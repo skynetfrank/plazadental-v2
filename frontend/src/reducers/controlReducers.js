@@ -1,4 +1,4 @@
-const {
+import {
   CONTROL_LIST_REQUEST,
   CONTROL_LIST_SUCCESS,
   CONTROL_LIST_FAIL,
@@ -20,7 +20,7 @@ const {
   CONTROL_BYPACIENTE_REQUEST,
   CONTROL_BYPACIENTE_SUCCESS,
   CONTROL_BYPACIENTE_FAIL,
-} = require('../constants/controlConstants');
+} from "../constants/controlConstants";
 
 export const controlCreateReducer = (state = {}, action) => {
   switch (action.type) {

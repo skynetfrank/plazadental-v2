@@ -1,4 +1,4 @@
-const {
+import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
@@ -38,7 +38,7 @@ const {
   PRODUCT_ONLY_CODES_REQUEST,
   PRODUCT_ONLY_CODES_SUCCESS,
   PRODUCT_ONLY_CODES_FAIL,
-} = require('../constants/productConstants');
+} from "../constants/productConstants";
 
 export const productCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -192,7 +192,7 @@ export const onlyCodesReducer = (state = { loading: true, codigos: [] }, action)
       return { loading: true };
     case PRODUCT_ONLY_CODES_SUCCESS:
       let codigos = action.payload.codigos;
-      codigos.unshift({ codigo: ' ' });
+      codigos.unshift({ codigo: " " });
       return {
         loading: false,
         codigos: codigos,

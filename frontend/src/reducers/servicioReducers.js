@@ -1,4 +1,4 @@
-const {
+import {
   SERVICIO_LIST_REQUEST,
   SERVICIO_LIST_SUCCESS,
   SERVICIO_LIST_FAIL,
@@ -17,17 +17,6 @@ const {
   SERVICIO_DELETE_SUCCESS,
   SERVICIO_DELETE_FAIL,
   SERVICIO_DELETE_RESET,
-  SERVICIO_CATEGORY_LIST_REQUEST,
-  SERVICIO_CATEGORY_LIST_SUCCESS,
-  SERVICIO_CATEGORY_LIST_FAIL,
-  SERVICIO_REVIEW_CREATE_REQUEST,
-  SERVICIO_REVIEW_CREATE_SUCCESS,
-  SERVICIO_REVIEW_CREATE_FAIL,
-  SERVICIO_REVIEW_CREATE_RESET,
-  SERVICIO_UPDATE_EXISTENCIA_REQUEST,
-  SERVICIO_UPDATE_EXISTENCIA_SUCCESS,
-  SERVICIO_UPDATE_EXISTENCIA_FAIL,
-  SERVICIO_UPDATE_EXISTENCIA_RESET,
   SERVICIO_BYCODE_REQUEST,
   SERVICIO_BYCODE_SUCCESS,
   SERVICIO_BYCODE_FAIL,
@@ -41,7 +30,7 @@ const {
   SERVICIO_ALL_LIST_REQUEST,
   SERVICIO_ALL_LIST_SUCCESS,
   SERVICIO_ALL_LIST_FAIL,
-} = require('../constants/servicioConstants');
+} from "../constants/servicioConstants";
 
 export const servicioCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -119,20 +108,6 @@ export const servicioDeleteReducer = (state = {}, action) => {
   }
 };
 
-export const servicioUpdateExistenciaReducer = (state = {}, action) => {
-  switch (action.type) {
-    case SERVICIO_UPDATE_EXISTENCIA_REQUEST:
-      return { loading: true };
-    case SERVICIO_UPDATE_EXISTENCIA_SUCCESS:
-      return { loading: false, success: true };
-    case SERVICIO_UPDATE_EXISTENCIA_FAIL:
-      return { loading: false, error: action.payload };
-    case SERVICIO_UPDATE_EXISTENCIA_RESET:
-      return {};
-    default:
-      return state;
-  }
-};
 
 export const getServiciobyCodeReducer = (state = { loading: true }, action) => {
   switch (action.type) {
@@ -168,7 +143,7 @@ export const servicioOnlyCodesReducer = (state = { loading: true, codigos: [] },
       return { loading: true };
     case SERVICIO_ONLY_CODES_SUCCESS:
       let codigos = action.payload.codigos;
-      codigos.unshift({ codigo: ' ' });
+      codigos.unshift({ codigo: " " });
       return {
         loading: false,
         codigos: codigos,
