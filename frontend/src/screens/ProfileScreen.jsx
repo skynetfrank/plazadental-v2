@@ -4,7 +4,7 @@ import { detailsUser, updateUserProfile } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import Swal from "sweetalert2";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.jpg";
 
 export default function ProfileScreen() {
   const [nombre, setNombre] = useState("");

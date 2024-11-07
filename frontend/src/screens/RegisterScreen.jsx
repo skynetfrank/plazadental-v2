@@ -6,7 +6,7 @@ import LoadingBox from "../components/LoadingBox";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { USER_REGISTER_RESET } from "../constants/userConstants";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.jpg";
 
 export default function RegisterScreen(props) {
   const navigate = useNavigate();

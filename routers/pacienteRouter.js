@@ -10,24 +10,11 @@ const pacienteRouter = express.Router();
 pacienteRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 12;
-    const page = Number(req.query.pageNumber) || 1;
+    const count = await Paciente.countDocuments({});
 
-    const busqueda = req.query.busqueda || "";
-    const searcherFilter = busqueda ? { searchstring: { $regex: busqueda, $options: "i" } } : {};
-
-    const count = await Paciente.countDocuments({
-      ...searcherFilter,
-    });
-
-    const pacientes = await Paciente.find({
-      ...searcherFilter,
-    })
+    const pacientes = await Paciente.find({})
       .sort({ nombre: 1 })
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
-
-    res.send({ pacientes, page, pages: Math.ceil(count / pageSize), count });
+    res.send({ pacientes, count });
   })
 );
 

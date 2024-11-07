@@ -4,10 +4,13 @@
   outline: none;
   text-decoration: none;
 }
+
 html {
-  font-size: 62.5%; /* 16px x 62.5 = 10px = 1rem */
+  font-size: 62.5%;
+  /* 16px x 62.5 = 10px = 1rem */
   box-sizing: border-box;
 }
+
 body {
   font-size: 1.6rem;
   font-family: Helvetica, Arial, sans-serif;
@@ -16,8 +19,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #203040;
 }
+
 #root {
   height: 100%;
+}
+
+.logo {
+  width: 120px;
+  height: 70px;
 }
 
 .fachada {
@@ -46,29 +55,34 @@ input::-webkit-inner-spin-button {
     "main"
     "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 2rem;
+  grid-template-rows: 7rem 1fr 2rem;
   height: 100vh;
 }
+
 header {
   grid-area: header;
-  background-color: #3e3e3e;
-  color: #c1c1c1;
+  color: #a5a5a5;
+  border-bottom: 1px solid rgb(218, 218, 218);
 }
+
 main {
   grid-area: main;
   padding: 0.5rem 0;
 }
+
 footer {
   grid-area: footer;
   background-color: #58585e;
   text-align: center;
 }
+
 button,
 input {
   padding: 0.5rem;
   border-radius: 0.5rem;
   border: 1px solid #a4a4a4;
 }
+
 button {
   cursor: pointer;
   pointer-events: all;
@@ -77,21 +91,25 @@ button {
   margin: 5px;
   min-width: 100px;
 }
+
 .btn-icon-container {
   background-color: transparent;
   padding: 0;
   min-width: 50px;
   border: none;
 }
+
 .btn-icon-container svg {
   font-size: 3rem;
 }
+
 .bike-icon,
 .save-icon,
 .dollar-icon,
 .user-circle-icon {
   font-size: 3rem;
 }
+
 .trash-icon {
   color: red;
 }
@@ -122,13 +140,12 @@ button:hover {
 }
 
 .home-buttons button {
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   margin: 1rem;
 }
 
 .home-buttons button svg {
-  max-width: 96px;
   color: rgb(94, 94, 94);
 }
 
@@ -251,6 +268,7 @@ select {
 .b-radius-05 {
   border-radius: 0.5rem;
 }
+
 .border-1 {
   border: 1px solid #aaaaaa;
 }
@@ -270,6 +288,7 @@ select {
 .pad-0 {
   padding: 0;
 }
+
 .pad-03 {
   padding: 0.2rem;
 }
@@ -305,6 +324,7 @@ select {
 .m-2 {
   margin: 2rem;
 }
+
 .mtop-1 {
   margin-top: 1rem;
 }
@@ -348,6 +368,7 @@ select {
 .mr-3 {
   margin-right: 3rem;
 }
+
 .mauto {
   margin: 0 auto;
 }
@@ -488,6 +509,7 @@ select {
   color: #203040;
   font-weight: bold;
 }
+
 .w-100pc {
   width: 100%;
 }
@@ -539,6 +561,7 @@ select {
 .pos-rel {
   position: relative;
 }
+
 .pos-abs {
   position: absolute;
 }
@@ -546,9 +569,11 @@ select {
 .top {
   top: 0;
 }
+
 .left {
   left: 0;
 }
+
 .right {
   right: 1rem;
 }
@@ -568,14 +593,17 @@ select {
 .hide {
   display: none;
 }
+
 .font-x {
   font-size: 10px;
   line-height: 10px;
 }
+
 .font-tiny {
   font-size: 8px;
   line-height: 8px;
 }
+
 /* end of generics */
 
 .form label {
@@ -619,6 +647,7 @@ a:hover {
   text-align: center;
   border: 1px solid #cccccc;
 }
+
 .styled-table td {
   font-size: 1.4rem;
   padding: 0 1rem;
@@ -636,6 +665,7 @@ a:hover {
   font-weight: bold;
   color: #009879;
 }
+
 .table-img {
   width: 120px;
   height: 100px;
@@ -686,11 +716,12 @@ a:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
-.dash-info-detail h2 > span {
+
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -843,6 +874,7 @@ summary {
 .monto-nocuadra {
   color: red;
 }
+
 .monto-cuadra {
   color: rgb(37, 161, 37);
 }
@@ -1028,6 +1060,7 @@ input.input-talla {
 .upload-img-info svg.facheck {
   color: green;
 }
+
 /* FIN DE EDITAR PRODUCTOS */
 
 /** tooltip component style **/
@@ -1067,6 +1100,7 @@ input.input-talla {
   right: 50%;
   color: black;
 }
+
 /** tooltip component style **/
 
 /* gastos fotos para cargar */
@@ -1092,6 +1126,7 @@ img.tiny-image {
   padding: 0px;
   object-fit: cover;
 }
+
 /* fin de gastos fotos para cargar **/
 
 .close-botonera {
@@ -1103,11 +1138,14 @@ img.tiny-image {
     size: auto;
     margin: 5mm;
   }
+
   body {
-    height: 100vh; /* Use 100% here to support printing more than a single page*/
+    height: 100vh;
+    /* Use 100% here to support printing more than a single page*/
     padding: 0 !important;
     overflow: hidden;
   }
+
   header,
   footer,
   .btn-print-conteo,
@@ -1119,11 +1157,13 @@ img.tiny-image {
   .btn-icon-container {
     display: none !important;
   }
+
   .cuadre-container {
     position: relative;
     top: -70px;
   }
 }
+
 /* tabla cuadre styling */
 #tabla-cuadre tr td {
   padding: 3px;
@@ -1176,6 +1216,7 @@ img.tiny-image {
 #tabla-cuadre tfoot tr th {
   font-size: 1.2rem;
 }
+
 /* fin de tabla cuadre styliong yall  */
 
 .botonera-pago button {
@@ -1210,6 +1251,7 @@ img.tiny-image {
   outline: none;
   font-weight: bold;
 }
+
 ::placeholder {
   color: #7e7e7e !important;
 }
@@ -1221,6 +1263,7 @@ img.tiny-image {
   aspect-ratio: 1;
   display: grid;
 }
+
 .loader::before,
 .loader::after {
   content: "";
@@ -1230,6 +1273,7 @@ img.tiny-image {
   background-size: 12px 12px;
   animation: l12 1s infinite;
 }
+
 .loader::before {
   margin: 4px;
   filter: hue-rotate(45deg);
@@ -1248,40 +1292,49 @@ img.tiny-image {
 .splash-svg-container {
   background-color: #ffffff;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .splash-svg-container svg {
   font-family: "Russo One", sans-serif;
   width: 100%;
-  height: 100%;
+
 }
+
 svg text {
   animation: stroke 3s;
   stroke-width: 2;
-  stroke: rgb(98, 3, 3);
-  font-size: 100px;
+  stroke: blue;
+  font-size: 50px;
   font-weight: bold;
 }
+
 @keyframes stroke {
   0% {
     fill: rgba(13, 24, 36, 0);
-    stroke: rgba(9, 17, 48, 1);
+    stroke: blue;
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
     stroke-width: 2;
   }
+
   70% {
     fill: rgba(13, 24, 36, 0);
-    stroke: rgba(9, 17, 48, 1);
+    stroke: blue;
   }
+
   80% {
-    fill: rgba(13, 24, 36, 0);
-    stroke: rgba(9, 17, 48, 1);
+    fill: blue;
+    stroke: blue;
     stroke-width: 3;
   }
+
   100% {
-    fill: rgb(98, 3, 3, 1);
-    stroke: rgba(9, 17, 48, 0);
+    fill: blue;
+    stroke: blue;
     stroke-dashoffset: -25%;
     stroke-dasharray: 50% 0;
     stroke-width: 0;
@@ -1299,6 +1352,7 @@ svg text {
   padding: 0 5px;
   border: 1px solid black;
 }
+
 .total-cash {
   font-weight: bold;
   font-size: 14px;
@@ -1328,6 +1382,7 @@ button.th-group-btn {
   margin: 0;
   min-width: unset;
 }
+
 button.th-ungroup-btn {
   background-color: red;
   margin: 0;
@@ -1355,12 +1410,29 @@ button.td-group-btn {
   width: 100px;
   height: 50px;
 }
+
 .home-buttons button span.span-cashea {
   position: relative;
   top: 23px;
 }
 
+
+
+/*LEGACY STYLES FROM PLAZA DENTAL APP OLD */
+
+
+/*LEGACY STYLES FROM PLAZA DENTAL APP OLD */
+
+
+
+
+
+
+
+
+
 @media (max-width: 575px) {
+
   .header-date,
   .header-bcv {
     min-width: 100px;
@@ -1372,17 +1444,13 @@ button.td-group-btn {
   .home-buttons {
     margin-top: 2rem;
   }
+
   .home-buttons button {
-    width: 110px;
-    height: 110px;
+    width: 160px;
+    height: 160px;
     margin: 3px;
   }
 
-  .home-buttons button svg {
-    max-width: 70px;
-    max-height: 60px;
-    color: rgb(94, 94, 94);
-  }
 
   .home-buttons button span {
     font-size: 1.4rem;

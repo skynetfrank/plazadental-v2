@@ -2,7 +2,6 @@ import {
   PACIENTE_LIST_REQUEST,
   PACIENTE_LIST_SUCCESS,
   PACIENTE_LIST_FAIL,
-  PACIENTE_LIST_RESET,
   PACIENTE_DETAILS_REQUEST,
   PACIENTE_DETAILS_SUCCESS,
   PACIENTE_DETAILS_FAIL,
@@ -55,8 +54,6 @@ export const pacienteListReducer = (state = { loading: true, pacientes: [] }, ac
       return {
         loading: false,
         pacientes: action.payload.pacientes,
-        pages: action.payload.pages,
-        page: action.payload.page,
         count: action.payload.count,
       };
     case PACIENTE_LIST_FAIL:

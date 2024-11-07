@@ -21,7 +21,6 @@ import {
   PACIENTE_ADDCONTROL_REQUEST,
   PACIENTE_ADDCONTROL_SUCCESS,
   PACIENTE_ADDCONTROL_FAIL,
-  PACIENTE_ADDCONTROL_RESET,
   PACIENTE_DELETECONTROL_REQUEST,
   PACIENTE_DELETECONTROL_SUCCESS,
   PACIENTE_DELETECONTROL_FAIL,
@@ -69,84 +68,84 @@ export const createPaciente =
     idOdontoImgName,
     controles
   ) =>
-  async (dispatch, getState) => {
-    dispatch({ type: PACIENTE_CREATE_REQUEST });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    try {
-      const { data } = await Axios.post(
-        "/api/pacientes/create",
-        {
-          nombre,
-          apellido,
-          cedula,
-          nombrerepresentante,
-          apellidorepresentante,
-          cedularepresentante,
-          genero,
-          estadoCivil,
-          Nacimiento,
-          edad,
-          peso,
-          estatura,
-          direccion,
-          celular,
-          telefono,
-          email,
-          contacto,
-          alergias,
-          otrasAlergias,
-          isAlergicoOtros,
-          antecedentesPersonales,
-          antecedentesFamiliares,
-          isTratadoPorMedico,
-          tratadoPorEnfermedad,
-          isOtraEnfermedad,
-          otraEnfermedad,
-          isTomaMedicamentos,
-          medicamentos,
-          dosismeds,
-          isHabitos,
-          habitos,
-          motivoEstaConsulta,
-          motivoUltimaConsulta,
-          fechaUltimaconsulta,
-          isComplicaciones,
-          complicaciones,
-          odontogramaUrl,
-          idOdontoImgName,
-          controles,
-        },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+    async (dispatch, getState) => {
+      dispatch({ type: PACIENTE_CREATE_REQUEST });
+      const {
+        userSignin: { userInfo },
+      } = getState();
+      try {
+        const { data } = await Axios.post(
+          "/api/pacientes/create",
+          {
+            nombre,
+            apellido,
+            cedula,
+            nombrerepresentante,
+            apellidorepresentante,
+            cedularepresentante,
+            genero,
+            estadoCivil,
+            Nacimiento,
+            edad,
+            peso,
+            estatura,
+            direccion,
+            celular,
+            telefono,
+            email,
+            contacto,
+            alergias,
+            otrasAlergias,
+            isAlergicoOtros,
+            antecedentesPersonales,
+            antecedentesFamiliares,
+            isTratadoPorMedico,
+            tratadoPorEnfermedad,
+            isOtraEnfermedad,
+            otraEnfermedad,
+            isTomaMedicamentos,
+            medicamentos,
+            dosismeds,
+            isHabitos,
+            habitos,
+            motivoEstaConsulta,
+            motivoUltimaConsulta,
+            fechaUltimaconsulta,
+            isComplicaciones,
+            complicaciones,
+            odontogramaUrl,
+            idOdontoImgName,
+            controles,
+          },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
 
-      dispatch({
-        type: PACIENTE_CREATE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-      dispatch({ type: PACIENTE_CREATE_FAIL, payload: message });
-    }
-  };
+        dispatch({
+          type: PACIENTE_CREATE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({ type: PACIENTE_CREATE_FAIL, payload: message });
+      }
+    };
 
 export const listPacientes =
-  ({ busqueda = "", pageNumber = "" }) =>
-  async (dispatch) => {
-    dispatch({
-      type: PACIENTE_LIST_REQUEST,
-    });
-    try {
-      const { data } = await Axios.get(`/api/pacientes?pageNumber=${pageNumber}&busqueda=${busqueda}`);
+  () =>
+    async (dispatch) => {
+      dispatch({
+        type: PACIENTE_LIST_REQUEST,
+      });
+      try {
+        const { data } = await Axios.get("/api/pacientes");
 
-      dispatch({ type: PACIENTE_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: PACIENTE_LIST_FAIL, payload: error.message });
-    }
-  };
+        dispatch({ type: PACIENTE_LIST_SUCCESS, payload: data });
+      } catch (error) {
+        dispatch({ type: PACIENTE_LIST_FAIL, payload: error.message });
+      }
+    };
 
 export const detailsPaciente = (pacienteId) => async (dispatch) => {
   dispatch({ type: PACIENTE_DETAILS_REQUEST, payload: pacienteId });

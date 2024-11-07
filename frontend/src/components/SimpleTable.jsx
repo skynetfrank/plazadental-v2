@@ -9,7 +9,7 @@ import {
 
 import { useState } from "react";
 
-function SimpleTable({ data, columns, filterInput, botonera }) {
+function SimpleTable({ data, columns, filterInput, botonera, records }) {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState("");
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
@@ -38,7 +38,7 @@ function SimpleTable({ data, columns, filterInput, botonera }) {
           className="b-radius border-1 pad-1 w-200"
           type="text"
           value={filtering}
-          placeholder="Buscar"
+          placeholder={"Buscar en " + records + " pacientes"}
           onChange={(e) => setFiltering(e.target.value)}
         />
       ) : (
