@@ -3,8 +3,8 @@ function AddCircleIcon() {
     <svg
       fill="none"
       viewBox="0 0 24 24"
-      height="1em"
-      width="1em"
+      height="2em"
+      width="2em"
       className="add-circle-icon">
       <path
         fill="currentColor"

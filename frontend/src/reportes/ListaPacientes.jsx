@@ -1,11 +1,31 @@
-import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { listPacientes } from "../actions/pacienteActions";
+import InfoIcon from "../icons/InfoIcon";
+import AddCircleIcon from "../icons/AddCircleIcon";
+import PacienteAddIcon from "../icons/PacienteAddIcon";
+import ToolTip from "../components/ToolTip";
+import EditIcon from "../icons/EditIcon";
+import ControlIcon from "../icons/ControlIcon";
+import TrashIcon from "../icons/TrashIcon";
 
 
 function ListaPacientes() {
   const navigate = useNavigate("");
-  const [pacientes] = useState(JSON.parse(localStorage.getItem("pacientes")));;
+  const pacienteList = useSelector((state) => state.pacienteList);
+  const { loading, pacientes, count } = pacienteList;
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (!pacientes || pacientes.length === 0) {
+      dispatch(listPacientes({}));
+    }
+  }, [dispatch, pacientes])
+
+
   const columns = [
     {
       header: "Nombre",
@@ -14,16 +34,44 @@ function ListaPacientes() {
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
     {
-      header: "Editar",
+      header: "Acciones",
       accessorKey: "_id",
       cell: (value) => {
         const { _id } = value.row.original;
         return (
-          <button
-            className="edit-cliente-btn"
-            onClick={() => navigate(`/cliente/${_id}/edit`)}>
-            editar
-          </button>
+          <div className="flx pad-0">
+            <ToolTip text="Ver Info">
+              <button
+                className="edit-cliente-btn"
+                onClick={() => {
+                  navigate(`/paciente/${_id}`);
+                }}>
+                <InfoIcon />
+              </button>
+            </ToolTip>
+            <ToolTip text="Editar">
+              <button
+                className="edit-cliente-btn"
+                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+                <EditIcon />
+              </button>
+            </ToolTip>
+            <ToolTip text="Controles">
+              <button
+                className="edit-cliente-btn"
+                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+                <ControlIcon />
+              </button>
+            </ToolTip>
+            <ToolTip text="Eliminar">
+              <button
+                className="edit-cliente-btn"
+                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+                <TrashIcon />
+              </button>
+            </ToolTip>
+          </div>
+
         );
       },
     },
@@ -31,9 +79,16 @@ function ListaPacientes() {
 
   return (
     <div>
-      <h2 className="centrado">Pacientes</h2>
-      {pacientes.length === 0 ? (
-        <span>No Hay Datos.......</span>
+      <div className="flx jcenter gap1 pad-0">  <h2 className="centrado">Pacientes</h2>
+        <ToolTip text="Agregar Paciente">
+          <button className="circle-btn">
+            <PacienteAddIcon />
+          </button>
+        </ToolTip>
+      </div>
+
+      {loading ? (
+        <span>Cargando Datos....</span>
       ) : (
         <>
           <div>

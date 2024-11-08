@@ -10,6 +10,7 @@ import SplashSvg from "./components/SplashSvg";
 import { listPacientes } from "./actions/pacienteActions";
 
 function App() {
+  console.log("in app")
   const [hoy] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const userSignin = useSelector((state) => state.userSignin);
@@ -21,14 +22,14 @@ function App() {
   const { pacientes } = pacienteList;
 
   useEffect(() => {
-    if (pacientes?.length === 0) {
+    if (!pacientes || pacientes.length === 0) {
       dispatch(listPacientes({}));
-    } else {
+    }
+    if (pacientes) {
       localStorage.setItem("pacientes", JSON.stringify(pacientes));
     }
-
   }, [dispatch, pacientes])
-  console.log("pacientes", pacientes)
+
 
   const signoutHandler = () => {
     dispatch(signout());

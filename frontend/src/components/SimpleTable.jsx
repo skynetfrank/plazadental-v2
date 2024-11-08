@@ -35,7 +35,7 @@ function SimpleTable({ data, columns, filterInput, botonera, records }) {
     <div className="flx column pad-0">
       {filterInput ? (
         <input
-          className="b-radius border-1 pad-1 w-200"
+          className="border-1 pad-05 w-200"
           type="text"
           value={filtering}
           placeholder={"Buscar en " + records + " pacientes"}

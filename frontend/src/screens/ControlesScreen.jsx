@@ -7,14 +7,17 @@ import {
 } from "../actions/pacienteActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { zonedTimeToUtc } from "date-fns-tz";
-import { format, parseISO } from "date-fns";
+import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "../styles.css";
-import { Pagination } from "swiper";
+
+//import the swiper yall
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import { deleteControl } from "../actions/controlActions";
 import {
   faFileInvoiceDollar,
@@ -22,22 +25,14 @@ import {
   faPrint,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
-import utcToZonedTime from "date-fns-tz/utcToZonedTime";
-import formatInTimeZone from "date-fns-tz/formatInTimeZone";
+import Swal from "sweetalert2";
+
 
 export default function ControlesScreen(props) {
   const [controles, setControles] = useState([]);
   const [togglePago, setTogglePago] = useState(false);
   const [toggleMateriales, setToggleMateriales] = useState(false);
   const [toggleServicios, setToggleServicios] = useState(false);
-
-  const pagination = {
-    clickable: true,
-    renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + "</span>";
-    },
-  };
 
   const navigate = useNavigate();
   const params = useParams();
@@ -71,9 +66,10 @@ export default function ControlesScreen(props) {
       let pw = prompt("Ingrese su clave", "");
 
       if (pw !== "matias01") {
-        toast.warning("Clave Erronea, verifique...", {
-          position: "top-center",
-          autoClose: 2000,
+        Swal.fire({
+          title: "Clave Erronea, verifique...",
+          text: "Ingrese Su Clave de Administrador",
+          icon: "warning"
         });
         return;
       }
@@ -81,10 +77,12 @@ export default function ControlesScreen(props) {
         dispatch(deleteControl(control._id));
         dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
         dispatch(detailsPaciente(pacienteId));
-        toast.success("Control Eliminado con Exito!", {
-          position: "top-center",
-          autoClose: 2000,
+        Swal.fire({
+          title: "Control Eliminado con Exito!",
+          text: "Eliminar Control",
+          icon: "success"
         });
+
       }
     } else {
       return;
@@ -134,9 +132,15 @@ export default function ControlesScreen(props) {
       </div>
       <>
         <Swiper
-          pagination={pagination}
-          modules={[Pagination]}
-          className="mySwiper"
+          // install Swiper modules
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          spaceBetween={50}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log('slide change')}
         >
           {controles.map((item, ind) => {
             if (!item.control) {
@@ -164,9 +168,10 @@ export default function ControlesScreen(props) {
                           }
 
                           if (pw !== "matias01") {
-                            toast.warning("Clave Erronea, verifique...", {
-                              position: "top-center",
-                              autoClose: 2000,
+                            Swal.fire({
+                              title: "Clave Erronea, verifique...",
+                              text: "Ingrese Su Clave de Administrador",
+                              icon: "warning"
                             });
                             return;
                           }
@@ -193,8 +198,7 @@ export default function ControlesScreen(props) {
                         className="btn-circle"
                         onClick={() =>
                           navigate(
-                            `/printfactura/${
-                              item.control._id
+                            `/printfactura/${item.control._id
                             }?tipo=${"notaentrega"}`
                           )
                         }
