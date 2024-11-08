@@ -20,12 +20,21 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { deleteControl } from "../actions/controlActions";
 import {
+  faBoxes,
+  faDollarSign,
   faFileInvoiceDollar,
+  faHandHoldingDollar,
+  faMedkit,
+  faMoneyCheck,
   faPen,
   faPrint,
+  faToolbox,
+  faTooth,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import ToolTip from "../components/ToolTip";
+import ControlAddIcon from "../icons/ControlAddIcon";
 
 
 export default function ControlesScreen(props) {
@@ -116,29 +125,24 @@ export default function ControlesScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div className="main-container control">
-      <div className="barra-botones control">
-        <button className="icon-btn add-btn" onClick={addControlHandler}>
-          <div className="add-icon"></div>
-          <div className="btn-txt">Agregar Nuevo Control</div>
-        </button>
-        <div>
-          <h2>Control de Consultas</h2>
-          <h2>{paciente.nombre + " " + paciente.apellido}</h2>
-        </div>
+    <div>
+      <div className="flx jcenter gap1 pad-0">
+        <h2>Controles de Consulta</h2>
+        <ToolTip text="Agregar Control">
+          <button className="circle-btn m-0" onClick={addControlHandler}>
+            <ControlAddIcon />
+          </button>
+        </ToolTip>
       </div>
-      <div>
-        {paciente.controles.length === 0 && <h2>PACIENTE NO POSEE CONTROL</h2>}
-      </div>
+      <p className="centrado pad-0">{paciente.nombre + " " + paciente.apellido}</p>
+
       <>
         <Swiper
           // install Swiper modules
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          modules={[Navigation, Pagination]}
           spaceBetween={50}
           slidesPerView={1}
-          navigation
           pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log('slide change')}
         >
@@ -149,17 +153,13 @@ export default function ControlesScreen(props) {
 
             return (
               <SwiperSlide key={ind}>
-                <div className="slide-control-container">
-                  <div className="slide-titulo">
-                    <div className="slide-action-btns">
+                <div className="flx column pad-0">
+                  {dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}
+                  <p className="font-x negrita">Atendido por: Dr. {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</p>
+                  <div className="flx gap-10">
+                    <ToolTip text="Editar">
                       <button
-                        className="btn-circle"
-                        onClick={() => deleteHandler(item.control)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                      <button
-                        className="btn-circle"
+                        className="circle-btn"
                         onClick={() => {
                           let pw = prompt("Ingrese su clave para Editar", "");
 
@@ -182,20 +182,10 @@ export default function ControlesScreen(props) {
                       >
                         <FontAwesomeIcon icon={faPen} />
                       </button>
-                    </div>
-
-                    <div className="slide-fecha-control">
-                      <h1 id="fecha-control">
-                        {new Date(item.control.fechaControl)
-                          .toUTCString()
-                          .substring(4, 16)}
-                      </h1>
-                      <p>Atendido por: Dr. {item.control.doctor?.nombre}</p>
-                    </div>
-
-                    <div className="slide-action-btns">
+                    </ToolTip>
+                    <ToolTip text="Factura">
                       <button
-                        className="btn-circle"
+                        className="circle-btn"
                         onClick={() =>
                           navigate(
                             `/printfactura/${item.control._id
@@ -205,9 +195,38 @@ export default function ControlesScreen(props) {
                       >
                         <FontAwesomeIcon icon={faFileInvoiceDollar} />
                       </button>
-                      <p>Factura</p>
-                    </div>
+                    </ToolTip>
+                    <ToolTip text="Recipe">
+                      <button
+                        className="circle-btn"
+                        onClick={() =>
+                          navigate(`/printrecipe/${item.control._id}`)
+                        }
+                      >
+                        <FontAwesomeIcon className="small" icon={faMedkit} />
+                      </button>
+                    </ToolTip>
+                    <ToolTip text="Eliminar">
+                      <button
+                        className="circle-btn"
+                        onClick={() => deleteHandler(item.control)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} />
+                      </button>
+                    </ToolTip>
+                    <ToolTip text="Servicios">
+                      <button onClick={ftoggleServicios} className="circle-btn">
+                        <FontAwesomeIcon icon={faTooth} />
+                      </button>
+                    </ToolTip>
+                    <button onClick={ftoggleMateriales} className="circle-btn">
+                      <FontAwesomeIcon icon={faBoxes} />
+                    </button>
+                    <button onClick={ftogglePago} className="circle-btn">
+                      <FontAwesomeIcon icon={faHandHoldingDollar} />
+                    </button>
                   </div>
+
                   <div className="slide-info">
                     <div className="div-textarea">
                       <span
@@ -251,14 +270,7 @@ export default function ControlesScreen(props) {
                         readOnly
                         value={item.control.recipe}
                       ></textarea>
-                      <button
-                        className="input btn-select"
-                        onClick={() =>
-                          navigate(`/printrecipe/${item.control._id}`)
-                        }
-                      >
-                        <FontAwesomeIcon className="small" icon={faPrint} />
-                      </button>
+
                     </div>
                     <div className="div-textarea">
                       <span
@@ -275,24 +287,6 @@ export default function ControlesScreen(props) {
                       ></textarea>
                     </div>
                   </div>
-                  <div className="sections-hider">
-                    <div>
-                      <button onClick={ftoggleServicios} className="button">
-                        Servicios
-                      </button>
-                    </div>
-                    <div>
-                      <button onClick={ftoggleMateriales} className="button">
-                        Materiales
-                      </button>
-                    </div>
-                    <div>
-                      <button onClick={ftogglePago} className="button">
-                        Ver Pago
-                      </button>
-                    </div>
-                  </div>
-
                   <div className="div-two-colums">
                     {toggleMateriales && (
                       <div className="slide-materiales-info">
@@ -358,7 +352,7 @@ export default function ControlesScreen(props) {
                             className="slide-pago-info show"
                             data-title="Informacion del Pago"
                           >
-                            'Consulta No tiene Informacion de Pago Registrada'
+                            Consulta No tiene Informacion de Pago Registrada
                           </div>
                         )}
                       </>

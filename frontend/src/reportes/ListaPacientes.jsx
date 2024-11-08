@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { listPacientes } from "../actions/pacienteActions";
 import InfoIcon from "../icons/InfoIcon";
-import AddCircleIcon from "../icons/AddCircleIcon";
 import PacienteAddIcon from "../icons/PacienteAddIcon";
 import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
@@ -51,21 +50,18 @@ function ListaPacientes() {
             </ToolTip>
             <ToolTip text="Editar">
               <button
-                className="edit-cliente-btn"
                 onClick={() => navigate(`/cliente/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>
             <ToolTip text="Controles">
               <button
-                className="edit-cliente-btn"
                 onClick={() => navigate(`/cliente/${_id}/edit`)}>
                 <ControlIcon />
               </button>
             </ToolTip>
             <ToolTip text="Eliminar">
               <button
-                className="edit-cliente-btn"
                 onClick={() => navigate(`/cliente/${_id}/edit`)}>
                 <TrashIcon />
               </button>
