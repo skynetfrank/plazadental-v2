@@ -143,8 +143,7 @@ export default function ControlesScreen(props) {
           spaceBetween={50}
           slidesPerView={1}
           pagination={{ clickable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log('slide change')}
+
         >
           {controles.map((item, ind) => {
             if (!item.control) {
@@ -214,151 +213,16 @@ export default function ControlesScreen(props) {
                         <FontAwesomeIcon icon={faTrash} />
                       </button>
                     </ToolTip>
-                    <ToolTip text="Servicios">
-                      <button onClick={ftoggleServicios} className="circle-btn">
-                        <FontAwesomeIcon icon={faTooth} />
-                      </button>
-                    </ToolTip>
-                    <button onClick={ftoggleMateriales} className="circle-btn">
-                      <FontAwesomeIcon icon={faBoxes} />
-                    </button>
-                    <button onClick={ftogglePago} className="circle-btn">
-                      <FontAwesomeIcon icon={faHandHoldingDollar} />
-                    </button>
                   </div>
-
-                  <div className="slide-info">
-                    <div className="div-textarea">
-                      <span
-                        className="textarea-titulo"
-                        data-title="Evaluacion"
-                      ></span>
-                      <textarea
-                        className="textarea"
-                        placeholder="Evaluacion..."
-                        cols="25"
-                        rows="5"
-                        readOnly
-                        value={item.control.evaluacion}
-                        data-title="Evaluacion"
-                      ></textarea>
-                    </div>
-                    <div className="div-textarea">
-                      <span
-                        className="textarea-titulo"
-                        data-title="Tratamiento"
-                      ></span>
-                      <textarea
-                        className="textarea"
-                        placeholder="Tratamiento..."
-                        cols="25"
-                        rows="5"
-                        readOnly
-                        value={item.control.tratamiento}
-                      ></textarea>
-                    </div>
-                    <div className="div-textarea">
-                      <span
-                        className="textarea-titulo"
-                        data-title="Recipe"
-                      ></span>
-                      <textarea
-                        className="textarea"
-                        placeholder="Recipe..."
-                        cols="25"
-                        rows="3"
-                        readOnly
-                        value={item.control.recipe}
-                      ></textarea>
-
-                    </div>
-                    <div className="div-textarea">
-                      <span
-                        className="textarea-titulo"
-                        data-title="Indicaciones"
-                      ></span>
-                      <textarea
-                        className="textarea"
-                        placeholder="Recipe..."
-                        cols="25"
-                        rows="3"
-                        readOnly
-                        value={item.control.indicaciones}
-                      ></textarea>
-                    </div>
+                  <div className="slide-content-header">
+                    <details>
+                      
+                    </details>
                   </div>
-                  <div className="div-two-colums">
-                    {toggleMateriales && (
-                      <div className="slide-materiales-info">
-                        <span className="slide-span-pago">
-                          Informacion sobre Materiales Aqui (en costruccion)
-                        </span>
-                        <span className="slide-span-pago">
-                          Informacion sobre Materiales Aqui (en construccion)
-                        </span>
-                      </div>
-                    )}
-
-                    {toggleServicios && (
-                      <>
-                        <div className="slide-materiales-info">
-                          {item.control.serviciosItems.map((item, ndx) => {
-                            let total = +item.montoItemServicio;
-                            return (
-                              <span key={ndx}>
-                                {item.cantidad +
-                                  " " +
-                                  item.servicio.nombre +
-                                  " " +
-                                  item.precioServ +
-                                  "$ = " +
-                                  " " +
-                                  item.montoItemServicio +
-                                  "$"}
-                              </span>
-                            );
-                          })}
-                          {item.control.montoUsd ? (
-                            <span>
-                              {" "}
-                              Total Servicios: US${" "}
-                              {item.control.montoUsd.toFixed(2)}
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </>
-                    )}
-
-                    {togglePago && (
-                      <>
-                        {item.control.pagoInfo.status === "pagado" ? (
-                          <div
-                            className="slide-pago-info show"
-                            data-title="Informacion del Pago"
-                          >
-                            {item.control.pagoInfo.detallePago && (
-                              <span>{item.control.pagoInfo.detallePago}</span>
-                            )}
-                            {item.control.pagoInfo.memoPago && (
-                              <span>
-                                MEMO: {item.control.pagoInfo.memoPago}
-                              </span>
-                            )}
-                          </div>
-                        ) : (
-                          <div
-                            className="slide-pago-info show"
-                            data-title="Informacion del Pago"
-                          >
-                            Consulta No tiene Informacion de Pago Registrada
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
+                  <div className="slide-content"></div>
                 </div>
+
+
               </SwiperSlide>
             );
           })}

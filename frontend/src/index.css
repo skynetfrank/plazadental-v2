@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
+
+
 * {
   margin: 0;
   padding: 0;
@@ -25,8 +29,8 @@ body {
 }
 
 .logo {
-  width: 120px;
-  height: 70px;
+  width: 100px;
+  height: 50px;
 }
 
 .fachada {
@@ -55,7 +59,7 @@ input::-webkit-inner-spin-button {
     "main"
     "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 7rem 1fr 2rem;
+  grid-template-rows: 5rem 1fr 2rem;
   height: 100vh;
 }
 
@@ -1625,8 +1629,10 @@ button.td-group-btn {
 
 .swiper {
   width: 100vh;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  background: rgb(232, 232, 232);
+  padding: 1rem !important;
+  border: 1px solid grey;
+  border-radius: 5px;
 }
 
 .swiper-slide {
@@ -1641,3 +1647,38 @@ button.td-group-btn {
   width: 100%;
   border: 1px solid grey;
 }
+
+.swiper-pagination-bullet {
+  width: 30px !important;
+  height: 30px !important;
+  color: whitesmoke;
+}
+
+.swiper-pagination-bullet-active {
+  background: blue !important;
+  color: white;
+}
+
+.slide-info {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  min-width: 360px;
+  min-height: max-content;
+}
+
+.slide-content {
+  width: 300px;
+  height: 150px;
+  background-color: #dbdbdb;
+}
+
+.slide-content-header {
+  width: 300px;
+  height: 30px;
+  background-color: rgb(207, 207, 207);
+}
+
+
+
+/*  TABS CSS STYLES FOR CHECKING */

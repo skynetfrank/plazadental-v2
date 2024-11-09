@@ -10,7 +10,7 @@ import SplashSvg from "./components/SplashSvg";
 import { listPacientes } from "./actions/pacienteActions";
 
 function App() {
-  console.log("in app")
+
   const [hoy] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const userSignin = useSelector((state) => state.userSignin);
