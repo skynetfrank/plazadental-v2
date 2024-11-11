@@ -17,6 +17,9 @@ import {
 } from "../actions/pacienteActions";
 import { listAllServicios } from "../actions/servicioActions";
 import { PACIENTE_DETAILS_RESET } from "../constants/pacienteConstants";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
+
 
 export default function ControlCreateScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);

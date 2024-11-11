@@ -6,13 +6,13 @@ export default function SplashSvg() {
       {" "}
 
       <div className="splash-svg-container fachada">
-
+        <img className="logo" src={logo} alt="logo" />
         <svg>
-          <text x="50%" y="50%" dy=".35em" textAnchor="middle">
+          <text x="50%" y="15%" dy=".35em" textAnchor="middle">
             PLAZA DENTAL
           </text>
         </svg>
-        <img className="logo" src={logo} alt="logo" />
+
       </div>
     </div>
   );

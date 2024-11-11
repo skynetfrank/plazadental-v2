@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPaciente } from "../actions/pacienteActions";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { PACIENTE_CREATE_RESET } from "../constants/pacienteConstants";
-import NumberFormat from "react-number-format";
-import { format } from "date-fns";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
+import dayjs from "dayjs";
+import Swal from "sweetalert2";
 
 export default function PacienteCreateScreen(props) {
   const navigate = useNavigate();

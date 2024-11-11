@@ -120,6 +120,8 @@ export default function ControlesScreen(props) {
     setToggleServicios(true);
   };
 
+
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -142,7 +144,11 @@ export default function ControlesScreen(props) {
           modules={[Navigation, Pagination]}
           spaceBetween={50}
           slidesPerView={1}
-          pagination={{ clickable: true }}
+          pagination={{
+            clickable: true, renderBullet: function (index, className) {
+              return '<span class="' + className + '">' + (index + 1) + '</span>';
+            }
+          }}
 
         >
           {controles.map((item, ind) => {
@@ -152,74 +158,106 @@ export default function ControlesScreen(props) {
 
             return (
               <SwiperSlide key={ind}>
-                <div className="flx column pad-0">
-                  {dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}
-                  <p className="font-x negrita">Atendido por: Dr. {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</p>
-                  <div className="flx gap-10">
-                    <ToolTip text="Editar">
-                      <button
-                        className="circle-btn"
-                        onClick={() => {
-                          let pw = prompt("Ingrese su clave para Editar", "");
+                <div>
+                  <div>
+                    <div className="flx jsb pad-0 control-header">
+                      <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
+                      <span>Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
+                    </div>
+                    <div className="flx jcenter gap-10 pad-0">
+                      <ToolTip text="Editar">
+                        <button
+                          className="circle-btn"
+                          onClick={() => {
+                            let pw = prompt("Ingrese su clave para Editar", "");
 
-                          if (!pw) {
-                            return;
-                          }
+                            if (!pw) {
+                              return;
+                            }
 
-                          if (pw !== "matias01") {
-                            Swal.fire({
-                              title: "Clave Erronea, verifique...",
-                              text: "Ingrese Su Clave de Administrador",
-                              icon: "warning"
-                            });
-                            return;
+                            if (pw !== "matias01") {
+                              Swal.fire({
+                                title: "Clave Erronea, verifique...",
+                                text: "Ingrese Su Clave de Administrador",
+                                icon: "warning"
+                              });
+                              return;
+                            }
+                            if (pw === "matias01") {
+                              navigate(`/control/${item.control._id}/edit`);
+                            }
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faPen} />
+                        </button>
+                      </ToolTip>
+                      <ToolTip text="Factura">
+                        <button
+                          className="circle-btn"
+                          onClick={() =>
+                            navigate(
+                              `/printfactura/${item.control._id
+                              }?tipo=${"notaentrega"}`
+                            )
                           }
-                          if (pw === "matias01") {
-                            navigate(`/control/${item.control._id}/edit`);
+                        >
+                          <FontAwesomeIcon icon={faFileInvoiceDollar} />
+                        </button>
+                      </ToolTip>
+                      <ToolTip text="Ver Recipe">
+                        <button
+                          className="circle-btn"
+                          onClick={() =>
+                            navigate(`/printrecipe/${item.control._id}`)
                           }
-                        }}
-                      >
-                        <FontAwesomeIcon icon={faPen} />
-                      </button>
-                    </ToolTip>
-                    <ToolTip text="Factura">
-                      <button
-                        className="circle-btn"
-                        onClick={() =>
-                          navigate(
-                            `/printfactura/${item.control._id
-                            }?tipo=${"notaentrega"}`
-                          )
-                        }
-                      >
-                        <FontAwesomeIcon icon={faFileInvoiceDollar} />
-                      </button>
-                    </ToolTip>
-                    <ToolTip text="Recipe">
-                      <button
-                        className="circle-btn"
-                        onClick={() =>
-                          navigate(`/printrecipe/${item.control._id}`)
-                        }
-                      >
-                        <FontAwesomeIcon className="small" icon={faMedkit} />
-                      </button>
-                    </ToolTip>
-                    <ToolTip text="Eliminar">
-                      <button
-                        className="circle-btn"
-                        onClick={() => deleteHandler(item.control)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} />
-                      </button>
-                    </ToolTip>
+                        >
+                          <FontAwesomeIcon className="small" icon={faMedkit} />
+                        </button>
+                      </ToolTip>
+                      <ToolTip text="Eliminar">
+                        <button
+                          className="circle-btn"
+                          onClick={() => deleteHandler(item.control)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </ToolTip>
+                    </div>
+                    <div className="slide-content">
+                      <h4>Evaluacion: </h4><p>{item.control.evaluacion ? item.control.evaluacion : "No se Registro Evaluacion"}</p>
+                      <h4>Tratamiento:</h4><p>{item.control.tratamiento ? item.control.tratamiento : "No se Registro Tratamiento"}</p>
+                      <h4>Recipe:</h4><p>{item.control.recipe ? item.control.recipe : "No se Registro Recipe"}</p>
+                      <h4 className="mb-2">Indicaciones:</h4><p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
+                      <div>
+                        <h4>Servicios:</h4>
+                        {item.control.serviciosItems.map((item, ndx) => {
+                          let total = +item.montoItemServicio;
+                          return (
+                            <span className="font-x negrita ml" key={ndx}>
+                              {item.cantidad +
+                                " " +
+                                item.servicio.nombre +
+                                " " +
+                                item.precioServ +
+                                "$ = " +
+                                " " +
+                                item.montoItemServicio +
+                                "$"}
+                            </span>
+                          );
+                        })}
+                        {item.control.montoUsd ? (
+                          <span className="font-x negrita ml">
+                            {" "}
+                            Total:${" "}
+                            {item.control.montoUsd.toFixed(2)}
+                          </span>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="slide-content-header">
-                    <details>
-                      
-                    </details>
-                  </div>
-                  <div className="slide-content"></div>
                 </div>
 
 

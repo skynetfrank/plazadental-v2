@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { listPacientes } from "../actions/pacienteActions";
 import InfoIcon from "../icons/InfoIcon";
@@ -36,7 +36,7 @@ function ListaPacientes() {
       header: "Acciones",
       accessorKey: "_id",
       cell: (value) => {
-        const { _id } = value.row.original;
+        const { _id, controles } = value.row.original;
         return (
           <div className="flx pad-0">
             <ToolTip text="Ver Info">
@@ -54,15 +54,15 @@ function ListaPacientes() {
                 <EditIcon />
               </button>
             </ToolTip>
-            <ToolTip text="Controles">
+            <ToolTip text={"Controles " + controles.length}>
               <button
-                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+                onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
               </button>
             </ToolTip>
             <ToolTip text="Eliminar">
               <button
-                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+                onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
             </ToolTip>
@@ -77,9 +77,11 @@ function ListaPacientes() {
     <div>
       <div className="flx jcenter gap1 pad-0">  <h2 className="centrado">Pacientes</h2>
         <ToolTip text="Agregar Paciente">
-          <button className="circle-btn">
-            <PacienteAddIcon />
-          </button>
+          <Link to='/crearpaciente'>
+            <button className="circle-btn">
+              <PacienteAddIcon />
+            </button>
+          </Link>
         </ToolTip>
       </div>
 

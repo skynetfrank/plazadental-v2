@@ -55,7 +55,7 @@ function App() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2900);
   }, []);
 
 
@@ -101,7 +101,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>26oct2024</span>
+            <span>11nov2024</span>
           </footer>
         </div>
       )}

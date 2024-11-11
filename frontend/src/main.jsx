@@ -13,6 +13,7 @@ import HomeScreen from "./screens/HomeScreen";
 import ListaPacientes from "./reportes/ListaPacientes";
 import PacienteScreen from "./screens/PacienteScreen";
 import ControlesScreen from "./screens/ControlesScreen";
+import PacienteCreateScreen from "./screens/PacienteCreateScreen";
 
 
 const router = createBrowserRouter(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
 
       <Route path="" element={<ProtectedRoute />}>
         <Route path="/profile" element={<ProfileScreen />}></Route>
+        <Route path="/crearpaciente" element={<PacienteCreateScreen />}></Route>
         <Route path="/listapacientes" element={<ListaPacientes />}></Route>
         <Route path="/paciente/:id" element={<PacienteScreen />}></Route>
         <Route path="/controles/:id" element={<ControlesScreen />}></Route>
