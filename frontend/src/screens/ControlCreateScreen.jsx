@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createControl } from "../actions/controlActions";
-import { listDoctores } from "../actions/doctorActions";
-import LoadingBox from "../components/LoadingBox";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
-import MessageBox from "../components/MessageBox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
-import { listAllServicios } from "../actions/servicioActions";
-import { PACIENTE_DETAILS_RESET } from "../constants/pacienteConstants";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
-  return date;
+  return dayjs(date).format("YYYY-MM-DD");
 }
 
 export default function ControlCreateScreen(props) {
@@ -29,9 +24,8 @@ export default function ControlCreateScreen(props) {
   const cita1 = new URLSearchParams(search).get("escita1");
 
   const [doctorId, setDoctorId] = useState("");
-  const [productId, setProductId] = useState("");
   const [servicioId, setServicioId] = useState("");
-  const [user, setUser] = useState(userInfo._id);
+  const [user] = useState(userInfo._id);
   const [fechaControl, setFechaControl] = useState(subtractHours(new Date(), 6));
   const [esCita1, setEsCita1] = useState(false);
   const [evaluacion, setEvaluacion] = useState("");
@@ -44,7 +38,6 @@ export default function ControlCreateScreen(props) {
   const [tasaIva, setTasaIva] = useState(0.16);
   const [montoIva, setMontoIva] = useState(0);
   const [totalGeneral, setTotalGeneral] = useState(0);
-  const [totalGeneralBs, setTotalGeneralBs] = useState(0);
   const [tasaComisionDr, setTasaComisionDr] = useState(40);
   const [tasaComisionPlaza, setTasaComisionPlaza] = useState(60);
   const [montoComisionDr, setMontoComisionDr] = useState(0);
@@ -55,29 +48,7 @@ export default function ControlCreateScreen(props) {
   const [qtyServ, setQtyServ] = useState(1);
   const [pagoInfo, setPagoInfo] = useState({});
   const [fechaPago, setFechaPago] = useState("");
-  const [montoEfectivo, setMontoEfectivo] = useState(0);
-  const [transferencia, setTransferencia] = useState(0);
-  const [refTransfer, setRefTransfer] = useState("");
-  const [bancoTransfer, setBancoTransfer] = useState("");
-  const [montoZelle, setMontoZelle] = useState(0);
-  const [refZelle, setRefZelle] = useState("");
-  const [cuentaZelle, setCuentaZelle] = useState("");
-  const [montoPagoMobil, setMontoPagoMobil] = useState("");
-  const [refPagoMobil, setRefPagoMobil] = useState("");
-  const [bancoPagoMobil, setBancoPagoMobil] = useState("");
-  const [tarjetaDebito, setTarjetaDebito] = useState(0);
-  const [refTarjetaDebito, setRefTarjetaDebito] = useState("");
-  const [bancoTarjetaDebito, setBancoTarjetaDebito] = useState("");
-  const [tarjetaCredito, setTarjetaCredito] = useState(0);
-  const [refTarjetaCredito, setRefTarjetaCredito] = useState("");
-  const [bancoTarjetaCredito, setBancoTarjetaCredito] = useState("");
-  const [brandTarjetaCredito, setBrandTarjetaCredito] = useState("");
-  const [detallePago, setDetallePago] = useState("");
-  const [memoPago, setMemoPago] = useState("");
-  const [togglePago, setTogglePago] = useState(false);
-  const [toggleMateriales, setToggleMateriales] = useState(false);
-  const [toggleServicios, setToggleServicios] = useState(false);
-  const [toggleComisiones, setToggleComisiones] = useState(false);
+
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
@@ -88,9 +59,6 @@ export default function ControlCreateScreen(props) {
   const { error, success, control } = controlCreate;
 
   const dispatch = useDispatch();
-
-  const brandSel = ["Visa", "MasterCard"];
-  const tasaSel = [...Array(100).keys()];
 
   const bancos = [
     "Venezuela",
@@ -132,62 +100,12 @@ export default function ControlCreateScreen(props) {
   }, [dispatch, paciente, pacienteId]);
 
   useEffect(() => {
-    const fecha = fechaPago ? new Date(fechaPago) : "";
-    const cash = montoEfectivo > 0 ? " - Efectivo: $" + montoEfectivo : "";
-    const trf = transferencia > 0 ? " - Transferencia " + bancoTransfer + " ref:" + refTransfer : "";
-    const pmobil = montoPagoMobil > 0 ? " - Pago Movil " + bancoPagoMobil + " ref:" + refPagoMobil : "";
-    const tdb = tarjetaDebito > 0 ? " - Tarjeta de Debito " + bancoTarjetaDebito + " ref:" + refTarjetaDebito : "";
-    const tdc =
-      tarjetaCredito > 0
-        ? " - Tarjeta de Credito " + brandTarjetaCredito + " " + bancoTarjetaCredito + " ref: " + refTarjetaCredito
-        : "";
-    const titular = cuentaZelle ? "titular: " + cuentaZelle : "";
-    const zelle = montoZelle > 0 ? " Zelle ref:" + refZelle + " " + titular : "";
-
-    const stringPago = "Pagado el " + fecha + ": " + cash + trf + pmobil + tdb + tdc + zelle;
-
-    if (!cash && !trf && !pmobil && !tdb && !tdc && !zelle) {
-      setPagoInfo({});
-    }
-
-    if (cash || trf || pmobil || tdb || tdc || zelle) {
-      setPagoInfo({
-        status: "pagado",
-        fechaPago,
-        detallePago: stringPago,
-        memoPago,
-      });
-    }
-  }, [
-    bancoPagoMobil,
-    bancoTarjetaCredito,
-    bancoTarjetaDebito,
-    bancoTransfer,
-    brandTarjetaCredito,
-    cuentaZelle,
-    detallePago,
-    fechaPago,
-    memoPago,
-    montoEfectivo,
-    montoPagoMobil,
-    montoZelle,
-    refPagoMobil,
-    refTarjetaCredito,
-    refTarjetaDebito,
-    refTransfer,
-    refZelle,
-    tarjetaCredito,
-    tarjetaDebito,
-    transferencia,
-  ]);
-
-  useEffect(() => {
     setMontoComisionDr(totalGeneral * (tasaComisionDr / 100));
     setMontoComisionPlaza(totalGeneral * (tasaComisionPlaza / 100));
     setMontoUsd(totalGeneral);
     setMontoBs(montoUsd * cambioBcv);
     setMontoIva(montoBs * tasaIva);
-    setTotalGeneralBs(montoBs + montoIva);
+
   }, [
     cambioBcv,
     montoBs,
@@ -203,9 +121,10 @@ export default function ControlCreateScreen(props) {
 
   useEffect(() => {
     if (success) {
-      toast.success("Control Registrado con Exito!", {
-        position: "top-center",
-        autoClose: 1000,
+      Swal.fire({
+        title: "Control Registrado con Exito!",
+        text: "Registrar Nuevo Control de Citas",
+        icon: "success",
       });
       dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
       dispatch({ type: CONTROL_CREATE_RESET });
@@ -218,7 +137,6 @@ export default function ControlCreateScreen(props) {
       setMontoUsd(0);
       setCambioBcv(0);
       setMontoBs(0);
-      setTotalGeneralBs(0);
       setTasaComisionDr(40);
       setTasaComisionPlaza(60);
       setMontoComisionDr(0);
@@ -234,11 +152,12 @@ export default function ControlCreateScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    console.log("submitHandler")
     if (!doctorId) {
-      toast.warning("Seleccione Un Doctor", {
-        position: "top-center",
-        autoClose: 500,
+      Swal.fire({
+        title: "Falta El Doctor",
+        text: "Seleccionar Doctor",
+        icon: "warning",
       });
       return;
     }
@@ -271,52 +190,6 @@ export default function ControlCreateScreen(props) {
     );
   };
 
-  const ftogglePago = (e) => {
-    e.preventDefault();
-    setTogglePago(true);
-    setToggleMateriales(false);
-    setToggleServicios(false);
-    setToggleComisiones(false);
-  };
-
-  const ftoggleMateriales = (e) => {
-    e.preventDefault();
-    setTogglePago(false);
-    setToggleMateriales(true);
-    setToggleServicios(false);
-    setToggleComisiones(false);
-  };
-
-  const ftoggleServicios = (e) => {
-    e.preventDefault();
-    setTogglePago(false);
-    setToggleMateriales(false);
-    setToggleServicios(true);
-    setToggleComisiones(false);
-  };
-
-  const ftoggleComisiones = (e) => {
-    e.preventDefault();
-    setTogglePago(false);
-    setToggleMateriales(false);
-    setToggleServicios(false);
-    setToggleComisiones(true);
-  };
-
-  const allBtnsOff = () => {
-    setTogglePago(false);
-    setToggleMateriales(false);
-    setToggleServicios(false);
-  };
-
-  const handleMaterials = (e) => {
-    e.preventDefault();
-
-    //La funcion setState tiene el ultimo valor de la variable o el array (current)
-    //asi que usando el spread operator se agrega todos los valores anteriores y el nuevo a continuacion
-    setMateriales((current) => [...current, { cantidad: qty, producto: productId }]);
-  };
-
   const handleEvaluacion = (e) => {
     e.preventDefault();
     setEvaluacion((current) => current + e.target.value);
@@ -329,16 +202,16 @@ export default function ControlCreateScreen(props) {
 
   const handleServicios = (e) => {
     e.preventDefault();
-    const esteServicio = servicios.find((x) => x._id === servicioId);
+    const esteServicio = listaServicios.find((x) => x._id === servicioId);
     if (!esteServicio) {
-      toast.info("Debe Seleccionar un Servicio!", {
-        position: "top-center",
-        autoClose: 500,
+      Swal.fire({
+        title: "Falta El Servicio!",
+        text: "Seleccionar Servicio",
+        icon: "warning",
       });
       return;
     }
-    //La funcion setState tiene el ultimo valor de la variable o el array (current)
-    //asi que usando el spread operator se agrega todos los valores anteriores y el nuevo a continuacion
+
 
     setServiciosItems((current) => [
       ...current,
@@ -361,62 +234,50 @@ export default function ControlCreateScreen(props) {
 
   const handleEliminarServicio = (e, id) => {
     e.preventDefault();
-
     const newarray = serviciosItems.filter((x) => x.servicio !== id);
-
     setServiciosItems(newarray);
   };
-  console.log("fechaControl", fechaControl);
+
   return (
-    <div className="main-container control">
-      <div>
-        <form id="form-control" onSubmit={submitHandler}>
-          {listaDoctores.length === 0 ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-          ) : (
-            <div className="inputs-section center control">
-              <div>
-                <select value={doctorId} className="input select" onChange={(e) => setDoctorId(e.target.value)}>
-                  <option value="">Atendido por el Doctor</option>
+
+    <div>
+      <div className="flx column jcenter">
+        <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
+        <h4>Agregar Control</h4>
+        <input
+          type="date"
+          placeholder=" "
+          value={fechaControl}
+          onChange={(e) => setFechaControl(e.target.value)}
+        ></input>
+        <div className="flx jcenter gap1 botonera-menu">
+          <button className="font-x pad-0 m-0 negrita">Facturar Servicios</button>
+          <button className="font-x pad-0 m-0 negrita">Informacion de Pago</button>
+          <button className="font-x pad-0 m-0 negrita">Guardar Control</button>
+        </div>
+
+
+        <form onSubmit={submitHandler}>
+          <div className="flx jcenter wrap gap1">
+            <div className="control-textarea-container">
+              <div className="flx">
+                <label>Evaluacion</label>
+                <select value={doctorId} className="maxw-150 font-x m-05" onChange={(e) => setDoctorId(e.target.value)}>
+                  <option value="">Seleccionar Doctor</option>
                   {listaDoctores?.map((x, inx) => (
                     <option key={inx} value={x._id}>
-                      {x.nombre + " " + x.apellido}
+                      {"Doctor " + x.nombre + " " + x.apellido}
                     </option>
                   ))}
                 </select>
               </div>
 
-              <div className="h2-absolute">
-                <h2>{paciente?.nombre + " " + paciente?.apellido}</h2>
-              </div>
-
-              <div className="input-group">
-                <input
-                  type="date"
-                  placeholder=" "
-                  className="input fecha"
-                  min="2020-12-31"
-                  max="2030-12-31"
-                  value={dayjs(fechaControl).format("YYYY/MM/DD").toString()}
-                  autoComplete="off"
-                  onChange={(e) => setFechaControl(e.target.value)}
-                ></input>
-                <label className="user-label">Fecha</label>
-              </div>
-            </div>
-          )}
-
-          <div className="inputs-section tablet">
-            <div className="select-wrapper" data-title="Evaluacion">
               <textarea
-                className="textarea tablet"
-                rows="7"
+                rows="5"
                 value={evaluacion}
                 onChange={(e) => setEvaluacion(e.target.value)}
               ></textarea>
-              <select className="input btn-select" onChange={(e) => handleEvaluacion(e)}>
+              <select onChange={(e) => handleEvaluacion(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
                   <option key={inx} value={x}>
@@ -425,14 +286,14 @@ export default function ControlCreateScreen(props) {
                 ))}
               </select>
             </div>
-            <div className="select-wrapper" data-title="Tratamiento">
+            <div className="control-textarea-container">
+              <label>Tratamiento</label>
               <textarea
-                className="textarea tablet"
-                rows="7"
+                rows="5"
                 value={tratamiento}
                 onChange={(e) => setTratamiento(e.target.value)}
               ></textarea>
-              <select className="input btn-select" onChange={(e) => handleTratamiento(e)}>
+              <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
                   <option key={inx} value={x}>
@@ -441,412 +302,33 @@ export default function ControlCreateScreen(props) {
                 ))}
               </select>
             </div>
-            <div className="select-wrapper" data-title="Recipe">
+            <div className="control-textarea-container">
+              <label>Recipe</label>
               <textarea
-                className="textarea tablet"
-                rows="7"
+                rows="5"
                 value={recipe}
                 onChange={(e) => setRecipe(e.target.value)}
               ></textarea>
             </div>
-            <div className="select-wrapper" data-title="Indicaciones">
+            <div className="control-textarea-container">
+              <label>Indicaciones</label>
               <textarea
-                className="textarea tablet"
-                rows="7"
+                rows="5"
                 value={indicaciones}
                 onChange={(e) => setIndicaciones(e.target.value)}
               ></textarea>
             </div>
           </div>
-          <div className="sections-hider">
-            <div>
-              <button onClick={ftoggleServicios} className="button">
-                Servicios
-              </button>
-            </div>
-            <div>
-              <button onClick={ftoggleMateriales} className="button">
-                Materiales
-              </button>
-            </div>
-            <div>
-              <button onClick={ftoggleComisiones} className="button">
-                Comisiones
-              </button>
-            </div>
-
-            <div>
-              <button onClick={ftogglePago} className="button">
-                Pago Info
-              </button>
-            </div>
-          </div>
-
-          {toggleServicios && (
-            <div>
-              {listaServicios ? (
-                <LoadingBox></LoadingBox>
-              ) : error ? (
-                <MessageBox variant="danger">{error}</MessageBox>
-              ) : (
-                <div>
-                  <div className="inputs-section servicios">
-                    <div className="select-wrapper" data-title="Servicio Aplicado">
-                      <select
-                        value={servicioId}
-                        className="input select w340"
-                        onChange={(e) => setServicioId(e.target.value)}
-                      >
-                        <option value="">Seleccionar</option>
-                        {listaServicios?.map((x, inx) => (
-                          <option key={inx} value={x._id}>
-                            {x.nombre}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="select-wrapper" data-title="Cant.">
-                      <select className="input select qty" value={qtyServ} onChange={(e) => setQtyServ(e.target.value)}>
-                        {selCantidad.map((x) => (
-                          <option key={x} value={x}>
-                            {x}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="select-wrapper">
-                      <FontAwesomeIcon
-                        icon={faPlusCircle}
-                        onClick={(e) => handleServicios(e)}
-                        className="add-service-icon"
-                      />
-                    </div>
-                    <div className="total-servicios">
-                      <span>{totalGeneral.toFixed(2)}</span>
-                    </div>
-                    {serviciosItems && (
-                      <div className="cuadro-detalles">
-                        {serviciosItems.map((m, inx) => {
-                          const foundit = servicios.find((x) => x._id === m.servicio);
-
-                          return (
-                            <div key={inx} className="div-item-detalles">
-                              <span className="item-detalles">
-                                {foundit?.nombre +
-                                  " : " +
-                                  m?.cantidad +
-                                  " por " +
-                                  foundit.preciousd +
-                                  " c/u " +
-                                  " = " +
-                                  m.montoItemServicio +
-                                  " $"}
-                              </span>
-                              <button className="button mini" onClick={(e) => handleEliminarServicio(e, m.servicio)}>
-                                x
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-          {toggleComisiones && (
-            <div>
-              <div className="inputs-section comisiones" data-title="Comisiones">
-                <div className="select-wrapper" data-title="Comision PD">
-                  <select
-                    className="input select small"
-                    value={tasaComisionPlaza}
-                    onChange={(e) => setTasaComisionPlaza(e.target.value)}
-                  >
-                    {tasaSel.map((x) => (
-                      <option key={x} value={x}>
-                        {x}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="select-wrapper" data-title="Comision Dr.">
-                  <select
-                    className="input select small"
-                    value={tasaComisionDr}
-                    onChange={(e) => setTasaComisionDr(e.target.value)}
-                  >
-                    {tasaSel.map((x) => (
-                      <option key={x} value={x}>
-                        {x}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <span data-title="Monto Comision PD">{montoComisionPlaza}</span>
-                <span data-title="Monto Comision Dr">{montoComisionDr}</span>
-              </div>
-            </div>
-          )}
-
-          {togglePago && (
-            <div className="inputs-section">
-              <div className="input-group">
-                <input
-                  type="date"
-                  id="fecha-pago"
-                  placeholder=" "
-                  className="input"
-                  min="2020-12-31"
-                  max="2030-12-31"
-                  autoComplete="off"
-                  value={fechaPago}
-                  onChange={(e) => setFechaPago(e.target.value)}
-                ></input>
-                <label className="user-label">Fecha del Pago</label>
-              </div>
-
-              <div className="input-group">
-                <input
-                  type="number"
-                  step={"any"}
-                  placeholder=" "
-                  className="input"
-                  autoComplete="off"
-                  maxLength={20}
-                  onChange={(e) => setMontoEfectivo(e.target.value)}
-                ></input>
-                <label htmlFor="apellido" className="user-label">
-                  Efectivo Dolares $
-                </label>
-              </div>
-
-              <div className="payment-group-section" data-title="Transferencia">
-                <select value={bancoTransfer} onChange={(e) => setBancoTransfer(e.target.value)}>
-                  <option value="">Banco</option>
-                  {bancos.map((x, inx) => (
-                    <option key={inx} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-                <div className="input-group">
-                  <input
-                    type="number"
-                    step={"any"}
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setTransferencia(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Monto Bs.
-                  </label>
-                </div>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setRefTransfer(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Referencia
-                  </label>
-                </div>
-              </div>
-              <div className="payment-group-section" data-title="Pago Mobil">
-                <select value={bancoPagoMobil} onChange={(e) => setBancoPagoMobil(e.target.value)}>
-                  <option value="">Banco</option>
-                  {bancos.map((x, inx) => (
-                    <option key={inx} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-
-                <div className="input-group">
-                  <input
-                    type="number"
-                    step={"any"}
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setMontoPagoMobil(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Monto Bs.
-                  </label>
-                </div>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setRefPagoMobil(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Referencia
-                  </label>
-                </div>
-              </div>
-              <div className="payment-group-section" data-title="Tarjeta de Debito">
-                <select value={bancoTarjetaDebito} onChange={(e) => setBancoTarjetaDebito(e.target.value)}>
-                  <option value="">Banco</option>
-                  {bancos.map((x, inx) => (
-                    <option key={inx} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-
-                <div className="input-group">
-                  <input
-                    type="number"
-                    step={"any"}
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setTarjetaDebito(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Monto Bs.
-                  </label>
-                </div>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setRefTarjetaDebito(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Referencia
-                  </label>
-                </div>
-              </div>
-              <div className="payment-group-section" data-title="Tarjeta de Credito">
-                <select value={bancoTarjetaCredito} onChange={(e) => setBancoTarjetaCredito(e.target.value)}>
-                  <option value="">Banco</option>
-                  {bancos.map((x, inx) => (
-                    <option key={inx} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-
-                <div className="input-group">
-                  <input
-                    type="number"
-                    step={"any"}
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setTarjetaCredito(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Monto Bs.
-                  </label>
-                </div>
-                <select value={brandTarjetaCredito} onChange={(e) => setBrandTarjetaCredito(e.target.value)}>
-                  <option value="">Tipo</option>
-                  {brandSel.map((x, inx) => (
-                    <option key={inx} value={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setRefTarjetaCredito(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Referencia
-                  </label>
-                </div>
-              </div>
-              <div className="payment-group-section" data-title="Zelle">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setMontoZelle(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Monto US$
-                  </label>
-                </div>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setRefZelle(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Referencia
-                  </label>
-                </div>
-                <div className="input-group">
-                  <input
-                    type="text"
-                    placeholder=" "
-                    className="input"
-                    autoComplete="off"
-                    maxLength={20}
-                    onChange={(e) => setCuentaZelle(e.target.value)}
-                  ></input>
-                  <label htmlFor="apellido" className="user-label">
-                    Titular
-                  </label>
-                </div>
-              </div>
-
-              <div className="input-group tablet">
-                <input
-                  type="text"
-                  placeholder=" "
-                  className="input memo-tablet"
-                  autoComplete="off"
-                  maxLength={100}
-                  onChange={(e) => setMemoPago(e.target.value)}
-                ></input>
-                <label htmlFor="apellido" className="user-label">
-                  Memo
-                </label>
-              </div>
-            </div>
-          )}
-
-          <div id="btn-guardar-paciente">
-            <button className="button" type="submit">
+          <div className="centrado">
+            <button type="submit">
               Registrar Control
             </button>
           </div>
+
         </form>
+
       </div>
-    </div>
+    </div >
+
   );
 }

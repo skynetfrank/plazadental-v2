@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import SplashSvg from "./components/SplashSvg";
 import { listPacientes } from "./actions/pacienteActions";
 import { listDoctores } from "./actions/doctorActions";
-import { listServicios } from "./actions/servicioActions";
+import { listAllServicios } from "./actions/servicioActions";
 
 function App() {
   const [hoy] = useState(new Date());
@@ -47,7 +47,7 @@ function App() {
 
   useEffect(() => {
     if (!servicios || servicios.length === 0) {
-      dispatch(listServicios({}));
+      dispatch(listAllServicios({}));
     }
     if (servicios) {
       localStorage.setItem("servicios", JSON.stringify(servicios));
@@ -92,7 +92,7 @@ function App() {
               <Link to="/">
                 <img className="logo" src={logo} alt="logo" />
               </Link>
-              <div className="flx column pad-0">
+              <div className="flx column pad-0 brand-container">
                 <h2>Plaza Dental</h2>
                 <span className="negrita font-1 header-date">Caracas, {hoy.toLocaleDateString()}</span>
               </div>
