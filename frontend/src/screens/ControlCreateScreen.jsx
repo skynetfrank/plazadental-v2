@@ -4,22 +4,21 @@ import { createControl } from "../actions/controlActions";
 import { listDoctores } from "../actions/doctorActions";
 import LoadingBox from "../components/LoadingBox";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import MessageBox from "../components/MessageBox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { listProducts } from "../actions/productActions";
-import { format } from "date-fns";
-import {
-  addControlPaciente,
-  detailsPaciente,
-} from "../actions/pacienteActions";
+import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import { listAllServicios } from "../actions/servicioActions";
 import { PACIENTE_DETAILS_RESET } from "../constants/pacienteConstants";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 
+function subtractHours(date, hours) {
+  date.setHours(date.getHours() - hours);
+  return date;
+}
 
 export default function ControlCreateScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
@@ -34,18 +33,14 @@ export default function ControlCreateScreen(props) {
   const [productId, setProductId] = useState("");
   const [servicioId, setServicioId] = useState("");
   const [user, setUser] = useState(userInfo._id);
-  const [fechaControl, setFechaControl] = useState(
-    format(new Date(), "yyyy-MM-dd")
-  );
+  const [fechaControl, setFechaControl] = useState(subtractHours(new Date(), 6));
   const [esCita1, setEsCita1] = useState(false);
   const [evaluacion, setEvaluacion] = useState("");
   const [tratamiento, setTratamiento] = useState("");
   const [recipe, setRecipe] = useState("");
   const [indicaciones, setIndicaciones] = useState("");
   const [montoUsd, setMontoUsd] = useState("");
-  const [cambioBcv, setCambioBcv] = useState(
-    Number(localStorage.getItem("cambioBcv")).toFixed(2)
-  );
+  const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
   const [montoBs, setMontoBs] = useState("");
   const [tasaIva, setTasaIva] = useState(0.16);
   const [montoIva, setMontoIva] = useState(0);
@@ -84,18 +79,11 @@ export default function ControlCreateScreen(props) {
   const [toggleMateriales, setToggleMateriales] = useState(false);
   const [toggleServicios, setToggleServicios] = useState(false);
   const [toggleComisiones, setToggleComisiones] = useState(false);
+  const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
+  const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente } = pacienteDetails;
-
-  const doctorList = useSelector((state) => state.doctorList);
-  const { loading: loadingDoctors, doctores } = doctorList;
-
-  const productList = useSelector((state) => state.productList);
-  const { loading: loadingProducts, products } = productList;
-
-  const servicioAllList = useSelector((state) => state.servicioAllList);
-  const { loading: loadingServicios, servicios } = servicioAllList;
 
   const controlCreate = useSelector((state) => state.controlCreate);
   const { error, success, control } = controlCreate;
@@ -140,51 +128,24 @@ export default function ControlCreateScreen(props) {
 
   useEffect(() => {
     if (!paciente || paciente._id !== pacienteId) {
-      dispatch({ type: PACIENTE_DETAILS_RESET });
       dispatch(detailsPaciente(pacienteId));
     }
-
-    if (!paciente) {
-      dispatch(detailsPaciente(pacienteId));
-    }
-    dispatch(listDoctores({}));
-    dispatch(listProducts({}));
-    dispatch(listAllServicios({}));
   }, [dispatch, paciente, pacienteId]);
 
   useEffect(() => {
-    const fecha = fechaPago ? format(new Date(fechaPago), "dd-MM-yyyy") : "";
+    const fecha = fechaPago ? new Date(fechaPago) : "";
     const cash = montoEfectivo > 0 ? " - Efectivo: $" + montoEfectivo : "";
-    const trf =
-      transferencia > 0
-        ? " - Transferencia " + bancoTransfer + " ref:" + refTransfer
-        : "";
-    const pmobil =
-      montoPagoMobil > 0
-        ? " - Pago Movil " + bancoPagoMobil + " ref:" + refPagoMobil
-        : "";
-    const tdb =
-      tarjetaDebito > 0
-        ? " - Tarjeta de Debito " +
-        bancoTarjetaDebito +
-        " ref:" +
-        refTarjetaDebito
-        : "";
+    const trf = transferencia > 0 ? " - Transferencia " + bancoTransfer + " ref:" + refTransfer : "";
+    const pmobil = montoPagoMobil > 0 ? " - Pago Movil " + bancoPagoMobil + " ref:" + refPagoMobil : "";
+    const tdb = tarjetaDebito > 0 ? " - Tarjeta de Debito " + bancoTarjetaDebito + " ref:" + refTarjetaDebito : "";
     const tdc =
       tarjetaCredito > 0
-        ? " - Tarjeta de Credito " +
-        brandTarjetaCredito +
-        " " +
-        bancoTarjetaCredito +
-        " ref: " +
-        refTarjetaCredito
+        ? " - Tarjeta de Credito " + brandTarjetaCredito + " " + bancoTarjetaCredito + " ref: " + refTarjetaCredito
         : "";
     const titular = cuentaZelle ? "titular: " + cuentaZelle : "";
-    const zelle =
-      montoZelle > 0 ? " Zelle ref:" + refZelle + " " + titular : "";
+    const zelle = montoZelle > 0 ? " Zelle ref:" + refZelle + " " + titular : "";
 
-    const stringPago =
-      "Pagado el " + fecha + ": " + cash + trf + pmobil + tdb + tdc + zelle;
+    const stringPago = "Pagado el " + fecha + ": " + cash + trf + pmobil + tdb + tdc + zelle;
 
     if (!cash && !trf && !pmobil && !tdb && !tdc && !zelle) {
       setPagoInfo({});
@@ -354,10 +315,7 @@ export default function ControlCreateScreen(props) {
 
     //La funcion setState tiene el ultimo valor de la variable o el array (current)
     //asi que usando el spread operator se agrega todos los valores anteriores y el nuevo a continuacion
-    setMateriales((current) => [
-      ...current,
-      { cantidad: qty, producto: productId },
-    ]);
+    setMateriales((current) => [...current, { cantidad: qty, producto: productId }]);
   };
 
   const handleEvaluacion = (e) => {
@@ -397,9 +355,7 @@ export default function ControlCreateScreen(props) {
 
   useEffect(() => {
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-    const itemsPrice = toPrice(
-      serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0)
-    );
+    const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
 
     setTotalGeneral(itemsPrice);
   }, [serviciosItems]);
@@ -411,28 +367,21 @@ export default function ControlCreateScreen(props) {
 
     setServiciosItems(newarray);
   };
-  console.log("cambioBcv", cambioBcv)
+  console.log("fechaControl", fechaControl);
   return (
     <div className="main-container control">
-
       <div>
         <form id="form-control" onSubmit={submitHandler}>
-          {loadingDoctors ? (
+          {listaDoctores.length === 0 ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
             <div className="inputs-section center control">
-              <div
-
-              >
-                <select
-                  value={doctorId}
-                  className="input select"
-                  onChange={(e) => setDoctorId(e.target.value)}
-                >
+              <div>
+                <select value={doctorId} className="input select" onChange={(e) => setDoctorId(e.target.value)}>
                   <option value="">Atendido por el Doctor</option>
-                  {doctores?.map((x, inx) => (
+                  {listaDoctores?.map((x, inx) => (
                     <option key={inx} value={x._id}>
                       {x.nombre + " " + x.apellido}
                     </option>
@@ -451,7 +400,7 @@ export default function ControlCreateScreen(props) {
                   className="input fecha"
                   min="2020-12-31"
                   max="2030-12-31"
-                  value={fechaControl}
+                  value={dayjs(fechaControl).format("YYYY/MM/DD").toString()}
                   autoComplete="off"
                   onChange={(e) => setFechaControl(e.target.value)}
                 ></input>
@@ -468,10 +417,7 @@ export default function ControlCreateScreen(props) {
                 value={evaluacion}
                 onChange={(e) => setEvaluacion(e.target.value)}
               ></textarea>
-              <select
-                className="input btn-select"
-                onChange={(e) => handleEvaluacion(e)}
-              >
+              <select className="input btn-select" onChange={(e) => handleEvaluacion(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
                   <option key={inx} value={x}>
@@ -487,10 +433,7 @@ export default function ControlCreateScreen(props) {
                 value={tratamiento}
                 onChange={(e) => setTratamiento(e.target.value)}
               ></textarea>
-              <select
-                className="input btn-select"
-                onChange={(e) => handleTratamiento(e)}
-              >
+              <select className="input btn-select" onChange={(e) => handleTratamiento(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
                   <option key={inx} value={x}>
@@ -539,87 +482,24 @@ export default function ControlCreateScreen(props) {
               </button>
             </div>
           </div>
-          {toggleMateriales && (
-            <div>
-              {loadingProducts ? (
-                <LoadingBox></LoadingBox>
-              ) : error ? (
-                <MessageBox variant="danger">{error}</MessageBox>
-              ) : (
-                <div>
-                  <div className="inputs-section materiales">
-                    <div className="select-wrapper" data-title="Materiales">
-                      <select
-                        value={productId}
-                        className="input select"
-                        onChange={(e) => setProductId(e.target.value)}
-                      >
-                        <option value="">Seleccionar</option>
-                        {products?.map((x, inx) => (
-                          <option key={inx} value={x._id}>
-                            {x.nombre}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="select-wrapper" data-title="Cantidad">
-                      <select
-                        className="input select small"
-                        value={qty}
-                        onChange={(e) => setQty(e.target.value)}
-                      >
-                        {[...Array(12).keys()].map((x) => (
-                          <option key={x} value={x}>
-                            {x}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <button
-                        onClick={(e) => handleMaterials(e)}
-                        className="button small"
-                      >
-                        <FontAwesomeIcon icon={faPlusCircle} />
-                      </button>
-                    </div>
-                    {materiales && (
-                      <div className="cuadro-detalles">
-                        {materiales.map((m) => {
-                          const foundit = products.find(
-                            (x) => x._id === m.producto
-                          );
-                          return (
-                            <span>{foundit?.nombre + " " + m?.cantidad}</span>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+
           {toggleServicios && (
             <div>
-              {loadingServicios ? (
+              {listaServicios ? (
                 <LoadingBox></LoadingBox>
               ) : error ? (
                 <MessageBox variant="danger">{error}</MessageBox>
               ) : (
                 <div>
                   <div className="inputs-section servicios">
-                    <div
-                      className="select-wrapper"
-                      data-title="Servicio Aplicado"
-                    >
+                    <div className="select-wrapper" data-title="Servicio Aplicado">
                       <select
                         value={servicioId}
                         className="input select w340"
                         onChange={(e) => setServicioId(e.target.value)}
                       >
                         <option value="">Seleccionar</option>
-                        {servicios?.map((x, inx) => (
+                        {listaServicios?.map((x, inx) => (
                           <option key={inx} value={x._id}>
                             {x.nombre}
                           </option>
@@ -627,11 +507,7 @@ export default function ControlCreateScreen(props) {
                       </select>
                     </div>
                     <div className="select-wrapper" data-title="Cant.">
-                      <select
-                        className="input select qty"
-                        value={qtyServ}
-                        onChange={(e) => setQtyServ(e.target.value)}
-                      >
+                      <select className="input select qty" value={qtyServ} onChange={(e) => setQtyServ(e.target.value)}>
                         {selCantidad.map((x) => (
                           <option key={x} value={x}>
                             {x}
@@ -652,9 +528,7 @@ export default function ControlCreateScreen(props) {
                     {serviciosItems && (
                       <div className="cuadro-detalles">
                         {serviciosItems.map((m, inx) => {
-                          const foundit = servicios.find(
-                            (x) => x._id === m.servicio
-                          );
+                          const foundit = servicios.find((x) => x._id === m.servicio);
 
                           return (
                             <div key={inx} className="div-item-detalles">
@@ -669,12 +543,7 @@ export default function ControlCreateScreen(props) {
                                   m.montoItemServicio +
                                   " $"}
                               </span>
-                              <button
-                                className="button mini"
-                                onClick={(e) =>
-                                  handleEliminarServicio(e, m.servicio)
-                                }
-                              >
+                              <button className="button mini" onClick={(e) => handleEliminarServicio(e, m.servicio)}>
                                 x
                               </button>
                             </div>
@@ -689,10 +558,7 @@ export default function ControlCreateScreen(props) {
           )}
           {toggleComisiones && (
             <div>
-              <div
-                className="inputs-section comisiones"
-                data-title="Comisiones"
-              >
+              <div className="inputs-section comisiones" data-title="Comisiones">
                 <div className="select-wrapper" data-title="Comision PD">
                   <select
                     className="input select small"
@@ -759,10 +625,7 @@ export default function ControlCreateScreen(props) {
               </div>
 
               <div className="payment-group-section" data-title="Transferencia">
-                <select
-                  value={bancoTransfer}
-                  onChange={(e) => setBancoTransfer(e.target.value)}
-                >
+                <select value={bancoTransfer} onChange={(e) => setBancoTransfer(e.target.value)}>
                   <option value="">Banco</option>
                   {bancos.map((x, inx) => (
                     <option key={inx} value={x}>
@@ -799,10 +662,7 @@ export default function ControlCreateScreen(props) {
                 </div>
               </div>
               <div className="payment-group-section" data-title="Pago Mobil">
-                <select
-                  value={bancoPagoMobil}
-                  onChange={(e) => setBancoPagoMobil(e.target.value)}
-                >
+                <select value={bancoPagoMobil} onChange={(e) => setBancoPagoMobil(e.target.value)}>
                   <option value="">Banco</option>
                   {bancos.map((x, inx) => (
                     <option key={inx} value={x}>
@@ -839,14 +699,8 @@ export default function ControlCreateScreen(props) {
                   </label>
                 </div>
               </div>
-              <div
-                className="payment-group-section"
-                data-title="Tarjeta de Debito"
-              >
-                <select
-                  value={bancoTarjetaDebito}
-                  onChange={(e) => setBancoTarjetaDebito(e.target.value)}
-                >
+              <div className="payment-group-section" data-title="Tarjeta de Debito">
+                <select value={bancoTarjetaDebito} onChange={(e) => setBancoTarjetaDebito(e.target.value)}>
                   <option value="">Banco</option>
                   {bancos.map((x, inx) => (
                     <option key={inx} value={x}>
@@ -883,14 +737,8 @@ export default function ControlCreateScreen(props) {
                   </label>
                 </div>
               </div>
-              <div
-                className="payment-group-section"
-                data-title="Tarjeta de Credito"
-              >
-                <select
-                  value={bancoTarjetaCredito}
-                  onChange={(e) => setBancoTarjetaCredito(e.target.value)}
-                >
+              <div className="payment-group-section" data-title="Tarjeta de Credito">
+                <select value={bancoTarjetaCredito} onChange={(e) => setBancoTarjetaCredito(e.target.value)}>
                   <option value="">Banco</option>
                   {bancos.map((x, inx) => (
                     <option key={inx} value={x}>
@@ -913,10 +761,7 @@ export default function ControlCreateScreen(props) {
                     Monto Bs.
                   </label>
                 </div>
-                <select
-                  value={brandTarjetaCredito}
-                  onChange={(e) => setBrandTarjetaCredito(e.target.value)}
-                >
+                <select value={brandTarjetaCredito} onChange={(e) => setBrandTarjetaCredito(e.target.value)}>
                   <option value="">Tipo</option>
                   {brandSel.map((x, inx) => (
                     <option key={inx} value={x}>

@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  deleteControlPaciente,
-  detailsPaciente,
-} from "../actions/pacienteActions";
+import { deleteControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //import the swiper yall
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 import { deleteControl } from "../actions/controlActions";
 import {
   faBoxes,
@@ -35,7 +32,6 @@ import {
 import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import ControlAddIcon from "../icons/ControlAddIcon";
-
 
 export default function ControlesScreen(props) {
   const [controles, setControles] = useState([]);
@@ -59,10 +55,7 @@ export default function ControlesScreen(props) {
       const controlesOrdenados = paciente.controles.map((item) => item);
 
       const sortedDesc = controlesOrdenados.sort((objA, objB) => {
-        return (
-          Date.parse(objB.control?.fechaControl) -
-          Date.parse(objA.control?.fechaControl)
-        );
+        return Date.parse(objB.control?.fechaControl) - Date.parse(objA.control?.fechaControl);
       });
 
       setControles(sortedDesc);
@@ -78,7 +71,7 @@ export default function ControlesScreen(props) {
         Swal.fire({
           title: "Clave Erronea, verifique...",
           text: "Ingrese Su Clave de Administrador",
-          icon: "warning"
+          icon: "warning",
         });
         return;
       }
@@ -89,9 +82,8 @@ export default function ControlesScreen(props) {
         Swal.fire({
           title: "Control Eliminado con Exito!",
           text: "Eliminar Control",
-          icon: "success"
+          icon: "success",
         });
-
       }
     } else {
       return;
@@ -101,26 +93,6 @@ export default function ControlesScreen(props) {
   const addControlHandler = () => {
     navigate(`/crearcontrol/${paciente._id}?escita1=${"no"}`);
   };
-
-  const ftogglePago = () => {
-    setTogglePago(true);
-    setToggleMateriales(false);
-    setToggleServicios(false);
-  };
-
-  const ftoggleMateriales = () => {
-    setTogglePago(false);
-    setToggleMateriales(true);
-    setToggleServicios(false);
-  };
-
-  const ftoggleServicios = () => {
-    setTogglePago(false);
-    setToggleMateriales(false);
-    setToggleServicios(true);
-  };
-
-
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -145,11 +117,11 @@ export default function ControlesScreen(props) {
           spaceBetween={50}
           slidesPerView={1}
           pagination={{
-            clickable: true, renderBullet: function (index, className) {
-              return '<span class="' + className + '">' + (index + 1) + '</span>';
-            }
+            clickable: true,
+            renderBullet: function (index, className) {
+              return '<span class="' + className + '">' + (index + 1) + "</span>";
+            },
           }}
-
         >
           {controles.map((item, ind) => {
             if (!item.control) {
@@ -179,7 +151,7 @@ export default function ControlesScreen(props) {
                               Swal.fire({
                                 title: "Clave Erronea, verifique...",
                                 text: "Ingrese Su Clave de Administrador",
-                                icon: "warning"
+                                icon: "warning",
                               });
                               return;
                             }
@@ -194,42 +166,33 @@ export default function ControlesScreen(props) {
                       <ToolTip text="Factura">
                         <button
                           className="circle-btn"
-                          onClick={() =>
-                            navigate(
-                              `/printfactura/${item.control._id
-                              }?tipo=${"notaentrega"}`
-                            )
-                          }
+                          onClick={() => navigate(`/printfactura/${item.control._id}?tipo=${"notaentrega"}`)}
                         >
                           <FontAwesomeIcon icon={faFileInvoiceDollar} />
                         </button>
                       </ToolTip>
                       <ToolTip text="Ver Recipe">
-                        <button
-                          className="circle-btn"
-                          onClick={() =>
-                            navigate(`/printrecipe/${item.control._id}`)
-                          }
-                        >
+                        <button className="circle-btn" onClick={() => navigate(`/printrecipe/${item.control._id}`)}>
                           <FontAwesomeIcon className="small" icon={faMedkit} />
                         </button>
                       </ToolTip>
                       <ToolTip text="Eliminar">
-                        <button
-                          className="circle-btn"
-                          onClick={() => deleteHandler(item.control)}
-                        >
+                        <button className="circle-btn" onClick={() => deleteHandler(item.control)}>
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </ToolTip>
                     </div>
                     <div className="slide-content">
-                      <h4>Evaluacion: </h4><p>{item.control.evaluacion ? item.control.evaluacion : "No se Registro Evaluacion"}</p>
-                      <h4>Tratamiento:</h4><p>{item.control.tratamiento ? item.control.tratamiento : "No se Registro Tratamiento"}</p>
-                      <h4>Recipe:</h4><p>{item.control.recipe ? item.control.recipe : "No se Registro Recipe"}</p>
-                      <h4 className="mb-2">Indicaciones:</h4><p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
+                      <h4>Evaluacion: </h4>
+                      <p>{item.control.evaluacion ? item.control.evaluacion : "No se Registro Evaluacion"}</p>
+                      <h4>Tratamiento:</h4>
+                      <p>{item.control.tratamiento ? item.control.tratamiento : "No se Registro Tratamiento"}</p>
+                      <h4>Recipe:</h4>
+                      <p>{item.control.recipe ? item.control.recipe : "No se Registro Recipe"}</p>
+                      <h4 className="mb-2">Indicaciones:</h4>
+                      <p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
                       <div>
-                        <h4>Servicios:</h4>
+                        <h4>Servicios Facturados:</h4>
                         {item.control.serviciosItems.map((item, ndx) => {
                           let total = +item.montoItemServicio;
                           return (
@@ -247,11 +210,7 @@ export default function ControlesScreen(props) {
                           );
                         })}
                         {item.control.montoUsd ? (
-                          <span className="font-x negrita ml">
-                            {" "}
-                            Total:${" "}
-                            {item.control.montoUsd.toFixed(2)}
-                          </span>
+                          <span className="font-x negrita ml"> Total:$ {item.control.montoUsd.toFixed(2)}</span>
                         ) : (
                           ""
                         )}
@@ -259,8 +218,6 @@ export default function ControlesScreen(props) {
                     </div>
                   </div>
                 </div>
-
-
               </SwiperSlide>
             );
           })}
