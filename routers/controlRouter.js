@@ -4,90 +4,10 @@ import Control from "../models/control.js";
 import User from "../models/usuario.js";
 import Producto from "../models/control.js";
 import { isAdmin, isAuth } from "../utils.js";
-import Paciente from "../models/paciente.js";
+
 import mongoose from "mongoose";
 
 const controlRouter = express.Router();
-
-async function getPaciente(id) {
-  const found = await Paciente.find({ idPaciente: id });
-  return found;
-}
-
-controlRouter.get(
-  "/",
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const pageSize = 9;
-    const page = Number(req.query.pageNumber) || 1;
-    const busqueda = req.query.busqueda || "";
-    const multiFilter = busqueda ? { searchstring: { $regex: busqueda, $options: "i" } } : {};
-
-    const count = await Control.countDocuments({
-      ...multiFilter,
-    });
-
-    const controls = await Control.find({
-      ...multiFilter,
-    })
-      .populate("paciente", "nombre", "apellido")
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .sort({ createdAt: -1 });
-    res.send({ controls, page, pages: Math.ceil(count / pageSize) });
-  })
-);
-controlRouter.get(
-  "/all",
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const fecha1 = req.query.fecha1;
-    const fecha2 = req.query.fecha2;
-    const dia = Number(fecha1.substr(8, 2));
-    const mes = Number(fecha1.substr(5, 2));
-    const ano = Number(fecha1.substr(0, 4));
-
-    const dia2 = Number(fecha2.substr(8, 2));
-    const mes2 = Number(fecha2.substr(5, 2));
-    const ano2 = Number(fecha2.substr(0, 4));
-
-    const count = await Control.countDocuments({});
-    const controls = await Control.aggregate([
-      {
-        $project: {
-          _id: 1,
-          controlItems: 1,
-          vendedorInfo: 1,
-          clienteInfo: 1,
-          totalPrice: 1,
-          taxPrice: 1,
-          createdAt: 1,
-          subtotal: 1,
-          totalcomision: 1,
-          comision: 1,
-          day: { $dayOfMonth: "$createdAt" },
-          month: { $month: "$createdAt" },
-          year: { $year: "$createdAt" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-        },
-      },
-      {
-        $match: {
-          day: { $gte: dia },
-          month: { $gte: mes },
-          year: { $gte: ano },
-        },
-      },
-    ])
-      .match({
-        day: { $lte: dia2 },
-        month: { $lte: mes2 },
-        year: { $lte: ano2 },
-      })
-      .sort({ createdAt: -1 });
-    res.send({ controls });
-  })
-);
 
 controlRouter.get(
   "/summary",
@@ -104,82 +24,6 @@ controlRouter.get(
       },
     ]);
 
-    const cotizaciones = await Cotizacion.aggregate([
-      {
-        $group: {
-          _id: null,
-          numCotizaciones: { $sum: 1 },
-          totalCotizaciones: { $sum: "$subtotal" },
-        },
-      },
-    ]);
-
-    const articulosVendidos = await Control.aggregate([
-      {
-        $unwind: "$controlItems",
-      },
-      {
-        $group: {
-          _id: "$nombre",
-          vendidos: { $sum: "$controlItems.qty" },
-        },
-      },
-    ]);
-
-    const totalProductos = await Producto.aggregate([
-      {
-        $group: {
-          _id: null,
-          numProductos: { $sum: 1 },
-        },
-      },
-    ]);
-
-    const totalStock = await Producto.aggregate([
-      {
-        $group: {
-          _id: null,
-          existenciaActual: { $sum: "$existencia" },
-        },
-      },
-    ]);
-
-    const valorTotalStock = await Producto.aggregate([
-      {
-        $group: {
-          _id: null,
-          valorInventario: { $sum: "$preciousd" },
-        },
-      },
-    ]);
-
-    const costoTotalStock = await Producto.aggregate([
-      {
-        $group: {
-          _id: null,
-          costoInventario: { $sum: "$costousd" },
-        },
-      },
-    ]);
-
-    const users = await User.aggregate([
-      {
-        $group: {
-          _id: null,
-          numUsers: { $sum: 1 },
-        },
-      },
-    ]);
-
-    const clientes = await Cliente.aggregate([
-      {
-        $group: {
-          _id: null,
-          numClientes: { $sum: 1 },
-        },
-      },
-    ]);
-
     const dailyControls = await Control.aggregate([
       {
         $group: {
@@ -192,39 +36,12 @@ controlRouter.get(
     ]);
 
     res.send({
-      users,
       controls,
       dailyControls,
-      clientes,
-      articulosVendidos,
-      totalStock,
-      valorTotalStock,
-      costoTotalStock,
-      cotizaciones,
-      totalProductos,
     });
   })
 );
 
-controlRouter.get(
-  "/mine",
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const pageSize = 10;
-    const page = Number(req.query.pageNumber) || 1;
-    const busqueda = req.query.busqueda || "";
-    const multiFilter = busqueda ? { searchstring: { $regex: busqueda, $options: "i" } } : {};
-    const usuario = { user: req.user._id };
-
-    const count = await Control.countDocuments({ ...usuario, ...multiFilter });
-
-    const controls = await Control.find({ ...usuario, ...multiFilter })
-      .skip(pageSize * (page - 1))
-      .limit(pageSize)
-      .sort({ createdAt: -1 });
-    res.send({ controls, page, pages: Math.ceil(count / pageSize) });
-  })
-);
 
 controlRouter.post(
   "/create",

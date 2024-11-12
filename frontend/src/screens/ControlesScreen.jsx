@@ -8,37 +8,20 @@ import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //import the swiper yall
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import { deleteControl } from "../actions/controlActions";
-import {
-  faBoxes,
-  faDollarSign,
-  faFileInvoiceDollar,
-  faHandHoldingDollar,
-  faMedkit,
-  faMoneyCheck,
-  faPen,
-  faPrint,
-  faToolbox,
-  faTooth,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoiceDollar, faMedkit, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import ControlAddIcon from "../icons/ControlAddIcon";
 
 export default function ControlesScreen(props) {
   const [controles, setControles] = useState([]);
-  const [togglePago, setTogglePago] = useState(false);
-  const [toggleMateriales, setToggleMateriales] = useState(false);
-  const [toggleServicios, setToggleServicios] = useState(false);
-
   const navigate = useNavigate();
   const params = useParams();
   const { id: pacienteId } = params;
