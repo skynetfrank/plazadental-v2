@@ -8,6 +8,8 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
+import PaymentForm from "../components/PaymentForm";
+import ServiciosForm from "../components/ServiciosForm";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -48,6 +50,12 @@ export default function ControlCreateScreen(props) {
   const [qtyServ, setQtyServ] = useState(1);
   const [pagoInfo, setPagoInfo] = useState({});
   const [fechaPago, setFechaPago] = useState("");
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showServicioModal, setShowServicioModal] = useState(false);
+  const [totalPago, setTotalPago] = useState(0);
+  const [txtformapago, setTxtformapago] = useState("");
+  const [pago, setPago] = useState({})
+  const [servicio, setServicio] = useState({})
 
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
@@ -185,7 +193,8 @@ export default function ControlCreateScreen(props) {
         tasaComisionPlaza,
         montoComisionDr,
         montoComisionPlaza,
-        pagoInfo
+        pagoInfo,
+        pago
       )
     );
   };
@@ -238,6 +247,34 @@ export default function ControlCreateScreen(props) {
     setServiciosItems(newarray);
   };
 
+
+  const handlePayFromChild = (data, textopago) => {
+    setPago(data);
+    const bs = Number(data.efectivobs) / Number(cambioBcv);
+    const punto = Number(data.punto.montopunto) / Number(cambioBcv);
+    const punto2 = Number(data.punto.montopunto2) / Number(cambioBcv);
+    const punto3 = Number(data.punto.montopunto3) / Number(cambioBcv);
+    const pmobil = Number(data.pagomovil.montopagomovil) / Number(cambioBcv);
+
+    const suma =
+      bs +
+      punto +
+      punto2 +
+      punto3 +
+      pmobil +
+      Number(data.zelle.montozelle) +
+      Number(data.efectivousd) +
+      Number(data.efectivoeuros);
+
+    setTotalPago(Number(suma));
+    setTxtformapago(textopago);
+  };
+
+  const handleServicioFromChild = (xdata) => {
+
+  }
+
+
   return (
 
     <div>
@@ -251,8 +288,8 @@ export default function ControlCreateScreen(props) {
           onChange={(e) => setFechaControl(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita">Facturar Servicios</button>
-          <button className="font-x pad-0 m-0 negrita">Informacion de Pago</button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowServicioModal(true)}>Facturar Servicios</button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>Informacion de Pago</button>
           <button className="font-x pad-0 m-0 negrita">Guardar Control</button>
         </div>
 
@@ -328,6 +365,24 @@ export default function ControlCreateScreen(props) {
         </form>
 
       </div>
+      {showPaymentModal && (
+        <PaymentForm
+          onClose={() => setShowPaymentModal(false)}
+          sendPayToParent={handlePayFromChild}
+          montoPagoBs={Number(1980).toFixed(2)}
+          montoPagoUsd={Number(20 * cambioBcv).toFixed(2)}
+
+        />
+      )}
+      {showServicioModal && (
+        <ServiciosForm
+          onClose={() => setShowServicioModal(false)}
+          sendDataToParent={handleServicioFromChild}
+          montoServiciosBs={Number(1980).toFixed(2)}
+          montoServiciosUsd={Number(20 * cambioBcv).toFixed(2)}
+
+        />
+      )}
     </div >
 
   );

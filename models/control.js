@@ -51,12 +51,43 @@ const controlSchema = new mongoose.Schema(
     montoComisionDr: { type: Number, default: 0 },
     montoComisionPlaza: { type: Number, default: 0 },
 
-    pagoInfo: {
-      status: { type: String, default: 'pendiente' },
-      fechaPago: { type: Date, default: '' },
-      detallePago: { type: String, default: '' },
-      memoPago: { type: String, default: '' },
+    pago: {
+      efectivousd: { type: Number },
+      efectivobs: { type: Number },
+      efectivoeuros: { type: Number },
+      transferbs: {
+        monto: { type: Number, default: 0 },
+        banco: { type: String },
+        referencia: { type: String },
+      },
+      punto: {
+        montopunto: { type: Number, default: 0 },
+        bancopunto: { type: String },
+        refpunto: { type: String },
+        bancodestinopunto: { type: String },
+        montopunto2: { type: Number, default: 0 },
+        bancopunto2: { type: String },
+        refpunto2: { type: String },
+        bancodestinopunto2: { type: String },
+        montopunto3: { type: Number, default: 0 },
+        bancopunto3: { type: String },
+        refpunto3: { type: String },
+        bancodestinopunto3: { type: String },
+      },
+
+      pagomovil: {
+        montopagomovil: { type: Number, default: 0 },
+        bancopagomovil: { type: String },
+        bancodestinopagomovil: { type: String },
+        telefonopagomovil: { type: String },
+      },
+      zelle: {
+        montozelle: { type: Number, default: 0 },
+        zelletitular: { type: String },
+        zelleref: { type: String },
+      },
     },
+
     factura: { type: String, default: '' },
     facturaControl: { type: String, default: '' },
     fechaFactura: { type: Date, default: '' },
