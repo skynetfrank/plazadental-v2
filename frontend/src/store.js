@@ -5,7 +5,6 @@ import {
   controlDeleteReducer,
   controlDetailsReducer,
   controlesByPacienteReducer,
-  controlListReducer,
   controlUpdateReducer,
 } from "./reducers/controlReducers";
 import {
@@ -83,7 +82,6 @@ const reducer = combineReducers({
   pacienteDeleteControl: pacienteDeleteControlReducer,
 
   controlCreate: controlCreateReducer,
-  controlList: controlListReducer,
   controlDetails: controlDetailsReducer,
   controlUpdate: controlUpdateReducer,
   controlDelete: controlDeleteReducer,

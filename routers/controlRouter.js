@@ -1,8 +1,6 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Control from "../models/control.js";
-import User from "../models/usuario.js";
-import Producto from "../models/control.js";
 import { isAdmin, isAuth } from "../utils.js";
 
 import mongoose from "mongoose";
@@ -151,8 +149,6 @@ controlRouter.get(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const idfiltro = mongoose.Types.ObjectId(req.id);
-
-    //const count = await Control.countDocuments({ ...joinid });
     const controles = await Control.find({ paciente: idfiltro })
       .populate("paciente", "nombre", "apellido")
       .sort({ createdAt: -1 });
@@ -181,48 +177,11 @@ controlRouter.get(
   "/controlesporpaciente/:id",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    //  console.log('req.params.id', req.params.id);
     const idfiltro = mongoose.Types.ObjectId(req.params.id);
-    // console.log('idfiltro Object Type:', idfiltro);
-    //const count = await Control.countDocuments({ ...joinid });
-
     const controles = await Control.find({ paciente: { idfiltro } }).sort({
       createdAt: -1,
     });
     res.send({ controles });
-  })
-);
-
-controlRouter.put(
-  "/:id/pay",
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const control = await Control.findById(req.params.id).populate("user", "email name");
-    if (control) {
-      control.isPaid = true;
-      control.paidAt = Date.now();
-      control.paymentResult = {
-        id: req.body.id,
-        status: req.body.status,
-        email_address: req.body.email_address,
-        banco: req.body.banco,
-        referencia: req.body.referencia,
-        fechaTransferencia: req.body.fechaTransferencia,
-        refzelle: req.body.refzelle,
-        cuentazelle: req.body.cuentazelle,
-        refpagomobil: req.body.refpagomobil,
-        refpagomixto: req.body.refpagomixto,
-        refpagoefectivo: req.body.refpagoefectivo,
-        montotransfer: req.body.montotransfer,
-        montozelle: req.body.montozelle,
-        montopagomobil: req.body.montopagomobil,
-        monedas: req.body.monedas,
-      };
-      const updatedControl = await control.save();
-      res.send({ message: "Pedido Pagado", control: updatedControl });
-    } else {
-      res.status(404).send({ message: "Pedido No Encontrado" });
-    }
   })
 );
 
@@ -235,47 +194,9 @@ controlRouter.delete(
 
     if (control) {
       const deleteControl = await control.remove();
-      res.send({ message: "Pedido Eliminado", control: deleteControl });
+      res.send({ message: "Control Eliminado", control: deleteControl });
     } else {
-      res.status(404).send({ message: "Pedido No Encontrado" });
-    }
-  })
-);
-
-controlRouter.put(
-  "/:id/deliver",
-  isAuth,
-  isAdmin,
-  expressAsyncHandler(async (req, res) => {
-    const control = await Control.findById(req.params.id);
-    if (control) {
-      control.isDelivered = true;
-      control.deliveredAt = Date.now();
-      const updatedControl = await control.save();
-      res.send({ message: "Pedido Entregado", control: updatedControl });
-    } else {
-      res.status(404).send({ message: "Pedido No Encontrado" });
-    }
-  })
-);
-
-controlRouter.put(
-  "/:id/payconfirm",
-  isAuth,
-  isAdmin,
-  expressAsyncHandler(async (req, res) => {
-    const usuario = req.query.usuario;
-    const control = await Control.findById(req.params.id);
-    if (control) {
-      control.paymentResult.status = "CONFIRMADO";
-      control.paymentResult.confirmador = usuario;
-      const updatedControl = await control.save();
-      res.send({
-        message: "Transferencia Bancaria Confirmada OK!",
-        control: updatedControl,
-      });
-    } else {
-      res.status(404).send({ message: "Orden No Encontrada" });
+      res.status(404).send({ message: "Control No Encontrado" });
     }
   })
 );

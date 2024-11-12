@@ -1,6 +1,5 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
-//import dataStock from '../models/dataStock.js';
 import Servicio from '../models/servicio.js';
 import { isAdmin, isAuth } from '../utils.js';
 

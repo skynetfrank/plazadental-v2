@@ -19,82 +19,15 @@ pacienteRouter.get(
 );
 
 pacienteRouter.get(
-  "/all",
-  isAuth,
-  expressAsyncHandler(async (req, res) => {
-    const fecha1 = req.query.fecha1;
-    const fecha2 = req.query.fecha2;
-    const dia = Number(fecha1.substr(8, 2));
-    const mes = Number(fecha1.substr(5, 2));
-    const ano = Number(fecha1.substr(0, 4));
-
-    const dia2 = Number(fecha2.substr(8, 2));
-    const mes2 = Number(fecha2.substr(5, 2));
-    const ano2 = Number(fecha2.substr(0, 4));
-
-    const count = await Paciente.countDocuments({});
-    const pacientes = await Paciente.aggregate([
-      {
-        $project: {
-          _id: 1,
-          codigo: 1,
-          ubicacion: 1,
-          nombre: 1,
-          marca: 1,
-          presentacion: 1,
-          unidades: 1,
-          vehiculo: 1,
-          modelos: 1,
-          years: 1,
-          motores: 1,
-          tags: 1,
-          categoria: 1,
-          descripcion: 1,
-          existencia: 1,
-          reposicion: 1,
-          costobs: 1,
-          costousd: 1,
-          preciobs: 1,
-          preciousd: 1,
-          proveedor: 1,
-          imageurl: 1,
-          createdAt: 1,
-          day: { $dayOfMonth: "$createdAt" },
-          month: { $month: "$createdAt" },
-          year: { $year: "$createdAt" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-        },
-      },
-      {
-        $match: {
-          day: { $gte: dia },
-          month: { $gte: mes },
-          year: { $gte: ano },
-        },
-      },
-    ])
-      .match({
-        day: { $lte: dia2 },
-        month: { $lte: mes2 },
-        year: { $lte: ano2 },
-      })
-      .sort({ createdAt: -1 });
-    res.send({ pacientes });
-  })
-);
-
-pacienteRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
     const paciente = await Paciente.findById(req.params.id)
       .populate({
         path: "controles.control",
-        // Get friends of friends - populate the 'friends' array for every friend
         populate: { path: "serviciosItems.servicio" },
       })
       .populate({
         path: "controles.control",
-        // Get friends of friends - populate the 'friends' array for every friend
         populate: { path: "doctor" },
       });
 

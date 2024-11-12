@@ -37,25 +37,6 @@ export const controlCreateReducer = (state = {}, action) => {
   }
 };
 
-export const controlListReducer = (state = { loading: true, controles: [] }, action) => {
-  switch (action.type) {
-    case CONTROL_LIST_REQUEST:
-      return { loading: true };
-    case CONTROL_LIST_SUCCESS:
-      return {
-        loading: false,
-        controls: action.payload.controles,
-        pages: action.payload.pages,
-        page: action.payload.page,
-        count: action.payload.count,
-      };
-    case CONTROL_LIST_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
-
 export const controlDetailsReducer = (state = { loading: true }, action) => {
   switch (action.type) {
     case CONTROL_DETAILS_REQUEST:

@@ -53,71 +53,56 @@ export const createControl =
     facturaControl,
     fechaFactura
   ) =>
-  async (dispatch, getState) => {
-    dispatch({ type: CONTROL_CREATE_REQUEST });
-    const {
-      userSignin: { userInfo },
-    } = getState();
+    async (dispatch, getState) => {
+      dispatch({ type: CONTROL_CREATE_REQUEST });
+      const {
+        userSignin: { userInfo },
+      } = getState();
 
-    try {
-      const { data } = await Axios.post(
-        '/api/controles/create',
-        {
-          pacienteId,
-          doctorId,
-          user,
-          fechaControl,
-          esCita1,
-          evaluacion,
-          tratamiento,
-          recipe,
-          indicaciones,
-          serviciosItems,
-          materiales,
-          cambioBcv,
-          montoUsd,
-          montoBs,
-          tasaIva,
-          montoIva,
-          totalGeneralBs,
-          tasaComisionDr,
-          tasaComisionPlaza,
-          montoComisionDr,
-          montoComisionPlaza,
-          pagoInfo,
-          factura,
-          facturaControl,
-          fechaFactura,
-        },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+      try {
+        const { data } = await Axios.post(
+          '/api/controles/create',
+          {
+            pacienteId,
+            doctorId,
+            user,
+            fechaControl,
+            esCita1,
+            evaluacion,
+            tratamiento,
+            recipe,
+            indicaciones,
+            serviciosItems,
+            materiales,
+            cambioBcv,
+            montoUsd,
+            montoBs,
+            tasaIva,
+            montoIva,
+            totalGeneralBs,
+            tasaComisionDr,
+            tasaComisionPlaza,
+            montoComisionDr,
+            montoComisionPlaza,
+            pagoInfo,
+            factura,
+            facturaControl,
+            fechaFactura,
+          },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
 
-      dispatch({
-        type: CONTROL_CREATE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-      dispatch({ type: CONTROL_CREATE_FAIL, payload: message });
-    }
-  };
-
-export const listControles =
-  ({ busqueda = '', pageNumber = '' }) =>
-  async dispatch => {
-    dispatch({
-      type: CONTROL_LIST_REQUEST,
-    });
-    try {
-      const { data } = await Axios.get(`/api/controles?pageNumber=${pageNumber}&busqueda=${busqueda}`);
-
-      dispatch({ type: CONTROL_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: CONTROL_LIST_FAIL, payload: error.message });
-    }
-  };
+        dispatch({
+          type: CONTROL_CREATE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({ type: CONTROL_CREATE_FAIL, payload: message });
+      }
+    };
 
 export const detailsControl = controlId => async (dispatch, getState) => {
   dispatch({ type: CONTROL_DETAILS_REQUEST, payload: controlId });

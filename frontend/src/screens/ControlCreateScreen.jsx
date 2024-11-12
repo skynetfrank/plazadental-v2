@@ -8,7 +8,6 @@ import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import MessageBox from "../components/MessageBox";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { listProducts } from "../actions/productActions";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import { listAllServicios } from "../actions/servicioActions";
 import { PACIENTE_DETAILS_RESET } from "../constants/pacienteConstants";
