@@ -38,7 +38,7 @@ function SimpleTable({ data, columns, filterInput, botonera, records }) {
           className="border-1 pad-05 w-200"
           type="text"
           value={filtering}
-          placeholder={"Buscar en " + records + " pacientes"}
+          placeholder={"Buscar en " + records + " Registros"}
           onChange={(e) => setFiltering(e.target.value)}
         />
       ) : (

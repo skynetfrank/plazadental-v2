@@ -55,8 +55,6 @@ export const servicioListReducer = (state = { loading: true, servicios: [] }, ac
       return {
         loading: false,
         servicios: action.payload.servicios,
-        pages: action.payload.pages,
-        page: action.payload.page,
         count: action.payload.count,
       };
     case SERVICIO_LIST_FAIL:

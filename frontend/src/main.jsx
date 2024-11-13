@@ -15,6 +15,8 @@ import PacienteScreen from "./screens/PacienteScreen";
 import ControlesScreen from "./screens/ControlesScreen";
 import PacienteCreateScreen from "./screens/PacienteCreateScreen";
 import ControlCreateScreen from "./screens/ControlCreateScreen";
+import ListaDoctores from "./reportes/ListaDoctores";
+import ListaServicios from "./reportes/ListaServicios";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +29,8 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<ProfileScreen />}></Route>
         <Route path="/crearpaciente" element={<PacienteCreateScreen />}></Route>
         <Route path="/listapacientes" element={<ListaPacientes />}></Route>
+        <Route path="/listadoctores" element={<ListaDoctores />}></Route>
+        <Route path="/listaservicios" element={<ListaServicios />}></Route>
         <Route path="/paciente/:id" element={<PacienteScreen />}></Route>
         <Route path="/controles/:id" element={<ControlesScreen />}></Route>
         <Route path="/crearcontrol/:id" element={<ControlCreateScreen />}></Route>

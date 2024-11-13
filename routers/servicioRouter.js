@@ -8,23 +8,9 @@ const servicioRouter = express.Router();
 servicioRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 9;
-    const page = Number(req.query.pageNumber) || 1;
-
-    const nombre = req.query.nombre || '';
-    const searcherFilter = nombre ? { searchstring: { $regex: nombre, $options: 'i' } } : {};
-
-    const count = await Servicio.countDocuments({
-      ...searcherFilter,
-    });
-
-    const servicios = await Servicio.find({
-      ...searcherFilter,
-    })
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
-
-    res.send({ servicios, page, pages: Math.ceil(count / pageSize), count });
+    const count = await Servicio.countDocuments({});
+    const servicios = await Servicio.find({})
+    res.send({ servicios, count });
   })
 );
 

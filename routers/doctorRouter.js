@@ -8,23 +8,9 @@ const doctorRouter = express.Router();
 doctorRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 12;
-    const page = Number(req.query.pageNumber) || 1;
-
-    const busqueda = req.query.busqueda || "";
-    const searcherFilter = busqueda ? { searchstring: { $regex: busqueda, $options: "i" } } : {};
-
-    const count = await Doctor.countDocuments({
-      ...searcherFilter,
-    });
-
-    const doctores = await Doctor.find({
-      ...searcherFilter,
-    })
-      .skip(pageSize * (page - 1))
-      .limit(pageSize);
-
-    res.send({ doctores, page, pages: Math.ceil(count / pageSize), count });
+    const count = await Doctor.countDocuments({});
+    const doctores = await Doctor.find({})
+    res.send({ doctores, count });
   })
 );
 
