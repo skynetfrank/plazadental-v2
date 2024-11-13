@@ -202,6 +202,9 @@ select {
 .flx.rgap05 {
   row-gap: 5px;
 }
+.flx.rgap1{
+  row-gap: 10px;
+}
 
 .flx.gap {
   column-gap: 2rem;
@@ -362,6 +365,9 @@ select {
 .mb {
   margin-bottom: 2rem;
 }
+.mb03{
+  margin-bottom: 3px;
+}
 
 .ml-05 {
   margin-left: 5px;
@@ -421,6 +427,14 @@ select {
 
 .maxw-800 {
   width: 800px;
+}
+
+.maxw-60{
+  max-width: 60px;
+}
+
+.minw-10{
+  min-width: 10px;
 }
 
 .minw-20 {
@@ -1700,6 +1714,10 @@ h4 {
   margin-top: 10px;
 }
 
+.modal-content.servicios {
+  padding: 2rem;
+}
+
 .delivery-modal-container {
   display: flex;
   justify-content: center;
@@ -1738,6 +1756,15 @@ h4 {
 }
 
 /*fin de delivery style for facturacion modal */
+
+.show-servicios{
+  border-radius: 3px;
+  font-size: 8px;
+  margin-bottom: 2px;
+  background: #203040;
+  color: white;
+  padding: 5px;
+}
 
 
 

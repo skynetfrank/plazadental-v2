@@ -4,7 +4,7 @@ import { createControl } from "../actions/controlActions";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
@@ -46,7 +46,6 @@ export default function ControlCreateScreen(props) {
   const [montoComisionPlaza, setMontoComisionPlaza] = useState(0);
   const [materiales, setMateriales] = useState([]);
   const [serviciosItems, setServiciosItems] = useState([]);
-  const [qty, setQty] = useState(1);
   const [qtyServ, setQtyServ] = useState(1);
   const [pagoInfo, setPagoInfo] = useState({});
   const [fechaPago, setFechaPago] = useState("");
@@ -56,6 +55,17 @@ export default function ControlCreateScreen(props) {
   const [txtformapago, setTxtformapago] = useState("");
   const [pago, setPago] = useState({})
   const [servicio, setServicio] = useState({})
+
+  //FROM LA CIMA
+
+  const [qty, setQty] = useState(1);
+  const [qtyserv, setQtyserv] = useState(1);
+
+  const [servicios, setServicios] = useState([{}]);
+  const [idServicio, setIdServicio] = useState("");
+
+  const [selectedServicios, setSelectedServicios] = useState([]);
+  const [totalServicios, setTotalServicios] = useState(0);
 
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
@@ -270,9 +280,55 @@ export default function ControlCreateScreen(props) {
     setTxtformapago(textopago);
   };
 
-  const handleServicioFromChild = (xdata) => {
+  const addServicio = async () => {
+    const { value: id } = await Swal.fire({
+      title: "SERVICIOS",
+      input: "select",
+      inputOptions: {
+        servicios: listaServicios.map((s) => s.nombre),
+      },
+      inputPlaceholder: "Seleccione un Servicio",
+      showCancelButton: true,
 
-  }
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+
+          console.log("value select", value)
+          const id = listaServicios[Number(value)]._id;
+          const nombre = listaServicios[Number(value)].nombre;
+          const precio = listaServicios[Number(value)].preciousd;
+          console.log("id", id, "nombre", nombre)
+          //todo somenthing with state
+          setServiciosItems((current) => [
+            ...current,
+            {
+              cantidad: Number(1),
+              servicio: id,
+              precioServ: precio,
+              montoItemServicio: precio,
+            },
+          ]);
+          resolve();
+
+        });
+      },
+    });
+  };
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
@@ -288,9 +344,47 @@ export default function ControlCreateScreen(props) {
           onChange={(e) => setFechaControl(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowServicioModal(true)}>Facturar Servicios</button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => addServicio()}>Facturar Servicios</button>
           <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>Informacion de Pago</button>
           <button className="font-x pad-0 m-0 negrita">Guardar Control</button>
+        </div>
+        <div>
+
+          {serviciosItems.length > 0 ? (<div className="show-servicios">
+            {serviciosItems.map((m, inx) => {
+              const foundit = listaServicios.find(
+                (x) => x._id === m.servicio
+              );
+
+              return (
+                <div key={inx} className="flx mb03">
+                  <span className="minw-10">
+                    {m?.cantidad}
+                  </span>
+                  <span className="maxw-150 minw-150">
+                    {foundit?.nombre}
+                  </span>
+                  <span className="minw-30 txt-align-r">
+                    ${foundit.preciousd}
+                  </span>
+                  <span className="minw-30 txt-align-r">
+                    ${m.montoItemServicio}
+                  </span>
+
+                  <FontAwesomeIcon
+                    icon={faTrashAlt}
+                    onClick={(e) =>
+                      handleEliminarServicio(e, m.servicio)
+                    }
+                    className="ml minw-20 txt-align-l"
+                  />
+
+
+                </div>
+              );
+            })}
+            <p className="centrado">Total Servicios a Facturar: ${totalGeneral}</p>
+          </div>) : ("")}
         </div>
 
 
@@ -299,7 +393,7 @@ export default function ControlCreateScreen(props) {
             <div className="control-textarea-container">
               <div className="flx">
                 <label>Evaluacion</label>
-                <select value={doctorId} className="maxw-150 font-x m-05" onChange={(e) => setDoctorId(e.target.value)}>
+                <select value={doctorId} className="maxw-150 font-x ml" onChange={(e) => setDoctorId(e.target.value)}>
                   <option value="">Seleccionar Doctor</option>
                   {listaDoctores?.map((x, inx) => (
                     <option key={inx} value={x._id}>
@@ -314,7 +408,7 @@ export default function ControlCreateScreen(props) {
                 value={evaluacion}
                 onChange={(e) => setEvaluacion(e.target.value)}
               ></textarea>
-              <select onChange={(e) => handleEvaluacion(e)}>
+              <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
                   <option key={inx} value={x}>
@@ -374,16 +468,10 @@ export default function ControlCreateScreen(props) {
 
         />
       )}
-      {showServicioModal && (
-        <ServiciosForm
-          onClose={() => setShowServicioModal(false)}
-          sendDataToParent={handleServicioFromChild}
-          montoServiciosBs={Number(1980).toFixed(2)}
-          montoServiciosUsd={Number(20 * cambioBcv).toFixed(2)}
 
-        />
-      )}
     </div >
+
+
 
   );
 }
