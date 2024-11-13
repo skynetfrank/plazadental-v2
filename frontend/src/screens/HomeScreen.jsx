@@ -18,10 +18,16 @@ function HomeScreen() {
               <span>Pacientes</span>
             </button>
           </Link>
-          <Link to="/listaventas">
+          <Link to="/listadoctores">
             <button>
               <DoctorIcon />
               <span>Doctores</span>
+            </button>
+          </Link>
+          <Link to="/listaservicios">
+            <button>
+              <DoctorIcon />
+              <span>Servicios</span>
             </button>
           </Link>
           <Link to="/listacuadres">
@@ -34,7 +40,13 @@ function HomeScreen() {
           <Link to="/listagasto">
             <button>
               <TuercasIcon />
-              <span>Administrador</span>
+              <span>Calendario</span>
+            </button>
+          </Link>
+          <Link to="/listagasto">
+            <button>
+              <TuercasIcon />
+              <span>Gastos</span>
             </button>
           </Link>
 

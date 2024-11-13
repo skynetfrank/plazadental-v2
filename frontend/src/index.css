@@ -1759,11 +1759,12 @@ h4 {
 
 .show-servicios{
   border-radius: 3px;
-  font-size: 8px;
+  font-size: 10px;
   margin-bottom: 2px;
   background: #203040;
   color: white;
   padding: 5px;
+  margin: 1rem;
 }
 
 

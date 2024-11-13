@@ -171,6 +171,7 @@ export default function ControlCreateScreen(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log("submitHandler")
+
     if (!doctorId) {
       Swal.fire({
         title: "Falta El Doctor",
@@ -217,31 +218,6 @@ export default function ControlCreateScreen(props) {
   const handleTratamiento = (e) => {
     e.preventDefault();
     setTratamiento((current) => current + e.target.value);
-  };
-
-  const handleServicios = (e) => {
-    e.preventDefault();
-    const esteServicio = listaServicios.find((x) => x._id === servicioId);
-    if (!esteServicio) {
-      Swal.fire({
-        title: "Falta El Servicio!",
-        text: "Seleccionar Servicio",
-        icon: "warning",
-      });
-      return;
-    }
-
-
-    setServiciosItems((current) => [
-      ...current,
-      {
-        cantidad: qtyServ,
-        servicio: servicioId,
-        precioServ: esteServicio.preciousd,
-        montoItemServicio: qtyServ * esteServicio.preciousd,
-      },
-    ]);
-    setQtyServ(1);
   };
 
   useEffect(() => {
@@ -317,6 +293,7 @@ export default function ControlCreateScreen(props) {
         });
       },
     });
+    
   };
 
 
@@ -346,7 +323,7 @@ export default function ControlCreateScreen(props) {
         <div className="flx jcenter gap1 botonera-menu">
           <button className="font-x pad-0 m-0 negrita" onClick={() => addServicio()}>Facturar Servicios</button>
           <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>Informacion de Pago</button>
-          <button className="font-x pad-0 m-0 negrita">Guardar Control</button>
+          <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">Guardar Control</button>
         </div>
         <div>
 
@@ -388,7 +365,7 @@ export default function ControlCreateScreen(props) {
         </div>
 
 
-        <form onSubmit={submitHandler}>
+        <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
             <div className="control-textarea-container">
               <div className="flx">
@@ -450,11 +427,7 @@ export default function ControlCreateScreen(props) {
               ></textarea>
             </div>
           </div>
-          <div className="centrado">
-            <button type="submit">
-              Registrar Control
-            </button>
-          </div>
+          
 
         </form>
 
