@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
 import ServiciosForm from "../components/ServiciosForm";
+import logo from "/tiny_logo.jpg";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -26,7 +27,6 @@ export default function ControlCreateScreen(props) {
   const cita1 = new URLSearchParams(search).get("escita1");
 
   const [doctorId, setDoctorId] = useState("");
-  const [servicioId, setServicioId] = useState("");
   const [user] = useState(userInfo._id);
   const [fechaControl, setFechaControl] = useState(subtractHours(new Date(), 6));
   const [esCita1, setEsCita1] = useState(false);
@@ -46,26 +46,14 @@ export default function ControlCreateScreen(props) {
   const [montoComisionPlaza, setMontoComisionPlaza] = useState(0);
   const [materiales, setMateriales] = useState([]);
   const [serviciosItems, setServiciosItems] = useState([]);
-  const [qtyServ, setQtyServ] = useState(1);
-  const [pagoInfo, setPagoInfo] = useState({});
-  const [fechaPago, setFechaPago] = useState("");
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [showServicioModal, setShowServicioModal] = useState(false);
-  const [totalPago, setTotalPago] = useState(0);
-  const [txtformapago, setTxtformapago] = useState("");
   const [pago, setPago] = useState({})
-  const [servicio, setServicio] = useState({})
+  const [idServ, setIdServ] = useState("")
+  const [precio, setPrecio] = useState(0)
+  const [qty, setQty] = useState(0)
 
-  //FROM LA CIMA
 
-  const [qty, setQty] = useState(1);
-  const [qtyserv, setQtyserv] = useState(1);
 
-  const [servicios, setServicios] = useState([{}]);
-  const [idServicio, setIdServicio] = useState("");
-
-  const [selectedServicios, setSelectedServicios] = useState([]);
-  const [totalServicios, setTotalServicios] = useState(0);
 
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
@@ -109,7 +97,7 @@ export default function ControlCreateScreen(props) {
     "Bracket Caido                           ",
   ];
 
-  const selCantidad = [1, 2, 3, 4, 5, 6];
+  const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
     if (!paciente || paciente._id !== pacienteId) {
@@ -141,8 +129,10 @@ export default function ControlCreateScreen(props) {
     if (success) {
       Swal.fire({
         title: "Control Registrado con Exito!",
-        text: "Registrar Nuevo Control de Citas",
-        icon: "success",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo"
       });
       dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
       dispatch({ type: CONTROL_CREATE_RESET });
@@ -161,22 +151,22 @@ export default function ControlCreateScreen(props) {
       setMontoComisionPlaza(0);
       setMateriales([]);
       setServiciosItems([]);
-      setFechaPago("");
       setRecipe("");
       setIndicaciones("");
-      setPagoInfo({});
+
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("submitHandler")
 
     if (!doctorId) {
       Swal.fire({
-        title: "Falta El Doctor",
-        text: "Seleccionar Doctor",
-        icon: "warning",
+        text: "Falta Seleccionar el Doctor",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo"
       });
       return;
     }
@@ -204,7 +194,6 @@ export default function ControlCreateScreen(props) {
         tasaComisionPlaza,
         montoComisionDr,
         montoComisionPlaza,
-        pagoInfo,
         pago
       )
     );
@@ -256,9 +245,8 @@ export default function ControlCreateScreen(props) {
     setTxtformapago(textopago);
   };
 
-  const addServicio = async () => {
+  const getServicio = async () => {
     const { value: id } = await Swal.fire({
-      title: "SERVICIOS",
       input: "select",
       inputOptions: {
         servicios: listaServicios.map((s) => s.nombre),
@@ -272,31 +260,51 @@ export default function ControlCreateScreen(props) {
             resolve();
             return;
           }
-
-          console.log("value select", value)
-          const id = listaServicios[Number(value)]._id;
-          const nombre = listaServicios[Number(value)].nombre;
-          const precio = listaServicios[Number(value)].preciousd;
-          console.log("id", id, "nombre", nombre)
-          //todo somenthing with state
-          setServiciosItems((current) => [
-            ...current,
-            {
-              cantidad: Number(1),
-              servicio: id,
-              precioServ: precio,
-              montoItemServicio: precio,
-            },
-          ]);
+          setIdServ(listaServicios[Number(value)]._id)
+          setPrecio(listaServicios[Number(value)].preciousd)
           resolve();
-
-        });
+        })
       },
-    });
-    
+    })
+    addCantidad()
+  };
+
+  const addCantidad = async () => {
+    const { value: cant } = await Swal.fire({
+      input: "select",
+      inputOptions: {
+        servicios: selCantidad,
+      },
+      inputPlaceholder: "Seleccione una Cantidad",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+          setQty(Number(value) + 1)
+          resolve();
+        })
+      },
+    })
   };
 
 
+  const addServicio = () => {
+    setServiciosItems((current) => [
+      ...current,
+      {
+        cantidad: Number(qty),
+        servicio: idServ,
+        precioServ: precio,
+        montoItemServicio: precio * qty,
+      },
+    ]);
+  }
+
+  console.log("id", idServ, "precio", precio, "cantidad", qty)
+  console.log("obj", serviciosItems)
 
 
 
@@ -306,11 +314,11 @@ export default function ControlCreateScreen(props) {
 
 
 
-
-
+  //console.log("serviciosItem", serviciosItems)
   return (
 
     <div>
+
       <div className="flx column jcenter">
         <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
         <h4>Agregar Control</h4>
@@ -321,7 +329,7 @@ export default function ControlCreateScreen(props) {
           onChange={(e) => setFechaControl(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita" onClick={() => addServicio()}>Facturar Servicios</button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>Facturar Servicios</button>
           <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>Informacion de Pago</button>
           <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">Guardar Control</button>
         </div>
@@ -336,16 +344,14 @@ export default function ControlCreateScreen(props) {
               return (
                 <div key={inx} className="flx mb03">
                   <span className="minw-10">
-                    {m?.cantidad}
+                    {m.cantidad}
                   </span>
                   <span className="maxw-150 minw-150">
-                    {foundit?.nombre}
+                    {foundit?.nombre + " ($" + foundit?.preciousd + ")"}
                   </span>
+
                   <span className="minw-30 txt-align-r">
-                    ${foundit.preciousd}
-                  </span>
-                  <span className="minw-30 txt-align-r">
-                    ${m.montoItemServicio}
+                    ${Number(m.montoItemServicio).toFixed(2)}
                   </span>
 
                   <FontAwesomeIcon
@@ -427,7 +433,7 @@ export default function ControlCreateScreen(props) {
               ></textarea>
             </div>
           </div>
-          
+
 
         </form>
 
@@ -436,8 +442,8 @@ export default function ControlCreateScreen(props) {
         <PaymentForm
           onClose={() => setShowPaymentModal(false)}
           sendPayToParent={handlePayFromChild}
-          montoPagoBs={Number(1980).toFixed(2)}
-          montoPagoUsd={Number(20 * cambioBcv).toFixed(2)}
+          montoPagoBs={Number(totalGeneral * cambioBcv).toFixed(2)}
+          montoPagoUsd={Number(totalGeneral).toFixed(2)}
 
         />
       )}
