@@ -260,16 +260,13 @@ export default function ControlCreateScreen(props) {
             resolve();
             return;
           }
-          setIdServ(listaServicios[Number(value)]._id)
-          setPrecio(listaServicios[Number(value)].preciousd)
+
           resolve();
         })
       },
     })
-    addCantidad()
-  };
-
-  const addCantidad = async () => {
+    setIdServ(listaServicios[Number(id)]._id)
+    setPrecio(listaServicios[Number(id)].preciousd)
     const { value: cant } = await Swal.fire({
       input: "select",
       inputOptions: {
@@ -288,20 +285,21 @@ export default function ControlCreateScreen(props) {
         })
       },
     })
+    setServiciosItems((prev) => {
+      return [
+        ...prev,
+        {
+          cantidad: Number(cant) + 1,
+          servicio: listaServicios[Number(id)]._id,
+          precioServ: listaServicios[Number(id)].preciousd,
+          montoItemServicio: listaServicios[Number(id)].preciousd * cant,
+        },
+      ]
+    });
   };
 
 
-  const addServicio = () => {
-    setServiciosItems((current) => [
-      ...current,
-      {
-        cantidad: Number(qty),
-        servicio: idServ,
-        precioServ: precio,
-        montoItemServicio: precio * qty,
-      },
-    ]);
-  }
+
 
   console.log("id", idServ, "precio", precio, "cantidad", qty)
   console.log("obj", serviciosItems)
@@ -335,7 +333,7 @@ export default function ControlCreateScreen(props) {
         </div>
         <div>
 
-          {serviciosItems.length > 0 ? (<div className="show-servicios">
+          {serviciosItems?.length > 0 ? (<div className="show-servicios">
             {serviciosItems.map((m, inx) => {
               const foundit = listaServicios.find(
                 (x) => x._id === m.servicio
@@ -346,7 +344,7 @@ export default function ControlCreateScreen(props) {
                   <span className="minw-10">
                     {m.cantidad}
                   </span>
-                  <span className="maxw-150 minw-150">
+                  <span className="maxw-200 minw-200">
                     {foundit?.nombre + " ($" + foundit?.preciousd + ")"}
                   </span>
 
@@ -366,7 +364,8 @@ export default function ControlCreateScreen(props) {
                 </div>
               );
             })}
-            <p className="centrado">Total Servicios a Facturar: ${totalGeneral}</p>
+            <hr />
+            <p className="centrado negrita">Total: ${totalGeneral}</p>
           </div>) : ("")}
         </div>
 
