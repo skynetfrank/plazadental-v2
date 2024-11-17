@@ -56,6 +56,11 @@ function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, mont
   ];
   const bancosDemoda = ["", "Banesco", "Venezuela", "Plaza", "Otro Banco"];
 
+  if (montoPagoUsd <= 0) {
+    Swal.fire("No Ha Registrado Servicios!");
+    onClose();
+  }
+
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       onClose();

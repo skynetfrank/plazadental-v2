@@ -98,7 +98,7 @@ function App() {
               </div>
             </div>
 
-            <button className="btn-icon-container" onClick={cambioHandler}>
+            <button className="btn-bcv" onClick={cambioHandler}>
               <span className="header-bcv pad-1">BCV: {Number(localStorage.getItem("cambioBcv")).toFixed(2)}</span>
             </button>
 

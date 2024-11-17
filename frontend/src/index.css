@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i');
-@import url('https://fonts.googleapis.com/css?family=Bree+Serif');
-
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i");
+@import url("https://fonts.googleapis.com/css?family=Bree+Serif");
 
 * {
   margin: 0;
@@ -95,7 +94,6 @@ input,
 .btn-lookalike {
   color: #203040;
 }
-
 
 button,
 .btn-lookalike {
@@ -202,7 +200,7 @@ select {
 .flx.rgap05 {
   row-gap: 5px;
 }
-.flx.rgap1{
+.flx.rgap1 {
   row-gap: 10px;
 }
 
@@ -365,7 +363,7 @@ select {
 .mb {
   margin-bottom: 2rem;
 }
-.mb03{
+.mb03 {
   margin-bottom: 3px;
 }
 
@@ -429,11 +427,11 @@ select {
   width: 800px;
 }
 
-.maxw-60{
+.maxw-60 {
   max-width: 60px;
 }
 
-.minw-10{
+.minw-10 {
   min-width: 10px;
 }
 
@@ -769,12 +767,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -784,8 +782,6 @@ h6 {
 }
 
 /* Dashboard */
-
-
 
 summary.summary-pago {
   font-size: 1.6rem;
@@ -904,14 +900,19 @@ summary {
 }
 
 .header-bcv {
-  color: rgb(221, 220, 220);
+  color: rgb(106, 106, 106);
   text-decoration: underline;
-  text-underline-offset: 5px;
+  text-underline-offset: 3px;
 }
 
-.header-bcv:hover {
-  color: white;
-  background-color: black;
+.btn-bcv {
+  background: transparent;
+  border: none;
+}
+
+.btn-bcv:hover {
+  color: black;
+  background: none;
 }
 
 .order-pago {
@@ -1294,7 +1295,6 @@ img.tiny-image {
 .splash-svg-container svg {
   font-family: "Russo One", sans-serif;
   width: 100%;
-
 }
 
 svg text {
@@ -1354,11 +1354,15 @@ svg text {
 div:where(.swal2-container) .swal2-html-container {
   font-size: 1.3rem !important;
   font-weight: bold !important;
-  color: blue !important;
+  color: black;
 }
 
 div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
   background-color: rgb(0, 0, 233) !important;
+}
+
+div:where(.swal2-container) .swal2-select{
+  text-align: left !important;
 }
 
 .plus-circle-icon,
@@ -1409,23 +1413,17 @@ button.td-group-btn {
   top: 23px;
 }
 
-
 .botonera-menu {
   width: 250px;
   height: 50px;
-  background: #e8e8e8;
   margin: 5px;
-  border-radius: 3px;
-
-
 }
 
 .botonera-menu button {
-  width: 70px;
-  min-width: 70px;
-  height: 40px;
+  width: 60px;
+  min-width: 60px;
+  height: 35px;
   color: #203040;
-  border-radius: 1px solid grey;
 }
 
 .control-textarea-container {
@@ -1582,7 +1580,6 @@ button.td-group-btn {
   margin-top: 15px;
 }
 
-
 .control-header {
   font-size: 1rem;
   column-gap: 1rem;
@@ -1590,8 +1587,6 @@ button.td-group-btn {
   width: 100%;
   margin-bottom: 1rem;
 }
-
-
 
 .paciente-cards-container .nav__link {
   padding: 0px;
@@ -1621,7 +1616,6 @@ h4 {
   background-position: center;
   background-size: cover;
   width: 300px;
-
 }
 
 .swiper-slide img {
@@ -1638,13 +1632,11 @@ h4 {
   font-size: 1.4rem;
   text-decoration: underline;
   background: transparent !important;
-
 }
 
 .swiper-pagination-bullet-active {
   background: transparent !important;
   color: black !important;
-
 }
 
 .slide-info {
@@ -1662,7 +1654,6 @@ h4 {
   margin-bottom: 40px;
   border-radius: 5px;
   border: 1px solid grey;
-
 }
 
 .slide-content p {
@@ -1677,19 +1668,13 @@ h4 {
   text-decoration: underline;
 }
 
-
 .slide-content-header {
   width: 300px;
   height: 30px;
   background-color: rgb(207, 207, 207);
 }
 
-
-
 /*  TABS CSS STYLES FOR CHECKING */
-
-
-
 
 /*delivery style for facturacion modal */
 
@@ -1757,7 +1742,7 @@ h4 {
 
 /*fin de delivery style for facturacion modal */
 
-.show-servicios{
+.show-servicios {
   border-radius: 3px;
   font-size: 10px;
   margin-bottom: 2px;
@@ -1767,10 +1752,7 @@ h4 {
   margin: 1rem;
 }
 
-
-
 @media (max-width: 575px) {
-
   .brand-container {
     display: none;
   }
@@ -1792,7 +1774,6 @@ h4 {
     height: 160px;
     margin: 3px;
   }
-
 
   .home-buttons button span {
     font-size: 1.4rem;

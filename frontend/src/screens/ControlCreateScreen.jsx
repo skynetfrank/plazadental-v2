@@ -47,13 +47,12 @@ export default function ControlCreateScreen(props) {
   const [materiales, setMateriales] = useState([]);
   const [serviciosItems, setServiciosItems] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [pago, setPago] = useState({})
-  const [idServ, setIdServ] = useState("")
-  const [precio, setPrecio] = useState(0)
-  const [qty, setQty] = useState(0)
-
-
-
+  const [pago, setPago] = useState({});
+  const [idServ, setIdServ] = useState("");
+  const [precio, setPrecio] = useState(0);
+  const [qty, setQty] = useState(0);
+  const [totalPago, setTotalPago] = useState(0);
+  const [txtformapago, setTxtformapago] = useState(0);
 
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
@@ -111,7 +110,6 @@ export default function ControlCreateScreen(props) {
     setMontoUsd(totalGeneral);
     setMontoBs(montoUsd * cambioBcv);
     setMontoIva(montoBs * tasaIva);
-
   }, [
     cambioBcv,
     montoBs,
@@ -132,7 +130,7 @@ export default function ControlCreateScreen(props) {
         imageUrl: "/tiny_logo.jpg",
         imageWidth: 70,
         imageHeight: 30,
-        imageAlt: "logo"
+        imageAlt: "logo",
       });
       dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
       dispatch({ type: CONTROL_CREATE_RESET });
@@ -153,7 +151,6 @@ export default function ControlCreateScreen(props) {
       setServiciosItems([]);
       setRecipe("");
       setIndicaciones("");
-
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
@@ -166,7 +163,7 @@ export default function ControlCreateScreen(props) {
         imageUrl: "/tiny_logo.jpg",
         imageWidth: 70,
         imageHeight: 30,
-        imageAlt: "logo"
+        imageAlt: "logo",
       });
       return;
     }
@@ -222,7 +219,6 @@ export default function ControlCreateScreen(props) {
     setServiciosItems(newarray);
   };
 
-
   const handlePayFromChild = (data, textopago) => {
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
@@ -262,15 +258,15 @@ export default function ControlCreateScreen(props) {
           }
 
           resolve();
-        })
+        });
       },
-    })
-    setIdServ(listaServicios[Number(id)]._id)
-    setPrecio(listaServicios[Number(id)].preciousd)
+    });
+    setIdServ(listaServicios[Number(id)]._id);
+    setPrecio(listaServicios[Number(id)].preciousd);
     const { value: cant } = await Swal.fire({
       input: "select",
       inputOptions: {
-        servicios: selCantidad,
+        cantidad: selCantidad,
       },
       inputPlaceholder: "Seleccione una Cantidad",
       showCancelButton: true,
@@ -280,11 +276,14 @@ export default function ControlCreateScreen(props) {
             resolve();
             return;
           }
-          setQty(Number(value) + 1)
           resolve();
-        })
+        });
       },
-    })
+    });
+
+    if (!cant) {
+      return;
+    }
     setServiciosItems((prev) => {
       return [
         ...prev,
@@ -294,29 +293,16 @@ export default function ControlCreateScreen(props) {
           precioServ: listaServicios[Number(id)].preciousd,
           montoItemServicio: listaServicios[Number(id)].preciousd * cant,
         },
-      ]
+      ];
     });
   };
 
-
-
-
-  console.log("id", idServ, "precio", precio, "cantidad", qty)
-  console.log("obj", serviciosItems)
-
-
-
-
-
-
-
-
+  console.log("id", idServ, "precio", precio, "cantidad", qty);
+  console.log("obj", serviciosItems);
 
   //console.log("serviciosItem", serviciosItems)
   return (
-
     <div>
-
       <div className="flx column jcenter">
         <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
         <h4>Agregar Control</h4>
@@ -327,48 +313,44 @@ export default function ControlCreateScreen(props) {
           onChange={(e) => setFechaControl(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>Facturar Servicios</button>
-          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>Informacion de Pago</button>
-          <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">Guardar Control</button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
+            Registrar Servicio
+          </button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>
+            Registrar Pago
+          </button>
+          <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
+            Guardar
+          </button>
         </div>
         <div>
+          {serviciosItems?.length > 0 ? (
+            <div className="show-servicios">
+              {serviciosItems.map((m, inx) => {
+                const foundit = listaServicios.find((x) => x._id === m.servicio);
 
-          {serviciosItems?.length > 0 ? (<div className="show-servicios">
-            {serviciosItems.map((m, inx) => {
-              const foundit = listaServicios.find(
-                (x) => x._id === m.servicio
-              );
+                return (
+                  <div key={inx} className="flx mb03">
+                    <span className="minw-10">{m.cantidad}</span>
+                    <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
 
-              return (
-                <div key={inx} className="flx mb03">
-                  <span className="minw-10">
-                    {m.cantidad}
-                  </span>
-                  <span className="maxw-200 minw-200">
-                    {foundit?.nombre + " ($" + foundit?.preciousd + ")"}
-                  </span>
+                    <span className="minw-30 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
 
-                  <span className="minw-30 txt-align-r">
-                    ${Number(m.montoItemServicio).toFixed(2)}
-                  </span>
-
-                  <FontAwesomeIcon
-                    icon={faTrashAlt}
-                    onClick={(e) =>
-                      handleEliminarServicio(e, m.servicio)
-                    }
-                    className="ml minw-20 txt-align-l"
-                  />
-
-
-                </div>
-              );
-            })}
-            <hr />
-            <p className="centrado negrita">Total: ${totalGeneral}</p>
-          </div>) : ("")}
+                    <FontAwesomeIcon
+                      icon={faTrashAlt}
+                      onClick={(e) => handleEliminarServicio(e, m.servicio)}
+                      className="ml minw-20 txt-align-l"
+                    />
+                  </div>
+                );
+              })}
+              <hr />
+              <p className="centrado negrita">Total: ${totalGeneral}</p>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
-
 
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
@@ -385,11 +367,7 @@ export default function ControlCreateScreen(props) {
                 </select>
               </div>
 
-              <textarea
-                rows="5"
-                value={evaluacion}
-                onChange={(e) => setEvaluacion(e.target.value)}
-              ></textarea>
+              <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>
               <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
@@ -401,11 +379,7 @@ export default function ControlCreateScreen(props) {
             </div>
             <div className="control-textarea-container">
               <label>Tratamiento</label>
-              <textarea
-                rows="5"
-                value={tratamiento}
-                onChange={(e) => setTratamiento(e.target.value)}
-              ></textarea>
+              <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
               <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
                 <option value="">Seleccionar</option>
                 {conceptos.map((x, inx) => (
@@ -417,25 +391,14 @@ export default function ControlCreateScreen(props) {
             </div>
             <div className="control-textarea-container">
               <label>Recipe</label>
-              <textarea
-                rows="5"
-                value={recipe}
-                onChange={(e) => setRecipe(e.target.value)}
-              ></textarea>
+              <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>
             </div>
             <div className="control-textarea-container">
               <label>Indicaciones</label>
-              <textarea
-                rows="5"
-                value={indicaciones}
-                onChange={(e) => setIndicaciones(e.target.value)}
-              ></textarea>
+              <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
             </div>
           </div>
-
-
         </form>
-
       </div>
       {showPaymentModal && (
         <PaymentForm
@@ -443,13 +406,8 @@ export default function ControlCreateScreen(props) {
           sendPayToParent={handlePayFromChild}
           montoPagoBs={Number(totalGeneral * cambioBcv).toFixed(2)}
           montoPagoUsd={Number(totalGeneral).toFixed(2)}
-
         />
       )}
-
-    </div >
-
-
-
+    </div>
   );
 }
