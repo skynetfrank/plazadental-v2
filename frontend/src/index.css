@@ -1361,7 +1361,7 @@ div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
   background-color: rgb(0, 0, 233) !important;
 }
 
-div:where(.swal2-container) .swal2-select{
+div:where(.swal2-container) .swal2-select {
   text-align: left !important;
 }
 
@@ -1435,11 +1435,13 @@ button.td-group-btn {
 .control-textarea-container label {
   color: #203040;
   font-weight: bold;
+  font-size: 1.4rem;
 }
 
 .control-textarea-container textarea {
   min-width: 300px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .control-textarea-container select.select-btn {
@@ -1752,6 +1754,22 @@ h4 {
   margin: 1rem;
 }
 
+.action-map {
+  position: absolute;
+  left: 0;
+  font-size: 12px;
+  margin-left: 10px;
+  font-weight: bold;
+  color: #203040;
+  padding: 5px;
+  background: #e7e7e7;
+  border-radius: 3px;
+}
+
+.form-new-control{
+  max-width: 600px;
+}
+
 @media (max-width: 575px) {
   .brand-container {
     display: none;
@@ -1783,4 +1801,15 @@ h4 {
   svg text {
     font-size: 40px;
   }
+
+  .action-map {
+    font-size: 8px;
+    margin-left: 3px;
+    padding: 2px;
+  }
+
+  #form-new-control{
+    margin-top: 2rem;
+  }
+
 }

@@ -304,8 +304,10 @@ export default function ControlCreateScreen(props) {
   return (
     <div>
       <div className="flx column jcenter">
-        <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
-        <h4>Agregar Control</h4>
+        <div>
+          <span className="action-map">Agregar Control</span>
+          <h3 className="centrado font-12">{paciente?.nombre + " " + paciente?.apellido}</h3>
+        </div>
         <input
           type="date"
           placeholder=" "
