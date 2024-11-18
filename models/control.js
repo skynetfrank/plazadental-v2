@@ -55,11 +55,6 @@ const controlSchema = new mongoose.Schema(
       efectivousd: { type: Number },
       efectivobs: { type: Number },
       efectivoeuros: { type: Number },
-      transferbs: {
-        monto: { type: Number, default: 0 },
-        banco: { type: String },
-        referencia: { type: String },
-      },
       punto: {
         montopunto: { type: Number, default: 0 },
         bancopunto: { type: String },

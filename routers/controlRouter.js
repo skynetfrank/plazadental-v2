@@ -67,7 +67,7 @@ controlRouter.post(
       tasaComisionPlaza: req.body.tasaComisionPlaza,
       montoComisionDr: req.body.montoComisionDr,
       montoComisionPlaza: req.body.montoComisionPlaza,
-      pagoInfo: req.body.pagoInfo,
+      pago: req.body.pago,
       factura: req.body.factura,
       facturaControl: req.body.facturacontrol,
       fechaFactura: req.body.fechaFactura,

@@ -161,11 +161,11 @@ function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, mont
       paymentObject.punto.efectivousd > 0
         ? "Divisas "
         : "Punto de Venta " +
-          paymentObject.punto.bancodestinopunto +
-          " " +
-          bancodestinopunto2 +
-          " " +
-          bancodestinopunto3;
+        paymentObject.punto.bancodestinopunto +
+        " " +
+        bancodestinopunto2 +
+        " " +
+        bancodestinopunto3;
     sendPayToParent(paymentObject, txtpago);
 
     onClose();

@@ -48,7 +48,7 @@ export const createControl =
     tasaComisionPlaza,
     montoComisionDr,
     montoComisionPlaza,
-    pagoInfo,
+    pago,
     factura,
     facturaControl,
     fechaFactura
@@ -84,7 +84,7 @@ export const createControl =
             tasaComisionPlaza,
             montoComisionDr,
             montoComisionPlaza,
-            pagoInfo,
+            pago,
             factura,
             facturaControl,
             fechaFactura,

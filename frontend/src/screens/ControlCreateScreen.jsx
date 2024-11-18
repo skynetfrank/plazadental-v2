@@ -37,7 +37,7 @@ export default function ControlCreateScreen(props) {
   const [montoUsd, setMontoUsd] = useState("");
   const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
   const [montoBs, setMontoBs] = useState("");
-  const [tasaIva, setTasaIva] = useState(0.16);
+  const [tasaIva] = useState(0.16);
   const [montoIva, setMontoIva] = useState(0);
   const [totalGeneral, setTotalGeneral] = useState(0);
   const [tasaComisionDr, setTasaComisionDr] = useState(40);
@@ -48,7 +48,7 @@ export default function ControlCreateScreen(props) {
   const [serviciosItems, setServiciosItems] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [pago, setPago] = useState({});
-  const [idServ, setIdServ] = useState("");
+  const [idServ, setIdServ] = useState(""); 
   const [precio, setPrecio] = useState(0);
   const [qty, setQty] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
@@ -167,6 +167,10 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
+    if (pago.efectivousd > 0) {
+      setMontoComisionPlaza((Number(pago.efectivousd) / 1.16) * 0.4)
+      setMontoComisionDr((Number(pago.efectivousd) / 1.16) * 0.6)
+    }
 
     dispatch(
       createControl(
@@ -220,6 +224,7 @@ export default function ControlCreateScreen(props) {
   };
 
   const handlePayFromChild = (data, textopago) => {
+console.log("data from payment",data,textopago)
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -247,7 +252,7 @@ export default function ControlCreateScreen(props) {
       inputOptions: {
         servicios: listaServicios.map((s) => s.nombre),
       },
-      inputPlaceholder: "Seleccione un Servicio",
+      inputPlaceholder: "Seleccione un Servicio a Facturar",
       showCancelButton: true,
 
       inputValidator: (value) => {
@@ -296,9 +301,7 @@ export default function ControlCreateScreen(props) {
       ];
     });
   };
-
-  console.log("id", idServ, "precio", precio, "cantidad", qty);
-  console.log("obj", serviciosItems);
+  console.log("pago", pago)
 
   //console.log("serviciosItem", serviciosItems)
   return (
@@ -316,10 +319,10 @@ export default function ControlCreateScreen(props) {
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
-            Registrar Servicio
+            Facturar
           </button>
           <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>
-            Registrar Pago
+            Pago
           </button>
           <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
             Guardar
