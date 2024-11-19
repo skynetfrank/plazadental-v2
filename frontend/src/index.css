@@ -200,6 +200,7 @@ select {
 .flx.rgap05 {
   row-gap: 5px;
 }
+
 .flx.rgap1 {
   row-gap: 10px;
 }
@@ -363,6 +364,7 @@ select {
 .mb {
   margin-bottom: 2rem;
 }
+
 .mb03 {
   margin-bottom: 3px;
 }
@@ -767,12 +769,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2 > span {
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -1632,13 +1634,23 @@ h4 {
   color: rgb(22, 22, 22) !important;
   margin-top: 50px;
   font-size: 1.4rem;
-  text-decoration: underline;
+
   background: transparent !important;
+  opacity: 0.5 !important;
 }
 
 .swiper-pagination-bullet-active {
   background: transparent !important;
   color: black !important;
+  opacity: 1 !important;
+  text-decoration: underline;
+}
+
+.swiper-pagination-bullet:hover {
+  color: #203040 !important;
+  font-weight: bold;
+  opacity: 0.8 !important;
+
 }
 
 .slide-info {
@@ -1766,8 +1778,20 @@ h4 {
   border-radius: 3px;
 }
 
-.form-new-control{
+.form-new-control {
   max-width: 600px;
+}
+
+
+.btn-pago {
+  margin: 5px;
+  width: 50px;
+  padding: 3px;
+
+}
+
+hr {
+  margin: 5px 0;
 }
 
 @media (max-width: 575px) {
@@ -1808,7 +1832,7 @@ h4 {
     padding: 2px;
   }
 
-  #form-new-control{
+  #form-new-control {
     margin-top: 2rem;
   }
 

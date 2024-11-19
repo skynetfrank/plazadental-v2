@@ -14,6 +14,7 @@ import logo from "/tiny_logo.jpg";
 
 
 function subtractHours(date, hours) {
+  console.log("date", date)
   date.setHours(date.getHours() - hours);
   return dayjs(date).format("YYYY-MM-DD");
 }
@@ -307,7 +308,7 @@ export default function ControlCreateScreen(props) {
 
   //console.log("serviciosItem", serviciosItems)
 
- 
+
   return (
     <div>
       <div className="flx column jcenter">
@@ -325,9 +326,7 @@ export default function ControlCreateScreen(props) {
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
             Facturar
           </button>
-          <button className="font-x pad-0 m-0 negrita" onClick={() => setShowPaymentModal(true)}>
-            Pago
-          </button>
+
           <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
             Guardar
           </button>
@@ -355,6 +354,13 @@ export default function ControlCreateScreen(props) {
               })}
               <hr />
               <p className="centrado negrita">Total: ${totalGeneral}</p>
+              <div className="centrado">
+                <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => setShowPaymentModal(true)}>
+                  Registrar Pago
+                </button>
+              </div>
+
+
             </div>
           ) : (
             ""

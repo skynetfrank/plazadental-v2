@@ -113,13 +113,13 @@ export default function ControlesScreen(props) {
             if (!item.control) {
               return "";
             }
-
+            const itemPago = item.control.pago
             return (
               <SwiperSlide key={ind}>
                 <div>
                   <div>
                     <div className="flx jsb pad-0 control-header">
-                      <span>{dayjs(new Date(item.control.createdAt)).format("DD/MM/YYYY")}</span>
+                      <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
                       <span>Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
                     </div>
                     <div className="flx jcenter gap-10 pad-0">
@@ -197,8 +197,18 @@ export default function ControlesScreen(props) {
                           );
                         })}
                       </div>
+                      <h4>Pago:</h4>
+                      <div>
+                        <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + (item.control.pago.efectivousd) : ("")}</p>
+                        <p> {itemPago.efectivoeuros > 0 ? "Efectivo Euros: " + (item.control.pago.efectivoeuros) : ("")}</p>
+                        <p> {itemPago.efectivobs > 0 ? "Efectivo Bs.: " + (item.control.pago.efectivobs) : ("")}</p>
+                        <p>  {itemPago.montopunto > 0 ? "Punto Bancario: " + (item.control.pago.montopunto + item.control.pago.montopunto2 + item.control.pago.montopunto3) : ("")}</p>
+                        <p>  {itemPago.pagomovil.montopagomovil > 0 ? "Pago Movil: " + (item.control.pago.montopagomovil) : ("")}</p>
+                        <p>  {itemPago.zelle.montozelle > 0 ? "Zelle: " + (item.control.montozelle) : ("")}</p>
+
+                      </div>
                     </div>
-                    <p>{displayPago(item.control.pago)}</p>
+
                   </div>
                 </div>
               </SwiperSlide>
