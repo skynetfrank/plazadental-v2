@@ -12,6 +12,7 @@ import PaymentForm from "../components/PaymentForm";
 import ServiciosForm from "../components/ServiciosForm";
 import logo from "/tiny_logo.jpg";
 
+
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
   return dayjs(date).format("YYYY-MM-DD");
@@ -48,7 +49,7 @@ export default function ControlCreateScreen(props) {
   const [serviciosItems, setServiciosItems] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [pago, setPago] = useState({});
-  const [idServ, setIdServ] = useState(""); 
+  const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [qty, setQty] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
@@ -151,6 +152,7 @@ export default function ControlCreateScreen(props) {
       setServiciosItems([]);
       setRecipe("");
       setIndicaciones("");
+      setPago({})
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
@@ -224,7 +226,7 @@ export default function ControlCreateScreen(props) {
   };
 
   const handlePayFromChild = (data, textopago) => {
-console.log("data from payment",data,textopago)
+    console.log("data from payment", data, textopago)
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -296,7 +298,7 @@ console.log("data from payment",data,textopago)
           cantidad: Number(cant) + 1,
           servicio: listaServicios[Number(id)]._id,
           precioServ: listaServicios[Number(id)].preciousd,
-          montoItemServicio: listaServicios[Number(id)].preciousd * cant,
+          montoItemServicio: listaServicios[Number(id)].preciousd * (Number(cant) + 1),
         },
       ];
     });
@@ -304,6 +306,8 @@ console.log("data from payment",data,textopago)
   console.log("pago", pago)
 
   //console.log("serviciosItem", serviciosItems)
+
+ 
   return (
     <div>
       <div className="flx column jcenter">

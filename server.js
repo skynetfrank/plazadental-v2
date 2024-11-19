@@ -14,10 +14,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const localdb = 'mongodb://localhost/lacimadb';
+const localdb = 'mongodb://localhost/plazadentaldb';
 //process.env.MONGODB_URI;
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(localdb)
   .then(() => console.log('mongodb =>: conectado'))
   .catch(e => console.log(e.message));
 

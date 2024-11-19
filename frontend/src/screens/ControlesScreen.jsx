@@ -20,11 +20,13 @@ import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import ControlAddIcon from "../icons/ControlAddIcon";
 
+
 export default function ControlesScreen(props) {
   const [controles, setControles] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
   const { id: pacienteId } = params;
+  const [montoPagos, setMontoPagos] = useState(0)
 
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente, loading, error } = pacienteDetails;
@@ -42,6 +44,7 @@ export default function ControlesScreen(props) {
       });
 
       setControles(sortedDesc);
+
     }
   }, [dispatch, pacienteId, paciente]);
 
@@ -116,7 +119,7 @@ export default function ControlesScreen(props) {
                 <div>
                   <div>
                     <div className="flx jsb pad-0 control-header">
-                      <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
+                      <span>{dayjs(new Date(item.control.createdAt)).format("DD/MM/YYYY")}</span>
                       <span>Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
                     </div>
                     <div className="flx jcenter gap-10 pad-0">
@@ -175,11 +178,11 @@ export default function ControlesScreen(props) {
                       <h4 className="mb-2">Indicaciones:</h4>
                       <p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
                       <div>
-                        <h4>Servicios Facturados:</h4>
+                        <h4>Servicios Facturados: (${Number(item.control.montoUsd).toFixed(2)})</h4>
                         {item.control.serviciosItems.map((item, ndx) => {
                           let total = +item.montoItemServicio;
                           return (
-                            <span className="font-x negrita ml" key={ndx}>
+                            <div className="font-x" key={ndx}><span className="font-x negrita ml" >
                               {item.cantidad +
                                 " " +
                                 item.servicio.nombre +
@@ -189,16 +192,13 @@ export default function ControlesScreen(props) {
                                 " " +
                                 item.montoItemServicio +
                                 "$"}
-                            </span>
+                            </span></div>
+
                           );
                         })}
-                        {item.control.montoUsd ? (
-                          <span className="font-x negrita ml"> Total:$ {item.control.montoUsd.toFixed(2)}</span>
-                        ) : (
-                          ""
-                        )}
                       </div>
                     </div>
+                    <p>{displayPago(item.control.pago)}</p>
                   </div>
                 </div>
               </SwiperSlide>
