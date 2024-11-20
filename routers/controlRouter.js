@@ -62,7 +62,6 @@ controlRouter.post(
       montoBs: req.body.montoBs,
       tasaIva: req.body.tasaIva,
       montoIva: req.body.montoIva,
-      totalGeneralBs: req.body.totalGeneralBs,
       tasaComisionDr: req.body.tasaComisionDr,
       tasaComisionPlaza: req.body.tasaComisionPlaza,
       montoComisionDr: req.body.montoComisionDr,

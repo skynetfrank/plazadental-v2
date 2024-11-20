@@ -207,6 +207,9 @@ export default function ControlesScreen(props) {
                         <p>  {itemPago.zelle.montozelle > 0 ? "Zelle: " + (item.control.montozelle) : ("")}</p>
 
                       </div>
+                      <h4>Comisiones:</h4>
+                      <p>Comision Plaza 60% : ${item.control.montoComisionPlaza}</p>
+                      <p>Comision Doctor 40%: ${item.control.montoComisionDr}</p>
                     </div>
 
                   </div>

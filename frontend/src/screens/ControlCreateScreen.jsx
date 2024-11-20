@@ -4,19 +4,16 @@ import { createControl } from "../actions/controlActions";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusCircle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
-import ServiciosForm from "../components/ServiciosForm";
-import logo from "/tiny_logo.jpg";
 
 
 function subtractHours(date, hours) {
-  console.log("date", date)
   date.setHours(date.getHours() - hours);
-  return dayjs(date).format("YYYY-MM-DD");
+  return date;
 }
 
 export default function ControlCreateScreen(props) {
@@ -42,8 +39,8 @@ export default function ControlCreateScreen(props) {
   const [tasaIva] = useState(0.16);
   const [montoIva, setMontoIva] = useState(0);
   const [totalGeneral, setTotalGeneral] = useState(0);
-  const [tasaComisionDr, setTasaComisionDr] = useState(40);
-  const [tasaComisionPlaza, setTasaComisionPlaza] = useState(60);
+  const [tasaComisionDr, setTasaComisionDr] = useState(0.40);
+  const [tasaComisionPlaza, setTasaComisionPlaza] = useState(0.60);
   const [montoComisionDr, setMontoComisionDr] = useState(0);
   const [montoComisionPlaza, setMontoComisionPlaza] = useState(0);
   const [materiales, setMateriales] = useState([]);
@@ -107,8 +104,8 @@ export default function ControlCreateScreen(props) {
   }, [dispatch, paciente, pacienteId]);
 
   useEffect(() => {
-    setMontoComisionDr(totalGeneral * (tasaComisionDr / 100));
-    setMontoComisionPlaza(totalGeneral * (tasaComisionPlaza / 100));
+    setMontoComisionDr(totalGeneral * (tasaComisionDr));
+    setMontoComisionPlaza(totalGeneral * (tasaComisionPlaza));
     setMontoUsd(totalGeneral);
     setMontoBs(montoUsd * cambioBcv);
     setMontoIva(montoBs * tasaIva);
@@ -159,7 +156,8 @@ export default function ControlCreateScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+    setMontoComisionPlaza(tasaComisionPlaza * montoUsd)
+    setMontoComisionDr(tasaComisionDr * montoUsd)
     if (!doctorId) {
       Swal.fire({
         text: "Falta Seleccionar el Doctor",
@@ -170,10 +168,7 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
-    if (pago.efectivousd > 0) {
-      setMontoComisionPlaza((Number(pago.efectivousd) / 1.16) * 0.4)
-      setMontoComisionDr((Number(pago.efectivousd) / 1.16) * 0.6)
-    }
+
 
     dispatch(
       createControl(
@@ -304,9 +299,11 @@ export default function ControlCreateScreen(props) {
       ];
     });
   };
-  console.log("pago", pago)
 
-  //console.log("serviciosItem", serviciosItems)
+
+  const dateHandler = (e) => {
+    setFechaControl(e)
+  }
 
 
   return (
@@ -318,9 +315,8 @@ export default function ControlCreateScreen(props) {
         </div>
         <input
           type="date"
-          placeholder=" "
-          value={fechaControl}
-          onChange={(e) => setFechaControl(e.target.value)}
+          value={dayjs(fechaControl).format("YYYY-MM-DD")}
+          onChange={(e) => dateHandler(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>

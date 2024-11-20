@@ -45,7 +45,6 @@ const controlSchema = new mongoose.Schema(
     montoBs: { type: Number, default: 0 },
     tasaIva: { type: Number, default: 0.16 },
     montoIva: { type: Number, default: 0 },
-    totalGeneralBs: { type: Number, default: 0 },
     tasaComisionDr: { type: Number, default: 0 },
     tasaComisionPlaza: { type: Number, default: 0 },
     montoComisionDr: { type: Number, default: 0 },
@@ -82,12 +81,10 @@ const controlSchema = new mongoose.Schema(
         zelleref: { type: String },
       },
     },
-
     factura: { type: String, default: '' },
     facturaControl: { type: String, default: '' },
     fechaFactura: { type: Date, default: '' },
     idPacienteOld: { type: String, default: '' },
-    searchstring: { type: String },
   },
 
   {
