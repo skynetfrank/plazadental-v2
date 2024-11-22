@@ -31,6 +31,7 @@ function ListaDoctores() {
     },
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
+    { header: "Especialidad", accessorKey: "especialidad" },
     {
       header: "Acciones",
       accessorKey: "_id",
