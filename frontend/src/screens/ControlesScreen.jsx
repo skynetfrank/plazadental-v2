@@ -49,7 +49,52 @@ export default function ControlesScreen(props) {
   }, [dispatch, pacienteId, paciente]);
 
   const deleteHandler = (control) => {
-    let confirmacion = window.confirm("ESTA SEGURO DE ELIMINAR ESTE CONTROL?");
+    Swal.fire({
+      title: "Eliminar Control",
+      text: "Esta seguro de Eliminar Este Control?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Eminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      let pw = prompt("Ingrese su clave", "");
+
+      if (pw !== "matias01") {
+        Swal.fire({
+          title: "Clave Erronea, verifique...",
+          text: "Ingrese Su Clave de Administrador",
+          icon: "warning",
+        });
+        return;
+      }
+      if (pw === "matias01") {
+        dispatch(deleteControl(control._id));
+        dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
+        dispatch(detailsPaciente(pacienteId));
+        Swal.fire({
+          title: "Control Eliminado con Exito!",
+          text: "Eliminar Control",
+          icon: "success",
+        });
+      }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /*   let confirmacion = window.confirm("ESTA SEGURO DE ELIMINAR ESTE CONTROL?");
     if (confirmacion) {
       let pw = prompt("Ingrese su clave", "");
 
@@ -73,7 +118,7 @@ export default function ControlesScreen(props) {
       }
     } else {
       return;
-    }
+    } */
   };
 
   const addControlHandler = () => {
@@ -94,7 +139,7 @@ export default function ControlesScreen(props) {
           </button>
         </ToolTip>
       </div>
-      <p className="centrado pad-0">{paciente.nombre + " " + paciente.apellido}</p>
+    
 
       <>
         <Swiper
@@ -120,6 +165,7 @@ export default function ControlesScreen(props) {
                   <div>
                     <div className="flx jsb pad-0 control-header">
                       <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
+                      <p className="pad-0">{paciente.nombre + " " + paciente.apellido}</p>
                       <span>Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
                     </div>
                     <div className="flx jcenter gap-10 pad-0">

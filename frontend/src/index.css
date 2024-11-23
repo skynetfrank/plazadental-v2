@@ -707,7 +707,7 @@ a:hover {
   height: 100px;
 }
 
-td button,
+
 button.circle-btn {
   min-width: 35px;
   min-height: 35px;
@@ -1177,7 +1177,7 @@ img.tiny-image {
 }
 
 #tabla-cuadre tr td:nth-child(n + 3) {
-  text-align: right;
+  text-align: left;
   padding-right: 5px;
 }
 
@@ -1196,7 +1196,7 @@ img.tiny-image {
 }
 
 .cuadre-descripcion p:nth-child(1) {
-  min-width: 60px;
+  min-width: 200px;
 }
 
 .cuadre-descripcion p:nth-child(2),
@@ -1609,7 +1609,7 @@ h4 {
 /* FIN DE PACIENTE SCREEN */
 
 .swiper {
-  width: 100vh;
+  width: 400px;
   background: rgb(232, 232, 232);
   padding: 1rem !important;
   border: 1px solid grey;
@@ -1794,9 +1794,15 @@ hr {
   margin: 5px 0;
 }
 
+
 @media (max-width: 575px) {
   .brand-container {
     display: none;
+  }
+
+  .swiper {
+    width: 90vw;
+
   }
 
   .header-date,

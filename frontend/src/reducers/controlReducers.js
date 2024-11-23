@@ -20,6 +20,12 @@ import {
   CONTROL_BYPACIENTE_REQUEST,
   CONTROL_BYPACIENTE_SUCCESS,
   CONTROL_BYPACIENTE_FAIL,
+  CUADREDIA_FAIL,
+  CUADREDIA_SUCCESS,
+  CUADREDIA_REQUEST,
+  GROUPBYDAY_REQUEST,
+  GROUPBYDAY_SUCCESS,
+  GROUPBYDAY_FAIL,
 } from "../constants/controlConstants";
 
 export const controlCreateReducer = (state = {}, action) => {
@@ -97,3 +103,48 @@ export const controlesByPacienteReducer = (state = { loading: true, controles: [
       return state;
   }
 };
+
+
+export const orderGroupByDayReducer = (state = { loading: true, dailyControles: {} }, action) => {
+  switch (action.type) {
+    case GROUPBYDAY_REQUEST:
+      return { loading: true };
+    case GROUPBYDAY_SUCCESS:
+      return { loading: false, dailyControles: action.payload };
+    case GROUPBYDAY_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const cuadreDiaReducer = (
+  state = {
+    controles: [],
+    cash: {},
+    puntoPlaza: [],
+    puntoVenezuela: [],
+    puntoBanesco: [],
+  },
+
+  action
+) => {
+  switch (action.type) {
+    case CUADREDIA_REQUEST:
+      return { loading: true };
+    case CUADREDIA_SUCCESS:
+      return {
+        loading: false,
+        controles: action.payload.controles,
+        cash: action.payload.cash[0],
+        puntoPlaza: action.payload.puntoPlaza,
+        puntoVenezuela: action.payload.puntoVenezuela,
+        puntoBanesco: action.payload.puntoBanesco,
+      };
+    case CUADREDIA_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+

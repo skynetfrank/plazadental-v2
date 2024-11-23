@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { cuadreDia } from "../actions/orderActions";
+import { cuadreDia } from "../actions/controlActions";
 import CuadreDiarioTable from "../components/CuadreDiarioTable";
 import PrintIcon from "../icons/PrintIcon";
 
@@ -12,21 +12,21 @@ export default function CuadreDiarioScreen() {
   const [ventaDolares, setVentaDolares] = useState(0);
   const dispatch = useDispatch();
   const ventaDia = useSelector((state) => state.cuadreDia);
-  const { loading, orders, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
+  const { loading, controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
 
   useEffect(() => {
     dispatch(cuadreDia(fechaId));
   }, [dispatch, fechaId]);
 
   useEffect(() => {
-    if (orders) {
-      const totalVentaBs = orders.reduce((sum, order) => Number(order.subtotal) * Number(order.cambioDia) + sum, 0);
-      const totalVentaUsd = orders.reduce((sum, order) => Number(order.subtotal) + sum, 0);
+    if (controles) {
+      const totalVentaBs = controles.reduce((sum, order) => Number(order.subtotal) * Number(order.cambioDia) + sum, 0);
+      const totalVentaUsd = controles.reduce((sum, order) => Number(order.subtotal) + sum, 0);
 
       setSubtotalcuadre(totalVentaBs);
       setVentaDolares(totalVentaUsd);
     }
-  }, [orders]);
+  }, [controles]);
 
   const columns = useMemo(
     () => [
@@ -35,7 +35,7 @@ export default function CuadreDiarioScreen() {
         id: "id",
         cell: (info) => {
           return (
-            <Link to={`/order/${info.row.original._id}`}>
+            <Link to={`/controles/${info.row.original._id}`}>
               <span className="azul-brand negrita subrayado font-1">{info.row.index + 1}</span>{" "}
             </Link>
           );
@@ -45,90 +45,64 @@ export default function CuadreDiarioScreen() {
           console.log("valuefooter", valuefooter.table.getFilteredRowModel().rows);
         },
       },
+
       {
-        header: "Descripcion",
-        accessorKey: "orderItems",
+        header: "Paciente",
+        accessorKey: "paciente_data",
+        cell: (value) => {
+          return value.getValue().nombre + " " + value.getValue().apellido;
+        },
+      },
+      {
+        header: "Doctor",
+        accessorKey: "doctor_data",
+        cell: (value) => {
+          return value.getValue().nombre + " " + value.getValue().apellido;
+        },
+      },
+
+      {
+        header: "Servicios Facturados",
+        accessorKey: "serviciosItems",
 
         cell: (value) => {
-          const { orderItems, memo } = value.row.original;
+          const { serviciosItems, servicio_data } = value.row.original;
 
-          if (!orderItems) {
+          if (!serviciosItems) {
             return " ";
           }
           return (
-            <div className="maxw-200">
-              {orderItems.map((item, inx) => (
+            <div className="maxw-250">
+              {serviciosItems.map((item, inx) => (
                 <div key={item.producto + inx} className="maxw-150">
                   <div className="cuadre-descripcion flx font-x pad-0">
-                    <p>{item.codigo}</p>
-                    <p>{item.talla}</p>
-                    <p>{item.qty}</p>
+                    <p>{servicio_data[inx].nombre}</p>
+                    <p>{item.cantidad}</p>
                     <p>x</p>
-                    <p>${item.precio}</p>
+                    <p>${item.precioServ}</p>
                   </div>
                 </div>
               ))}
-              {memo ? <p className="font-tiny">{memo}</p> : ""}
+
             </div>
           );
         },
-        footer: ({ table }) => {
-          const total = table
-            .getFilteredRowModel()
-            .rows.reduce(
-              (total, row) => total + row.getValue("orderItems").reduce((subtotal, x) => subtotal + x.qty, 0),
-              0
-            );
-          return "Total: " + Number(total) + " Articulos";
-        },
+
       },
       {
-        header: "Articulos",
-        accessorKey: "totalItems",
+        header: "Monto",
+        accessorKey: "montoUsd",
         cell: (value) => {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("totalItems"), 0);
-          return "$" + Number(total).toFixed(2);
-        },
-      },
-      {
-        header: "Dcto.",
-        accessorKey: "descuento",
-        cell: (value) => {
-          return "$" + Number(value.getValue()).toFixed(2);
-        },
-        footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("descuento"), 0);
-          return "$" + Number(total).toFixed(2);
-        },
-      },
-      {
-        header: "Delivery",
-        accessorKey: "delivery",
-        cell: (value) => {
-          return "$" + Number(value.getValue()).toFixed(2);
-        },
-        footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("delivery"), 0);
-          return "$" + Number(total).toFixed(2);
-        },
-      },
-      {
-        header: "A Pagar",
-        accessorKey: "subtotal",
-        cell: (value) => {
-          return "$" + Number(value.getValue()).toFixed(2);
-        },
-        footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("subtotal"), 0);
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
       {
         header: "Cambio",
-        accessorKey: "cambioDia",
+        accessorKey: "cambioBcv",
         cell: (value) => {
           return Number(value.getValue()).toFixed(2);
         },
@@ -136,29 +110,7 @@ export default function CuadreDiarioScreen() {
           return " - ";
         },
       },
-      {
-        header: "CASHEA",
-        accessorKey: "pago.cashea.monto",
-        cell: ({ row }) => {
-          const obj1 = row.original.pago.cashea;
 
-          if (!obj1.monto) {
-            return "-";
-          }
-
-          return (
-            <div>
-              <span>{"$" + Number(obj1.monto).toFixed(2)}</span>
-            </div>
-          );
-        },
-        footer: ({ table }) => {
-          const total = table
-            .getFilteredRowModel()
-            .rows.reduce((total, row) => total + row.original.pago.cashea.monto, 0);
-          return "$" + Number(total).toFixed(2);
-        },
-      },
 
       {
         header: "Dolares",
@@ -315,7 +267,7 @@ export default function CuadreDiarioScreen() {
     const xfecha = dia + "-" + mes + "-" + ano;
     return xfecha;
   };
-  console.log("orders", orders);
+  console.log("controles", controles);
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">
@@ -325,7 +277,7 @@ export default function CuadreDiarioScreen() {
         <h3>REPORTE VENTAS DEL {parseFecha(fechaId)}</h3>
       </div>
 
-      <div>{loading ? <span>Cargando Datos...</span> : <CuadreDiarioTable columns={columns} data={orders} />}</div>
+      <div>{loading ? <span>Cargando Datos...</span> : <CuadreDiarioTable columns={columns} data={controles} />}</div>
       <span>Observaciones: ____________________________________________________________________________________</span>
       <div className="mtop-1">
         <span>
@@ -383,10 +335,7 @@ export default function CuadreDiarioScreen() {
             <span>Zelle:</span>
             <span>${Number(cash?.totalzelle).toFixed(2)}</span>
           </div>
-          <div className="ml-05">
-            <span>Cashea:</span>
-            <span>${Number(cash?.totalcashea).toFixed(2)}</span>
-          </div>
+
         </div>{" "}
       </div>
     </div>

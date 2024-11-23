@@ -15,6 +15,12 @@ import {
   CONTROL_BYPACIENTE_REQUEST,
   CONTROL_BYPACIENTE_SUCCESS,
   CONTROL_BYPACIENTE_FAIL,
+  CUADREDIA_SUCCESS,
+  CUADREDIA_FAIL,
+  CUADREDIA_REQUEST,
+  GROUPBYDAY_FAIL,
+  GROUPBYDAY_SUCCESS,
+  GROUPBYDAY_REQUEST,
 } from '../constants/controlConstants';
 
 export const createControl =
@@ -162,5 +168,42 @@ export const controlesByPaciente = pacienteId => async (dispatch, getState) => {
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
     dispatch({ type: CONTROL_BYPACIENTE_FAIL, payload: message });
+  }
+};
+
+
+
+export const groupByDay = () => async (dispatch, getState) => {
+  dispatch({ type: GROUPBYDAY_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get("/api/controles/groupedbyday", {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    console.log("data:", data)
+    dispatch({ type: GROUPBYDAY_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GROUPBYDAY_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+    });
+  }
+};
+
+export const cuadreDia = (fecha) => async (dispatch, getState) => {
+  dispatch({ type: CUADREDIA_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.get(`/api/controles/cuadrediario?fecha=${fecha}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: CUADREDIA_SUCCESS, payload: data });
+  } catch (error) {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+    dispatch({ type: CUADREDIA_FAIL, payload: message });
   }
 };

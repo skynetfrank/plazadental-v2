@@ -41,6 +41,462 @@ controlRouter.get(
 );
 
 
+
+controlRouter.get(
+  "/groupedbyday",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const dia = Number(22);
+    const mes = Number(11);
+    const ano = Number(2024);
+    const dailyControles = await Control.aggregate([
+      {
+        $project: {
+          fechaControl: 1,
+          paciente: 1,
+          doctor: 1,
+          serviciosItems: 1,
+          cambioBcv: 1,
+          montoUsd: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          pago: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+        },
+      },
+      {
+        $match: {
+          day: { $gte: dia },
+          month: { $gte: mes },
+          year: { $gte: ano },
+        },
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          controles: { $sum: 1 },
+          monto: { $sum: "$montoUsd" },
+        },
+      },
+
+      { $sort: { _id: -1 } },
+    ]);
+
+    res.send(dailyControles);
+  })
+);
+
+controlRouter.get(
+  "/cuadrediario",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const fecha1 = req.query.fecha;
+    const dia = Number(fecha1.substr(8, 2));
+    const mes = Number(fecha1.substr(5, 2));
+    const ano = Number(fecha1.substr(0, 4));
+
+    const count = await Control.countDocuments({});
+
+    const controles = await Control.aggregate([
+      {
+        $project: {
+          _id: 1,
+          fechaControl: 1,
+          paciente: 1,
+          doctor: 1,
+          serviciosItems: 1,
+          cambioBcv: 1,
+          montoUsd: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+        },
+      },
+      {
+        $lookup: {
+          from: "servicios",
+          localField: "serviciosItems.servicio",
+          foreignField: "_id",
+          as: "servicio_data",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "doctors",
+          localField: "doctor",
+          foreignField: "_id",
+          as: "doctor_data",
+        },
+      },
+      {
+        $unwind: "$doctor_data",
+      },
+      {
+        $lookup: {
+          from: "pacientes",
+          localField: "paciente",
+          foreignField: "_id",
+          as: "paciente_data",
+        },
+      },
+      {
+        $unwind: "$paciente_data",
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+    ]).sort({ fecha: 1 });
+
+    const cash = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalCashusd: { $sum: "$pago.efectivousd" },
+          totalCashbs: { $sum: "$pago.efectivobs" },
+          totalCasheuros: { $sum: "$pago.efectivoeuros" },
+          totalpagomobil: { $sum: "$pago.pagomovil.montopagomovil" },
+          totalzelle: { $sum: "$pago.zelle.montozelle" },
+          totalcashea: { $sum: "$pago.cashea.monto" },
+        },
+      },
+    ]);
+
+    const puntoPlz = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Plaza" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntoplaza: { $sum: "$pago.punto.montopunto" },
+        },
+      },
+    ]);
+
+    const puntoPlz2 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto2",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Plaza" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntoplaza: { $sum: "$pago.punto.montopunto2" },
+        },
+      },
+    ]);
+
+    const puntoPlz3 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto3",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Plaza" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntoplaza: { $sum: "$pago.punto.montopunto3" },
+        },
+      },
+    ]);
+
+    const puntoVzl = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Venezuela" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntovzla: { $sum: "$pago.punto.montopunto" },
+        },
+      },
+    ]);
+
+    const puntoVzl2 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto2",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Venezuela" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntovzla: { $sum: "$pago.punto.montopunto2" },
+        },
+      },
+    ]);
+
+    const puntoVzl3 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto3",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Venezuela" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntovzla: { $sum: "$pago.punto.montopunto3" },
+        },
+      },
+    ]);
+
+    const puntobanes = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Banesco" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntobanes: { $sum: "$pago.punto.montopunto" },
+        },
+      },
+    ]);
+
+    const puntobanes2 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto2",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Banesco" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntobanes: { $sum: "$pago.punto.montopunto2" },
+        },
+      },
+    ]);
+
+    const puntobanes3 = await Control.aggregate([
+      {
+        $project: {
+          fecha: 1,
+          pago: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fecha" },
+          month: { $month: "$fecha" },
+          year: { $year: "$fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          banco: "$pago.punto.bancodestinopunto3",
+        },
+      },
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+      {
+        $match: {
+          banco: { $eq: "Banesco" },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalpuntobanes: { $sum: "$pago.punto.montopunto3" },
+        },
+      },
+    ]);
+
+    const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
+    const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
+    const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
+
+    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
+  })
+);
+
+
+
 controlRouter.post(
   "/create",
   isAuth,
