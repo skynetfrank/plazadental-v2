@@ -1173,7 +1173,7 @@ img.tiny-image {
 }
 
 #tabla-cuadre tr td:nth-child(2) {
-  width: 150px;
+  width: 200px;
 }
 
 #tabla-cuadre tr td:nth-child(n + 3) {
@@ -1181,14 +1181,8 @@ img.tiny-image {
   padding-right: 5px;
 }
 
-#tabla-cuadre tr td:nth-child(n + 10),
-#tabla-cuadre tr td:nth-child(8) {
+#tabla-cuadre tr td:nth-child(n + 5) {
   text-align: center;
-}
-
-#tabla-cuadre tr th:nth-child(8) {
-  font-weight: bold;
-  background-color: yellow;
 }
 
 #tabla-cuadre thead tr th {
@@ -1196,17 +1190,21 @@ img.tiny-image {
 }
 
 .cuadre-descripcion p:nth-child(1) {
+  min-width: 10px;
+}
+
+
+.cuadre-descripcion p:nth-child(2) {
   min-width: 200px;
 }
 
-.cuadre-descripcion p:nth-child(2),
-.cuadre-descripcion p:nth-child(5) {
-  min-width: 30px;
+.cuadre-descripcion p:nth-child(2) {
+  min-width: 200px;
 }
 
-.cuadre-descripcion p:nth-child(3),
-.cuadre-descripcion p:nth-child(4) {
-  min-width: 10px;
+.cuadre-descripcion p:nth-child(3) {
+  min-width: 30px;
+  text-align: left;
 }
 
 #tabla-cuadre tfoot tr th {

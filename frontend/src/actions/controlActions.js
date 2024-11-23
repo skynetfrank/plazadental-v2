@@ -201,6 +201,7 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
     const { data } = await Axios.get(`/api/controles/cuadrediario?fecha=${fecha}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
+    console.log("data cash server",data)
     dispatch({ type: CUADREDIA_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message;

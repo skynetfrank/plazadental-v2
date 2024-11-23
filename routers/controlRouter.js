@@ -108,6 +108,8 @@ controlRouter.get(
           paciente: 1,
           doctor: 1,
           serviciosItems: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
           cambioBcv: 1,
           montoUsd: 1,
           pago: 1,
@@ -161,13 +163,13 @@ controlRouter.get(
     const cash = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
         },
       },
       {
@@ -193,13 +195,13 @@ controlRouter.get(
     const puntoPlz = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto",
         },
       },

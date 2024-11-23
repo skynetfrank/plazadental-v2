@@ -20,8 +20,8 @@ export default function CuadreDiarioScreen() {
 
   useEffect(() => {
     if (controles) {
-      const totalVentaBs = controles.reduce((sum, order) => Number(order.subtotal) * Number(order.cambioDia) + sum, 0);
-      const totalVentaUsd = controles.reduce((sum, order) => Number(order.subtotal) + sum, 0);
+      const totalVentaBs = controles.reduce((sum, order) => Number(order.montoUsd) * Number(order.cambioBcv) + sum, 0);
+      const totalVentaUsd = controles.reduce((sum, order) => Number(order.montoUsd) + sum, 0);
 
       setSubtotalcuadre(totalVentaBs);
       setVentaDolares(totalVentaUsd);
@@ -72,14 +72,13 @@ export default function CuadreDiarioScreen() {
             return " ";
           }
           return (
-            <div className="maxw-250">
+            <div>
               {serviciosItems.map((item, inx) => (
-                <div key={item.producto + inx} className="maxw-150">
+                <div key={item.producto + inx}>
                   <div className="cuadre-descripcion flx font-x pad-0">
-                    <p>{servicio_data[inx].nombre}</p>
                     <p>{item.cantidad}</p>
-                    <p>x</p>
-                    <p>${item.precioServ}</p>
+                    <p>{servicio_data[inx].nombre}</p>
+                    <p>(${item.precioServ})</p>
                   </div>
                 </div>
               ))}
@@ -97,6 +96,29 @@ export default function CuadreDiarioScreen() {
         },
         footer: ({ table }) => {
           const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          return "$" + Number(total).toFixed(2);
+        },
+      },
+      {
+        header: "Comision Doctor",
+        accessorKey: "montoComisionDr",
+        cell: (value) => {
+          return "$" + Number(value.getValue()).toFixed(2);
+        },
+        footer: ({ table }) => {
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
+          return "$" + Number(total).toFixed(2);
+        },
+      },
+      {
+        header: "Comision Plaza",
+        accessorKey: "montoComisionPlaza",
+        cell: (value) => {
+          console.log("comision:", value.getValue())
+          return "$" + Number(value.getValue()).toFixed(2);
+        },
+        footer: ({ table }) => {
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -267,7 +289,7 @@ export default function CuadreDiarioScreen() {
     const xfecha = dia + "-" + mes + "-" + ano;
     return xfecha;
   };
-  console.log("controles", controles);
+  console.log("cash", cash);
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">
