@@ -38,7 +38,7 @@ function ListaPacientes() {
           <div className="flx pad-0">
             <ToolTip text="Ver Info">
               <button
-                className="edit-cliente-btn"
+                className="circle-btn"
                 onClick={() => {
                   navigate(`/paciente/${_id}`);
                 }}
@@ -47,17 +47,17 @@ function ListaPacientes() {
               </button>
             </ToolTip>
             <ToolTip text="Editar">
-              <button onClick={() => navigate(`/paciente/${_id}/edit`)}>
+              <button className="circle-btn" onClick={() => navigate(`/paciente/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>
             <ToolTip text={"Controles " + controles.length}>
-              <button onClick={() => navigate(`/controles/${_id}`)}>
+              <button className="circle-btn" onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
               </button>
             </ToolTip>
             <ToolTip text="Eliminar">
-              <button onClick={() => navigate(`/controles/${_id}/edit`)}>
+              <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
             </ToolTip>
@@ -71,7 +71,7 @@ function ListaPacientes() {
     <div>
       <div className="flx jcenter gap1 pad-0">
         {" "}
-        <h2 className="centrado">Pacientes</h2>
+        <h2>Pacientes</h2>
         <ToolTip text="Agregar Paciente">
           <Link to="/crearpaciente">
             <button className="circle-btn">
