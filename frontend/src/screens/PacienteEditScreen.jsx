@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsPaciente, updatePaciente } from "../actions/pacienteActions";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { PACIENTE_UPDATE_RESET } from "../constants/pacienteConstants";
-import NumberFormat from "react-number-format";
+import { NumericFormat } from "react-number-format";
 import LoadingBox from "../components/LoadingBox";
-import { format } from "date-fns";
 
 export default function PacienteEditScreen(props) {
   const navigate = useNavigate();
@@ -629,7 +627,7 @@ export default function PacienteEditScreen(props) {
                   </label>
                 </div>
                 <div className="input-group">
-                  <NumberFormat
+                  <NumericFormat
                     format="####-###-##-##"
                     allowEmptyFormatting
                     mask="_"

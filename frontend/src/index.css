@@ -707,7 +707,6 @@ a:hover {
   height: 100px;
 }
 
-
 button.circle-btn {
   min-width: 35px;
   min-height: 35px;
@@ -769,12 +768,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -1192,7 +1191,6 @@ img.tiny-image {
 .cuadre-descripcion p:nth-child(1) {
   min-width: 10px;
 }
-
 
 .cuadre-descripcion p:nth-child(2) {
   min-width: 200px;
@@ -1648,7 +1646,6 @@ h4 {
   color: #203040 !important;
   font-weight: bold;
   opacity: 0.8 !important;
-
 }
 
 .slide-info {
@@ -1780,18 +1777,191 @@ h4 {
   max-width: 600px;
 }
 
-
 .btn-pago {
   margin: 5px;
   width: 50px;
   padding: 3px;
-
 }
 
 hr {
   margin: 5px 0;
 }
 
+/* STYLES PARA HISTORIAS DE PACIENTES */
+/* FORMS FORMULARIOS */
+
+#cedula {
+  text-transform: capitalize;
+}
+
+#form-paciente {
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1565c0;
+}
+
+.span-historia {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1565c0;
+  width: 100%;
+  text-align: center;
+}
+
+.select-wrapper {
+  position: relative;
+  padding-top: 5px;
+  margin: 10px 15px;
+}
+.select-wrapper::after {
+  content: attr(data-title);
+  position: absolute;
+  top: -12px;
+  left: 10px;
+  pointer-events: none;
+  font-size: 1.4rem;
+  color: #0b7cd8;
+  font-weight: bold;
+}
+
+.texto-checkbox {
+  text-align: justify;
+}
+
+#btn-codigo {
+  position: absolute;
+  top: 24px;
+  left: 230px;
+  padding: 3px 10px;
+}
+
+/* END OF FORMS FORMULARIOS */
+
+.inputs-section,
+.checkboxes-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #d9d9d9;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px auto;
+  max-width: 875px;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+/* INPUTS From uiverse.io by @alexruix */
+.input-group {
+  position: relative;
+  margin: 7px 15px;
+}
+
+.input {
+  width: 200px;
+  border: solid 1.5px #0868b6;
+  border-radius: 1rem;
+  padding: 0.6rem 0.6rem 0.6rem 1rem;
+  font-size: 1.6rem;
+  color: black;
+}
+
+.input.btn-select {
+  position: absolute;
+  right: 0;
+  width: 30px;
+  margin: 3px;
+  border-radius: 2px;
+  height: 30px;
+}
+
+.input.small {
+  width: 100px;
+}
+
+.input.tiny {
+  width: 90px;
+}
+
+.input.w300 {
+  width: 300px;
+}
+
+.user-label {
+  min-width: max-content;
+  position: absolute;
+  left: 10px;
+  color: #8a8a8a;
+  pointer-events: none;
+  transform: translateY(0.8rem);
+  transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.title-container {
+  margin: 15px;
+  text-align: center;
+}
+
+.span-box {
+  position: relative;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: #2962ff;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.span-box.comisiones {
+  width: 100px;
+}
+
+.span-box::before {
+  content: "Paciente";
+  position: absolute;
+  top: -12px;
+  left: -28px;
+  color: black;
+  width: 115px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.input:focus,
+input:valid {
+  outline: none;
+  border: 1.5px solid #1065d4;
+}
+
+.input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
+  transform: translateY(-50%) scale(0.8);
+  background-color: #ffffff;
+  /*padding: 0 0.2em;*/
+  color: #0b7cd8;
+  font-weight: bold;
+}
+
+.input:hover {
+  border-color: green;
+}
+
+.titulo-de-section {
+  position: relative;
+  top: 13px;
+  left: 165px;
+  font-weight: bolder;
+}
+/* EN OF INPUTS From uiverse.io by @alexruix */
+/* FIN DE STYLES PARA HISTORIAS */
 
 @media (max-width: 575px) {
   .brand-container {
@@ -1800,7 +1970,6 @@ hr {
 
   .swiper {
     width: 90vw;
-
   }
 
   .header-date,
@@ -1839,5 +2008,4 @@ hr {
   #form-new-control {
     margin-top: 2rem;
   }
-
 }

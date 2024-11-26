@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 const localdb = 'mongodb://localhost/plazadentaldb';
 //process.env.MONGODB_URI;
 mongoose
-  .connect(localdb)
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('mongodb =>: conectado'))
   .catch(e => console.log(e.message));
 

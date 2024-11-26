@@ -10,20 +10,17 @@ import EditIcon from "../icons/EditIcon";
 import ControlIcon from "../icons/ControlIcon";
 import TrashIcon from "../icons/TrashIcon";
 
-
 function ListaPacientes() {
   const navigate = useNavigate("");
   const pacienteList = useSelector((state) => state.pacienteList);
   const { loading, pacientes, count } = pacienteList;
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (!pacientes || pacientes.length === 0) {
       dispatch(listPacientes({}));
     }
-  }, [dispatch, pacientes])
-
+  }, [dispatch, pacientes]);
 
   const columns = [
     {
@@ -44,30 +41,27 @@ function ListaPacientes() {
                 className="edit-cliente-btn"
                 onClick={() => {
                   navigate(`/paciente/${_id}`);
-                }}>
+                }}
+              >
                 <InfoIcon />
               </button>
             </ToolTip>
             <ToolTip text="Editar">
-              <button
-                onClick={() => navigate(`/cliente/${_id}/edit`)}>
+              <button onClick={() => navigate(`/paciente/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>
             <ToolTip text={"Controles " + controles.length}>
-              <button
-                onClick={() => navigate(`/controles/${_id}`)}>
+              <button onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
               </button>
             </ToolTip>
             <ToolTip text="Eliminar">
-              <button
-                onClick={() => navigate(`/controles/${_id}/edit`)}>
+              <button onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
             </ToolTip>
           </div>
-
         );
       },
     },
@@ -75,9 +69,11 @@ function ListaPacientes() {
 
   return (
     <div>
-      <div className="flx jcenter gap1 pad-0">  <h2 className="centrado">Pacientes</h2>
+      <div className="flx jcenter gap1 pad-0">
+        {" "}
+        <h2 className="centrado">Pacientes</h2>
         <ToolTip text="Agregar Paciente">
-          <Link to='/crearpaciente'>
+          <Link to="/crearpaciente">
             <button className="circle-btn">
               <PacienteAddIcon />
             </button>
