@@ -255,6 +255,16 @@ export default function ControlCreateScreen(props) {
   };
 
   const getServicio = async () => {
+    if (!doctorId) {
+      Swal.fire({
+        text: "Seleccione el Doctor",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      return;
+    }
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
@@ -330,7 +340,7 @@ export default function ControlCreateScreen(props) {
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
-            Facturar
+            Servicios
           </button>
 
           <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
