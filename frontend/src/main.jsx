@@ -21,6 +21,7 @@ import CuadreDiarioScreen from "./screens/CuadreDiarioScreen";
 import ReporteCuadres from "./reportes/ReporteCuadres";
 import PacienteEditScreen from "./screens/PacienteEditScreen";
 import DoctorCreateScreen from "./screens/DoctorCreateScreen";
+import ServicioCreateScreen from "./screens/ServicioCreateScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +34,7 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<ProfileScreen />}></Route>
         <Route path="/crearpaciente" element={<PacienteCreateScreen />}></Route>
         <Route path="/creardoctor" element={<DoctorCreateScreen />}></Route>
-
+        <Route path="/crearservicio" element={<ServicioCreateScreen />}></Route>
         <Route path="/listapacientes" element={<ListaPacientes />}></Route>
         <Route path="/listadoctores" element={<ListaDoctores />}></Route>
         <Route path="/listaservicios" element={<ListaServicios />}></Route>

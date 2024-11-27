@@ -8,6 +8,7 @@ import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
 import TrashIcon from "../icons/TrashIcon";
 import { listServicios } from "../actions/servicioActions";
+import AddCircleIcon from "../icons/AddCircleIcon";
 
 
 function ListaServicios() {
@@ -41,17 +42,10 @@ function ListaServicios() {
         const { _id, servicios } = value.row.original;
         return (
           <div className="flx pad-0">
-            <ToolTip text="Ver Info">
-              <button
-                className="edit-cliente-btn"
-                onClick={() => {
-                  navigate(`/doctor/${_id}`);
-                }}>
-                <InfoIcon />
-              </button>
-            </ToolTip>
+
             <ToolTip text="Editar">
               <button
+                className="circle-btn"
                 onClick={() => navigate(`doctor/${_id}/edit`)}>
                 <EditIcon />
               </button>
@@ -59,6 +53,7 @@ function ListaServicios() {
 
             <ToolTip text="Eliminar">
               <button
+                className="circle-btn"
                 onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
@@ -72,12 +67,13 @@ function ListaServicios() {
 
   return (
     <div>
-      <div className="flx jcenter gap1 pad-0">  <h2 className="centrado">Doctores</h2>
+      <div className="flx jcenter gap1 pad-0">
+        <h2>Servicios</h2>
         <ToolTip text="Agregar Doctor">
-          <Link to='/creardoctor'>
-            <button className="circle-btn">
-              <PacienteAddIcon />
-            </button>
+          <Link to='/crearservicio'>
+
+            <AddCircleIcon />
+
           </Link>
         </ToolTip>
       </div>
