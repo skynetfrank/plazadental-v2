@@ -94,31 +94,31 @@ export default function ControlesScreen(props) {
 
 
 
-  /*   let confirmacion = window.confirm("ESTA SEGURO DE ELIMINAR ESTE CONTROL?");
-    if (confirmacion) {
-      let pw = prompt("Ingrese su clave", "");
-
-      if (pw !== "matias01") {
-        Swal.fire({
-          title: "Clave Erronea, verifique...",
-          text: "Ingrese Su Clave de Administrador",
-          icon: "warning",
-        });
+    /*   let confirmacion = window.confirm("ESTA SEGURO DE ELIMINAR ESTE CONTROL?");
+      if (confirmacion) {
+        let pw = prompt("Ingrese su clave", "");
+  
+        if (pw !== "matias01") {
+          Swal.fire({
+            title: "Clave Erronea, verifique...",
+            text: "Ingrese Su Clave de Administrador",
+            icon: "warning",
+          });
+          return;
+        }
+        if (pw === "matias01") {
+          dispatch(deleteControl(control._id));
+          dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
+          dispatch(detailsPaciente(pacienteId));
+          Swal.fire({
+            title: "Control Eliminado con Exito!",
+            text: "Eliminar Control",
+            icon: "success",
+          });
+        }
+      } else {
         return;
-      }
-      if (pw === "matias01") {
-        dispatch(deleteControl(control._id));
-        dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
-        dispatch(detailsPaciente(pacienteId));
-        Swal.fire({
-          title: "Control Eliminado con Exito!",
-          text: "Eliminar Control",
-          icon: "success",
-        });
-      }
-    } else {
-      return;
-    } */
+      } */
   };
 
   const addControlHandler = () => {
@@ -139,7 +139,7 @@ export default function ControlesScreen(props) {
           </button>
         </ToolTip>
       </div>
-    
+
 
       <>
         <Swiper
@@ -254,8 +254,8 @@ export default function ControlesScreen(props) {
 
                       </div>
                       <h4>Comisiones:</h4>
-                      <p>Comision Plaza 60% : ${item.control.montoComisionPlaza}</p>
-                      <p>Comision Doctor 40%: ${item.control.montoComisionDr}</p>
+                      <p>Comision Plaza : ${Number(item.control.montoComisionPlaza).toFixed(2) + " (" + (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}</p>
+                      <p>Comision Doctor: ${Number(item.control.montoComisionDr).toFixed(2) + " (" + (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}</p>
                     </div>
 
                   </div>

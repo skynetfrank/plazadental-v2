@@ -1963,6 +1963,10 @@ input:not(:placeholder-shown) ~ label {
 /* EN OF INPUTS From uiverse.io by @alexruix */
 /* FIN DE STYLES PARA HISTORIAS */
 
+.doctor-img{
+  width: 40px;
+}
+
 @media (max-width: 575px) {
   .brand-container {
     display: none;

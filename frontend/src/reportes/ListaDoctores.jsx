@@ -33,6 +33,12 @@ function ListaDoctores() {
     { header: "Telefono", accessorKey: "celular" },
     { header: "Especialidad", accessorKey: "especialidad" },
     {
+      header: "Comision", accessorKey: "tasaComisionDoctor", cell: (value) => {
+        return value.getValue() * 100 + "%"
+      }
+    },
+
+    {
       header: "Acciones",
       accessorKey: "_id",
       cell: (value) => {
@@ -41,7 +47,7 @@ function ListaDoctores() {
           <div className="flx pad-0">
             <ToolTip text="Ver Info">
               <button
-                className="edit-cliente-btn"
+                className="circle-btn"
                 onClick={() => {
                   navigate(`/doctor/${_id}`);
                 }}>
@@ -50,6 +56,7 @@ function ListaDoctores() {
             </ToolTip>
             <ToolTip text="Editar">
               <button
+                className="circle-btn"
                 onClick={() => navigate(`doctor/${_id}/edit`)}>
                 <EditIcon />
               </button>
@@ -57,6 +64,7 @@ function ListaDoctores() {
 
             <ToolTip text="Eliminar">
               <button
+                className="circle-btn"
                 onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
@@ -70,7 +78,8 @@ function ListaDoctores() {
 
   return (
     <div>
-      <div className="flx jcenter gap1 pad-0">  <h2 className="centrado">Doctores</h2>
+      <div className="flx jcenter gap1 pad-0">
+        <h2>Doctores</h2>
         <ToolTip text="Agregar Doctor">
           <Link to='/creardoctor'>
             <button className="circle-btn">

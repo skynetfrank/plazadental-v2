@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createDoctor } from '../actions/doctorActions';
-import { toast } from 'react-toastify';
 import { DOCTOR_CREATE_RESET } from '../constants/doctorConstants';
-import NumberFormat from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
+import Swal from "sweetalert2";
 
 export default function DoctorCreateScreen(props) {
 	const [nombre, setNombre] = useState('');
@@ -18,6 +18,7 @@ export default function DoctorCreateScreen(props) {
 	const [contacto, setContacto] = useState('');
 	const [especialidad, setEspecialidad] = useState('');
 	const [numeroColegio, setNumeroColegio] = useState('');
+	const [tasaComisionDoctor, setTasaComisionDr] = useState(0.40)
 
 	const [fotoUrl, setFotoUrl] = useState('');
 
@@ -72,9 +73,12 @@ export default function DoctorCreateScreen(props) {
 
 	useEffect(() => {
 		if (doctor) {
-			toast.success('Doctor Registrado con Exito!', {
-				position: 'top-center',
-				autoClose: 500,
+			Swal.fire({
+				text: "Doctor Registrado!",
+				imageUrl: "/tiny_logo.jpg",
+				imageWidth: 70,
+				imageHeight: 30,
+				imageAlt: "logo",
 			});
 		}
 		dispatch({ type: DOCTOR_CREATE_RESET });
@@ -96,8 +100,8 @@ export default function DoctorCreateScreen(props) {
 
 	return (
 		<div className='main-container'>
-			<div className='add-doctor-container'>
-				<h1>Agregar Doctor</h1>
+			<div className='flx jcenter gap1'>
+				<h2>Agregar Doctor</h2>
 				<div>
 					<img src={fotoUrl} alt='doctor' className='doctor-img' />
 				</div>
@@ -187,7 +191,7 @@ export default function DoctorCreateScreen(props) {
 							</label>
 						</div>
 						<div className='input-group'>
-							<NumberFormat
+							<NumericFormat
 								format='####-###-##-##'
 								allowEmptyFormatting
 								mask='_'
@@ -274,6 +278,20 @@ export default function DoctorCreateScreen(props) {
 									</option>
 								))}
 							</select>
+						</div>
+						<div className='input-group'>
+							<input
+								type='text'
+								placeholder=' '
+								className='input'
+								autoComplete='off'
+								step={0.1}
+								value={tasaComisionDoctor}
+								onChange={(e) => setTasaComisionDr(e.target.value)}
+							></input>
+							<label htmlFor='contacto' className='user-label'>
+								Tasa Comision
+							</label>
 						</div>
 					</div>
 

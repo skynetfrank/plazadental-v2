@@ -103,6 +103,16 @@ export default function ControlCreateScreen(props) {
     }
   }, [dispatch, paciente, pacienteId]);
 
+
+  useEffect(() => {
+    const doctorFound = listaDoctores.find((x) => x._id === doctorId)
+    console.log("doctorFound", doctorFound)
+    if (doctorFound) {
+      setTasaComisionDr(doctorFound.tasaComisionDoctor)
+      setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor)
+    }
+  }, [doctorId, listaDoctores])
+
   useEffect(() => {
     setMontoComisionDr(totalGeneral * (tasaComisionDr));
     setMontoComisionPlaza(totalGeneral * (tasaComisionPlaza));
@@ -142,8 +152,8 @@ export default function ControlCreateScreen(props) {
       setMontoUsd(0);
       setCambioBcv(0);
       setMontoBs(0);
-      setTasaComisionDr(40);
-      setTasaComisionPlaza(60);
+      setTasaComisionDr(0.40);
+      setTasaComisionPlaza(0.60);
       setMontoComisionDr(0);
       setMontoComisionPlaza(0);
       setMateriales([]);
