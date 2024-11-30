@@ -33,7 +33,8 @@ function ListaDoctores() {
     { header: "Telefono", accessorKey: "celular" },
     { header: "Especialidad", accessorKey: "especialidad" },
     {
-      header: "Comision", accessorKey: "tasaComisionDoctor", cell: (value) => {
+      header: "Comision", accessorKey: "tasaComisionDoctor",
+      cell: (value) => {
         return value.getValue() * 100 + "%"
       }
     },
@@ -57,7 +58,7 @@ function ListaDoctores() {
             <ToolTip text="Editar">
               <button
                 className="circle-btn"
-                onClick={() => navigate(`doctor/${_id}/edit`)}>
+                onClick={() => navigate(`/doctor/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>
