@@ -147,9 +147,8 @@ button:hover {
   border-color: blue;
 }
 
-.btn-icon-container:has(svg.lock-icon) {
-  margin: 0;
-  min-width: 40px;
+.btn-icon-container:has(.lock-icon):hover {
+  background-color: transparent;
 }
 
 .home-buttons button {
@@ -768,12 +767,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -1929,8 +1928,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus~label,
-input:not(:placeholder-shown)~label {
+.input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1960,7 +1959,6 @@ button.button.small {
   padding: 5px 10px;
   margin: 5px;
 }
-
 
 @media (max-width: 575px) {
   .brand-container {

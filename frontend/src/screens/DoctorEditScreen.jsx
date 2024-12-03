@@ -313,9 +313,9 @@ export default function DoctorCreateScreen(props) {
 						</div>
 					</div>
 
-					<div id='btn-guardar-doctor'>
-						<button className='button' type='submit'>
-							Registrar Doctor
+					<div className='centrado'>
+						<button type='submit'>
+							Actualizar
 						</button>
 					</div>
 				</form>
