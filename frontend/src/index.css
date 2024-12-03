@@ -79,8 +79,13 @@ main {
 
 footer {
   grid-area: footer;
-  background-color: #58585e;
+  background-color: #dedede;
   text-align: center;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 button,
@@ -767,12 +772,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2 > span {
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -1928,8 +1933,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus ~ label,
-input:not(:placeholder-shown) ~ label {
+.input:focus~label,
+input:not(:placeholder-shown)~label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1959,6 +1964,341 @@ button.button.small {
   padding: 5px 10px;
   margin: 5px;
 }
+
+
+/*CSS PARA IMPRESION 06-OCT-2022   */
+
+.printer-container {
+  max-width: 750px;
+  padding: 0 20px;
+  margin-top: 100px;
+  margin-bottom: 510px;
+}
+
+.printer-container.recipe{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.print-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  width: 400px;
+  column-gap: 5px;
+  position: relative;
+}
+
+.social-icons img {
+  width: 20px;
+  height: 20px;
+}
+
+.social-icons p {
+  margin-right: 10px;
+}
+
+.factura {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.btn-print {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #203040;
+  color: white;
+}
+
+.btn-print.recipe{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
+
+.input-nfactura {
+  position: absolute;
+  width: 40px;
+  top: 100px;
+}
+
+.encabezado-print,
+.totales-print {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  width: 760px;
+}
+
+.encabezado-print.recipe {
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.titulo-recipe>h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.titulo-recipe>h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.totales-print {
+  border: none;
+  column-gap: 15px;
+  justify-content: flex-end;
+}
+
+.encabezado-print div p {
+  line-height: 24px;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.titulos-detalle-print {
+  width: 760px;
+  height: 30px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+}
+
+#nombre-print {
+  font-size: 14px;
+  color: black;
+  margin: 0 10px;
+}
+
+.titulo-print {
+  margin: 15px 0px 0px 20px;
+}
+
+.subtitulo-print {
+  margin: 0 0 0 100px;
+  color: black;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.titulos-detalle-print p {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card.resumen.print {
+  width: 340px;
+  box-shadow: none;
+  background-color: white;
+  margin: 0;
+  padding: 10px;
+}
+
+#mini-descripcion,
+#small-nombre {
+  font-size: 10px;
+  color: rgb(86, 85, 85);
+  margin: 0 10px;
+  line-height: 12px;
+}
+
+.footer-firma-print {
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+.footer-firma-print.recipe {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-direccion-print {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 15px;
+  text-align: center;
+}
+
+.footer-direccion-print p {
+  margin-bottom: 0;
+}
+
+.footer-telefono-print {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.footer-telefono-print p {
+  margin-top: 5px;
+}
+
+.row.print {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 700px;
+}
+
+.codigo-print {
+  width: 110px;
+  font-size: 1.2rem;
+}
+
+.descripcion-print {
+  min-width: 350px;
+}
+
+.qty.print {
+  position: relative;
+  width: 70px;
+  text-align: center;
+}
+
+.qty-price.print {
+  width: 60px;
+  position: relative;
+  left: 100px;
+}
+
+.qty-price.total {
+  position: relative;
+  left: 180px;
+  width: 60px;
+  text-align: right;
+}
+
+.bottom-resumen-print {
+  width: 340px;
+  border: 1px solid rgb(133, 133, 133);
+  text-align: center;
+  overflow: hidden;
+  margin: 7px;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.titulo-detalle-cant {
+  position: relative;
+  left: 10px;
+  margin-left: 100px;
+}
+
+.titulo-detalle-precio {
+  position: relative;
+  left: 50px;
+}
+
+.titulo-detalle-total {
+  position: relative;
+  left: -20px;
+}
+
+.items-print li p {
+  color: black;
+  font-weight: 500;
+}
+
+.bottom-section-print.recipe {
+  position: static;
+  top: 750px;
+}
+
+.bottom-section-print {
+  position: absolute;
+  top: 750px;
+}
+
+.rif-print {
+  margin: 0px 5px 5px 160px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.btn-print-order {
+  position: absolute;
+  left: 400px;
+  padding: 5px;
+}
+
+#btn-print-order-usd {
+  left: 350px;
+}
+
+.btn-print-order.almacen {
+  left: 300px;
+}
+
+.btn-print-order.almacen.dolar {
+  left: 340px;
+}
+
+.btn-print-order.entrega.dolar {
+  left: 440px;
+}
+
+.btn-print-order:hover .fa-house-user {
+  color: #203040;
+}
+
+.nombre-marca-print {
+  font-size: 1rem;
+}
+
+.cuadro-detalle-pago {
+  margin-top: 10px;
+}
+
+.detalle-pago-print li {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+.ul-resumen-print li {
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.ul-resumen-print hr {
+  margin: 5px 0;
+}
+
+.detalle-recipe-print {
+  width: 760px;
+  height: 100px;
+  border: 1px solid black;
+  padding: 30px 30px 30px 30px;
+  border-radius: 15px;
+}
+
+.detalle-recipe-print p {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.logo.recipe {
+  height: 80px;
+  width: 130px;
+}
+
+/*FIN DE CSS PARA IMPRESION 06-OCT-2022   */
+
 
 @media (max-width: 575px) {
   .brand-container {

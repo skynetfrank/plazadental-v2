@@ -44,16 +44,14 @@ export default function SigninScreen() {
 
   return loading ? (
     <Loader />
-  ) : error ? (
-    <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div className="flx jcenter">
-      <form className="form flx column bg-color b-radius border-1 pad-2 centrado" onSubmit={submitHandler}>
+      <form className="form flx column bg-color b-radius border-1 centrado" onSubmit={submitHandler}>
         <h2 className="centrado m-2">Iniciar Sesion</h2>
         <div className="flx column astart">
           <label htmlFor="email">Usuario</label>
           <input
-            className="b-radius border-1 pad-1 w-200"
+            className="border-1 pad-05 w-200"
             type="email"
             id="email"
             placeholder="Ingrese su Email"
@@ -61,10 +59,10 @@ export default function SigninScreen() {
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
-        <div className="flx column astart">
+        <div className="flx column astart mtop-1 mb">
           <label htmlFor="password">Password</label>
           <input
-            className="b-radius border-1 pad-1 w-200"
+            className="border-1 pad-05 w-200"
             type="password"
             placeholder="Ingrese su Clave"
             required
@@ -76,7 +74,7 @@ export default function SigninScreen() {
             Entrar
           </button>
         </div>
-        <div className="centrado m-2">
+        <div className="centrado m-1 font-x">
           <Link to={`/register?redirect=${redirect}`}>Crear Cuenta</Link>
         </div>
       </form>
