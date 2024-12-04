@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsPaciente, updatePaciente } from "../actions/pacienteActions";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PACIENTE_UPDATE_RESET } from "../constants/pacienteConstants";
 import { NumericFormat } from "react-number-format";
 import LoadingBox from "../components/LoadingBox";
+import Swal from "sweetalert2";
 
 export default function PacienteEditScreen(props) {
   const navigate = useNavigate();
@@ -164,10 +165,14 @@ export default function PacienteEditScreen(props) {
 
   useEffect(() => {
     if (successUpdate) {
-      toast.success("Informacion Actualizada ok", {
-        position: "top-center",
-        autoClose: 500,
+      Swal.fire({
+        title: "Informacion Actualizada ok",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
       });
+    
       navigate("/pacientelist");
     }
     if (!paciente || paciente._id !== pacienteId || successUpdate) {
@@ -183,7 +188,7 @@ export default function PacienteEditScreen(props) {
       setCedularepresentante(paciente.cedularepresentante || "");
       setGenero(paciente.genero || "");
       setEstadoCivil(paciente.estadoCivil || "");
-      setNacimiento(format(new Date(paciente.Nacimiento), "yyyy-MM-dd") || "");
+      setNacimiento(paciente.Nacimiento || "");
       setEdad(paciente.edad || "");
       setPeso(paciente.peso || "");
       setEstatura(paciente.estatura || "");
@@ -554,7 +559,7 @@ export default function PacienteEditScreen(props) {
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
-            toast.error("Ocurrio un error")
+           <span>error</span>
           ) : (
             <React.Fragment key={99}>
               <div className="span-historia">

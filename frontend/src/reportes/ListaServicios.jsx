@@ -2,8 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import InfoIcon from "../icons/InfoIcon";
-import PacienteAddIcon from "../icons/PacienteAddIcon";
 import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
 import TrashIcon from "../icons/TrashIcon";

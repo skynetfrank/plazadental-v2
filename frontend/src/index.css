@@ -6,6 +6,7 @@
   padding: 0;
   outline: none;
   text-decoration: none;
+  list-style: none;
 }
 
 html {
@@ -1135,7 +1136,7 @@ img.tiny-image {
 @media print {
   @page {
     size: auto;
-    margin: 5mm;
+    margin: 0;
   }
 
   body {
@@ -1975,7 +1976,8 @@ button.button.small {
   margin-bottom: 510px;
 }
 
-.printer-container.recipe{
+.printer-container.recipe,
+.printer-container.invoice {
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -2018,7 +2020,7 @@ button.button.small {
   color: white;
 }
 
-.btn-print.recipe{
+.btn-print.recipe {
   position: absolute;
   top: 100px;
   left: 200px;
@@ -2034,7 +2036,6 @@ button.button.small {
 .totales-print {
   display: flex;
   justify-content: space-between;
-  margin-top: 60px;
   margin-bottom: 10px;
   border: 1px solid black;
   padding: 10px 20px;
@@ -2161,7 +2162,7 @@ button.button.small {
 }
 
 .descripcion-print {
-  min-width: 350px;
+  min-width: 360px;
 }
 
 .qty.print {
@@ -2174,23 +2175,22 @@ button.button.small {
   width: 60px;
   position: relative;
   left: 100px;
+  text-align: right;
 }
 
 .qty-price.total {
   position: relative;
   left: 180px;
-  width: 60px;
+  width: 80px;
   text-align: right;
 }
 
 .bottom-resumen-print {
-  width: 340px;
+  width: 300px;
   border: 1px solid rgb(133, 133, 133);
-  text-align: center;
-  overflow: hidden;
-  margin: 7px;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
+  float: right;
 }
 
 .titulo-detalle-cant {
@@ -2216,11 +2216,6 @@ button.button.small {
 
 .bottom-section-print.recipe {
   position: static;
-  top: 750px;
-}
-
-.bottom-section-print {
-  position: absolute;
   top: 750px;
 }
 
@@ -2269,15 +2264,6 @@ button.button.small {
   margin-top: 0;
 }
 
-.ul-resumen-print li {
-  margin-top: 0.2rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.ul-resumen-print hr {
-  margin: 5px 0;
-}
 
 .detalle-recipe-print {
   width: 760px;
@@ -2296,6 +2282,21 @@ button.button.small {
   height: 80px;
   width: 130px;
 }
+
+.content-servicios-print {
+  min-height: 600px;
+}
+
+.bottom-resumen-print span {
+  min-width: 100px;
+
+}
+
+.fact-paciente-info{
+  max-width: 500px;
+}
+
+
 
 /*FIN DE CSS PARA IMPRESION 06-OCT-2022   */
 

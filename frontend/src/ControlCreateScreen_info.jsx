@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
 
+
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
   return date;
@@ -22,6 +23,7 @@ export default function ControlCreateScreen(props) {
   const navigate = useNavigate();
   const { search } = useLocation();
   const { id: pacienteId } = params;
+  const cita1 = new URLSearchParams(search).get("escita1");
 
   const [doctorId, setDoctorId] = useState("");
   const [user] = useState(userInfo._id);
@@ -48,8 +50,10 @@ export default function ControlCreateScreen(props) {
   const [pago, setPago] = useState({});
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
-  const [setTotalPago] = useState(0);
-  const [setTxtformapago] = useState(0);
+  const [qty, setQty] = useState(0);
+  const [totalPago, setTotalPago] = useState(0);
+  const [txtformapago, setTxtformapago] = useState(0);
+
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
@@ -57,9 +61,21 @@ export default function ControlCreateScreen(props) {
   const { paciente } = pacienteDetails;
 
   const controlCreate = useSelector((state) => state.controlCreate);
-  const { success, control } = controlCreate;
+  const { error, success, control } = controlCreate;
 
   const dispatch = useDispatch();
+
+  const bancos = [
+    "Venezuela",
+    "Banesco",
+    "Mercantil",
+    "Caribe",
+    "BNC",
+    "Provincial",
+    "Bancamiga",
+    "Banco Vzno Cdto",
+    "Banco del Tesoro",
+  ];
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -91,12 +107,31 @@ export default function ControlCreateScreen(props) {
 
   useEffect(() => {
     const doctorFound = listaDoctores.find((x) => x._id === doctorId)
+    console.log("doctorFound", doctorFound)
     if (doctorFound) {
       setTasaComisionDr(doctorFound.tasaComisionDoctor)
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor)
     }
   }, [doctorId, listaDoctores])
 
+  useEffect(() => {
+    setMontoComisionDr(totalGeneral * (tasaComisionDr));
+    setMontoComisionPlaza(totalGeneral * (tasaComisionPlaza));
+    setMontoUsd(totalGeneral);
+    setMontoBs(montoUsd * cambioBcv);
+    setMontoIva(montoBs * tasaIva);
+  }, [
+    cambioBcv,
+    montoBs,
+    montoComisionDr,
+    montoComisionPlaza,
+    montoIva,
+    montoUsd,
+    tasaComisionDr,
+    tasaComisionPlaza,
+    tasaIva,
+    totalGeneral,
+  ]);
 
   useEffect(() => {
     if (success) {
@@ -164,7 +199,7 @@ export default function ControlCreateScreen(props) {
         montoBs,
         tasaIva,
         montoIva,
-        descuento,
+        totalGeneral,
         tasaComisionDr,
         tasaComisionPlaza,
         montoComisionDr,
@@ -174,20 +209,50 @@ export default function ControlCreateScreen(props) {
     );
   };
 
+  const handleEvaluacion = (e) => {
+    e.preventDefault();
+    setEvaluacion((current) => current + e.target.value);
+  };
+
+  const handleTratamiento = (e) => {
+    e.preventDefault();
+    setTratamiento((current) => current + e.target.value);
+  };
+
   useEffect(() => {
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
-    const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
-    setMontoUsd(itemsPrice)
-    setMontoBs(itemsPrice * cambioBcv)
-    setMontoIva((itemsPrice * cambioBcv) * tasaIva)
-    setMontoComisionDr((itemsPrice - descuento) * tasaComisionDr);
-    setMontoComisionPlaza((itemsPrice - descuento) * tasaComisionPlaza);
-  }, [cambioBcv, descuento, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
+    const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0) - descuento);
+
+    setTotalGeneral(itemsPrice);
+  }, [descuento, serviciosItems]);
 
   const handleEliminarServicio = (e, id) => {
     e.preventDefault();
     const newarray = serviciosItems.filter((x) => x.servicio !== id);
     setServiciosItems(newarray);
+  };
+
+  const handlePayFromChild = (data, textopago) => {
+    console.log("data from payment", data, textopago)
+    setPago(data);
+    const bs = Number(data.efectivobs) / Number(cambioBcv);
+    const punto = Number(data.punto.montopunto) / Number(cambioBcv);
+    const punto2 = Number(data.punto.montopunto2) / Number(cambioBcv);
+    const punto3 = Number(data.punto.montopunto3) / Number(cambioBcv);
+    const pmobil = Number(data.pagomovil.montopagomovil) / Number(cambioBcv);
+
+    const suma =
+      bs +
+      punto +
+      punto2 +
+      punto3 +
+      pmobil +
+      Number(data.zelle.montozelle) +
+      Number(data.efectivousd) +
+      Number(data.efectivoeuros);
+
+    setTotalPago(Number(suma));
+    setTxtformapago(textopago);
   };
 
   const getServicio = async () => {
@@ -256,9 +321,11 @@ export default function ControlCreateScreen(props) {
     });
   };
 
+
   const dateHandler = (e) => {
     setFechaControl(e)
   }
+
 
   const getDescuento = async () => {
     const { value: discount } = await Swal.fire({
@@ -273,38 +340,7 @@ export default function ControlCreateScreen(props) {
     }
   };
 
-  const handleEvaluacion = (e) => {
-    e.preventDefault();
-    setEvaluacion((current) => current + e.target.value);
-  };
 
-  const handleTratamiento = (e) => {
-    e.preventDefault();
-    setTratamiento((current) => current + e.target.value);
-  };
-
-  const handlePayFromChild = (data, textopago) => {
-    console.log("data from payment", data, textopago)
-    setPago(data);
-    const bs = Number(data.efectivobs) / Number(cambioBcv);
-    const punto = Number(data.punto.montopunto) / Number(cambioBcv);
-    const punto2 = Number(data.punto.montopunto2) / Number(cambioBcv);
-    const punto3 = Number(data.punto.montopunto3) / Number(cambioBcv);
-    const pmobil = Number(data.pagomovil.montopagomovil) / Number(cambioBcv);
-
-    const suma =
-      bs +
-      punto +
-      punto2 +
-      punto3 +
-      pmobil +
-      Number(data.zelle.montozelle) +
-      Number(data.efectivousd) +
-      Number(data.efectivoeuros);
-
-    setTotalPago(Number(suma));
-    setTxtformapago(textopago);
-  };
 
   return (
     <div>
@@ -334,42 +370,8 @@ export default function ControlCreateScreen(props) {
             Guardar
           </button>
         </div>
-        <div>
-          {serviciosItems?.length > 0 ? (
-            <div className="show-servicios">
-              {serviciosItems.map((m, inx) => {
-                const foundit = listaServicios.find((x) => x._id === m.servicio);
-
-                return (
-                  <div key={inx} className="flx mb03">
-                    <span className="minw-10">{m.cantidad}</span>
-                    <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
-
-                    <span className="minw-30 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
-
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      onClick={(e) => handleEliminarServicio(e, m.servicio)}
-                      className="ml minw-20 txt-align-l"
-                    />
-                  </div>
-                );
-              })}
-              <hr />
-              <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
-              <p className="centrado negrita minw-30">Total Neto : ${montoUsd - descuento}</p>
-              <div className="centrado">
-                <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => setShowPaymentModal(true)}>
-                  Registrar Pago
-                </button>
-              </div>
 
 
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
 
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
@@ -423,8 +425,8 @@ export default function ControlCreateScreen(props) {
         <PaymentForm
           onClose={() => setShowPaymentModal(false)}
           sendPayToParent={handlePayFromChild}
-          montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
-          montoPagoUsd={Number(montoUsd).toFixed(2)}
+          montoPagoBs={Number(totalGeneral * cambioBcv).toFixed(2)}
+          montoPagoUsd={Number(totalGeneral).toFixed(2)}
         />
       )}
     </div>

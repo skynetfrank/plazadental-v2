@@ -45,6 +45,7 @@ const controlSchema = new mongoose.Schema(
     montoBs: { type: Number, default: 0 },
     tasaIva: { type: Number, default: 0.16 },
     montoIva: { type: Number, default: 0 },
+    descuento: { type: Number, default: 0 },
     tasaComisionDr: { type: Number, default: 0 },
     tasaComisionPlaza: { type: Number, default: 0 },
     montoComisionDr: { type: Number, default: 0 },

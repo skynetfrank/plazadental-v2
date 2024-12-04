@@ -243,6 +243,8 @@ export default function ControlesScreen(props) {
                           );
                         })}
                       </div>
+                      <h4>Descuento:</h4>
+                      <p>${Number(item.control?.descuento).toFixed(2)}</p>
                       <h4>Pago:</h4>
                       <div>
                         <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + (item.control.pago.efectivousd) : ("")}</p>

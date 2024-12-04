@@ -6,9 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import dayjs from "dayjs";
 import {
-	faAddressCard,
 	faAllergies,
-	faGrimace,
 	faHandHoldingMedical,
 	faHouseMedicalCircleCheck,
 } from '@fortawesome/free-solid-svg-icons';

@@ -1,4 +1,6 @@
 import React from 'react';
+import dayjs from "dayjs";
+
 
 // Create Document Component
 // eslint-disable-next-line react/display-name
@@ -21,7 +23,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 				<div>
 					<div>
 						<div className='encabezado-print'>
-							<div>
+							<div className='fact-paciente-info'>
 								<p>
 									<strong>Numero de R.I.F.: </strong>
 									{control.paciente.cedula}
@@ -41,10 +43,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 								<p>
 									<strong>Factura Numero:</strong> {nfact} <br />
 									<strong>Fecha de Emision:</strong>{' '}
-									{props.control.createdAt}
+									{dayjs(new Date(props.control.createdAt)).format("DD/MM/YYYY")}
 									<br />
 									<strong>Vencimiento:</strong>{' '}
-									{props.control.createdAt}
+									{dayjs(new Date(props.control.createdAt)).format("DD/MM/YYYY")}
 									<br />
 									<strong>Condiciones: </strong>
 									De Contado <br />
@@ -57,89 +59,75 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 							<p className='titulo-detalle-precio'>Precio Unitario</p>
 							<p className='titulo-detalle-total'>Monto Bs.</p>
 						</div>
-						<ul>
-							<li>
-								<div>
-									<ul>
-										{control.serviciosItems.map((item, inx) => (
-											<li className='separator-print' key={inx}>
-												<div className='row print'>
-													<div className='qty print'>
-														<p>{item.cantidad}</p>
-													</div>
 
-													<div className='descripcion-print'>
-														<span className='nombre-marca-print'>
-															{item.servicio.nombre}
-														</span>
-														<p id='mini-descripcion'>
-															Atendido por: Dr. {control.doctor.nombre}
-														</p>
-													</div>
 
-													<div className='qty-price print'>
-														<p>
-															{(item.precioServ * control.cambioBcv).toFixed(2)}
-														</p>
-													</div>
-													<div className='qty-price total'>
-														<p>
-															{(
-																item.cantidad *
-																item.precioServ *
-																control.cambioBcv
-															).toFixed(2)}
-														</p>
-													</div>
-												</div>
-											</li>
-										))}
-									</ul>
-								</div>
-							</li>
-						</ul>
+						<div className='content-servicios-print'>
+							<ul>
+								{control.serviciosItems.map((item, inx) => (
+									<li className='separator-print' key={inx}>
+										<div className='row print'>
+											<div className='qty print'>
+												<p>{item.cantidad}</p>
+											</div>
+
+											<div className='descripcion-print'>
+												<span className='nombre-marca-print'>
+													{item.servicio.nombre}
+												</span>
+												<p id='mini-descripcion'>
+													Atendido por: Dr. {control.doctor.nombre}
+												</p>
+											</div>
+
+											<div className='qty-price print'>
+												<p>
+													{(item.precioServ * control.cambioBcv).toFixed(2)}
+												</p>
+											</div>
+											<div className='qty-price total'>
+												<p>
+													{(
+														item.cantidad *
+														item.precioServ *
+														control.cambioBcv
+													).toFixed(2)}
+												</p>
+											</div>
+										</div>
+									</li>
+								))}
+							</ul>
+						</div>
 					</div>
 					<div>
 						<br></br>
 					</div>
-
-					<div className='bottom-section-print'>
-						<div className='totales-print'>
-							<div className='bottom-resumen-print'>
-								<ul className='ul-resumen-print'>
-									<li>
-										<div className='flx'>
-											<div>Base Imponible</div>
-											<div>{control.montoBs.toFixed(2)}</div>
-										</div>
-									</li>
-
-									<hr />
-									<li>
-										<div className='flx'>
-											<div>Monto Exento:</div>
-											<div>Bs. {0.0}</div>
-										</div>
-									</li>
-									<hr />
-									<li>
-										<div className='flx'>
-											<div>I.V.A. 16%</div>
-											<div>Bs.{control.montoIva.toFixed(2)}</div>
-										</div>
-									</li>
-									<hr />
-									<li>
-										<div className='flx'>
-											<div>
-												<strong>Total</strong>
-											</div>
-											<div>Bs.{control.totalGeneralBs.toFixed(2)}</div>
-										</div>
-									</li>
-								</ul>
-							</div>
+					<div className='bottom-resumen-print'>
+						<div className='flx jsb'>
+							<span className='.txt-align-l'>Base Imponible</span>
+							<span className='.txt-align-r'>Bs. {control.montoBs.toFixed(2)}</span>
 						</div>
+						<hr />
+						<div className='flx jsb'>
+							<span className='.txt-align-l'>Monto Exento:</span>
+							<span className='.txt-align-r'>Bs. {0.0}</span>
+						</div>
+
+						<hr />
+
+						<div className='flx jsb'>
+							<span className='.txt-align-l'>I.V.A. 16%</span>
+							<span className='.txt-align-r'>Bs.{control.montoIva?.toFixed(2)}</span>
+						</div>
+
+						<hr />
+
+						<div className='flx jsb'>
+							<span className='.txt-align-l'>Total</span>
+							<span className='.txt-align-r'>Bs.{control.totalGeneralBs?.toFixed(2)}</span>
+						</div>
+
+
 					</div>
 				</div>
 			</div>

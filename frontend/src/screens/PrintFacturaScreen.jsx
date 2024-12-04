@@ -10,10 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 
 export default function PrintFacturaScreen(props) {
-  const componentRef = useRef();
-  const handlePrint = useReactToPrint({
-    content: () => componentRef.current,
-  });
+  const contentRef = useRef(null);
+  const handlePrint = useReactToPrint({ contentRef });
 
   const params = useParams();
   const { id: controlId } = params;
@@ -37,9 +35,9 @@ export default function PrintFacturaScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div className="printer-container">
+    <div className="printer-container invoice">
       <div className="factura">
-        <div class="input-group">
+        <div className="input-group">
           <input
             type="text"
             className="input small"
@@ -49,7 +47,7 @@ export default function PrintFacturaScreen(props) {
             required
             onChange={e => setNfact(e.target.value)}
           />
-          <label htmlFor="cedula" class="user-label">
+          <label htmlFor="cedula" className="user-label">
             Factura No.
           </label>
         </div>
@@ -57,7 +55,7 @@ export default function PrintFacturaScreen(props) {
           <FontAwesomeIcon icon={faPrint} />
         </button>
       </div>
-      <ComponentToPrint control={control} nfact={nfact} userInfo={userInfo} ref={componentRef} />
+      <ComponentToPrint control={control} nfact={nfact} userInfo={userInfo} ref={contentRef} />
     </div>
   );
 }

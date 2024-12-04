@@ -41,15 +41,12 @@ export const createControl =
     montoBs,
     tasaIva,
     montoIva,
-    totalGeneralBs,
+    descuento,
     tasaComisionDr,
     tasaComisionPlaza,
     montoComisionDr,
     montoComisionPlaza,
-    pago,
-    factura,
-    facturaControl,
-    fechaFactura
+    pago
   ) =>
     async (dispatch, getState) => {
       dispatch({ type: CONTROL_CREATE_REQUEST });
@@ -77,15 +74,12 @@ export const createControl =
             montoBs,
             tasaIva,
             montoIva,
-            totalGeneralBs,
+            descuento,
             tasaComisionDr,
             tasaComisionPlaza,
             montoComisionDr,
             montoComisionPlaza,
-            pago,
-            factura,
-            facturaControl,
-            fechaFactura,
+            pago
           },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },
@@ -201,7 +195,7 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
     const { data } = await Axios.get(`/api/controles/cuadrediario?fecha=${fecha}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log("data cash server",data)
+    console.log("data cash server", data)
     dispatch({ type: CUADREDIA_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
