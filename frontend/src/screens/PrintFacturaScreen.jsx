@@ -51,6 +51,34 @@ export default function PrintFacturaScreen(props) {
             Factura No.
           </label>
         </div>
+        <div className="input-group">
+          <input
+            type="text"
+            className="input small"
+            autoComplete="off"
+            placeholder=" "
+            value={nfact}
+            required
+            onChange={e => setNfact(e.target.value)}
+          />
+          <label htmlFor="cedula" className="user-label">
+            Factura No.
+          </label>
+        </div>
+        <div className="input-group">
+          <input
+            type="text"
+            className="input small"
+            autoComplete="off"
+            placeholder=" "
+            value={nfact}
+            required
+            onChange={e => setNfact(e.target.value)}
+          />
+          <label htmlFor="cedula" className="user-label">
+            Factura No.
+          </label>
+        </div>
         <button className="btn-print" onClick={handlePrint}>
           <FontAwesomeIcon icon={faPrint} />
         </button>

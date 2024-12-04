@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import dayjs from "dayjs";
 
 
 // Create Document Component
 // eslint-disable-next-line react/display-name
 const ComponentToPrint = React.forwardRef((props, ref) => {
+	const [razonSocial,setRazonsocial]=useState("")
+	const [direccion,setDireccion]=useState("")
+	const [rif,setRif]=useState("")
+	
 	const control = props.control;
 	const nfact = props.nfact;
 	const userInfo = props.userInfo;
@@ -104,27 +108,27 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 					</div>
 					<div className='bottom-resumen-print'>
 						<div className='flx jsb'>
-							<span className='.txt-align-l'>Base Imponible</span>
-							<span className='.txt-align-r'>Bs. {control.montoBs.toFixed(2)}</span>
+							<span className='txt-align-l'>Base Imponible</span>
+							<span className='txt-align-r'>Bs. {control.montoBs.toFixed(2)}</span>
 						</div>
 						<hr />
 						<div className='flx jsb'>
-							<span className='.txt-align-l'>Monto Exento:</span>
-							<span className='.txt-align-r'>Bs. {0.0}</span>
-						</div>
-
-						<hr />
-
-						<div className='flx jsb'>
-							<span className='.txt-align-l'>I.V.A. 16%</span>
-							<span className='.txt-align-r'>Bs.{control.montoIva?.toFixed(2)}</span>
+							<span className='txt-align-l'>Monto Exento:</span>
+							<span className='txt-align-r'>Bs. {0.0}</span>
 						</div>
 
 						<hr />
 
 						<div className='flx jsb'>
-							<span className='.txt-align-l'>Total</span>
-							<span className='.txt-align-r'>Bs.{control.totalGeneralBs?.toFixed(2)}</span>
+							<span className='txt-align-l'>I.V.A. 16%</span>
+							<span className='txt-align-r'>Bs.{control.montoIva?.toFixed(2)}</span>
+						</div>
+
+						<hr />
+
+						<div className='flx jsb'>
+							<span className='txt-align-l'>Total</span>
+							<span className='txt-align-r'>Bs.{Number(control.montoBs+control.montoIva).toFixed(2)}</span>
 						</div>
 
 
