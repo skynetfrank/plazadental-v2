@@ -9,20 +9,17 @@ import EditIcon from "../icons/EditIcon";
 import TrashIcon from "../icons/TrashIcon";
 import { listDoctores } from "../actions/doctorActions";
 
-
 function ListaDoctores() {
   const navigate = useNavigate("");
   const doctorList = useSelector((state) => state.doctorList);
   const { loading, doctores, count } = doctorList;
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (!doctores || doctores.length === 0) {
       dispatch(listDoctores({}));
     }
-  }, [dispatch, doctores])
-
+  }, [dispatch, doctores]);
 
   const columns = [
     {
@@ -32,11 +29,13 @@ function ListaDoctores() {
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
     { header: "Especialidad", accessorKey: "especialidad" },
+    { header: "# Colegio", accessorKey: "numeroColegio" },
     {
-      header: "Comision", accessorKey: "tasaComisionDoctor",
+      header: "Comision",
+      accessorKey: "tasaComisionDoctor",
       cell: (value) => {
-        return value.getValue() * 100 + "%"
-      }
+        return value.getValue() * 100 + "%";
+      },
     },
 
     {
@@ -51,27 +50,23 @@ function ListaDoctores() {
                 className="circle-btn"
                 onClick={() => {
                   navigate(`/doctor/${_id}`);
-                }}>
+                }}
+              >
                 <InfoIcon />
               </button>
             </ToolTip>
             <ToolTip text="Editar">
-              <button
-                className="circle-btn"
-                onClick={() => navigate(`/doctor/${_id}/edit`)}>
+              <button className="circle-btn" onClick={() => navigate(`/doctor/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>
 
             <ToolTip text="Eliminar">
-              <button
-                className="circle-btn"
-                onClick={() => navigate(`/controles/${_id}/edit`)}>
+              <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>
             </ToolTip>
           </div>
-
         );
       },
     },
@@ -82,7 +77,7 @@ function ListaDoctores() {
       <div className="flx jcenter gap1 pad-0">
         <h2>Doctores</h2>
         <ToolTip text="Agregar Doctor">
-          <Link to='/creardoctor'>
+          <Link to="/creardoctor">
             <button className="circle-btn">
               <PacienteAddIcon />
             </button>

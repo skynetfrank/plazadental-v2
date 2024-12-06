@@ -92,7 +92,7 @@ footer {
 button,
 input,
 .btn-lookalike {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid #a4a4a4;
 }
@@ -2302,6 +2302,18 @@ button.button.small {
 }
 
 /*FIN DE CSS PARA IMPRESION 06-OCT-2022   */
+
+.paciente-info-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 300px;
+  align-items: center;
+  background-color: #ebebeb;
+  padding: 2rem;
+  border-radius: 5px;
+  border: 1px solid rgb(183, 183, 183);
+}
 
 @media (max-width: 575px) {
   .brand-container {
