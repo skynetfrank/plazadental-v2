@@ -31,7 +31,7 @@ export default function PacienteScreen(props) {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div className="flx column " >
-      <div className="paciente-info-container">
+      <div className="paciente-info-container font-12">
         <PacienteInfoIcon />
         <span className="font-14 negrita">{paciente.nombre + " " + paciente.apellido}</span>
         <span>{paciente.cedula + " - " + paciente.telefono + " " + paciente.celular}</span>
