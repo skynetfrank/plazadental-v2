@@ -2315,6 +2315,13 @@ button.button.small {
   border: 1px solid rgb(183, 183, 183);
 }
 
+
+.division{
+  width: 100%;
+  border-bottom: 1px solid black;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
 @media (max-width: 575px) {
   .brand-container {
     display: none;

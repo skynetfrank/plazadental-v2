@@ -46,8 +46,8 @@ controlRouter.get(
   "/groupedbyday",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const dia = Number(22);
-    const mes = Number(11);
+    const dia = Number(1);
+    const mes = Number(12);
     const ano = Number(2024);
     const dailyControles = await Control.aggregate([
       {

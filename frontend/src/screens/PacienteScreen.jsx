@@ -33,28 +33,27 @@ export default function PacienteScreen(props) {
     <div className="flx column " >
       <div className="paciente-info-container">
         <PacienteInfoIcon />
-        <span className="font-14">{paciente.nombre + " " + paciente.apellido}</span>
+        <span className="font-14 negrita">{paciente.nombre + " " + paciente.apellido}</span>
         <span>{paciente.cedula + " - " + paciente.telefono + " " + paciente.celular}</span>
-
         <span>{dayjs(new Date(paciente.Nacimiento)).format("DD/MM/YYYY") + " - " + paciente.edad + " años "}</span>
-
         <span>{paciente.genero + " " + paciente.estadoCivil}</span>
         <span>{paciente.peso + " Kgs - " + paciente.estatura + " Mts"}</span>
         <span>{paciente.email}</span>
         <span>{paciente.contacto}</span>
-        <span className="font-tiny">{paciente.direccion}</span>
-        <div>
+        <span className="division">{paciente.direccion}</span>
+
+        <div className="division">
           <span>Alergias:</span>
           <div className="content">
             <p>
               {paciente.alergias.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.alergias.map((alergia) => {
-                    if (alergia === "") {
-                      return "";
-                    }
-                    return alergia + ", ";
-                  })}
+                  if (alergia === "") {
+                    return "";
+                  }
+                  return alergia + ", ";
+                })}
             </p>
             <div className="datos">
               <p>Otras Alergias:</p>
@@ -62,35 +61,35 @@ export default function PacienteScreen(props) {
             </div>
           </div>
         </div>
-        <div>
+        <div className="division">
           <span>Antecedentes Personales:</span>
           <div className="content">
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No Refiere"
               : paciente.antecedentesPersonales.map((bgp, inx) => {
-                  if (bgp === "") {
-                    return "";
-                  }
-                  return <p key={inx}>{bgp}</p>;
-                })}
+                if (bgp === "") {
+                  return "";
+                }
+                return <p key={inx}>{bgp}</p>;
+              })}
             <p>Tratado por Medico por: {paciente.tratadoPorEnfermedad}</p>
             <p>Toma Medicamentos: {paciente.medicamentos}</p>
             <p>Dosis: {paciente.dosis}</p>
             <p>Habitos: {paciente.habitos}</p>
           </div>
         </div>
-        <div>
+        <div className="division">
           <span>Antecedentes Familiares:</span>
           <div className="content">
             <p>
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.antecedentesFamiliares.map((bgf) => {
-                    if (bgf === "") {
-                      return "";
-                    }
-                    return bgf + ", ";
-                  })}
+                  if (bgf === "") {
+                    return "";
+                  }
+                  return bgf + " ";
+                })}
             </p>
           </div>
         </div>
