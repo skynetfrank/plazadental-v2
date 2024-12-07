@@ -123,7 +123,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>03dic2024</span>
+            <span>07dic2024</span>
           </footer>
         </div>
       )}

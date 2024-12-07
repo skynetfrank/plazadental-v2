@@ -26,7 +26,6 @@ export default function ControlesScreen(props) {
   const navigate = useNavigate();
   const params = useParams();
   const { id: pacienteId } = params;
-  const [montoPagos, setMontoPagos] = useState(0)
 
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente, loading, error } = pacienteDetails;
@@ -80,45 +79,6 @@ export default function ControlesScreen(props) {
         });
       }
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*   let confirmacion = window.confirm("ESTA SEGURO DE ELIMINAR ESTE CONTROL?");
-      if (confirmacion) {
-        let pw = prompt("Ingrese su clave", "");
-  
-        if (pw !== "matias01") {
-          Swal.fire({
-            title: "Clave Erronea, verifique...",
-            text: "Ingrese Su Clave de Administrador",
-            icon: "warning",
-          });
-          return;
-        }
-        if (pw === "matias01") {
-          dispatch(deleteControl(control._id));
-          dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
-          dispatch(detailsPaciente(pacienteId));
-          Swal.fire({
-            title: "Control Eliminado con Exito!",
-            text: "Eliminar Control",
-            icon: "success",
-          });
-        }
-      } else {
-        return;
-      } */
   };
 
   const addControlHandler = () => {
@@ -214,17 +174,25 @@ export default function ControlesScreen(props) {
                         </button>
                       </ToolTip>
                     </div>
-                    <div className="slide-content">
-                      <h4>Evaluacion: </h4>
-                      <p>{item.control.evaluacion ? item.control.evaluacion : "No se Registro Evaluacion"}</p>
-                      <h4>Tratamiento:</h4>
-                      <p>{item.control.tratamiento ? item.control.tratamiento : "No se Registro Tratamiento"}</p>
-                      <h4>Recipe:</h4>
-                      <p>{item.control.recipe ? item.control.recipe : "No se Registro Recipe"}</p>
-                      <h4 className="mb-2">Indicaciones:</h4>
-                      <p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
-                      <div>
-                        <h4>Servicios Facturados: (${Number(item.control.montoUsd).toFixed(2)})</h4>
+                    <div className="slide-content division">
+                      <div className="border-bottom">
+                        <h4>Evaluacion </h4>
+                        <p>{item.control.evaluacion ? item.control.evaluacion : "No se Registro Evaluacion"}</p>
+                      </div>
+                      <div className="border-bottom">
+                        <h4>Tratamiento</h4>
+                        <p>{item.control.tratamiento ? item.control.tratamiento : "No se Registro Tratamiento"}</p>
+                      </div>
+                      <div className="border-bottom">
+                        <h4>Recipe</h4>
+                        <p>{item.control.recipe ? item.control.recipe : "No se Registro Recipe"}</p>
+                      </div>
+                      <div className="border-bottom">
+                        <h4 className="mb-2">Indicaciones</h4>
+                        <p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
+                      </div>
+                      <div className="border-bottom">
+                        <h4>Servicios Facturados {item.control.montoUsd > 0 ? "$" + Number(item.control.montoUsd).toFixed(2) : ""}</h4>
                         {item.control.serviciosItems.map((item, ndx) => {
                           let total = +item.montoItemServicio;
                           return (
@@ -243,21 +211,27 @@ export default function ControlesScreen(props) {
                           );
                         })}
                       </div>
-                      <h4>Descuento:</h4>
-                      <p>${Number(item.control?.descuento).toFixed(2)}</p>
-                      <h4>Pago:</h4>
-                      <div>
-                        <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + (item.control.pago.efectivousd) : ("")}</p>
-                        <p> {itemPago.efectivoeuros > 0 ? "Efectivo Euros: " + (item.control.pago.efectivoeuros) : ("")}</p>
-                        <p> {itemPago.efectivobs > 0 ? "Efectivo Bs.: " + (item.control.pago.efectivobs) : ("")}</p>
-                        <p>  {itemPago.montopunto > 0 ? "Punto Bancario: " + (item.control.pago.montopunto + item.control.pago.montopunto2 + item.control.pago.montopunto3) : ("")}</p>
-                        <p>  {itemPago.pagomovil.montopagomovil > 0 ? "Pago Movil: " + (item.control.pago.montopagomovil) : ("")}</p>
-                        <p>  {itemPago.zelle.montozelle > 0 ? "Zelle: " + (item.control.montozelle) : ("")}</p>
+                      {item.control?.descuento > 0 ? (<div className="border-bottom">
+                        <h4>Descuento</h4>
+                        <p>${Number(item.control?.descuento).toFixed(2)}</p>
+                      </div>) : ("")}
+                      <div className="border-bottom">
+                        <h4>Pago</h4>
+                        <div>
+                          <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + (item.control.pago.efectivousd) : ("")}</p>
+                          <p> {itemPago.efectivoeuros > 0 ? "Efectivo Euros: " + (item.control.pago.efectivoeuros) : ("")}</p>
+                          <p> {itemPago.efectivobs > 0 ? "Efectivo Bs.: " + (item.control.pago.efectivobs) : ("")}</p>
+                          <p>  {itemPago.montopunto > 0 ? "Punto Bancario: " + (item.control.pago.montopunto + item.control.pago.montopunto2 + item.control.pago.montopunto3) : ("")}</p>
+                          <p>  {itemPago.pagomovil.montopagomovil > 0 ? "Pago Movil: " + (item.control.pago.montopagomovil) : ("")}</p>
+                          <p>  {itemPago.zelle.montozelle > 0 ? "Zelle: " + (item.control.montozelle) : ("")}</p>
 
+                        </div>
                       </div>
-                      <h4>Comisiones:</h4>
-                      <p>Comision Plaza : ${Number(item.control.montoComisionPlaza).toFixed(2) + " (" + (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}</p>
-                      <p>Comision Doctor: ${Number(item.control.montoComisionDr).toFixed(2) + " (" + (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}</p>
+                      <div className="border-bottom">
+                        <h4>Comisiones</h4>
+                        <p>Comision Plaza : ${Number(item.control.montoComisionPlaza).toFixed(2) + " (" + (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}</p>
+                        <p>Comision Doctor: ${Number(item.control.montoComisionDr).toFixed(2) + " (" + (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}</p>
+                      </div>
                     </div>
 
                   </div>

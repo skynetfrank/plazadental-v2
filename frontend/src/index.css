@@ -656,6 +656,7 @@ a {
 a:hover {
   color: black;
   font-weight: bold;
+  background-color: white;
 }
 
 .img-small {
@@ -1662,9 +1663,6 @@ h4 {
   line-height: 14px;
 }
 
-.slide-content h4 {
-  text-decoration: underline;
-}
 
 .slide-content-header {
   width: 300px;
@@ -2321,6 +2319,18 @@ button.button.small {
   border-bottom: 1px solid black;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
+}
+
+.division h4 {
+  margin: 5px 0;
+  width: 100%;
+  text-align: center;
+
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgb(183, 183, 183);
+ padding-bottom: 5px;
 }
 
 @media (max-width: 575px) {

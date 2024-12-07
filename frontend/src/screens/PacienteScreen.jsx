@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { detailsPaciente } from "../actions/pacienteActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import dayjs from "dayjs";
-import { faAllergies, faHandHoldingMedical, faHouseMedicalCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import PacientesIcon from "../icons/PacientesIcon";
 import PacienteInfoIcon from "../icons/PacienteInfoIcon";
 
 export default function PacienteScreen(props) {
-  const navigate = useNavigate();
   const params = useParams();
   const { id: pacienteId } = params;
 
@@ -43,7 +39,7 @@ export default function PacienteScreen(props) {
         <span className="division">{paciente.direccion}</span>
 
         <div className="division">
-          <span>Alergias:</span>
+          <h4>Alergias</h4>
           <div className="content">
             <p>
               {paciente.alergias.every((elem) => elem === " ")
@@ -55,14 +51,16 @@ export default function PacienteScreen(props) {
                   return alergia + ", ";
                 })}
             </p>
-            <div className="datos">
-              <p>Otras Alergias:</p>
-              <span>{paciente.otrasAlergias}</span>
-            </div>
+            {paciente.otrasAlergias ? (
+              <div>
+                <p>Otras Alergias</p>
+                <span>{paciente.otrasAlergias}</span>
+              </div>
+            ) : ("")}
           </div>
         </div>
         <div className="division">
-          <span>Antecedentes Personales:</span>
+          <h4>Antecedentes Personales</h4>
           <div className="content">
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No Refiere"
@@ -79,7 +77,7 @@ export default function PacienteScreen(props) {
           </div>
         </div>
         <div className="division">
-          <span>Antecedentes Familiares:</span>
+          <h4>Antecedentes Familiares</h4>
           <div className="content">
             <p>
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
