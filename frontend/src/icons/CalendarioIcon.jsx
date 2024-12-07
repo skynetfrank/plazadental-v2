@@ -6,7 +6,9 @@ function CalendarioIcon() {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="calendario-icon">
+      className="calendario-icon"
+      height="9em"
+      width="9em">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"

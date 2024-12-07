@@ -2315,7 +2315,6 @@ button.button.small {
 
 
 .division {
-  width: 100%;
   border-bottom: 1px solid black;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
@@ -2325,13 +2324,14 @@ button.button.small {
   margin: 5px 0;
   width: 100%;
   text-align: center;
-
 }
 
 .border-bottom {
   border-bottom: 1px solid rgb(183, 183, 183);
- padding-bottom: 5px;
+  padding-bottom: 5px;
 }
+
+
 
 @media (max-width: 575px) {
   .brand-container {

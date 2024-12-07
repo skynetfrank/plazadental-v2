@@ -58,6 +58,7 @@ import {
   userUpdateProfileReducer,
   userUpdateReducer,
 } from "./reducers/userReducers";
+import { gastoCreateReducer, gastoDeleteReducer, gastoDetailsReducer, gastoListReducer, gastoUpdateReducer } from "./reducers/gastoReducers";
 
 const initialState = {
   userSignin: {
@@ -116,6 +117,12 @@ const reducer = combineReducers({
   serviciobyCode: getServiciobyCodeReducer,
   servicioAll: servicioAllReducer,
   serviceOnlyCodes: servicioOnlyCodesReducer,
+
+  gastoList: gastoListReducer,
+  gastoDelete: gastoDeleteReducer,
+  gastoDetails: gastoDetailsReducer,
+  gastoCreate: gastoCreateReducer,
+  gastoUpdate: gastoUpdateReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));

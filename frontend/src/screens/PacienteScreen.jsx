@@ -30,13 +30,20 @@ export default function PacienteScreen(props) {
       <div className="paciente-info-container font-12">
         <PacienteInfoIcon />
         <span className="font-14 negrita">{paciente.nombre + " " + paciente.apellido}</span>
-        <span>{paciente.cedula + " - " + paciente.telefono + " " + paciente.celular}</span>
+        <span>{paciente.cedula + " " + paciente.genero}</span>
         <span>{dayjs(new Date(paciente.Nacimiento)).format("DD/MM/YYYY") + " - " + paciente.edad + " años "}</span>
-        <span>{paciente.genero + " " + paciente.estadoCivil}</span>
-        <span>{paciente.peso + " Kgs - " + paciente.estatura + " Mts"}</span>
-        <span>{paciente.email}</span>
-        <span>{paciente.contacto}</span>
-        <span className="division">{paciente.direccion}</span>
+        <span>{paciente.estadoCivil + " " + paciente.peso + " Kgs - " + paciente.estatura + " Mts"}</span>
+        <Link to={`/controles/${paciente._id}`} className="btn-lookalike bg-blue">
+          Ver Controles de Consultas
+        </Link>
+        <span className="division"></span>
+        <div className="flx column division">
+          <h4>Direccion y Telefono</h4>
+          <span>{paciente.direccion}</span>
+          <span>{paciente.celular + " " + paciente.telefono}</span>
+          <span>{paciente.email}</span>
+          <span>{paciente.contacto}</span>
+        </div>
 
         <div className="division">
           <h4>Alergias</h4>
@@ -91,9 +98,10 @@ export default function PacienteScreen(props) {
             </p>
           </div>
         </div>
-        <Link to={`/controles/${paciente._id}`} className="btn-lookalike bg-blue">
-          Ver Controles de Consultas
-        </Link>
+        <div className="flx column division">
+          <h4>Contacto</h4>
+          <span>{paciente.contacto}</span>
+        </div>
       </div>
     </div>
   );

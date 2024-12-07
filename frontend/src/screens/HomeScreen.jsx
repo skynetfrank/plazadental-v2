@@ -4,6 +4,7 @@ import DoctorIcon from "../icons/DoctorIcon";
 import PacientesIcon from "../icons/PacientesIcon";
 import HandDollarIcon from "../icons/HandDollarIcon";
 import TuercasIcon from "../icons/TuercasIcon";
+import CalendarioIcon from "../icons/CalendarioIcon";
 
 function HomeScreen() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -37,12 +38,16 @@ function HomeScreen() {
             </button>
           </Link>{" "}
 
-          <Link to="/listagasto">
+          <a
+            href="https://planner-plaza-9tp7wnvii-tyrant7995gmailcoms-projects.vercel.app/"
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+          >
             <button>
-              <TuercasIcon />
-              <span>Calendario</span>
+              <CalendarioIcon />
+              <span>Planificacion</span>
             </button>
-          </Link>
+          </a>
           <Link to="/listagasto">
             <button>
               <TuercasIcon />

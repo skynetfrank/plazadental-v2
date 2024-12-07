@@ -175,6 +175,8 @@ export default function ControlCreateScreen(props) {
   };
 
   useEffect(() => {
+    //TODO: AGREGAR BOTON PARA SERVICIO LABORATORIO
+    //TODO:LA DISTRIBUCION DE COMISIONES SE HACE DESPUES DE RESTAR ALGUN SERVICIO DE LABORATORIO
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
     setMontoUsd(itemsPrice)
@@ -370,7 +372,11 @@ export default function ControlCreateScreen(props) {
             ""
           )}
         </div>
-
+        <div className="flx jcenter gap1 botonera-menu">
+          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
+            Laboratorio
+          </button>
+        </div>
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
             <div className="control-textarea-container">

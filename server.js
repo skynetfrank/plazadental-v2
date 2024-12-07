@@ -8,6 +8,7 @@ import pacienteRouter from './routers/pacienteRouter.js';
 import doctorRouter from './routers/doctorRouter.js';
 import controlRouter from './routers/controlRouter.js';
 import servicioRouter from './routers/servicioRouter.js';
+import gastoRouter from "./routers/gastoRouter.js";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const localdb = 'mongodb://localhost/plazadentaldb';
 //process.env.MONGODB_URI;
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(localdb)
   .then(() => console.log('mongodb =>: conectado'))
   .catch(e => console.log(e.message));
 
@@ -27,6 +28,7 @@ app.use('/api/pacientes', pacienteRouter);
 app.use('/api/doctores', doctorRouter);
 app.use('/api/controles', controlRouter);
 app.use('/api/servicios', servicioRouter);
+app.use("/api/gastos", gastoRouter);
 
 const __dirname = path.resolve();
 
