@@ -1,4 +1,3 @@
-
 import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "./actions/userActions";
@@ -22,37 +21,28 @@ function App() {
   const { pacientes } = pacienteList;
 
   const doctorList = useSelector((state) => state.doctorList);
-  const { loading: loadingDoctors, doctores } = doctorList;
+  const { doctores } = doctorList;
 
   const servicioAllList = useSelector((state) => state.servicioAllList);
-  const { loading: loadingServicios, servicios } = servicioAllList;
+  const { servicios } = servicioAllList;
 
   useEffect(() => {
-    if (!pacientes || pacientes.length === 0) {
-      dispatch(listPacientes({}));
-    }
+    dispatch(listPacientes({}));
+    dispatch(listDoctores({}));
+    dispatch(listAllServicios({}));
+  }, [dispatch]);
+
+  useEffect(() => {
     if (pacientes) {
       localStorage.setItem("pacientes", JSON.stringify(pacientes));
-    }
-  }, [dispatch, pacientes]);
-
-  useEffect(() => {
-    if (!doctores || doctores.length === 0) {
-      dispatch(listDoctores({}));
     }
     if (doctores) {
       localStorage.setItem("doctores", JSON.stringify(doctores));
     }
-  }, [dispatch, doctores]);
-
-  useEffect(() => {
-    if (!servicios || servicios.length === 0) {
-      dispatch(listAllServicios({}));
-    }
     if (servicios) {
       localStorage.setItem("servicios", JSON.stringify(servicios));
     }
-  }, [dispatch, servicios]);
+  }, [dispatch, doctores, pacientes, servicios]);
 
   const signoutHandler = () => {
     dispatch(signout());

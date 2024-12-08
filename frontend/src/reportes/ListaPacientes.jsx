@@ -17,7 +17,7 @@ function ListaPacientes() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!pacientes || pacientes.length === 0) {
+    if (!pacientes) {
       dispatch(listPacientes({}));
     }
   }, [dispatch, pacientes]);

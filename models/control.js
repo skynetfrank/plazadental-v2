@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const controlSchema = new mongoose.Schema(
   {
     paciente: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Paciente',
+      ref: "Paciente",
       required: true,
     },
 
     doctor: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Doctor',
+      ref: "Doctor",
       required: true,
     },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     fechaControl: { type: Date },
     esCita1: { type: Boolean },
     evaluacion: { type: String },
@@ -25,7 +25,7 @@ const controlSchema = new mongoose.Schema(
         cantidad: { type: Number, default: 0 },
         servicio: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Servicio',
+          ref: "Servicio",
         },
         precioServ: { type: Number, default: 0 },
         montoItemServicio: { type: Number, default: 0 },
@@ -36,11 +36,13 @@ const controlSchema = new mongoose.Schema(
         cantidad: { type: Number, required: true },
         producto: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Producto',
+          ref: "Producto",
         },
       },
     ],
     cambioBcv: { type: Number, default: 0 },
+    laboratorio: { type: String },
+    montoLab: { type: Number, default: 0 },
     montoUsd: { type: Number, default: 0 },
     montoBs: { type: Number, default: 0 },
     tasaIva: { type: Number, default: 0.16 },
@@ -82,15 +84,15 @@ const controlSchema = new mongoose.Schema(
         zelleref: { type: String },
       },
     },
-    factura: { type: String, default: '' },
-    facturaControl: { type: String, default: '' },
-    fechaFactura: { type: Date, default: '' },
-    idPacienteOld: { type: String, default: '' },
+    factura: { type: String, default: "" },
+    facturaControl: { type: String, default: "" },
+    fechaFactura: { type: Date, default: "" },
+    idPacienteOld: { type: String, default: "" },
   },
 
   {
     timestamps: true,
   }
 );
-const Control = mongoose.model('Control', controlSchema);
+const Control = mongoose.model("Control", controlSchema);
 export default Control;

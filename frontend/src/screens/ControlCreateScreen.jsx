@@ -9,6 +9,7 @@ import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions"
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
+import { listaLabs } from "../constants/listas";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -31,6 +32,8 @@ export default function ControlCreateScreen(props) {
   const [tratamiento, setTratamiento] = useState("");
   const [recipe, setRecipe] = useState("");
   const [indicaciones, setIndicaciones] = useState("");
+  const [montoLab, setMontoLab] = useState("");
+  const [laboratorio, setLaboratorio] = useState("");
   const [montoUsd, setMontoUsd] = useState("");
   const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
   const [montoBs, setMontoBs] = useState("");
@@ -38,8 +41,8 @@ export default function ControlCreateScreen(props) {
   const [montoIva, setMontoIva] = useState(0);
   const [descuento, setDescuento] = useState(0);
   const [totalGeneral, setTotalGeneral] = useState(0);
-  const [tasaComisionDr, setTasaComisionDr] = useState(0.40);
-  const [tasaComisionPlaza, setTasaComisionPlaza] = useState(0.60);
+  const [tasaComisionDr, setTasaComisionDr] = useState(0.4);
+  const [tasaComisionPlaza, setTasaComisionPlaza] = useState(0.6);
   const [montoComisionDr, setMontoComisionDr] = useState(0);
   const [montoComisionPlaza, setMontoComisionPlaza] = useState(0);
   const [materiales, setMateriales] = useState([]);
@@ -88,15 +91,13 @@ export default function ControlCreateScreen(props) {
     }
   }, [dispatch, paciente, pacienteId]);
 
-
   useEffect(() => {
-    const doctorFound = listaDoctores.find((x) => x._id === doctorId)
+    const doctorFound = listaDoctores.find((x) => x._id === doctorId);
     if (doctorFound) {
-      setTasaComisionDr(doctorFound.tasaComisionDoctor)
-      setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor)
+      setTasaComisionDr(doctorFound.tasaComisionDoctor);
+      setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }
-  }, [doctorId, listaDoctores])
-
+  }, [doctorId, listaDoctores]);
 
   useEffect(() => {
     if (success) {
@@ -116,24 +117,26 @@ export default function ControlCreateScreen(props) {
       setEvaluacion("");
       setTratamiento("");
       setMontoUsd(0);
+      setMontoLab(0);
       setCambioBcv(0);
       setMontoBs(0);
-      setTasaComisionDr(0.40);
-      setTasaComisionPlaza(0.60);
+      setTasaComisionDr(0.4);
+      setTasaComisionPlaza(0.6);
       setMontoComisionDr(0);
       setMontoComisionPlaza(0);
       setMateriales([]);
       setServiciosItems([]);
       setRecipe("");
       setIndicaciones("");
-      setPago({})
+      setPago({});
+      setLaboratorio("");
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setMontoComisionPlaza(tasaComisionPlaza * montoUsd)
-    setMontoComisionDr(tasaComisionDr * montoUsd)
+    setMontoComisionPlaza(tasaComisionPlaza * montoUsd);
+    setMontoComisionDr(tasaComisionDr * montoUsd);
     if (!doctorId) {
       Swal.fire({
         text: "Falta Seleccionar el Doctor",
@@ -144,7 +147,6 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
-
 
     dispatch(
       createControl(
@@ -179,9 +181,9 @@ export default function ControlCreateScreen(props) {
     //TODO:LA DISTRIBUCION DE COMISIONES SE HACE DESPUES DE RESTAR ALGUN SERVICIO DE LABORATORIO
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
-    setMontoUsd(itemsPrice)
-    setMontoBs(itemsPrice * cambioBcv)
-    setMontoIva((itemsPrice * cambioBcv) * tasaIva)
+    setMontoUsd(itemsPrice);
+    setMontoBs(itemsPrice * cambioBcv);
+    setMontoIva(itemsPrice * cambioBcv * tasaIva);
     setMontoComisionDr((itemsPrice - descuento) * tasaComisionDr);
     setMontoComisionPlaza((itemsPrice - descuento) * tasaComisionPlaza);
   }, [cambioBcv, descuento, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
@@ -258,20 +260,85 @@ export default function ControlCreateScreen(props) {
     });
   };
 
+  const getLaboratorio = async () => {
+    if (!doctorId) {
+      Swal.fire({
+        text: "Seleccione el Doctor",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      return;
+    }
+    const { value: id } = await Swal.fire({
+      input: "select",
+      inputOptions: {
+        Laboratorios: listaLabs.map((s) => s.nombre),
+      },
+      inputPlaceholder: "Seleccione un Laboratorio",
+      showCancelButton: true,
+
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+
+          resolve();
+        });
+      },
+    });
+    setLaboratorio(listaServicios[Number(id)]._id);
+    setPrecio(listaServicios[Number(id)].preciousd);
+    const { value: cant } = await Swal.fire({
+      input: "select",
+      inputOptions: {
+        cantidad: selCantidad,
+      },
+      inputPlaceholder: "Seleccione una Cantidad",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+          resolve();
+        });
+      },
+    });
+
+    if (!cant) {
+      return;
+    }
+    setServiciosItems((prev) => {
+      return [
+        ...prev,
+        {
+          cantidad: Number(cant) + 1,
+          servicio: listaServicios[Number(id)]._id,
+          precioServ: listaServicios[Number(id)].preciousd,
+          montoItemServicio: listaServicios[Number(id)].preciousd * (Number(cant) + 1),
+        },
+      ];
+    });
+  };
+
   const dateHandler = (e) => {
-    setFechaControl(e)
-  }
+    setFechaControl(e);
+  };
 
   const getDescuento = async () => {
     const { value: discount } = await Swal.fire({
       title: "Descuento",
       input: "number",
       inputLabel: "Descuento",
-      inputPlaceholder: "Ingrese un monto"
-
+      inputPlaceholder: "Ingrese un monto",
     });
     if (discount) {
-      setDescuento(Number(discount))
+      setDescuento(Number(discount));
     }
   };
 
@@ -286,7 +353,7 @@ export default function ControlCreateScreen(props) {
   };
 
   const handlePayFromChild = (data, textopago) => {
-    console.log("data from payment", data, textopago)
+    console.log("data from payment", data, textopago);
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -323,6 +390,9 @@ export default function ControlCreateScreen(props) {
         <div className="flx jcenter gap1 botonera-menu">
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
             Servicios
+          </button>
+          <button className="font-x pad-0 m-0 negrita" onClick={() => getLaboratorio()}>
+            Laboratorio
           </button>
           {serviciosItems?.length > 0 ? (
             <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => getDescuento()}>
@@ -361,22 +431,19 @@ export default function ControlCreateScreen(props) {
               <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
               <p className="centrado negrita minw-30">Total Neto : ${montoUsd - descuento}</p>
               <div className="centrado">
-                <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => setShowPaymentModal(true)}>
+                <button
+                  className="btn-pago font-x pad-0 m-0 negrita centrado"
+                  onClick={() => setShowPaymentModal(true)}
+                >
                   Registrar Pago
                 </button>
               </div>
-
-
             </div>
           ) : (
             ""
           )}
         </div>
-        <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
-            Laboratorio
-          </button>
-        </div>
+
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
             <div className="control-textarea-container">

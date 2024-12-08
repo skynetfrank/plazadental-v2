@@ -26,11 +26,11 @@ export default function PacienteScreen(props) {
   ) : error ? (
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
-    <div className="flx column " >
+    <div className="flx column ">
       <div className="paciente-info-container font-12">
         <PacienteInfoIcon />
         <span className="font-14 negrita">{paciente.nombre + " " + paciente.apellido}</span>
-        <span>{paciente.cedula + " " + paciente.genero}</span>
+        <span>{paciente.cedula + " - " + paciente.genero}</span>
         <span>{dayjs(new Date(paciente.Nacimiento)).format("DD/MM/YYYY") + " - " + paciente.edad + " años "}</span>
         <span>{paciente.estadoCivil + " " + paciente.peso + " Kgs - " + paciente.estatura + " Mts"}</span>
         <Link to={`/controles/${paciente._id}`} className="btn-lookalike bg-blue">
@@ -52,18 +52,20 @@ export default function PacienteScreen(props) {
               {paciente.alergias.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.alergias.map((alergia) => {
-                  if (alergia === "") {
-                    return "";
-                  }
-                  return alergia + ", ";
-                })}
+                    if (alergia === "") {
+                      return "";
+                    }
+                    return alergia + ", ";
+                  })}
             </p>
             {paciente.otrasAlergias ? (
               <div>
                 <p>Otras Alergias</p>
                 <span>{paciente.otrasAlergias}</span>
               </div>
-            ) : ("")}
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="division">
@@ -72,11 +74,11 @@ export default function PacienteScreen(props) {
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No Refiere"
               : paciente.antecedentesPersonales.map((bgp, inx) => {
-                if (bgp === "") {
-                  return "";
-                }
-                return <p key={inx}>{bgp}</p>;
-              })}
+                  if (bgp === "") {
+                    return "";
+                  }
+                  return <p key={inx}>{bgp}</p>;
+                })}
             <p>Tratado por Medico por: {paciente.tratadoPorEnfermedad}</p>
             <p>Toma Medicamentos: {paciente.medicamentos}</p>
             <p>Dosis: {paciente.dosis}</p>
@@ -90,11 +92,11 @@ export default function PacienteScreen(props) {
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.antecedentesFamiliares.map((bgf) => {
-                  if (bgf === "") {
-                    return "";
-                  }
-                  return bgf + " ";
-                })}
+                    if (bgf === "") {
+                      return "";
+                    }
+                    return bgf + " ";
+                  })}
             </p>
           </div>
         </div>

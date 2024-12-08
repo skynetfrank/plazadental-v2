@@ -172,14 +172,12 @@ export default function PacienteEditScreen(props) {
         imageHeight: 30,
         imageAlt: "logo",
       });
-    
-      navigate("/pacientelist");
+      navigate(`/paciente/${pacienteId}`);
     }
     if (!paciente || paciente._id !== pacienteId || successUpdate) {
       dispatch({ type: PACIENTE_UPDATE_RESET });
       dispatch(detailsPaciente(pacienteId));
     } else {
-      console.log("useEffect trigered");
       setNombre(paciente.nombre || "");
       setApellido(paciente.apellido || "");
       setCedula(paciente.cedula || "");
@@ -486,7 +484,7 @@ export default function PacienteEditScreen(props) {
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
-
+    console.log("checkedState", checkedState);
     setCheckedState(updatedCheckedState);
     const alergiasMarcadas = updatedCheckedState.map((currentState, index) => {
       if (currentState === true) {
@@ -494,6 +492,7 @@ export default function PacienteEditScreen(props) {
       }
       return " ";
     });
+    console.log("alergiasMarcadas", alergiasMarcadas);
     setAlergias(alergiasMarcadas);
   };
 
@@ -549,6 +548,7 @@ export default function PacienteEditScreen(props) {
     }
   }
 
+  console.log("alergis", alergias);
   return (
     <div className="main-container">
       <h1>Editar Paciente</h1>
@@ -559,7 +559,7 @@ export default function PacienteEditScreen(props) {
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
-           <span>error</span>
+            <span>error</span>
           ) : (
             <React.Fragment key={99}>
               <div className="span-historia">
@@ -1158,7 +1158,7 @@ export default function PacienteEditScreen(props) {
                   </div>
                 )}
               </div>
-              <div id="btn-guardar-paciente">
+              <div className="centrado">
                 <button className="button" type="submit">
                   Actualizar Paciente
                 </button>
