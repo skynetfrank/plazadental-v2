@@ -181,12 +181,12 @@ export default function ControlCreateScreen(props) {
     //TODO:LA DISTRIBUCION DE COMISIONES SE HACE DESPUES DE RESTAR ALGUN SERVICIO DE LABORATORIO
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
-    setMontoUsd(itemsPrice);
-    setMontoBs(itemsPrice * cambioBcv);
-    setMontoIva(itemsPrice * cambioBcv * tasaIva);
-    setMontoComisionDr((itemsPrice - descuento) * tasaComisionDr);
-    setMontoComisionPlaza((itemsPrice - descuento) * tasaComisionPlaza);
-  }, [cambioBcv, descuento, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
+    setMontoUsd(itemsPrice + (montoLab * 4));
+    setMontoBs((itemsPrice + montoLab * 4) * cambioBcv);
+    setMontoIva((itemsPrice + montoLab * 4) * cambioBcv * tasaIva);
+    setMontoComisionDr(((itemsPrice + (montoLab * 4 - montoLab)) - descuento) * tasaComisionDr);
+    setMontoComisionPlaza(((itemsPrice + (montoLab * 4 - montoLab)) - descuento) * tasaComisionPlaza);
+  }, [cambioBcv, descuento, montoLab, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
 
   const handleEliminarServicio = (e, id) => {
     e.preventDefault();
@@ -271,10 +271,11 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
+
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
-        Laboratorios: listaLabs.map((s) => s.nombre),
+        Laboratorios: listaLabs,
       },
       inputPlaceholder: "Seleccione un Laboratorio",
       showCancelButton: true,
@@ -290,40 +291,16 @@ export default function ControlCreateScreen(props) {
         });
       },
     });
-    setLaboratorio(listaServicios[Number(id)]._id);
-    setPrecio(listaServicios[Number(id)].preciousd);
-    const { value: cant } = await Swal.fire({
-      input: "select",
-      inputOptions: {
-        cantidad: selCantidad,
-      },
-      inputPlaceholder: "Seleccione una Cantidad",
-      showCancelButton: true,
-      inputValidator: (value) => {
-        return new Promise((resolve) => {
-          if (!value) {
-            resolve();
-            return;
-          }
-          resolve();
-        });
-      },
+    setLaboratorio(listaLabs[Number(id)]);
+    const { value: monto } = await Swal.fire({
+      title: "Monto Laboratorio",
+      input: "number",
+      inputLabel: "MontoDescuento",
+      inputPlaceholder: "Ingrese un monto",
     });
-
-    if (!cant) {
-      return;
+    if (monto) {
+      setMontoLab(Number(monto));
     }
-    setServiciosItems((prev) => {
-      return [
-        ...prev,
-        {
-          cantidad: Number(cant) + 1,
-          servicio: listaServicios[Number(id)]._id,
-          precioServ: listaServicios[Number(id)].preciousd,
-          montoItemServicio: listaServicios[Number(id)].preciousd * (Number(cant) + 1),
-        },
-      ];
-    });
   };
 
   const dateHandler = (e) => {
@@ -374,7 +351,8 @@ export default function ControlCreateScreen(props) {
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
   };
-
+  console.log("laboratorio", laboratorio, "montoLab", montoLab)
+  console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
   return (
     <div>
       <div className="flx column jcenter">
@@ -394,7 +372,7 @@ export default function ControlCreateScreen(props) {
           <button className="font-x pad-0 m-0 negrita" onClick={() => getLaboratorio()}>
             Laboratorio
           </button>
-          {serviciosItems?.length > 0 ? (
+          {montoUsd > 0 ? (
             <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => getDescuento()}>
               Descuento
             </button>
@@ -407,7 +385,7 @@ export default function ControlCreateScreen(props) {
           </button>
         </div>
         <div>
-          {serviciosItems?.length > 0 ? (
+          {serviciosItems?.length > 0 || montoUsd > 0 ? (
             <div className="show-servicios">
               {serviciosItems.map((m, inx) => {
                 const foundit = listaServicios.find((x) => x._id === m.servicio);
@@ -428,6 +406,7 @@ export default function ControlCreateScreen(props) {
                 );
               })}
               <hr />
+              <p className="centrado negrita minw-30">Laboratorio: ${montoLab * 4}</p>
               <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
               <p className="centrado negrita minw-30">Total Neto : ${montoUsd - descuento}</p>
               <div className="centrado">

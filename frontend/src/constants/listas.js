@@ -1,16 +1,10 @@
 export const listaLabs = [
-  "",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
-  "Laboratorio1 (Dr. del Laboratorio)",
- 
+  "Laboratorio1",
+  "Laboratorio2",
+  "Laboratorio3",
+  "Laboratorio4",
+  "Laboratorio5",
+
 ];
 
 
