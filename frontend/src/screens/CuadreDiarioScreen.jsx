@@ -60,7 +60,6 @@ export default function CuadreDiarioScreen() {
           return value.getValue().nombre + " " + value.getValue().apellido;
         },
       },
-
       {
         header: "Servicios Facturados",
         accessorKey: "serviciosItems",
@@ -89,7 +88,50 @@ export default function CuadreDiarioScreen() {
 
       },
       {
-        header: "Monto",
+        header: "Servicios",
+        accessorKey: "montoServicios",
+        cell: (value) => {
+          if (!value) {
+            return ""
+          }
+          return "$" + Number(value.getValue()).toFixed(2);
+        },
+        footer: ({ table }) => {
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoServicios"), 0);
+          return "$" + Number(total).toFixed(2);
+        },
+      },
+      {
+        header: "Laboratorio",
+        accessorKey: "montoLab",
+        cell: (value) => {
+          if (!value) {
+            return ""
+          }
+          return "$" + Number(value.getValue() * 4).toFixed(2);
+        },
+        footer: ({ table }) => {
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          return "$" + Number(total).toFixed(2);
+        },
+      },
+      {
+        header: "Descuento",
+        accessorKey: "descuento",
+        cell: (value) => {
+          if (!value) {
+            return ""
+          }
+          return "$" + Number(value.getValue()).toFixed(2);
+        },
+        footer: ({ table }) => {
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          return "$" + Number(total).toFixed(2);
+        },
+      },
+
+      {
+        header: "Monto A Pagar",
         accessorKey: "montoUsd",
         cell: (value) => {
           return "$" + Number(value.getValue()).toFixed(2);

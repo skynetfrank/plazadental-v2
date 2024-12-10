@@ -46,14 +46,17 @@ export const createControl =
     tasaComisionPlaza,
     montoComisionDr,
     montoComisionPlaza,
-    pago
+    pago,
+    montoLab,
+    laboratorio,
+    montoServicios
   ) =>
     async (dispatch, getState) => {
       dispatch({ type: CONTROL_CREATE_REQUEST });
       const {
         userSignin: { userInfo },
       } = getState();
-
+  
       try {
         const { data } = await Axios.post(
           '/api/controles/create',
@@ -79,7 +82,10 @@ export const createControl =
             tasaComisionPlaza,
             montoComisionDr,
             montoComisionPlaza,
-            pago
+            pago,
+            montoLab,
+            laboratorio,
+            montoServicios
           },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },

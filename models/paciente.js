@@ -97,37 +97,3 @@ const pacienteSchema = new mongoose.Schema(
 const Paciente = mongoose.model("Paciente", pacienteSchema);
 export default Paciente;
 
-/* nombre
-    apellido
-    cedula
-    genero
-    estadoCivil
-    Nacimiento
-    edad
-    peso
-    estatura
-    direccion
-    celular
-    telefono
-    email
-    contacto
-    alergias
-    otrasAlergias
-    antecedentesPersonales
-    antecedentesFamiliares
-    isTratadoPorMedico
-    tratadoPorEnfermedad
-    otraEnfermedad
-    isTomaMedicamentos
-    medicamentos
-    dosismeds
-    habitos
-    motivoEstaConsulta
-    motivoUltimaConsulta
-    fechaUltimaconsulta
-    isComplicaciones
-    complicaciones
-    odontogramaUrl
-    idOdontoImgName
-    idPacienteOld
-    controles */

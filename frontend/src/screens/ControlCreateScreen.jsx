@@ -34,6 +34,7 @@ export default function ControlCreateScreen(props) {
   const [indicaciones, setIndicaciones] = useState("");
   const [montoLab, setMontoLab] = useState("");
   const [laboratorio, setLaboratorio] = useState("");
+  const [montoServicios, setMontoServicios] = useState("");
   const [montoUsd, setMontoUsd] = useState("");
   const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
   const [montoBs, setMontoBs] = useState("");
@@ -118,8 +119,8 @@ export default function ControlCreateScreen(props) {
       setTratamiento("");
       setMontoUsd(0);
       setMontoLab(0);
-      setCambioBcv(0);
       setMontoBs(0);
+      setMontoServicios(0)
       setTasaComisionDr(0.4);
       setTasaComisionPlaza(0.6);
       setMontoComisionDr(0);
@@ -130,6 +131,7 @@ export default function ControlCreateScreen(props) {
       setIndicaciones("");
       setPago({});
       setLaboratorio("");
+      setDescuento(0)
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
@@ -171,7 +173,10 @@ export default function ControlCreateScreen(props) {
         tasaComisionPlaza,
         montoComisionDr,
         montoComisionPlaza,
-        pago
+        pago,
+        montoLab,
+        laboratorio,
+        montoServicios
       )
     );
   };
@@ -181,11 +186,12 @@ export default function ControlCreateScreen(props) {
     //TODO:LA DISTRIBUCION DE COMISIONES SE HACE DESPUES DE RESTAR ALGUN SERVICIO DE LABORATORIO
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
-    setMontoUsd(itemsPrice + (montoLab * 4));
-    setMontoBs((itemsPrice + montoLab * 4) * cambioBcv);
-    setMontoIva((itemsPrice + montoLab * 4) * cambioBcv * tasaIva);
-    setMontoComisionDr(((itemsPrice + (montoLab * 4 - montoLab)) - descuento) * tasaComisionDr);
-    setMontoComisionPlaza(((itemsPrice + (montoLab * 4 - montoLab)) - descuento) * tasaComisionPlaza);
+    setMontoServicios(itemsPrice)
+    setMontoUsd((itemsPrice + (montoLab * 4) - montoLab) - descuento);
+    setMontoBs((itemsPrice + (montoLab * 4)) * cambioBcv);
+    setMontoIva((itemsPrice + (montoLab * 4)) * cambioBcv * tasaIva);
+    setMontoComisionDr(((itemsPrice + ((montoLab * 4) - montoLab)) - descuento) * tasaComisionDr);
+    setMontoComisionPlaza(((itemsPrice + ((montoLab * 4) - montoLab)) - descuento) * tasaComisionPlaza);
   }, [cambioBcv, descuento, montoLab, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
 
   const handleEliminarServicio = (e, id) => {
@@ -351,8 +357,10 @@ export default function ControlCreateScreen(props) {
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
   };
-  console.log("laboratorio", laboratorio, "montoLab", montoLab)
-  console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
+  //console.log("laboratorio", laboratorio, "montoLab", montoLab)
+  //console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
+  console.log("montoServicios", montoServicios)
+  console.log("montoUsd", montoUsd, "descuento", descuento)
   return (
     <div>
       <div className="flx column jcenter">

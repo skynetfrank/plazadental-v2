@@ -42,6 +42,7 @@ const controlSchema = new mongoose.Schema(
     ],
     cambioBcv: { type: Number, default: 0 },
     laboratorio: { type: String },
+    montoServicios: { type: Number, default: 0 },
     montoLab: { type: Number, default: 0 },
     montoUsd: { type: Number, default: 0 },
     montoBs: { type: Number, default: 0 },
