@@ -450,6 +450,12 @@ select {
   min-width: 30px;
 }
 
+
+.minw-40 {
+  min-width: 40px;
+}
+
+
 .minw-360 {
   min-width: 360px;
 }

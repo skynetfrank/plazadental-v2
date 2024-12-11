@@ -52,8 +52,8 @@ export default function ControlCreateScreen(props) {
   const [pago, setPago] = useState({});
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
-  const [setTotalPago] = useState(0);
-  const [setTxtformapago] = useState(0);
+  const [totalPago, setTotalPago] = useState(0);
+  const [txtformapago,setTxtformapago] = useState(0);
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
@@ -187,9 +187,9 @@ export default function ControlCreateScreen(props) {
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     const itemsPrice = toPrice(serviciosItems.reduce((a, c) => a + c.cantidad * c.precioServ, 0));
     setMontoServicios(itemsPrice)
-    setMontoUsd((itemsPrice + (montoLab * 4) - montoLab) - descuento);
-    setMontoBs((itemsPrice + (montoLab * 4)) * cambioBcv);
-    setMontoIva((itemsPrice + (montoLab * 4)) * cambioBcv * tasaIva);
+    setMontoUsd((itemsPrice + (montoLab * 4)) - descuento);
+    setMontoBs(((itemsPrice + (montoLab * 4)) - descuento) * cambioBcv);
+    setMontoIva((((itemsPrice + (montoLab * 4)) - descuento) * cambioBcv) * tasaIva);
     setMontoComisionDr(((itemsPrice + ((montoLab * 4) - montoLab)) - descuento) * tasaComisionDr);
     setMontoComisionPlaza(((itemsPrice + ((montoLab * 4) - montoLab)) - descuento) * tasaComisionPlaza);
   }, [cambioBcv, descuento, montoLab, serviciosItems, tasaComisionDr, tasaComisionPlaza, tasaIva]);
@@ -336,7 +336,6 @@ export default function ControlCreateScreen(props) {
   };
 
   const handlePayFromChild = (data, textopago) => {
-    console.log("data from payment", data, textopago);
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -397,13 +396,12 @@ export default function ControlCreateScreen(props) {
             <div className="show-servicios">
               {serviciosItems.map((m, inx) => {
                 const foundit = listaServicios.find((x) => x._id === m.servicio);
-
                 return (
                   <div key={inx} className="flx mb03">
                     <span className="minw-10">{m.cantidad}</span>
                     <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
 
-                    <span className="minw-30 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
+                    <span className="minw-40 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
 
                     <FontAwesomeIcon
                       icon={faTrashAlt}
@@ -414,9 +412,10 @@ export default function ControlCreateScreen(props) {
                 );
               })}
               <hr />
+              <p className="centrado negrita minw-30">Servicios: ${serviciosItems.reduce((sum, s) => sum + s.montoItemServicio, 0)}</p>
               <p className="centrado negrita minw-30">Laboratorio: ${montoLab * 4}</p>
               <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
-              <p className="centrado negrita minw-30">Total Neto : ${montoUsd - descuento}</p>
+              <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
               <div className="centrado">
                 <button
                   className="btn-pago font-x pad-0 m-0 negrita centrado"

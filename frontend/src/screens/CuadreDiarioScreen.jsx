@@ -76,7 +76,7 @@ export default function CuadreDiarioScreen() {
                 <div key={item.producto + inx}>
                   <div className="cuadre-descripcion flx font-x pad-0">
                     <p>{item.cantidad}</p>
-                    <p>{servicio_data[inx].nombre}</p>
+                    <p>{servicio_data[inx]?.nombre}</p>
                     <p>(${item.precioServ})</p>
                   </div>
                 </div>
@@ -105,10 +105,20 @@ export default function CuadreDiarioScreen() {
         header: "Laboratorio",
         accessorKey: "montoLab",
         cell: (value) => {
+
+          const labtxt = value.row.original.laboratorio;
+          console.log("labtxt:", labtxt)
           if (!value) {
             return ""
           }
-          return "$" + Number(value.getValue() * 4).toFixed(2);
+          return (
+            <div className="flx column">
+              <span>${Number(value.getValue() * 4).toFixed(2)}</span>
+              <span>{labtxt}</span>
+            </div>
+          )
+
+
         },
         footer: ({ table }) => {
           const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
@@ -174,8 +184,6 @@ export default function CuadreDiarioScreen() {
           return " - ";
         },
       },
-
-
       {
         header: "Dolares",
         accessorKey: "pago.efectivousd",
@@ -292,7 +300,6 @@ export default function CuadreDiarioScreen() {
           return "Bs" + Number(total).toFixed(2);
         },
       },
-
       {
         header: "Zelle",
         accessorKey: "pago.zelle.montozelle",
