@@ -41,6 +41,172 @@ controlRouter.get(
 );
 
 
+controlRouter.get(
+  "/consolidadoventas",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const fecha1 = req.query.fecha1;
+    const fecha2 = req.query.fecha2;
+
+
+    const ventas = await Control.aggregate([
+      {
+        $project: {
+          _id: 1,
+          paciente: 1,
+          doctor: 1,
+          user: 1,
+          fechaControl: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoServicios: 1,
+          montoLab: 1,
+          descuento: 1,
+          montoUsd: 1,
+          tasaComisionDr: 1,
+          tasaComisionPlaza: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "usuario",
+        },
+      },
+      {
+        $unwind: "$usuario",
+      },
+      {
+        $project: {
+          _id: 1,
+          paciente: 1,
+          doctor: 1,
+          fechaControl: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoServicios: 1,
+          montoLab: 1,
+          descuento: 1,
+          montoUsd: 1,
+          tasaComisionDr: 1,
+          tasaComisionPlaza: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          usuario: { $toString: "$usuario.nombre" },
+        },
+      },
+      {
+        $lookup: {
+          from: "pacientes",
+          localField: "paciente",
+          foreignField: "_id",
+          as: "pacientex",
+        },
+      },
+      {
+        $unwind: "$pacientex",
+      },
+      {
+        $project: {
+          _id: 1,
+          paciente: 1,
+          doctor: 1,
+          fechaControl: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoServicios: 1,
+          montoLab: 1,
+          descuento: 1,
+          montoUsd: 1,
+          tasaComisionDr: 1,
+          tasaComisionPlaza: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          usuario: { $toString: "$usuario.nombre" },
+          nombrePaciente: { $toString: "$pacientex.nombre" },
+          apellidoPaciente: { $toString: "$pacientex.apellido" },
+          cedulaPaciente: { $toString: "$pacientex.cedula" },
+        },
+      },
+      {
+        $lookup: {
+          from: "doctors",
+          localField: "doctor",
+          foreignField: "_id",
+          as: "doctorx",
+        },
+      },
+      {
+        $unwind: "$doctorx",
+      },
+      {
+        $project: {
+          _id: 1,
+          paciente: 1,
+          doctor: 1,
+          fechaControl: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoServicios: 1,
+          montoLab: 1,
+          descuento: 1,
+          montoUsd: 1,
+          tasaComisionDr: 1,
+          tasaComisionPlaza: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          usuario: { $toString: "$usuario.nombre" },
+          nombrePaciente: 1,
+          apellidoPaciente: 1,
+          cedulaPaciente: 1,
+          nombreDoctor: { $toString: "$doctorx.nombre" },
+          apellidoDoctor: { $toString: "$doctorx.apellido" },
+
+        },
+      },
+
+
+
+
+
+      {
+        $match: {
+          fecha: { $gte: fecha1 },
+        },
+      },
+      {
+        $match: {
+          fecha: { $lte: fecha2 },
+        },
+      },
+    ]).sort({ fecha: -1 });
+    console.log("ventas:", ventas)
+    res.send(ventas);
+  })
+);
+
+
+
 
 controlRouter.get(
   "/groupedbyday",
@@ -110,7 +276,7 @@ controlRouter.get(
           serviciosItems: 1,
           laboratorio: 1,
           montoLab: 1,
-          montoServicios:1,
+          montoServicios: 1,
           descuento: 1,
           montoComisionDr: 1,
           montoComisionPlaza: 1,

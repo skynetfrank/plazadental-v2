@@ -26,6 +26,9 @@ import {
   GROUPBYDAY_REQUEST,
   GROUPBYDAY_SUCCESS,
   GROUPBYDAY_FAIL,
+  CONTROL_CONSOLIDADO_REQUEST,
+  CONTROL_CONSOLIDADO_SUCCESS,
+  CONTROL_CONSOLIDADO_FAIL,
 } from "../constants/controlConstants";
 
 export const controlCreateReducer = (state = {}, action) => {
@@ -147,4 +150,25 @@ export const cuadreDiaReducer = (
       return state;
   }
 };
+
+
+export const ventasControlsReducer = (
+  state = { ventas: [] },
+  action
+) => {
+  switch (action.type) {
+    case CONTROL_CONSOLIDADO_REQUEST:
+      return { loading: true };
+    case CONTROL_CONSOLIDADO_SUCCESS:
+      return {
+        loading: false,
+        ventas: action.payload,
+      };
+    case CONTROL_CONSOLIDADO_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
 

@@ -8,6 +8,7 @@ import {
   controlUpdateReducer,
   cuadreDiaReducer,
   orderGroupByDayReducer,
+  ventasControlsReducer,
 } from "./reducers/controlReducers";
 import {
   doctorCreateReducer,
@@ -89,6 +90,7 @@ const reducer = combineReducers({
   controlUpdate: controlUpdateReducer,
   controlDelete: controlDeleteReducer,
   controlesPorPaciente: controlesByPacienteReducer,
+  ventasControlsReport: ventasControlsReducer,
   cuadreDia: cuadreDiaReducer,
   orderGroupDay: orderGroupByDayReducer,
 

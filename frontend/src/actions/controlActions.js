@@ -21,6 +21,9 @@ import {
   GROUPBYDAY_FAIL,
   GROUPBYDAY_SUCCESS,
   GROUPBYDAY_REQUEST,
+  CONTROL_CONSOLIDADO_REQUEST,
+  CONTROL_CONSOLIDADO_SUCCESS,
+  CONTROL_CONSOLIDADO_FAIL,
 } from '../constants/controlConstants';
 
 export const createControl =
@@ -56,7 +59,7 @@ export const createControl =
       const {
         userSignin: { userInfo },
       } = getState();
-  
+
       try {
         const { data } = await Axios.post(
           '/api/controles/create',
@@ -208,3 +211,31 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
     dispatch({ type: CUADREDIA_FAIL, payload: message });
   }
 };
+
+
+export const ventasControls =
+  (fecha1 = "01-01-2024", fecha2 = "31-12-2024") =>
+    async (dispatch, getState) => {
+      //VENTAS CONSOLIDADAS TODAS LAS SUCURSALES DISPONIBLES
+      dispatch({ type: CONTROL_CONSOLIDADO_REQUEST });
+      const {
+        userSignin: { userInfo },
+      } = getState();
+      try {
+        const { data } = await Axios.get(
+          `/api/controles/consolidadoventas?fecha1=${fecha1}&fecha2=${fecha2}`,
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        console.log("action data", data)
+
+        dispatch({ type: CONTROL_CONSOLIDADO_SUCCESS, payload: data });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: CONTROL_CONSOLIDADO_FAIL, payload: message });
+      }
+    };

@@ -6,8 +6,8 @@ export default function MinusCircleIcon() {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-          className="minus-circle-icon"
-          width={30}
+      className="minus-circle-icon"
+      width={30}
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
     </svg>
