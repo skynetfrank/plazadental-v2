@@ -2446,11 +2446,13 @@ input.filter-input-v8 {
 
 
 .consolidado-articulos {
-  font-size: 1rem;
+  font-size: 0.8rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  min-width: 140px;
 }
+
+/*
 
 #consolidado-table tr td:nth-child(1) {
   width: 200px;
@@ -2486,6 +2488,13 @@ input.filter-input-v8 {
   color: black;
 }
 
+*/
+
+
+#consolidado-table tr td:nth-child(5) {
+ text-align: left;
+}
+
 .btn-query-report,
 .btn-close-report {
   border: none;
@@ -2502,7 +2511,7 @@ input.filter-input-v8 {
   color: red;
 }
 
-.input-report {
+input.input-report {
   margin: 0 5px;
   padding: 0.5rem 1rem;
   border: 1px solid rgb(168, 168, 168);

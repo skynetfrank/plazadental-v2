@@ -6,6 +6,7 @@ import { ventasControls } from "../actions/controlActions";
 import PrintIcon from "../icons/PrintIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
+import { listServicios } from "../actions/servicioActions";
 
 
 function GroupingControles() {
@@ -16,6 +17,17 @@ function GroupingControles() {
     dayjs(new Date()).format("YYYY-MM-DD")
   );
   const dispatch = useDispatch();
+
+  const servicioList = useSelector((state) => state.servicioList);
+  const { servicios } = servicioList;
+
+
+
+  useEffect(() => {
+    if (!servicios || servicios.length === 0) {
+      dispatch(listServicios({}));
+    }
+  }, [dispatch, servicios])
 
   const ventasControlsReport = useSelector(
     (state) => state.ventasControlsReport
@@ -79,9 +91,12 @@ function GroupingControles() {
       cell: (info) => {
         const { serviciosItems } = info.row.original;
         return serviciosItems.map((p, inx) => {
+          console.log("servicios", servicios, "p:", p)
+          const servName = servicios.find((s) => s._id === p.servicio)
+          console.log("servName", servName)
           return (
             <span className="consolidado-articulos" key={inx}>
-              {p.cantidad}
+              {p.cantidad + " " + servName.nombre + " $" + p.precioServ}
             </span>
           );
         });
@@ -105,6 +120,26 @@ function GroupingControles() {
         return Number(row.getValue("montoUsd")).toFixed(2);
       },
 
+    },
+    {
+      header: "Laboratorio",
+      accessorKey: "laboratorio",
+      cell: (info) => {
+        if (!info.getValue()) {
+          return "No Aplica"
+        }
+        return info.getValue();
+      },
+      footer: "",
+    },
+    {
+      header: "Monto Laboratorio",
+      accessorKey: "montoLab",
+      enableGrouping: false,
+      cell: (info) => {
+        return "$" + Number(info.getValue() * 4).toFixed(2);
+      },
+      footer: "",
     },
     {
       header: "Comision Dr.",
@@ -138,11 +173,15 @@ function GroupingControles() {
   console.log("ventas", ventas)
   return (
     <div className="div-print-report">
-      <button className="btn-print-report weekly" onClick={imprimir}>
-        <PrintIcon />
-      </button>
+
       <div className="weekly-report-header">
-        <h2 className="h2-weekly">VENTAS CONSOLIDADAS</h2>
+        <div className="flx jcenter">
+          <h2 className="h2-weekly">INGRESOS POR SERVICIOS</h2>
+          <button className="btn-query-report" onClick={imprimir}>
+            <PrintIcon />
+          </button>
+        </div>
+
 
         <div className="flx  jcenter">
           <button className="btn-close-report" onClick={resetHandler}>
