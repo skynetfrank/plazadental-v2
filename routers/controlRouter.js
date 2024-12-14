@@ -184,11 +184,6 @@ controlRouter.get(
 
         },
       },
-
-
-
-
-
       {
         $match: {
           fecha: { $gte: fecha1 },
@@ -200,7 +195,6 @@ controlRouter.get(
         },
       },
     ]).sort({ fecha: -1 });
-    console.log("ventas:", ventas)
     res.send(ventas);
   })
 );

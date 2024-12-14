@@ -89,7 +89,7 @@ function GroupingControles() {
         //<span>{orderItems.codigo + " talla " + orderItems.talla}</span>;
       },
 
-      footer: "Total General >:",
+      footer: "",
     },
 
     {
@@ -102,7 +102,7 @@ function GroupingControles() {
 
       aggregationFn: "sum",
       aggregatedCell: ({ row }) => {
-        return Number(row.getValue("subtotal")).toFixed(2);
+        return Number(row.getValue("montoUsd")).toFixed(2);
       },
 
     },
@@ -116,7 +116,7 @@ function GroupingControles() {
 
       aggregationFn: "sum",
       aggregatedCell: ({ row }) => {
-        return Number(row.getValue("subtotal")).toFixed(2);
+        return Number(row.getValue("montoComisionDr")).toFixed(2);
       },
 
     },
@@ -130,7 +130,7 @@ function GroupingControles() {
 
       aggregationFn: "sum",
       aggregatedCell: ({ row }) => {
-        return Number(row.getValue("subtotal")).toFixed(2);
+        return Number(row.getValue("montoComisionPlaza")).toFixed(2);
       },
 
     },

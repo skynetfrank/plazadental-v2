@@ -44,7 +44,7 @@ function GroupingReventasTable({ data, columns }) {
   });
 
   return (
-    <div className="tankstack-table-container">
+    <div className="tankstack-table-container table">
       <div className="filterv8-container">
         <input
           type="text"
@@ -118,6 +118,8 @@ function GroupingReventasTable({ data, columns }) {
                                 : cell.getIsPlaceholder()
                                   ? "#bebdbd"
                                   : "white",
+                            fontWeight: cell.getIsAggregated()
+                              ? "bold" : "normal",
                           },
                         }}>
                         {cell.getIsGrouped() ? (
