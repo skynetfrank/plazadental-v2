@@ -125,6 +125,15 @@ function GroupingControles() {
 
     },
     {
+      header: "Descuento",
+      accessorKey: "descuento",
+      enableGrouping: false,
+      cell: (info) => {
+        return "$" + Number(info.getValue()).toFixed(2);
+      },
+      footer: "",
+    },
+    {
       header: "Laboratorio",
       accessorKey: "laboratorio",
       cell: (info) => {
@@ -140,7 +149,7 @@ function GroupingControles() {
       accessorKey: "montoLab",
       enableGrouping: false,
       cell: (info) => {
-        return "$" + Number(info.getValue() * 4).toFixed(2);
+        return "$" + Number(info.getValue()).toFixed(2);
       },
       footer: "",
     },
