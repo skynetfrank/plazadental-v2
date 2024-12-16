@@ -1,20 +1,16 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Paciente from "../models/paciente.js";
-import Control from "../models/control.js";
 import { isAdmin, isAuth } from "../utils.js";
-import mongoose from "mongoose";
 
 const pacienteRouter = express.Router();
 
 pacienteRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const count = await Paciente.countDocuments({});
-
     const pacientes = await Paciente.find({})
       .sort({ nombre: 1 })
-    res.send({ pacientes, count });
+    res.send({ pacientes });
   })
 );
 

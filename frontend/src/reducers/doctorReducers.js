@@ -42,9 +42,6 @@ export const doctorListReducer = (state = { loading: true, doctores: [] }, actio
       return {
         loading: false,
         doctores: action.payload.doctores,
-        pages: action.payload.pages,
-        page: action.payload.page,
-        count: action.payload.count,
       };
     case DOCTOR_LIST_FAIL:
       return { loading: false, error: action.payload };

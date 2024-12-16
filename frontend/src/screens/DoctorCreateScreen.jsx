@@ -295,7 +295,7 @@ export default function DoctorCreateScreen(props) {
 						</div>
 					</div>
 
-					<div id='btn-guardar-doctor'>
+					<div className="centrado">
 						<button className='button' type='submit'>
 							Registrar Doctor
 						</button>

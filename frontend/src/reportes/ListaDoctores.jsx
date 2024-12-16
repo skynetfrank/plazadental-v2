@@ -12,14 +12,12 @@ import { listDoctores } from "../actions/doctorActions";
 function ListaDoctores() {
   const navigate = useNavigate("");
   const doctorList = useSelector((state) => state.doctorList);
-  const { loading, doctores, count } = doctorList;
+  const { loading, doctores } = doctorList;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!doctores || doctores.length === 0) {
-      dispatch(listDoctores({}));
-    }
-  }, [dispatch, doctores]);
+    dispatch(listDoctores({}));
+  }, [dispatch]);
 
   const columns = [
     {
@@ -112,4 +110,4 @@ function ListaDoctores() {
 
 export default ListaDoctores;
 
-//onClick={() => navigate(`/cliente/${cliente._id}/edit`)}
+

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Axios from "axios";
-import { createServicio } from "../actions/servicioActions";
-import { Link } from "react-router-dom";
-import { SERVICIO_CREATE_RESET } from "../constants/servicioConstants";
+import { createServicio, detailsServicio, updateServicio } from "../actions/servicioActions";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { SERVICIO_CREATE_RESET, SERVICIO_UPDATE_RESET } from "../constants/servicioConstants";
 import Swal from "sweetalert2";
 
-export default function ServicioCreateScreen(props) {
+export default function ServicioEditScreen(props) {
+  const params = useParams();
+  const navigate = useNavigate();
+  const { id: servicioId } = params;
   const [codigo, setCodigo] = useState("");
   const [nombre, setNombre] = useState("");
   const [area, setArea] = useState("");
@@ -16,45 +19,43 @@ export default function ServicioCreateScreen(props) {
   const [cambio, setCambio] = useState(1);
   const [isRegister, setIsRegister] = useState(false);
 
-  const servicioCreate = useSelector((state) => state.servicioCreate);
-  const { success, servicio } = servicioCreate;
+
+  const servicioDetails = useSelector((state) => state.servicioDetails);
+  const { loading, error, servicio } = servicioDetails;
+
+  const servicioUpdate = useSelector((state) => state.servicioUpdate);
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = servicioUpdate;
 
   const areaArray = [" ", "GENERAL", "ORTODONCIA", "ODONTOPEDIATRIA", "CIRUGIA"];
 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
-    let isCancelled = false;
-
-    if (codigo === "") {
-      return;
+    if (successUpdate) {
+      dispatch({ type: SERVICIO_UPDATE_RESET });
+      Swal.fire({
+        text: "Datos Actualizados!",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      navigate("/listaservicios");
     }
-    const buscarCode = async () => {
-      try {
-        const { data } = await Axios.get(`/api/servicios/buscar?codigo=${codigo}`);
+    if (!servicio || servicio._id !== servicioId || successUpdate) {
+      dispatch(detailsServicio(servicioId));
+    } else {
+      setCodigo(servicio.codigo || "");
+      setNombre(servicio.nombre || "");
+      setArea(servicio.area || "");
+      setDescripcion(servicio.descripcion || "");
+      setPreciobs(servicio.preciobs || "");
+      setPreciousd(servicio.preciousd || "");
+    }
+  }, [dispatch, navigate, servicio, servicioId, successUpdate]);
 
-        if (data.servicio.length > 0) {
-          setIsRegister(true);
-          Swal.fire({
-            text: "Codigo Ya Registrado...Verifique!",
-            imageUrl: "/tiny_logo.jpg",
-            imageWidth: 70,
-            imageHeight: 30,
-            imageAlt: "logo",
-          });
-        }
-        if (data.servicio.length === 0) {
-          setIsRegister(false);
-        }
-      } catch (error) {
-        console.log("error al buscar codigo con axios", error);
-      }
-    };
-    buscarCode();
-    return () => {
-      isCancelled = true;
-    };
-  }, [codigo, isRegister]);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -70,27 +71,9 @@ export default function ServicioCreateScreen(props) {
       return;
     }
 
-    dispatch(createServicio(codigo, nombre, area, descripcion, preciobs, preciousd, cambio));
+    dispatch(updateServicio({ _id: servicioId, codigo, nombre, area, descripcion, preciobs, preciousd, cambio }));
   };
 
-  useEffect(() => {
-    if (success) {
-      Swal.fire({
-        text: "Servicio Registrado OK!",
-        imageUrl: "/tiny_logo.jpg",
-        imageWidth: 70,
-        imageHeight: 30,
-        imageAlt: "logo",
-      });
-    }
-    dispatch({ type: SERVICIO_CREATE_RESET });
-    setCodigo("");
-    setNombre("");
-    setArea("");
-    setDescripcion("");
-    setPreciobs("");
-    setPreciousd("");
-  }, [dispatch, servicio, success]);
 
   const getPrecio = async (e) => {
     try {

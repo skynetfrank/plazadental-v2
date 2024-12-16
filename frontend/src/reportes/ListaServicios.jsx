@@ -12,13 +12,13 @@ import AddCircleIcon from "../icons/AddCircleIcon";
 function ListaServicios() {
   const navigate = useNavigate("");
   const servicioList = useSelector((state) => state.servicioList);
-  const { loading, servicios, count } = servicioList;
+  const { loading, servicios } = servicioList;
   const dispatch = useDispatch();
 
 
   useEffect(() => {
     if (!servicios || servicios.length === 0) {
-      dispatch(listServicios({}));
+      dispatch(listServicios());
     }
   }, [dispatch, servicios])
 
@@ -44,7 +44,7 @@ function ListaServicios() {
             <ToolTip text="Editar">
               <button
                 className="circle-btn"
-                onClick={() => navigate(`doctor/${_id}/edit`)}>
+                onClick={() => navigate(`/servicio/${_id}/edit`)}>
                 <EditIcon />
               </button>
             </ToolTip>

@@ -13,7 +13,7 @@ import TrashIcon from "../icons/TrashIcon";
 function ListaPacientes() {
   const navigate = useNavigate("");
   const pacienteList = useSelector((state) => state.pacienteList);
-  const { loading, pacientes, count } = pacienteList;
+  const { loading, pacientes } = pacienteList;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -108,4 +108,4 @@ function ListaPacientes() {
 
 export default ListaPacientes;
 
-//onClick={() => navigate(`/cliente/${cliente._id}/edit`)}
+

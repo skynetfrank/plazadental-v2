@@ -24,21 +24,21 @@ import {
 } from '../constants/servicioConstants';
 
 export const listServicios =
-	({ nombre = '', pageNumber = '' }) =>
-	async (dispatch) => {
-		dispatch({
-			type: SERVICIO_LIST_REQUEST,
-		});
-		try {
-			const { data } = await Axios.get(
-				`/api/servicios?pageNumber=${pageNumber}&nombre=${nombre}`
-			);
+	() =>
+		async (dispatch) => {
+			dispatch({
+				type: SERVICIO_LIST_REQUEST,
+			});
+			try {
+				const { data } = await Axios.get(
+					`/api/servicios`
+				);
 
-			dispatch({ type: SERVICIO_LIST_SUCCESS, payload: data });
-		} catch (error) {
-			dispatch({ type: SERVICIO_LIST_FAIL, payload: error.message });
-		}
-	};
+				dispatch({ type: SERVICIO_LIST_SUCCESS, payload: data });
+			} catch (error) {
+				dispatch({ type: SERVICIO_LIST_FAIL, payload: error.message });
+			}
+		};
 
 export const detailsServicio = (servicioId) => async (dispatch) => {
 	dispatch({ type: SERVICIO_DETAILS_REQUEST, payload: servicioId });
@@ -57,41 +57,35 @@ export const detailsServicio = (servicioId) => async (dispatch) => {
 };
 
 export const createServicio =
-	(codigo, nombre, area, descripcion, preciobs, preciousd, cambio) =>
-	async (dispatch, getState) => {
-		dispatch({ type: SERVICIO_CREATE_REQUEST });
-		const {
-			userSignin: { userInfo },
-		} = getState();
-		try {
-			const { data } = await Axios.post(
-				'/api/servicios/create',
-				{
-					codigo,
-					nombre,
-					area,
-					descripcion,
-					preciobs,
-					preciousd,
-					cambio,
-				},
-				{
-					headers: { Authorization: `Bearer ${userInfo.token}` },
-				}
-			);
+	servicio =>
+		async (dispatch, getState) => {
+			dispatch({ type: SERVICIO_CREATE_REQUEST });
+			const {
+				userSignin: { userInfo },
+			} = getState();
+			try {
+				const { data } = await Axios.post(
+					'/api/servicios/create',
+					{
+						servicio
+					},
+					{
+						headers: { Authorization: `Bearer ${userInfo.token}` },
+					}
+				);
 
-			dispatch({
-				type: SERVICIO_CREATE_SUCCESS,
-				payload: data,
-			});
-		} catch (error) {
-			const message =
-				error.response && error.response.data.message
-					? error.response.data.message
-					: error.message;
-			dispatch({ type: SERVICIO_CREATE_FAIL, payload: message });
-		}
-	};
+				dispatch({
+					type: SERVICIO_CREATE_SUCCESS,
+					payload: data,
+				});
+			} catch (error) {
+				const message =
+					error.response && error.response.data.message
+						? error.response.data.message
+						: error.message;
+				dispatch({ type: SERVICIO_CREATE_FAIL, payload: message });
+			}
+		};
 
 export const updateServicio = (servicio) => async (dispatch, getState) => {
 	dispatch({ type: SERVICIO_UPDATE_REQUEST, payload: servicio });

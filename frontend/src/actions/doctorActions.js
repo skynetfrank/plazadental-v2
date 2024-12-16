@@ -19,7 +19,7 @@ import {
   DOCTOR_DELETE_REQUEST,
   DOCTOR_DELETE_FAIL,
   DOCTOR_DELETE_SUCCESS,
-  DOCTOR_DELETE_RESET,
+
 } from '../constants/doctorConstants';
 
 export const createDoctor = doctor => async (dispatch, getState) => {
@@ -50,18 +50,18 @@ export const createDoctor = doctor => async (dispatch, getState) => {
 
 export const listDoctores =
   ({ busqueda = '', pageNumber = '' }) =>
-  async dispatch => {
-    dispatch({
-      type: DOCTOR_LIST_REQUEST,
-    });
-    try {
-      const { data } = await Axios.get(`/api/doctores?pageNumber=${pageNumber}&nombre=${busqueda}`);
+    async dispatch => {
+      dispatch({
+        type: DOCTOR_LIST_REQUEST,
+      });
+      try {
+        const { data } = await Axios.get(`/api/doctores?pageNumber=${pageNumber}&nombre=${busqueda}`);
 
-      dispatch({ type: DOCTOR_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: DOCTOR_LIST_FAIL, payload: error.message });
-    }
-  };
+        dispatch({ type: DOCTOR_LIST_SUCCESS, payload: data });
+      } catch (error) {
+        dispatch({ type: DOCTOR_LIST_FAIL, payload: error.message });
+      }
+    };
 
 export const detailsDoctor = doctorId => async (dispatch, getState) => {
   dispatch({ type: DOCTOR_DETAILS_REQUEST, payload: doctorId });

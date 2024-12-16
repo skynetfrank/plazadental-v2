@@ -53,7 +53,7 @@ export default function ControlCreateScreen(props) {
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
-  const [txtformapago,setTxtformapago] = useState(0);
+  const [txtformapago, setTxtformapago] = useState(0);
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
@@ -211,6 +211,17 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
+    if (cambioBcv <= 0) {
+      Swal.fire({
+        text: "Actualice el Cambio BCV",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+        icon: "error"
+      });
+      return;
+    }
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
@@ -274,6 +285,17 @@ export default function ControlCreateScreen(props) {
         imageWidth: 70,
         imageHeight: 30,
         imageAlt: "logo",
+      });
+      return;
+    }
+    if (cambioBcv <= 0) {
+      Swal.fire({
+        text: "Actualice el Cambio BCV",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+        icon: "error"
       });
       return;
     }

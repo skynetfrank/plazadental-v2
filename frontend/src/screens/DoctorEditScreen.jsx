@@ -5,9 +5,9 @@ import { DOCTOR_UPDATE_RESET } from "../constants/doctorConstants";
 import { NumericFormat } from "react-number-format";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import dayjs from "dayjs";
 
-export default function DoctorCreateScreen(props) {
+
+export default function DoctorEditScreen(props) {
   const params = useParams();
   const navigate = useNavigate();
   const { id: doctorId } = params;
@@ -23,7 +23,7 @@ export default function DoctorCreateScreen(props) {
   const [contacto, setContacto] = useState("");
   const [especialidad, setEspecialidad] = useState("");
   const [numeroColegio, setNumeroColegio] = useState("");
-  const [tasaComisionDoctor, setTasaComisionDr] = useState(0.4);
+  const [tasaComisionDoctor, setTasaComisionDr] = useState("");
 
   const [fotoUrl, setFotoUrl] = useState("");
 
@@ -70,6 +70,7 @@ export default function DoctorCreateScreen(props) {
         email,
         especialidad,
         numeroColegio,
+        tasaComisionDoctor,
         contacto,
         fotoUrl,
       })
@@ -79,7 +80,14 @@ export default function DoctorCreateScreen(props) {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: DOCTOR_UPDATE_RESET });
-      navigate("/doctorlist");
+      Swal.fire({
+        text: "Datos Actualizados!",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      navigate("/listadoctores");
     }
     if (!doctor || doctor._id !== doctorId || successUpdate) {
       dispatch(detailsDoctor(doctorId));
@@ -96,6 +104,7 @@ export default function DoctorCreateScreen(props) {
       setContacto(doctor.contacto || "");
       setEspecialidad(doctor.especialidad || "");
       setNumeroColegio(doctor.numeroColegio);
+      setTasaComisionDr(doctor.tasaComisionDoctor);
       setFotoUrl(
         genero === "Mujer"
           ? "https://res.cloudinary.com/plazasky/image/upload/v1662409177/doctores/female-doctor.png"

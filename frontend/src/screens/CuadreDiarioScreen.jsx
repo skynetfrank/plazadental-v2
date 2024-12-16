@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { cuadreDia } from "../actions/controlActions";
 import CuadreDiarioTable from "../components/CuadreDiarioTable";
 import PrintIcon from "../icons/PrintIcon";
@@ -30,22 +30,6 @@ export default function CuadreDiarioScreen() {
 
   const columns = useMemo(
     () => [
-      {
-        header: "# Ver",
-        id: "id",
-        cell: (info) => {
-          return (
-            <Link to={`/controles/${info.row.original._id}`}>
-              <span className="azul-brand negrita subrayado font-1">{info.row.index + 1}</span>{" "}
-            </Link>
-          );
-        },
-
-        footer: (valuefooter) => {
-          console.log("valuefooter", valuefooter.table.getFilteredRowModel().rows);
-        },
-      },
-
       {
         header: "Paciente",
         accessorKey: "paciente_data",
@@ -355,7 +339,7 @@ export default function CuadreDiarioScreen() {
           Resumen: Venta Total del Dia ${Number(ventaDolares).toFixed(2)} (Efectivo US$ {cash?.totalCashusd}){" "}
         </span>
       </div>
-      <div className="flx gap3 border-1 astart b-radius font-x pad-left pad-right">
+      <div className="flx gap3 border-1 astart b-radius font-x pad-1">
         <div className="font-14">
           <label className="pad-0 negrita font-14">Efectivo</label>
           <div className="ml-05">
