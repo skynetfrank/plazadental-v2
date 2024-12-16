@@ -84,12 +84,15 @@ function GroupingControles() {
       accessorKey: "nombreDoctor",
       footer: "",
     },
+
+
     {
       header: "Servicios",
       accessorKey: "serviciosItems",
       enableGrouping: false,
       cell: (info) => {
-        const { serviciosItems } = info.row.original;
+        const { serviciosItems, _id } = info.row.original;
+        console.log("_id", _id)
         return serviciosItems.map((p, inx) => {
           console.log("servicios", servicios, "p:", p)
           const servName = servicios.find((s) => s._id === p.servicio)
