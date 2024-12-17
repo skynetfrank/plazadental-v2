@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createControl } from "../actions/controlActions";
+import { createControl, detailsControl, updateControl } from "../actions/controlActions";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
+import { CONTROL_CREATE_RESET, CONTROL_UPDATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
@@ -16,13 +16,12 @@ function subtractHours(date, hours) {
   return date;
 }
 
-export default function ControlCreateScreen(props) {
+export default function ControlEditScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const params = useParams();
   const navigate = useNavigate();
-  const { search } = useLocation();
-  const { id: pacienteId } = params;
+  const { id: controlId } = params;
 
   const [doctorId, setDoctorId] = useState("");
   const [user] = useState(userInfo._id);
@@ -60,10 +59,53 @@ export default function ControlCreateScreen(props) {
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente } = pacienteDetails;
 
-  const controlCreate = useSelector((state) => state.controlCreate);
-  const { success, control } = controlCreate;
+  const controlDetails = useSelector((state) => state.controlDetails);
+  const { loading, error, control } = controlDetails;
+
+  const controlUpdate = useSelector((state) => state.controlUpdate);
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = controlUpdate;
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (successUpdate) {
+      Swal.fire({
+        title: "Informacion Actualizado!",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      dispatch({ type: CONTROL_UPDATE_RESET });
+      navigate("/controleslist");
+    }
+
+    if (!control || control._id !== controlId || successUpdate) {
+      dispatch({ type: CONTROL_UPDATE_RESET });
+      dispatch(detailsControl(controlId));
+    } else {
+      setDoctorId(control.doctor._id || " ");
+      setFechaControl(control.fechaControl);
+      setEvaluacion(control.evaluacion || "");
+      setTratamiento(control.tratamiento || "");
+      setMontoUsd(control.montoUsd || 0);
+      setCambioBcv(control.cambioBcv || 0);
+      setMontoBs(control.montoBs || 0);
+      setTasaComisionDr(control.tasaComisionDr || 40);
+      setTasaComisionPlaza(control.tasaComisionPlaza || 60);
+      setMontoComisionDr(control.montoComisionDr || 0);
+      setMontoComisionPlaza(control.montoComisionPlaza || 0);
+      setMateriales(control.materiales || []);
+      setServiciosItems(control.serviciosItems || []);
+      setRecipe(control.recipe || "");
+      setIndicaciones(control.indicaciones || "");
+      setPago(control.pago || {});
+      setMontoLab(control.montoLab || 0);
+      setMontoServicios(control.montoServicios || 0);
+      setLaboratorio(control.laboratorio || "");
+      setDescuento(control.descuento || 0);
+    }
+  }, [control, controlId, dispatch, navigate, successUpdate]);
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -87,53 +129,12 @@ export default function ControlCreateScreen(props) {
   const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
-    if (!paciente || paciente._id !== pacienteId) {
-      dispatch(detailsPaciente(pacienteId));
-    }
-  }, [dispatch, paciente, pacienteId]);
-
-  useEffect(() => {
     const doctorFound = listaDoctores.find((x) => x._id === doctorId);
     if (doctorFound) {
       setTasaComisionDr(doctorFound.tasaComisionDoctor);
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }
   }, [doctorId, listaDoctores]);
-
-  useEffect(() => {
-    if (success) {
-      Swal.fire({
-        title: "Control Registrado con Exito!",
-        imageUrl: "/tiny_logo.jpg",
-        imageWidth: 70,
-        imageHeight: 30,
-        imageAlt: "logo",
-      });
-      dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
-      dispatch({ type: CONTROL_CREATE_RESET });
-      dispatch(detailsPaciente(pacienteId));
-      setDoctorId("");
-      setFechaControl("");
-      setEsCita1(false);
-      setEvaluacion("");
-      setTratamiento("");
-      setMontoUsd(0);
-      setMontoLab(0);
-      setMontoBs(0);
-      setMontoServicios(0);
-      setTasaComisionDr(0.4);
-      setTasaComisionPlaza(0.6);
-      setMontoComisionDr(0);
-      setMontoComisionPlaza(0);
-      setMateriales([]);
-      setServiciosItems([]);
-      setRecipe("");
-      setIndicaciones("");
-      setPago({});
-      setLaboratorio("");
-      setDescuento(0);
-    }
-  }, [dispatch, control, navigate, success, pacienteId]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -151,8 +152,8 @@ export default function ControlCreateScreen(props) {
     }
 
     dispatch(
-      createControl(
-        pacienteId,
+      updateControl({
+        _id: controlId,
         doctorId,
         user,
         fechaControl,
@@ -176,8 +177,8 @@ export default function ControlCreateScreen(props) {
         pago,
         montoLab,
         laboratorio,
-        montoServicios
-      )
+        montoServicios,
+      })
     );
   };
 
@@ -380,13 +381,12 @@ export default function ControlCreateScreen(props) {
   };
   //console.log("laboratorio", laboratorio, "montoLab", montoLab)
   //console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
-  console.log("montoServicios", montoServicios);
-  console.log("montoUsd", montoUsd, "descuento", descuento);
+  //console.log("listaServicios", listaServicios);
   return (
     <div>
       <div className="flx column jcenter">
         <div>
-          <span className="action-map">Agregar Control</span>
+          <span className="action-map">Editar Control</span>
           <h3 className="centrado font-12">{paciente?.nombre + " " + paciente?.apellido}</h3>
         </div>
         <input
@@ -410,14 +410,15 @@ export default function ControlCreateScreen(props) {
           )}
 
           <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
-            Guardar
+            Actualizar
           </button>
         </div>
         <div>
           {serviciosItems?.length > 0 || montoUsd > 0 ? (
             <div className="show-servicios">
               {serviciosItems.map((m, inx) => {
-                const foundit = listaServicios.find((x) => x._id === m.servicio);
+                const foundit = listaServicios.find((x) => x._id === m.servicio._id);
+                console.log("m", m, "foundit", foundit);
                 return (
                   <div key={inx} className="flx mb03">
                     <span className="minw-10">{m.cantidad}</span>
