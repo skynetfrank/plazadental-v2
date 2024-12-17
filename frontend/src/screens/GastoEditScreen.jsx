@@ -7,12 +7,7 @@ import { detailsGasto } from "../actions/gastoActions";
 import { GASTO_UPDATE_RESET } from "../constants/gastoConstants";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  selectBancos,
-  selectFormapago,
-  nombres,
-  categorias,
-} from "../constants/listas";
+import { selectBancos, selectFormapago, nombres, categorias } from "../constants/listas";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -40,9 +35,7 @@ export default function GastoEditScreen(props) {
   const [descripcion, setDescripcion] = useState("");
   const [montousd, setMontousd] = useState(0);
   const [montobs, setMontobs] = useState(0);
-  const [cambiodia, setCambiodia] = useState(
-    Number(localStorage.getItem("cambioBcv")).toFixed(2)
-  );
+  const [cambiodia, setCambiodia] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
   const [imageurl, setImageurl] = useState("");
   const [imageurl2, setImageurl2] = useState("");
 
@@ -142,10 +135,7 @@ export default function GastoEditScreen(props) {
     setLoadingUpload(true);
 
     try {
-      const { data } = await Axios.post(
-        "https://api.cloudinary.com/v1_1/reactorsys/image/upload",
-        bodyFormData
-      );
+      const { data } = await Axios.post("https://api.cloudinary.com/v1_1/reactorsys/image/upload", bodyFormData);
       setImageurl(data.secure_url);
       setLoadingUpload(false);
     } catch (error) {
@@ -166,10 +156,7 @@ export default function GastoEditScreen(props) {
     setLoadingUpload(true);
 
     try {
-      const { data } = await Axios.post(
-        "https://api.cloudinary.com/v1_1/reactorsys/image/upload",
-        bodyFormData
-      );
+      const { data } = await Axios.post("https://api.cloudinary.com/v1_1/reactorsys/image/upload", bodyFormData);
       setImageurl2(data.secure_url);
       setLoadingUpload(false);
     } catch (error) {
@@ -181,9 +168,7 @@ export default function GastoEditScreen(props) {
 
   const handleMontobs = (e) => {
     e.preventDefault();
-    setMontousd(
-      (parseFloat(e.target.value) / parseFloat(cambiodia)).toFixed(2)
-    );
+    setMontousd((parseFloat(e.target.value) / parseFloat(cambiodia)).toFixed(2));
     setMontobs(e.target.value);
   };
 
@@ -202,9 +187,7 @@ export default function GastoEditScreen(props) {
   return (
     <div className="flx column jcenter m-0 pad-0">
       <h2 className="centrado m-1">Modificar Gasto</h2>
-      <form
-        className="form flx bg-color b-radius border-1 pad-2 centrado"
-        onSubmit={submitHandler}>
+      <form className="form flx bg-color b-radius border-1 pad-2 centrado" onSubmit={submitHandler}>
         <div>
           <div>
             <input
@@ -212,7 +195,8 @@ export default function GastoEditScreen(props) {
               className="b-radius border-1 b-radius-05 pad-05 w-120"
               value={fecha}
               required
-              onChange={(e) => setFecha(e.target.value)}></input>
+              onChange={(e) => setFecha(e.target.value)}
+            ></input>
           </div>
 
           <div className="flx abase pad-0">
@@ -225,7 +209,8 @@ export default function GastoEditScreen(props) {
                 list="nombres"
                 required
                 maxLength={50}
-                onChange={(e) => setBeneficiario(e.target.value)}></input>
+                onChange={(e) => setBeneficiario(e.target.value)}
+              ></input>
               <datalist id="nombres">
                 {nombres.map((x) => (
                   <option key={x} value={x}>
@@ -244,7 +229,8 @@ export default function GastoEditScreen(props) {
                 value={referencia}
                 required
                 maxLength={50}
-                onChange={(e) => setReferencia(e.target.value)}></input>
+                onChange={(e) => setReferencia(e.target.value)}
+              ></input>
             </div>
             <div className="flx column astart pad-0">
               <label>Categoria</label>
@@ -254,7 +240,8 @@ export default function GastoEditScreen(props) {
                 value={categoria}
                 list="categorias"
                 required
-                onChange={(e) => setCategoria(e.target.value)}></input>
+                onChange={(e) => setCategoria(e.target.value)}
+              ></input>
               <datalist id="categorias">
                 {categorias.map((x) => (
                   <option key={x} value={x}>
@@ -273,7 +260,8 @@ export default function GastoEditScreen(props) {
               value={descripcion}
               required
               maxLength={50}
-              onChange={(e) => setDescripcion(e.target.value)}></input>
+              onChange={(e) => setDescripcion(e.target.value)}
+            ></input>
           </div>
 
           <div className="flx jsb pad-0 mtop-1">
@@ -285,7 +273,8 @@ export default function GastoEditScreen(props) {
                 className="b-radius border-1 b-radius-05 pad-05 w-70 txt-align-r"
                 value={montousd}
                 required
-                onChange={(e) => handleMontousd(e)}></input>
+                onChange={(e) => handleMontousd(e)}
+              ></input>
             </div>
             <div className="flx column astart pad-0">
               <label>Cambio</label>
@@ -294,7 +283,8 @@ export default function GastoEditScreen(props) {
                 className="b-radius border-1 b-radius-05 pad-05 w-70 txt-align-r"
                 value={cambiodia}
                 required
-                onChange={(e) => handleCambio(e)}></input>
+                onChange={(e) => handleCambio(e)}
+              ></input>
             </div>
             <div className="flx column astart pad-0">
               <label>Monto Bs.</label>
@@ -303,7 +293,8 @@ export default function GastoEditScreen(props) {
                 className="b-radius border-1 b-radius-05 pad-05 w-70 txt-align-r"
                 value={montobs}
                 required
-                onChange={(e) => handleMontobs(e)}></input>
+                onChange={(e) => handleMontobs(e)}
+              ></input>
             </div>
           </div>
 
@@ -314,7 +305,8 @@ export default function GastoEditScreen(props) {
               <select
                 className="w-120 b-radius-05 pad-05"
                 value={formadepago}
-                onChange={(e) => setFormadepago(e.target.value)}>
+                onChange={(e) => setFormadepago(e.target.value)}
+              >
                 {selectFormapago.map((x) => (
                   <option key={x} value={x}>
                     {x}
@@ -324,10 +316,7 @@ export default function GastoEditScreen(props) {
             </div>
             <div className="flx column astart pad-0">
               <label className="small-label w120">Banco</label>
-              <select
-                className="w-120 b-radius-05 pad-05"
-                value={banco}
-                onChange={(e) => setBanco(e.target.value)}>
+              <select className="w-120 b-radius-05 pad-05" value={banco} onChange={(e) => setBanco(e.target.value)}>
                 {selectBancos.map((x) => (
                   <option key={x} value={x}>
                     {x}
@@ -339,30 +328,14 @@ export default function GastoEditScreen(props) {
 
           <div className="flx jsb pad-0 mtop-1">
             <div className="flx column pos-rel border-1">
-              <img
-                src={imageurl ? imageurl : "/camera.png"}
-                className="tiny-image"
-                alt=" imagen1"
-              />
+              <img src={imageurl ? imageurl : "/camera.png"} className="tiny-image" alt=" imagen1" />
               <p>Documento 1</p>
-              <input
-                type="file"
-                className="custom-file-input"
-                id="foto1"
-                onChange={uploadFileHandler}></input>
+              <input type="file" className="custom-file-input" id="foto1" onChange={uploadFileHandler}></input>
             </div>
             <div className="flx column pos-rel border-1">
-              <img
-                src={imageurl2 ? imageurl2 : "/camera.png"}
-                className="tiny-image"
-                alt=" imagen2"
-              />
+              <img src={imageurl2 ? imageurl2 : "/camera.png"} className="tiny-image" alt=" imagen2" />
               <p>Documento 2</p>
-              <input
-                type="file"
-                className="custom-file-input"
-                id="foto2"
-                onChange={uploadFile2Handler}></input>
+              <input type="file" className="custom-file-input" id="foto2" onChange={uploadFile2Handler}></input>
             </div>
           </div>
           <button className="btn-submit m-2" type="submit">
@@ -373,3 +346,24 @@ export default function GastoEditScreen(props) {
     </div>
   );
 }
+
+/* 
+<form>
+{
+  loadingUpdate && <LoadingBox></LoadingBox>;
+}
+{
+  errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>;
+}
+{
+  loading ? (
+    <LoadingBox></LoadingBox>
+  ) : error ? (
+    <MessageBox variant="danger">{error}</MessageBox>
+  ) : (
+    <>
+      <div></div>
+    </>
+  );
+}
+</form> */

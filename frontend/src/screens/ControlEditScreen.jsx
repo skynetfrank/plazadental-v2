@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createControl, detailsControl, updateControl } from "../actions/controlActions";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { CONTROL_CREATE_RESET, CONTROL_UPDATE_RESET } from "../constants/controlConstants";
+import { detailsControl, updateControl } from "../actions/controlActions";
+import { useNavigate, useParams } from "react-router-dom";
+import { CONTROL_UPDATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
@@ -56,14 +56,11 @@ export default function ControlEditScreen(props) {
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
 
-  const pacienteDetails = useSelector((state) => state.pacienteDetails);
-  const { paciente } = pacienteDetails;
-
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
 
   const controlUpdate = useSelector((state) => state.controlUpdate);
-  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = controlUpdate;
+  const { success: successUpdate } = controlUpdate;
 
   const dispatch = useDispatch();
 
@@ -382,12 +379,13 @@ export default function ControlEditScreen(props) {
   //console.log("laboratorio", laboratorio, "montoLab", montoLab)
   //console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
   //console.log("listaServicios", listaServicios);
+  console.log("control", control);
   return (
     <div>
       <div className="flx column jcenter">
         <div>
           <span className="action-map">Editar Control</span>
-          <h3 className="centrado font-12">{paciente?.nombre + " " + paciente?.apellido}</h3>
+          <h3 className="centrado font-12">{control.paciente?.nombre + " " + control.paciente?.apellido}</h3>
         </div>
         <input
           type="date"

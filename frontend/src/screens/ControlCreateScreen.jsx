@@ -149,6 +149,17 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
+    if (cambioBcv <= 0) {
+      Swal.fire({
+        text: "Actualice el Cambio BCV",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+        icon: "error",
+      });
+      return;
+    }
 
     dispatch(
       createControl(

@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import {
   CONTROL_CREATE_FAIL,
   CONTROL_CREATE_REQUEST,
@@ -24,7 +24,7 @@ import {
   CONTROL_CONSOLIDADO_REQUEST,
   CONTROL_CONSOLIDADO_SUCCESS,
   CONTROL_CONSOLIDADO_FAIL,
-} from '../constants/controlConstants';
+} from "../constants/controlConstants";
 
 export const createControl =
   (
@@ -54,58 +54,58 @@ export const createControl =
     laboratorio,
     montoServicios
   ) =>
-    async (dispatch, getState) => {
-      dispatch({ type: CONTROL_CREATE_REQUEST });
-      const {
-        userSignin: { userInfo },
-      } = getState();
+  async (dispatch, getState) => {
+    dispatch({ type: CONTROL_CREATE_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
-      try {
-        const { data } = await Axios.post(
-          '/api/controles/create',
-          {
-            pacienteId,
-            doctorId,
-            user,
-            fechaControl,
-            esCita1,
-            evaluacion,
-            tratamiento,
-            recipe,
-            indicaciones,
-            serviciosItems,
-            materiales,
-            cambioBcv,
-            montoUsd,
-            montoBs,
-            tasaIva,
-            montoIva,
-            descuento,
-            tasaComisionDr,
-            tasaComisionPlaza,
-            montoComisionDr,
-            montoComisionPlaza,
-            pago,
-            montoLab,
-            laboratorio,
-            montoServicios
-          },
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
+    try {
+      const { data } = await Axios.post(
+        "/api/controles/create",
+        {
+          pacienteId,
+          doctorId,
+          user,
+          fechaControl,
+          esCita1,
+          evaluacion,
+          tratamiento,
+          recipe,
+          indicaciones,
+          serviciosItems,
+          materiales,
+          cambioBcv,
+          montoUsd,
+          montoBs,
+          tasaIva,
+          montoIva,
+          descuento,
+          tasaComisionDr,
+          tasaComisionPlaza,
+          montoComisionDr,
+          montoComisionPlaza,
+          pago,
+          montoLab,
+          laboratorio,
+          montoServicios,
+        },
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      );
 
-        dispatch({
-          type: CONTROL_CREATE_SUCCESS,
-          payload: data,
-        });
-      } catch (error) {
-        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-        dispatch({ type: CONTROL_CREATE_FAIL, payload: message });
-      }
-    };
+      dispatch({
+        type: CONTROL_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+      dispatch({ type: CONTROL_CREATE_FAIL, payload: message });
+    }
+  };
 
-export const detailsControl = controlId => async (dispatch, getState) => {
+export const detailsControl = (controlId) => async (dispatch, getState) => {
   dispatch({ type: CONTROL_DETAILS_REQUEST, payload: controlId });
   const {
     userSignin: { userInfo },
@@ -123,7 +123,7 @@ export const detailsControl = controlId => async (dispatch, getState) => {
   }
 };
 
-export const updateControl = control => async (dispatch, getState) => {
+export const updateControl = (control) => async (dispatch, getState) => {
   dispatch({ type: CONTROL_UPDATE_REQUEST, payload: control });
   const {
     userSignin: { userInfo },
@@ -139,7 +139,7 @@ export const updateControl = control => async (dispatch, getState) => {
   }
 };
 
-export const deleteControl = controlId => async (dispatch, getState) => {
+export const deleteControl = (controlId) => async (dispatch, getState) => {
   dispatch({ type: CONTROL_DELETE_REQUEST, payload: controlId });
   const {
     userSignin: { userInfo },
@@ -156,7 +156,7 @@ export const deleteControl = controlId => async (dispatch, getState) => {
   }
 };
 
-export const controlesByPaciente = pacienteId => async (dispatch, getState) => {
+export const controlesByPaciente = (pacienteId) => async (dispatch, getState) => {
   dispatch({ type: CONTROL_BYPACIENTE_REQUEST });
   const {
     userSignin: { userInfo },
@@ -174,8 +174,6 @@ export const controlesByPaciente = pacienteId => async (dispatch, getState) => {
   }
 };
 
-
-
 export const groupByDay = () => async (dispatch, getState) => {
   dispatch({ type: GROUPBYDAY_REQUEST });
   const {
@@ -185,7 +183,7 @@ export const groupByDay = () => async (dispatch, getState) => {
     const { data } = await Axios.get("/api/controles/groupedbyday", {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log("data:", data)
+    console.log("data:", data);
     dispatch({ type: GROUPBYDAY_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -204,7 +202,7 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
     const { data } = await Axios.get(`/api/controles/cuadrediario?fecha=${fecha}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    console.log("data cash server", data)
+    console.log("data cash server", data);
     dispatch({ type: CUADREDIA_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
@@ -212,30 +210,23 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
   }
 };
 
-
 export const ventasControls =
   (fecha1 = "01-01-2024", fecha2 = "31-12-2024") =>
-    async (dispatch, getState) => {
-      //VENTAS CONSOLIDADAS TODAS LAS SUCURSALES DISPONIBLES
-      dispatch({ type: CONTROL_CONSOLIDADO_REQUEST });
-      const {
-        userSignin: { userInfo },
-      } = getState();
-      try {
-        const { data } = await Axios.get(
-          `/api/controles/consolidadoventas?fecha1=${fecha1}&fecha2=${fecha2}`,
-          {
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-          }
-        );
-        console.log("action data", data)
+  async (dispatch, getState) => {
+    //VENTAS CONSOLIDADAS TODAS LAS SUCURSALES DISPONIBLES
+    dispatch({ type: CONTROL_CONSOLIDADO_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await Axios.get(`/api/controles/consolidadoventas?fecha1=${fecha1}&fecha2=${fecha2}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      console.log("action data", data);
 
-        dispatch({ type: CONTROL_CONSOLIDADO_SUCCESS, payload: data });
-      } catch (error) {
-        const message =
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message;
-        dispatch({ type: CONTROL_CONSOLIDADO_FAIL, payload: message });
-      }
-    };
+      dispatch({ type: CONTROL_CONSOLIDADO_SUCCESS, payload: data });
+    } catch (error) {
+      const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+      dispatch({ type: CONTROL_CONSOLIDADO_FAIL, payload: message });
+    }
+  };
