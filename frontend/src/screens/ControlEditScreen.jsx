@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CONTROL_UPDATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
@@ -74,7 +73,7 @@ export default function ControlEditScreen(props) {
         imageAlt: "logo",
       });
       dispatch({ type: CONTROL_UPDATE_RESET });
-      navigate("/controleslist");
+      navigate(`/controles/${controlId}`);
     }
 
     if (!control || control._id !== controlId || successUpdate) {
@@ -385,7 +384,7 @@ export default function ControlEditScreen(props) {
       <div className="flx column jcenter">
         <div>
           <span className="action-map">Editar Control</span>
-          <h3 className="centrado font-12">{control.paciente?.nombre + " " + control.paciente?.apellido}</h3>
+          <h3 className="centrado font-12">{control?.paciente?.nombre + " " + control?.paciente?.apellido}</h3>
         </div>
         <input
           type="date"

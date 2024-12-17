@@ -211,10 +211,18 @@ export default function ControlesScreen(props) {
                           );
                         })}
                       </div>
-                      {item.control?.descuento > 0 ? (<div className="border-bottom">
-                        <h4>Descuento</h4>
-                        <p>${Number(item.control?.descuento).toFixed(2)}</p>
+
+                      {item.control?.montoLab > 0 ? (<div className="border-bottom">
+                        <h4>Laboratorio ${Number(item.control?.montoLab).toFixed(2) + " " + item.control.laboratorio}</h4>
                       </div>) : ("")}
+
+
+
+                      {item.control?.descuento > 0 ? (<div className="border-bottom">
+                        <h4>Descuento ${Number(item.control?.descuento).toFixed(2)}</h4>
+                      </div>) : ("")}
+
+
                       <div className="border-bottom">
                         <h4>Pago</h4>
                         <div>

@@ -741,25 +741,25 @@ controlRouter.put(
       control.doctor = req.body.doctorId;
       control.user = req.body.user;
       control.fechaControl = req.body.fechaControl;
-      control.esCita1 = req.body.esCita1;
       control.evaluacion = req.body.evaluacion;
       control.tratamiento = req.body.tratamiento;
       control.recipe = req.body.recipe;
       control.indicaciones = req.body.indicaciones;
       control.serviciosItems = req.body.serviciosItems;
-      control.materiales = req.body.materiales;
       control.cambioBcv = req.body.cambioBcv;
+      control.montoServicios = req.body.montoServicios;
       control.montoUsd = req.body.montoUsd;
       control.montoBs = req.body.montoBs;
       control.tasaIva = req.body.tasaIva;
       control.montoIva = req.body.montoIva;
-      control.totalGeneralBs = req.body.totalGeneral;
+      control.descuento = req.body.descuento;
+      control.laboratorio = req.body.laboratorio;
+      control.montoLab = req.body.montoLab;
       control.tasaComisionDr = req.body.tasaComisionDr;
       control.tasaComisionPlaza = req.body.tasaComisionPlaza;
       control.montoComisionDr = req.body.montoComisionDr;
       control.montoComisionPlaza = req.body.montoComisionPlaza;
       control.pagoInfo = req.body.pagoInfo;
-
       const updatedControl = await control.save();
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {
