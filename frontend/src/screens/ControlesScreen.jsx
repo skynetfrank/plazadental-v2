@@ -191,36 +191,36 @@ export default function ControlesScreen(props) {
                         <h4 className="mb-2">Indicaciones</h4>
                         <p>{item.control.indicaciones ? item.control.indicaciones : "No se Registro Indicaciones"}</p>
                       </div>
-                      <div className="border-bottom">
-                        <h4>Servicios Facturados {item.control.montoUsd > 0 ? "$" + Number(item.control.montoUsd).toFixed(2) : ""}</h4>
-                        {item.control.serviciosItems.map((item, ndx) => {
-                          let total = +item.montoItemServicio;
-                          return (
-                            <div className="font-x" key={ndx}><span className="font-x negrita ml" >
-                              {item.cantidad +
-                                " " +
-                                item.servicio.nombre +
-                                " " +
-                                item.precioServ +
-                                "$ = " +
-                                " " +
-                                item.montoItemServicio +
-                                "$"}
-                            </span></div>
 
-                          );
-                        })}
+                      <div className="border-bottom">
+                        <h4>Facturacion {item.control.montoUsd > 0 ? "$" + Number(item.control.montoUsd).toFixed(2) : ""}</h4>
+                        <div className="flx column font-x astart show-control-facturacion">
+                          <div className="flx">
+                            <span className="negrita">Servicios:</span>
+                            {item.control.serviciosItems.map((item, ndx) => {
+
+                              return (
+                                <div className="font-x" key={ndx}>
+                                  <span className="negrita ml" >
+                                    {item.cantidad +
+                                      " " +
+                                      item.servicio.nombre +
+                                      " " +
+                                      item.montoItemServicio +
+                                      "$"}
+                                  </span>
+                                </div>
+
+                              );
+                            })}
+                          </div>
+                          <span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>
+                          <span className="negrita">Descuento: ${Number(item.control?.descuento).toFixed(2)}</span>
+                        </div>
                       </div>
 
-                      {item.control?.montoLab > 0 ? (<div className="border-bottom">
-                        <h4>Laboratorio ${Number(item.control?.montoLab).toFixed(2) + " " + item.control.laboratorio}</h4>
-                      </div>) : ("")}
 
 
-
-                      {item.control?.descuento > 0 ? (<div className="border-bottom">
-                        <h4>Descuento ${Number(item.control?.descuento).toFixed(2)}</h4>
-                      </div>) : ("")}
 
 
                       <div className="border-bottom">

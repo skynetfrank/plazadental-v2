@@ -83,6 +83,43 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                     </div>
                   </li>
                 ))}
+                <li className="separator-print">
+                  <div className="row print">
+                    <div className="qty print">
+                      <p>1</p>
+                    </div>
+
+                    <div className="descripcion-print">
+                      <span className="nombre-marca-print">{props.control.laboratorio}</span>
+                    </div>
+
+                    <div className="qty-price print">
+                      <p>{((props.control.montoLab * 4) * props.control.cambioBcv).toFixed(2)}</p>
+                    </div>
+                    <div className="qty-price total">
+                      <p>{((props.control.montoLab * 4) * props.control.cambioBcv).toFixed(2)}</p>
+                    </div>
+                  </div>
+                </li>
+                <li className="separator-print">
+                  <div className="row print">
+                    <div className="qty print">
+                      <p>1</p>
+                    </div>
+
+                    <div className="descripcion-print">
+                      <span className="nombre-marca-print">MENOS: DESCUENTO</span>
+                    </div>
+
+                    <div className="qty-price print">
+                      <p>-{(props.control.descuento * props.control.cambioBcv).toFixed(2)}</p>
+                    </div>
+                    <div className="qty-price total">
+                      <p>-{(props.control.descuento * props.control.cambioBcv).toFixed(2)}</p>
+                    </div>
+                  </div>
+                </li>
+
               </ul>
             </div>
           </div>
@@ -92,7 +129,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
           <div className="bottom-resumen-print">
             <div className="flx jsb">
               <span className="txt-align-l">Base Imponible</span>
-              <span className="txt-align-r">Bs. {control.montoBs.toFixed(2)}</span>
+              <span className="txt-align-r">Bs. {Number(control.montoUsd * control.cambioBcv).toFixed(2)}</span>
             </div>
             <hr />
             <div className="flx jsb">
@@ -111,7 +148,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
             <div className="flx jsb">
               <span className="txt-align-l">Total</span>
-              <span className="txt-align-r">Bs.{Number(control.montoBs + control.montoIva).toFixed(2)}</span>
+              <span className="txt-align-r">Bs.{Number((control.montoUsd * control.cambioBcv) + control.montoIva).toFixed(2)}</span>
             </div>
           </div>
         </div>
