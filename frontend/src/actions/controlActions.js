@@ -211,7 +211,7 @@ export const cuadreDia = (fecha) => async (dispatch, getState) => {
 };
 
 export const ventasControls =
-  (fecha1 = "01-01-2024", fecha2 = "31-12-2024") =>
+  (fecha1 = "18-12-2024", fecha2 = "31-12-2027") =>
   async (dispatch, getState) => {
     //VENTAS CONSOLIDADAS TODAS LAS SUCURSALES DISPONIBLES
     dispatch({ type: CONTROL_CONSOLIDADO_REQUEST });

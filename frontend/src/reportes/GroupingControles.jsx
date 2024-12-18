@@ -8,30 +8,21 @@ import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import { listServicios } from "../actions/servicioActions";
 
-
 function GroupingControles() {
-  const [fechaInicio, setFechaInicio] = useState(
-    dayjs(new Date()).format("YYYY-MM-DD")
-  );
-  const [fechaFinal, setFechaFinal] = useState(
-    dayjs(new Date()).format("YYYY-MM-DD")
-  );
+  const [fechaInicio, setFechaInicio] = useState(dayjs(new Date()).format("YYYY-MM-DD"));
+  const [fechaFinal, setFechaFinal] = useState(dayjs(new Date()).format("YYYY-MM-DD"));
   const dispatch = useDispatch();
 
   const servicioList = useSelector((state) => state.servicioList);
   const { servicios } = servicioList;
 
-
-
   useEffect(() => {
     if (!servicios || servicios.length === 0) {
       dispatch(listServicios({}));
     }
-  }, [dispatch, servicios])
+  }, [dispatch, servicios]);
 
-  const ventasControlsReport = useSelector(
-    (state) => state.ventasControlsReport
-  );
+  const ventasControlsReport = useSelector((state) => state.ventasControlsReport);
   const { loading, ventas } = ventasControlsReport;
 
   useEffect(() => {
@@ -50,7 +41,7 @@ function GroupingControles() {
     dispatch(ventasControls(fechaInicio, fechaFinal));
   };
 
-  useEffect(() => { }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   const resetHandler = () => {
     const f1 = dayjs(new Date()).format("YYYY-MM-DD");
@@ -85,18 +76,17 @@ function GroupingControles() {
       footer: "",
     },
 
-
     {
       header: "Servicios",
       accessorKey: "serviciosItems",
       enableGrouping: false,
       cell: (info) => {
         const { serviciosItems, _id } = info.row.original;
-        console.log("_id", _id)
+        console.log("_id", _id);
         return serviciosItems.map((p, inx) => {
-          console.log("servicios", servicios, "p:", p)
-          const servName = servicios.find((s) => s._id === p.servicio)
-          console.log("servName", servName)
+          console.log("servicios", servicios, "p:", p);
+          const servName = servicios.find((s) => s._id === p.servicio);
+          console.log("servName", servName);
           return (
             <span className="consolidado-articulos" key={inx}>
               {p.cantidad + " " + servName.nombre + " $" + p.precioServ}
@@ -122,7 +112,6 @@ function GroupingControles() {
       aggregatedCell: ({ row }) => {
         return Number(row.getValue("montoUsd")).toFixed(2);
       },
-
     },
     {
       header: "Descuento",
@@ -138,7 +127,7 @@ function GroupingControles() {
       accessorKey: "laboratorio",
       cell: (info) => {
         if (!info.getValue()) {
-          return "No Aplica"
+          return "No Aplica";
         }
         return info.getValue();
       },
@@ -165,7 +154,6 @@ function GroupingControles() {
       aggregatedCell: ({ row }) => {
         return Number(row.getValue("montoComisionDr")).toFixed(2);
       },
-
     },
     {
       header: "Comision Plaza",
@@ -179,13 +167,12 @@ function GroupingControles() {
       aggregatedCell: ({ row }) => {
         return Number(row.getValue("montoComisionPlaza")).toFixed(2);
       },
-
     },
   ];
-  console.log("ventas", ventas)
+  //console.log("ventas", ventas);
+  console.log("fechaInicio", fechaInicio);
   return (
     <div className="div-print-report">
-
       <div className="weekly-report-header">
         <div className="flx jcenter">
           <h2 className="h2-weekly">INGRESOS POR SERVICIOS</h2>
@@ -193,7 +180,6 @@ function GroupingControles() {
             <PrintIcon />
           </button>
         </div>
-
 
         <div className="flx  jcenter">
           <button className="btn-close-report" onClick={resetHandler}>
@@ -224,13 +210,7 @@ function GroupingControles() {
         {loading ? (
           <span>Cargando Datos...</span>
         ) : (
-          <div>
-            {ventas?.length > 0 ? (
-              <GroupingReventasTable data={ventas} columns={columns} />
-            ) : (
-              ""
-            )}
-          </div>
+          <div>{ventas?.length > 0 ? <GroupingReventasTable data={ventas} columns={columns} /> : ""}</div>
         )}
       </div>
     </div>

@@ -194,7 +194,7 @@ export default function ControlesScreen(props) {
                         </h4>
                         <div className="flx column font-x astart show-control-facturacion">
                           <div className="flx">
-                            <span className="negrita">Servicios:</span>
+                            <span className="negrita">Servicios&emsp;:</span>
                             {item.control.serviciosItems.map((item, ndx) => {
                               return (
                                 <div className="font-x" key={ndx}>
@@ -206,7 +206,9 @@ export default function ControlesScreen(props) {
                             })}
                           </div>
                           <span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>
-                          <span className="negrita">Descuento: ${Number(item.control?.descuento).toFixed(2)}</span>
+                          <span className="negrita">
+                            Descuento&ensp;: ${Number(item.control?.descuento).toFixed(2)}
+                          </span>
                         </div>
                       </div>
 
@@ -239,18 +241,26 @@ export default function ControlesScreen(props) {
                       </div>
                       <div className="border-bottom">
                         <h4>Comisiones</h4>
-                        <p>
-                          Comision Plaza : $
-                          {Number(item.control.montoComisionPlaza).toFixed(2) +
-                            " (" +
-                            (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
-                        </p>
-                        <p>
-                          Comision Doctor: $
-                          {Number(item.control.montoComisionDr).toFixed(2) +
-                            " (" +
-                            (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
-                        </p>
+                        {item.control.montoComisionPlaza ? (
+                          <p>
+                            Comision Plaza&ensp;: $
+                            {Number(item.control.montoComisionPlaza).toFixed(2) +
+                              " (" +
+                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                          </p>
+                        ) : (
+                          ""
+                        )}
+                        {item.control.montoComisionDr ? (
+                          <p>
+                            Comision Doctor: $
+                            {Number(item.control.montoComisionDr).toFixed(2) +
+                              " (" +
+                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                          </p>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </div>
