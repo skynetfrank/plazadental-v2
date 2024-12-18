@@ -37,13 +37,17 @@ body {
   background: url(/logo_bg.png) rgb(248, 248, 248) no-repeat;
   background-position: center;
   background-size: contain;
-  height: 100vh;
+
 }
 
 .form {
   min-width: 320px;
   max-width: 320px;
   width: fit-content;
+}
+
+.form.signin {
+  margin-top: ;
 }
 
 .form-control {
@@ -122,7 +126,7 @@ button,
   font-size: 3rem;
 }
 
-.bike-icon,
+
 .save-icon,
 .dollar-icon,
 .user-circle-icon {
@@ -831,59 +835,6 @@ summary {
   display: none;
 }
 
-.show-stock-container.table {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  row-gap: 15px;
-}
-
-.show-stock-container.table .btns-sizes span {
-  background: #e8e8e8;
-  margin: 1px 5px;
-  font-weight: bold;
-  padding: 0.3rem;
-  color: black;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.table-container.facturacion {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 1px;
-}
-
-.table-facturacion tbody tr td:nth-child(1) {
-  text-align: center;
-  min-width: 85px;
-}
-
-.table-facturacion thead tr th:nth-child(1),
-.table-facturacion thead tr th:nth-child(2) {
-  font-size: 1.2rem;
-}
-
-.table-facturacion tbody tr td:nth-child(2) {
-  text-align: center;
-  padding: 1rem;
-  min-width: 225px;
-}
-
-.monto-nocuadra {
-  color: red;
-}
-
-.monto-cuadra {
-  color: rgb(37, 161, 37);
-}
-
-.green {
-  color: rgb(7, 221, 7);
-}
-
 /* FACTURACION ORIGINAL */
 
 .fact-cuadro {
@@ -950,11 +901,6 @@ button.buscador svg {
   min-width: 10px;
 }
 
-.btn-talla {
-  position: absolute;
-  left: calc(62%);
-}
-
 .circle {
   width: 100px;
   height: 100px;
@@ -1001,70 +947,6 @@ h3 {
   font-size: 1.2rem;
   font-weight: bold;
   color: #203040;
-}
-
-.edit-span-tallas {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.3rem;
-  background-color: rgb(201, 201, 201);
-  margin: 2px;
-  border-radius: 5px;
-  border: 1px solid rgb(136, 136, 136);
-  font-weight: bold;
-  font-size: 1.4rem;
-}
-
-input.input-talla {
-  width: 25px;
-  text-align: center;
-}
-
-.input-file-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto 1px auto;
-  border: 2px dashed rgb(124, 5, 5);
-  height: 210px;
-  width: 310px;
-  cursor: pointer;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-}
-
-.upload-icon {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.upload-icon p {
-  font-size: 1rem;
-}
-
-.upload-img-info {
-  display: flex;
-  justify-content: center;
-  column-gap: 1rem;
-}
-
-.upload-img-info span {
-  display: flex;
-  align-items: center;
-  column-gap: 5px;
-  color: grey;
-}
-
-.upload-img-info svg {
-  color: maroon;
-  font-size: 3rem;
-}
-
-.upload-img-info svg.facheck {
-  color: green;
 }
 
 /* FIN DE EDITAR PRODUCTOS */
@@ -1137,37 +1019,6 @@ img.tiny-image {
 
 .close-botonera {
   display: none;
-}
-
-@media print {
-  @page {
-    size: auto;
-    margin: 0;
-  }
-
-  body {
-    height: 100vh;
-    /* Use 100% here to support printing more than a single page*/
-    padding: 0 !important;
-    overflow: hidden;
-  }
-
-  header,
-  footer,
-  .btn-print-conteo,
-  .btn-print-report,
-  .back-link,
-  .btn-imprimir,
-  .btn-procesar,
-  .botonera-reporte,
-  .btn-icon-container {
-    display: none !important;
-  }
-
-  .cuadre-container {
-    position: relative;
-    top: -70px;
-  }
 }
 
 /* tabla cuadre styling */
@@ -2575,7 +2426,7 @@ span.span-admin-consolidado {
 }
 
 
-.show-control-facturacion{
+.show-control-facturacion {
   margin-left: 1rem;
 }
 
@@ -2625,5 +2476,37 @@ span.span-admin-consolidado {
 
   #form-new-control {
     margin-top: 2rem;
+  }
+}
+
+
+@media print {
+  @page {
+    size: auto;
+    margin: 0;
+  }
+
+  body {
+    height: 100vh;
+    /* Use 100% here to support printing more than a single page*/
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  header,
+  footer,
+  .btn-print-conteo,
+  .btn-print-report,
+  .back-link,
+  .btn-imprimir,
+  .btn-procesar,
+  .botonera-reporte,
+  .btn-icon-container {
+    display: none !important;
+  }
+
+  .cuadre-container {
+    position: relative;
+    top: -70px;
   }
 }

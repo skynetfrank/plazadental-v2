@@ -44,7 +44,7 @@ export default function SigninScreen() {
     <Loader />
   ) : (
     <div className="flx jcenter">
-      <form className="form flx column bg-color b-radius border-1 centrado" onSubmit={submitHandler}>
+      <form className="form flx column bg-color b-radius border-1 centrado mtop-1" onSubmit={submitHandler}>
         <h2 className="centrado m-2">Iniciar Sesion</h2>
         <div className="flx column astart">
           <label htmlFor="email">Usuario</label>
