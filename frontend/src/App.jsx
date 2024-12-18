@@ -82,7 +82,7 @@ function App() {
               <Link to="/">
                 <img className="logo" src={logo} alt="logo" />
               </Link>
-              <div className="flx column pad-0 brand-container">
+              <div className="flx column pad-0 brand-container ml">
                 <h2>Plaza Dental</h2>
                 <span className="negrita font-1 header-date">Caracas, {hoy.toLocaleDateString()}</span>
               </div>

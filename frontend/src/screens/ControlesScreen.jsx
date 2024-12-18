@@ -20,7 +20,6 @@ import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import ControlAddIcon from "../icons/ControlAddIcon";
 
-
 export default function ControlesScreen(props) {
   const [controles, setControles] = useState([]);
   const navigate = useNavigate();
@@ -43,7 +42,6 @@ export default function ControlesScreen(props) {
       });
 
       setControles(sortedDesc);
-
     }
   }, [dispatch, pacienteId, paciente]);
 
@@ -100,7 +98,6 @@ export default function ControlesScreen(props) {
         </ToolTip>
       </div>
 
-
       <>
         <Swiper
           // install Swiper modules
@@ -118,7 +115,7 @@ export default function ControlesScreen(props) {
             if (!item.control) {
               return "";
             }
-            const itemPago = item.control.pago
+            const itemPago = item.control.pago;
             return (
               <SwiperSlide key={ind}>
                 <div>
@@ -132,19 +129,18 @@ export default function ControlesScreen(props) {
                       <ToolTip text="Editar">
                         <button
                           className="circle-btn"
-                          onClick={() => {
-                            let pw = prompt("Ingrese su clave para Editar", "");
-
-                            if (!pw) {
-                              return;
-                            }
-
+                          onClick={async () => {
+                            const { value: pw } = await Swal.fire({
+                              title: "Clave de Autorizacion",
+                              input: "password",
+                              inputAttributes: {
+                                maxlength: "10",
+                                autocapitalize: "off",
+                                autocorrect: "off",
+                              },
+                            });
                             if (pw !== "matias01") {
-                              Swal.fire({
-                                title: "Clave Erronea, verifique...",
-                                text: "Ingrese Su Clave de Administrador",
-                                icon: "warning",
-                              });
+                              Swal.fire("Clave Incorrecta! Verifique!");
                               return;
                             }
                             if (pw === "matias01") {
@@ -193,24 +189,19 @@ export default function ControlesScreen(props) {
                       </div>
 
                       <div className="border-bottom">
-                        <h4>Facturacion {item.control.montoUsd > 0 ? "$" + Number(item.control.montoUsd).toFixed(2) : ""}</h4>
+                        <h4>
+                          Facturacion {item.control.montoUsd > 0 ? "$" + Number(item.control.montoUsd).toFixed(2) : ""}
+                        </h4>
                         <div className="flx column font-x astart show-control-facturacion">
                           <div className="flx">
                             <span className="negrita">Servicios:</span>
                             {item.control.serviciosItems.map((item, ndx) => {
-
                               return (
                                 <div className="font-x" key={ndx}>
-                                  <span className="negrita ml" >
-                                    {item.cantidad +
-                                      " " +
-                                      item.servicio.nombre +
-                                      " " +
-                                      item.montoItemServicio +
-                                      "$"}
+                                  <span className="negrita ml">
+                                    {item.cantidad + " " + item.servicio.nombre + " " + item.montoItemServicio + "$"}
                                   </span>
                                 </div>
-
                               );
                             })}
                           </div>
@@ -219,29 +210,49 @@ export default function ControlesScreen(props) {
                         </div>
                       </div>
 
-
-
-
-
                       <div className="border-bottom">
                         <h4>Pago</h4>
                         <div>
-                          <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + (item.control.pago.efectivousd) : ("")}</p>
-                          <p> {itemPago.efectivoeuros > 0 ? "Efectivo Euros: " + (item.control.pago.efectivoeuros) : ("")}</p>
-                          <p> {itemPago.efectivobs > 0 ? "Efectivo Bs.: " + (item.control.pago.efectivobs) : ("")}</p>
-                          <p>  {itemPago.montopunto > 0 ? "Punto Bancario: " + (item.control.pago.montopunto + item.control.pago.montopunto2 + item.control.pago.montopunto3) : ("")}</p>
-                          <p>  {itemPago.pagomovil.montopagomovil > 0 ? "Pago Movil: " + (item.control.pago.montopagomovil) : ("")}</p>
-                          <p>  {itemPago.zelle.montozelle > 0 ? "Zelle: " + (item.control.montozelle) : ("")}</p>
-
+                          <p>{itemPago.efectivousd > 0 ? "Efectivo US$: " + item.control.pago.efectivousd : ""}</p>
+                          <p>
+                            {" "}
+                            {itemPago.efectivoeuros > 0 ? "Efectivo Euros: " + item.control.pago.efectivoeuros : ""}
+                          </p>
+                          <p> {itemPago.efectivobs > 0 ? "Efectivo Bs.: " + item.control.pago.efectivobs : ""}</p>
+                          <p>
+                            {" "}
+                            {itemPago.montopunto > 0
+                              ? "Punto Bancario: " +
+                                (item.control.pago.montopunto +
+                                  item.control.pago.montopunto2 +
+                                  item.control.pago.montopunto3)
+                              : ""}
+                          </p>
+                          <p>
+                            {" "}
+                            {itemPago.pagomovil.montopagomovil > 0
+                              ? "Pago Movil: " + item.control.pago.montopagomovil
+                              : ""}
+                          </p>
+                          <p> {itemPago.zelle.montozelle > 0 ? "Zelle: " + item.control.montozelle : ""}</p>
                         </div>
                       </div>
                       <div className="border-bottom">
                         <h4>Comisiones</h4>
-                        <p>Comision Plaza : ${Number(item.control.montoComisionPlaza).toFixed(2) + " (" + (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}</p>
-                        <p>Comision Doctor: ${Number(item.control.montoComisionDr).toFixed(2) + " (" + (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}</p>
+                        <p>
+                          Comision Plaza : $
+                          {Number(item.control.montoComisionPlaza).toFixed(2) +
+                            " (" +
+                            (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                        </p>
+                        <p>
+                          Comision Doctor: $
+                          {Number(item.control.montoComisionDr).toFixed(2) +
+                            " (" +
+                            (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                        </p>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </SwiperSlide>

@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
 import { listaLabs } from "../constants/listas";
+import Loader from "../components/Loader";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -71,9 +72,13 @@ export default function ControlEditScreen(props) {
         imageWidth: 70,
         imageHeight: 30,
         imageAlt: "logo",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          navigate(`/controles/${control.paciente._id}`);
+        }
       });
       dispatch({ type: CONTROL_UPDATE_RESET });
-      navigate(`/controles/${controlId}`);
     }
 
     if (!control || control._id !== controlId || successUpdate) {
@@ -381,132 +386,142 @@ export default function ControlEditScreen(props) {
   console.log("control", control);
   return (
     <div>
-      <div className="flx column jcenter">
-        <div>
-          <span className="action-map">Editar Control</span>
-          <h3 className="centrado font-12">{control?.paciente?.nombre + " " + control?.paciente?.apellido}</h3>
-        </div>
-        <input
-          type="date"
-          value={dayjs(fechaControl).format("YYYY-MM-DD")}
-          onChange={(e) => dateHandler(e.target.value)}
-        ></input>
-        <div className="flx jcenter gap1 botonera-menu">
-          <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
-            Servicios
-          </button>
-          <button className="font-x pad-0 m-0 negrita" onClick={() => getLaboratorio()}>
-            Laboratorio
-          </button>
-          {montoUsd > 0 ? (
-            <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => getDescuento()}>
-              Descuento
-            </button>
-          ) : (
-            ""
-          )}
-
-          <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
-            Actualizar
-          </button>
-        </div>
-        <div>
-          {serviciosItems?.length > 0 || montoUsd > 0 ? (
-            <div className="show-servicios">
-              {serviciosItems.map((m, inx) => {
-                const foundit = listaServicios.find((x) => x._id === m.servicio._id);
-                console.log("m", m, "foundit", foundit);
-                return (
-                  <div key={inx} className="flx mb03">
-                    <span className="minw-10">{m.cantidad}</span>
-                    <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
-
-                    <span className="minw-40 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
-
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      onClick={(e) => handleEliminarServicio(e, m.servicio)}
-                      className="ml minw-20 txt-align-l"
-                    />
-                  </div>
-                );
-              })}
-              <hr />
-              <p className="centrado negrita minw-30">
-                Servicios: ${serviciosItems.reduce((sum, s) => sum + s.montoItemServicio, 0)}
-              </p>
-              <p className="centrado negrita minw-30">Laboratorio: ${montoLab * 4}</p>
-              <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
-              <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
-              <div className="centrado">
-                <button
-                  className="btn-pago font-x pad-0 m-0 negrita centrado"
-                  onClick={() => setShowPaymentModal(true)}
-                >
-                  Registrar Pago
+      {loading ? (
+        <Loader txt={"Cargando Control"} />
+      ) : (
+        <>
+          <div className="flx column jcenter">
+            <div>
+              <span className="action-map">Editar Control</span>
+              <h3 className="centrado font-12">{control?.paciente?.nombre + " " + control?.paciente?.apellido}</h3>
+            </div>
+            <input
+              type="date"
+              value={dayjs(fechaControl).format("YYYY-MM-DD")}
+              onChange={(e) => dateHandler(e.target.value)}
+            ></input>
+            <div className="flx jcenter gap1 botonera-menu">
+              <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
+                Servicios
+              </button>
+              <button className="font-x pad-0 m-0 negrita" onClick={() => getLaboratorio()}>
+                Laboratorio
+              </button>
+              {montoUsd > 0 ? (
+                <button className="btn-pago font-x pad-0 m-0 negrita centrado" onClick={() => getDescuento()}>
+                  Descuento
                 </button>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+              ) : (
+                ""
+              )}
 
-        <form id="form-new-control" onSubmit={submitHandler}>
-          <div className="flx jcenter wrap gap1">
-            <div className="control-textarea-container">
-              <div className="flx">
-                <label>Evaluacion</label>
-                <select value={doctorId} className="maxw-150 font-x ml" onChange={(e) => setDoctorId(e.target.value)}>
-                  <option value="">Seleccionar Doctor</option>
-                  {listaDoctores?.map((x, inx) => (
-                    <option key={inx} value={x._id}>
-                      {"Doctor " + x.nombre + " " + x.apellido}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <button form="form-new-control" className="font-x pad-0 m-0 negrita" type="submit">
+                Actualizar
+              </button>
+            </div>
+            <div>
+              {serviciosItems?.length > 0 || montoUsd > 0 ? (
+                <div className="show-servicios">
+                  {serviciosItems.map((m, inx) => {
+                    const foundit = listaServicios.find((x) => x._id === m.servicio._id);
+                    console.log("m", m, "foundit", foundit);
+                    return (
+                      <div key={inx} className="flx mb03">
+                        <span className="minw-10">{m.cantidad}</span>
+                        <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
 
-              <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>
-              <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
-                <option value="">Seleccionar</option>
-                {conceptos.map((x, inx) => (
-                  <option key={inx} value={x}>
-                    {x}
-                  </option>
-                ))}
-              </select>
+                        <span className="minw-40 txt-align-r">${Number(m.montoItemServicio).toFixed(2)}</span>
+
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          onClick={(e) => handleEliminarServicio(e, m.servicio)}
+                          className="ml minw-20 txt-align-l"
+                        />
+                      </div>
+                    );
+                  })}
+                  <hr />
+                  <p className="centrado negrita minw-30">
+                    Servicios: ${serviciosItems.reduce((sum, s) => sum + s.montoItemServicio, 0)}
+                  </p>
+                  <p className="centrado negrita minw-30">Laboratorio: ${montoLab * 4}</p>
+                  <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
+                  <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
+                  <div className="centrado">
+                    <button
+                      className="btn-pago font-x pad-0 m-0 negrita centrado"
+                      onClick={() => setShowPaymentModal(true)}
+                    >
+                      Registrar Pago
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
-            <div className="control-textarea-container">
-              <label>Tratamiento</label>
-              <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
-              <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
-                <option value="">Seleccionar</option>
-                {conceptos.map((x, inx) => (
-                  <option key={inx} value={x}>
-                    {x}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="control-textarea-container">
-              <label>Recipe</label>
-              <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>
-            </div>
-            <div className="control-textarea-container">
-              <label>Indicaciones</label>
-              <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
-            </div>
+
+            <form id="form-new-control" onSubmit={submitHandler}>
+              <div className="flx jcenter wrap gap1">
+                <div className="control-textarea-container">
+                  <div className="flx">
+                    <label>Evaluacion</label>
+                    <select
+                      value={doctorId}
+                      className="maxw-150 font-x ml"
+                      onChange={(e) => setDoctorId(e.target.value)}
+                    >
+                      <option value="">Seleccionar Doctor</option>
+                      {listaDoctores?.map((x, inx) => (
+                        <option key={inx} value={x._id}>
+                          {"Doctor " + x.nombre + " " + x.apellido}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>
+                  <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
+                    <option value="">Seleccionar</option>
+                    {conceptos.map((x, inx) => (
+                      <option key={inx} value={x}>
+                        {x}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="control-textarea-container">
+                  <label>Tratamiento</label>
+                  <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
+                  <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
+                    <option value="">Seleccionar</option>
+                    {conceptos.map((x, inx) => (
+                      <option key={inx} value={x}>
+                        {x}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="control-textarea-container">
+                  <label>Recipe</label>
+                  <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>
+                </div>
+                <div className="control-textarea-container">
+                  <label>Indicaciones</label>
+                  <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-      {showPaymentModal && (
-        <PaymentForm
-          onClose={() => setShowPaymentModal(false)}
-          sendPayToParent={handlePayFromChild}
-          montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
-          montoPagoUsd={Number(montoUsd).toFixed(2)}
-        />
+          {showPaymentModal && (
+            <PaymentForm
+              onClose={() => setShowPaymentModal(false)}
+              sendPayToParent={handlePayFromChild}
+              montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
+              montoPagoUsd={Number(montoUsd).toFixed(2)}
+            />
+          )}
+        </>
       )}
     </div>
   );
