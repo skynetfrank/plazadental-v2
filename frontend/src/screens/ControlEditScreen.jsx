@@ -380,10 +380,6 @@ export default function ControlEditScreen(props) {
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
   };
-  //console.log("laboratorio", laboratorio, "montoLab", montoLab)
-  //console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
-  //console.log("listaServicios", listaServicios);
-  console.log("control", control);
   return (
     <div>
       {loading ? (
@@ -424,7 +420,7 @@ export default function ControlEditScreen(props) {
                 <div className="show-servicios">
                   {serviciosItems.map((m, inx) => {
                     const foundit = listaServicios.find((x) => x._id === m.servicio._id);
-                    console.log("m", m, "foundit", foundit);
+
                     return (
                       <div key={inx} className="flx mb03">
                         <span className="minw-10">{m.cantidad}</span>

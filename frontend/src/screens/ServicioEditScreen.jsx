@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Axios from "axios";
-import { createServicio, detailsServicio, updateServicio } from "../actions/servicioActions";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { SERVICIO_CREATE_RESET, SERVICIO_UPDATE_RESET } from "../constants/servicioConstants";
+import { detailsServicio, updateServicio } from "../actions/servicioActions";
+import { useNavigate, useParams } from "react-router-dom";
+import { SERVICIO_UPDATE_RESET } from "../constants/servicioConstants";
 import Swal from "sweetalert2";
 
 export default function ServicioEditScreen(props) {

@@ -2450,7 +2450,7 @@ input.filter-input-v8 {
   font-size: 0.8rem;
   display: flex;
   flex-direction: column;
-  min-width: 140px;
+  min-width: 180px;
 }
 
 /*

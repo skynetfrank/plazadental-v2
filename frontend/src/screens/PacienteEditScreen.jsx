@@ -484,15 +484,13 @@ export default function PacienteEditScreen(props) {
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) => (index === position ? !item : item));
-    console.log("checkedState", checkedState);
-    setCheckedState(updatedCheckedState);
+     setCheckedState(updatedCheckedState);
     const alergiasMarcadas = updatedCheckedState.map((currentState, index) => {
       if (currentState === true) {
         return arrayAlergias[index].name;
       }
       return " ";
     });
-    console.log("alergiasMarcadas", alergiasMarcadas);
     setAlergias(alergiasMarcadas);
   };
 
@@ -548,7 +546,7 @@ export default function PacienteEditScreen(props) {
     }
   }
 
-  console.log("alergis", alergias);
+
   return (
     <div className="main-container">
       <h1>Editar Paciente</h1>

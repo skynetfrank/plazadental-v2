@@ -40,7 +40,7 @@ export default function DoctorEditScreen(props) {
   ];
 
   const doctorDetails = useSelector((state) => state.doctorDetails);
-  const { loading, error, doctor } = doctorDetails;
+  const { doctor } = doctorDetails;
 
   const doctorUpdate = useSelector((state) => state.doctorUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = doctorUpdate;

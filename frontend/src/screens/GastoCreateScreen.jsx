@@ -6,7 +6,6 @@ import Axios from "axios";
 import { createGasto } from "../actions/gastoActions";
 import { GASTO_CREATE_RESET } from "../constants/gastoConstants";
 import Swal from "sweetalert2";
-import camera from "../assets/camera.png";
 import { selectBancos, selectFormapago, nombres, categorias } from "../constants/listas";
 
 function subtractHours(date, hours) {

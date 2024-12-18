@@ -18,7 +18,7 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
     const marginLeft = "70px";
     return `@page { margin: ${marginTop} ${marginRight}  ${marginBottom} ${marginLeft}}`;
   };
-  console.log("props:", props);
+
   return (
     <div ref={ref}>
       <style>{getPageMargins()}</style>

@@ -240,36 +240,3 @@ export const deleteControlPaciente = (pacienteId, control) => async (dispatch, g
     dispatch({ type: PACIENTE_DELETECONTROL_FAIL, error: message });
   }
 };
-
-/* 
-
-nombre           	                    
-apellido								
-cedula									
-genero									
-estadoCivil								
-Nacimiento								
-edad									
-peso									
-direccion								
-celular									
-telefono								
-email									
-contacto								
-alergias								
-otrasAlergias							
-antecedentesPersonales					
-antecedentesFamiliares					
-IsTratadoPorMedico						
-tratadoPorEnfermedad					
-otraEnfermedad							
-IsTomaMedicamentos						
-medicamentos							
-dosismeds								
-habitos									
-motivoEstaConsulta						
-motivoUltimaConsulta					
-fechaUltimaconsulta						
-IsComplicaciones						
-complicaciones							
-odontogramaUrl							 */

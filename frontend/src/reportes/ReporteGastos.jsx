@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteGasto, listGastos } from "../actions/gastoActions";
-
 import { GASTO_DELETE_RESET } from "../constants/gastoConstants";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";

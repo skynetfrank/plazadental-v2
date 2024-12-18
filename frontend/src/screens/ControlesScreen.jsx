@@ -225,9 +225,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                                (item.control.pago.montopunto +
-                                  item.control.pago.montopunto2 +
-                                  item.control.pago.montopunto3)
+                              (item.control.pago.montopunto +
+                                item.control.pago.montopunto2 +
+                                item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>

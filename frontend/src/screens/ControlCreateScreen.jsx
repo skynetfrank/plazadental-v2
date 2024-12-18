@@ -389,10 +389,7 @@ export default function ControlCreateScreen(props) {
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
   };
-  //console.log("laboratorio", laboratorio, "montoLab", montoLab)
-  //console.log("comsiion dr", montoComisionDr, "comision plaza", montoComisionPlaza)
-  console.log("montoServicios", montoServicios);
-  console.log("montoUsd", montoUsd, "descuento", descuento);
+
   return (
     <div>
       <div className="flx column jcenter">

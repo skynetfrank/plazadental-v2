@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import SimpleTable from "../components/SimpleTable";
 import { groupByDay } from "../actions/controlActions";
 import CuadreIcon from "../icons/CuadreIcon";
-import ToolsIcon from "../icons/ToolsIcon";
+
 
 function ReporteCuadres() {
   const navigate = useNavigate("");
   const dispatch = useDispatch();
 
   const groupDay = useSelector((state) => state.orderGroupDay);
-  const { loading, dailyControles, error } = groupDay;
+  const { loading, dailyControles } = groupDay;
 
   useEffect(() => {
     dispatch(groupByDay());

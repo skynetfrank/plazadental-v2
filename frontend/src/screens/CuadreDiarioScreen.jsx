@@ -89,9 +89,7 @@ export default function CuadreDiarioScreen() {
         header: "Laboratorio",
         accessorKey: "montoLab",
         cell: (value) => {
-
           const labtxt = value.row.original.laboratorio;
-          console.log("labtxt:", labtxt)
           if (!value) {
             return ""
           }
@@ -150,7 +148,6 @@ export default function CuadreDiarioScreen() {
         header: "Comision Plaza",
         accessorKey: "montoComisionPlaza",
         cell: (value) => {
-          console.log("comision:", value.getValue())
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
@@ -322,7 +319,7 @@ export default function CuadreDiarioScreen() {
     const xfecha = dia + "-" + mes + "-" + ano;
     return xfecha;
   };
-  console.log("cash", cash);
+
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">

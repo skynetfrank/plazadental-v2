@@ -7,6 +7,7 @@ import PrintIcon from "../icons/PrintIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CloseIcon from "../icons/CloseIcon";
 import { listServicios } from "../actions/servicioActions";
+import Swal from "sweetalert2";
 
 function GroupingControles() {
   const [fechaInicio, setFechaInicio] = useState(dayjs(new Date()).format("YYYY-MM-DD"));
@@ -38,10 +39,20 @@ function GroupingControles() {
   };
 
   const queryHandler = () => {
+    if (fechaInicio < "2024-12-11") {
+      Swal.fire({
+        text: "No Hay Datos Antes del 11-12-2024",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
+      });
+      return;
+    }
     dispatch(ventasControls(fechaInicio, fechaFinal));
   };
 
-  useEffect(() => {}, [dispatch]);
+  useEffect(() => { }, [dispatch]);
 
   const resetHandler = () => {
     const f1 = dayjs(new Date()).format("YYYY-MM-DD");
@@ -73,6 +84,26 @@ function GroupingControles() {
     {
       header: "Doctor",
       accessorKey: "nombreDoctor",
+      footer: "",
+    },
+    {
+      header: "Laboratorio",
+      accessorKey: "laboratorio",
+      cell: (info) => {
+        if (!info.getValue()) {
+          return "No Aplica";
+        }
+        return info.getValue();
+      },
+      footer: "",
+    },
+    {
+      header: "Monto Laboratorio",
+      accessorKey: "montoLab",
+      enableGrouping: false,
+      cell: (info) => {
+        return "$" + Number(info.getValue()).toFixed(2);
+      },
       footer: "",
     },
 
@@ -122,26 +153,7 @@ function GroupingControles() {
       },
       footer: "",
     },
-    {
-      header: "Laboratorio",
-      accessorKey: "laboratorio",
-      cell: (info) => {
-        if (!info.getValue()) {
-          return "No Aplica";
-        }
-        return info.getValue();
-      },
-      footer: "",
-    },
-    {
-      header: "Monto Laboratorio",
-      accessorKey: "montoLab",
-      enableGrouping: false,
-      cell: (info) => {
-        return "$" + Number(info.getValue()).toFixed(2);
-      },
-      footer: "",
-    },
+
     {
       header: "Comision Dr.",
       accessorKey: "montoComisionDr",

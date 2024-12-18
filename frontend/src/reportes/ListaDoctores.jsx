@@ -2,11 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import InfoIcon from "../icons/InfoIcon";
 import PacienteAddIcon from "../icons/PacienteAddIcon";
 import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
-import TrashIcon from "../icons/TrashIcon";
 import { listDoctores } from "../actions/doctorActions";
 
 function ListaDoctores() {
@@ -40,28 +38,12 @@ function ListaDoctores() {
       header: "Acciones",
       accessorKey: "_id",
       cell: (value) => {
-        const { _id, controles } = value.row.original;
+        const { _id } = value.row.original;
         return (
           <div className="flx pad-0">
-            <ToolTip text="Ver Info">
-              <button
-                className="circle-btn"
-                onClick={() => {
-                  navigate(`/doctor/${_id}`);
-                }}
-              >
-                <InfoIcon />
-              </button>
-            </ToolTip>
             <ToolTip text="Editar">
               <button className="circle-btn" onClick={() => navigate(`/doctor/${_id}/edit`)}>
                 <EditIcon />
-              </button>
-            </ToolTip>
-
-            <ToolTip text="Eliminar">
-              <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
-                <TrashIcon />
               </button>
             </ToolTip>
           </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { detailsPaciente } from "../actions/pacienteActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -52,11 +52,11 @@ export default function PacienteScreen(props) {
               {paciente.alergias.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.alergias.map((alergia) => {
-                    if (alergia === "") {
-                      return "";
-                    }
-                    return alergia + ", ";
-                  })}
+                  if (alergia === "") {
+                    return "";
+                  }
+                  return alergia + ", ";
+                })}
             </p>
             {paciente.otrasAlergias ? (
               <div>
@@ -74,11 +74,11 @@ export default function PacienteScreen(props) {
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No Refiere"
               : paciente.antecedentesPersonales.map((bgp, inx) => {
-                  if (bgp === "") {
-                    return "";
-                  }
-                  return <p key={inx}>{bgp}</p>;
-                })}
+                if (bgp === "") {
+                  return "";
+                }
+                return <p key={inx}>{bgp}</p>;
+              })}
             <p>Tratado por Medico por: {paciente.tratadoPorEnfermedad}</p>
             <p>Toma Medicamentos: {paciente.medicamentos}</p>
             <p>Dosis: {paciente.dosis}</p>
@@ -92,11 +92,11 @@ export default function PacienteScreen(props) {
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.antecedentesFamiliares.map((bgf) => {
-                    if (bgf === "") {
-                      return "";
-                    }
-                    return bgf + " ";
-                  })}
+                  if (bgf === "") {
+                    return "";
+                  }
+                  return bgf + " ";
+                })}
             </p>
           </div>
         </div>
