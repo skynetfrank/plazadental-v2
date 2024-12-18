@@ -100,7 +100,7 @@ export default function PrintFacturaScreen(props) {
             onChange={(e) => setTelefono(e.target.value)}
           />
           <label htmlFor="cedula" className="user-label">
-            R.I.F.
+            Telefono
           </label>
         </div>
         <div className="input-group">

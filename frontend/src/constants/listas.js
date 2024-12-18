@@ -1,27 +1,11 @@
 export const listaLabs = [
-  "Laboratorio1",
+  "Laboratorio1: Alcide",
   "Laboratorio2",
   "Laboratorio3",
   "Laboratorio4",
   "Laboratorio5",
-
 ];
 
-
-export const listaTipos = [
-  "",
-  "Alta Gama",
-  "Casual",
-  "Deportivo",
-  "Sandalias",
-  "Camisa",
-  "Franela",
-  "Short",
-  "Mono",
-  "Chemise",
-  "Sweater",
-  "Otro",
-];
 
 export const categorias = [
   "",
