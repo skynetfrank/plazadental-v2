@@ -9,7 +9,7 @@ import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions"
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
-import { listaLabs } from "../constants/listas";
+import { listaLabs, tipoLab } from "../constants/listas";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -56,7 +56,7 @@ export default function ControlCreateScreen(props) {
   const [txtformapago, setTxtformapago] = useState(0);
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
-
+  const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente } = pacienteDetails;
 
@@ -187,6 +187,7 @@ export default function ControlCreateScreen(props) {
         pago,
         montoLab,
         laboratorio,
+        conceptoLaboratorio,
         montoServicios
       )
     );
@@ -334,7 +335,6 @@ export default function ControlCreateScreen(props) {
     const { value: monto } = await Swal.fire({
       title: "Monto Laboratorio",
       input: "number",
-      inputLabel: "MontoDescuento",
       inputPlaceholder: "Ingrese un monto",
     });
     if (monto) {
@@ -421,6 +421,32 @@ export default function ControlCreateScreen(props) {
             Guardar
           </button>
         </div>
+        {montoLab > 0 ? (
+          <div className="flx abase pad-0">
+            <div className="flx column astart pad-05">
+              <label>Concepto Laboratorio</label>
+              <input
+                type="text"
+                className="b-radius border-1 b-radius-05 pad-05 w-full"
+                value={conceptoLaboratorio}
+                list="tipoLab"
+                required
+                maxLength={50}
+                onChange={(e) => setConceptoLaboratorio(e.target.value)}
+              ></input>
+              <datalist id="tipoLab">
+                {tipoLab.map((x) => (
+                  <option key={x} value={x}>
+                    {x}
+                  </option>
+                ))}
+              </datalist>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div>
           {serviciosItems?.length > 0 || montoUsd > 0 ? (
             <div className="show-servicios">

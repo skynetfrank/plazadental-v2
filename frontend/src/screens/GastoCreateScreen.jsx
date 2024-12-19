@@ -17,10 +17,10 @@ export default function GastoCreateScreen(props) {
   const [f1, setF1] = useState(subtractHours(new Date(), 6));
   const [fecha, setFecha] = useState(
     f1.getFullYear().toString() +
-    "-" +
-    (f1.getMonth() + 1).toString().padStart(2, 0) +
-    "-" +
-    f1.getDate().toString().padStart(2, 0)
+      "-" +
+      (f1.getMonth() + 1).toString().padStart(2, 0) +
+      "-" +
+      f1.getDate().toString().padStart(2, 0)
   );
   const [referencia, setReferencia] = useState("");
   const [formadepago, setFormadepago] = useState("Efectivo US$");

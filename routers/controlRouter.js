@@ -40,14 +40,12 @@ controlRouter.get(
   })
 );
 
-
 controlRouter.get(
   "/consolidadoventas",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const fecha1 = req.query.fecha1;
     const fecha2 = req.query.fecha2;
-
 
     const ventas = await Control.aggregate([
       {
@@ -181,7 +179,6 @@ controlRouter.get(
           cedulaPaciente: 1,
           nombreDoctor: { $toString: "$doctorx.nombre" },
           apellidoDoctor: { $toString: "$doctorx.apellido" },
-
         },
       },
       {
@@ -198,9 +195,6 @@ controlRouter.get(
     res.send(ventas);
   })
 );
-
-
-
 
 controlRouter.get(
   "/groupedbyday",
@@ -661,8 +655,6 @@ controlRouter.get(
   })
 );
 
-
-
 controlRouter.post(
   "/create",
   isAuth,
@@ -688,6 +680,7 @@ controlRouter.post(
       descuento: req.body.descuento,
       laboratorio: req.body.laboratorio,
       montoLab: req.body.montoLab,
+      conceptoLaboratorio: req.body.conceptoLaboratorio,
       tasaComisionDr: req.body.tasaComisionDr,
       tasaComisionPlaza: req.body.tasaComisionPlaza,
       montoComisionDr: req.body.montoComisionDr,
@@ -755,6 +748,7 @@ controlRouter.put(
       control.descuento = req.body.descuento;
       control.laboratorio = req.body.laboratorio;
       control.montoLab = req.body.montoLab;
+      control.conceptoLaboratorio = req.body.conceptoLaboratorio;
       control.tasaComisionDr = req.body.tasaComisionDr;
       control.tasaComisionPlaza = req.body.tasaComisionPlaza;
       control.montoComisionDr = req.body.montoComisionDr;

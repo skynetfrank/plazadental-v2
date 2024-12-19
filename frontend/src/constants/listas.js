@@ -1,11 +1,4 @@
-export const listaLabs = [
-  "Laboratorio1: Alcide",
-  "Laboratorio2",
-  "Laboratorio3",
-  "Laboratorio4",
-  "Laboratorio5",
-];
-
+export const listaLabs = ["Laboratorio1: Alcide", "Laboratorio2", "Laboratorio3", "Laboratorio4", "Laboratorio5"];
 
 export const categorias = [
   "",
@@ -82,3 +75,5 @@ export const selectBancos = [
   "Vzlano Cdto",
   "Tesoro",
 ];
+
+export const tipoLab = [" ", "TipoLab1", "TipoLab2", "TipoLab3", "TipoLab4", "TipoLab5", "TipoLab6"];

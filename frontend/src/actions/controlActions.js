@@ -52,6 +52,7 @@ export const createControl =
     pago,
     montoLab,
     laboratorio,
+    conceptoLaboratorio,
     montoServicios
   ) =>
   async (dispatch, getState) => {
@@ -88,6 +89,7 @@ export const createControl =
           pago,
           montoLab,
           laboratorio,
+          conceptoLaboratorio,
           montoServicios,
         },
         {

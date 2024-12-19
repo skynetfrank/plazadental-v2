@@ -55,7 +55,7 @@ export default function ControlEditScreen(props) {
   const [txtformapago, setTxtformapago] = useState(0);
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
-
+  const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
 
@@ -102,6 +102,7 @@ export default function ControlEditScreen(props) {
       setIndicaciones(control.indicaciones || "");
       setPago(control.pago || {});
       setMontoLab(control.montoLab || 0);
+      setConceptoLaboratorio(control.conceptoLaboratorio || "");
       setMontoServicios(control.montoServicios || 0);
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
@@ -178,6 +179,7 @@ export default function ControlEditScreen(props) {
         pago,
         montoLab,
         laboratorio,
+        conceptoLaboratorio,
         montoServicios,
       })
     );
@@ -415,6 +417,31 @@ export default function ControlEditScreen(props) {
                 Actualizar
               </button>
             </div>
+            {montoLab > 0 ? (
+              <div className="flx abase pad-0">
+                <div className="flx column astart pad-05">
+                  <label>Concepto Laboratorio</label>
+                  <input
+                    type="text"
+                    className="b-radius border-1 b-radius-05 pad-05 w-full"
+                    value={conceptoLaboratorio}
+                    list="tipoLab"
+                    required
+                    maxLength={50}
+                    onChange={(e) => setConceptoLaboratorio(e.target.value)}
+                  ></input>
+                  <datalist id="tipoLab">
+                    {tipoLab.map((x) => (
+                      <option key={x} value={x}>
+                        {x}
+                      </option>
+                    ))}
+                  </datalist>
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
             <div>
               {serviciosItems?.length > 0 || montoUsd > 0 ? (
                 <div className="show-servicios">
