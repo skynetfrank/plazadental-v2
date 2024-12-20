@@ -131,6 +131,7 @@ export default function ControlCreateScreen(props) {
       setIndicaciones("");
       setPago({});
       setLaboratorio("");
+      setConceptoLaboratorio("");
       setDescuento(0);
     }
   }, [dispatch, control, navigate, success, pacienteId]);
@@ -390,6 +391,34 @@ export default function ControlCreateScreen(props) {
     setTxtformapago(textopago);
   };
 
+
+
+  const getDoctor = async () => {
+    const { value: idDoctor } = await Swal.fire({
+      input: "select",
+      inputOptions: {
+        Doctores: listaDoctores.map((s) => s.nombre),
+      },
+      inputPlaceholder: "Seleccione un Doctor",
+      showCancelButton: true,
+
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+
+          resolve();
+        });
+      },
+    });
+    setDoctorId(listaDoctores[Number(idDoctor)]._id);
+
+  };
+
+
+  console.log("doctorId", doctorId)
   return (
     <div>
       <div className="flx column jcenter">
@@ -403,6 +432,9 @@ export default function ControlCreateScreen(props) {
           onChange={(e) => dateHandler(e.target.value)}
         ></input>
         <div className="flx jcenter gap1 botonera-menu">
+          <button className="font-x pad-0 m-0 negrita" onClick={() => getDoctor()}>
+            Doctores
+          </button>
           <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
             Servicios
           </button>
@@ -493,14 +525,6 @@ export default function ControlCreateScreen(props) {
             <div className="control-textarea-container">
               <div className="flx">
                 <label>Evaluacion</label>
-                <select value={doctorId} className="maxw-150 font-x ml" onChange={(e) => setDoctorId(e.target.value)}>
-                  <option value="">Seleccionar Doctor</option>
-                  {listaDoctores?.map((x, inx) => (
-                    <option key={inx} value={x._id}>
-                      {"Doctor " + x.nombre + " " + x.apellido}
-                    </option>
-                  ))}
-                </select>
               </div>
 
               <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>

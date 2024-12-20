@@ -195,15 +195,17 @@ export default function ControlesScreen(props) {
                         <div className="flx column font-x astart show-control-facturacion">
                           <div className="flx">
                             <span className="negrita">Servicios&emsp;:</span>
-                            {item.control.serviciosItems.map((item, ndx) => {
-                              return (
-                                <div className="font-x" key={ndx}>
-                                  <span className="negrita ml">
-                                    {item.cantidad + " " + item.servicio.nombre + " " + item.montoItemServicio + "$"}
-                                  </span>
-                                </div>
-                              );
-                            })}
+                            <div >
+                              {item.control.serviciosItems.map((item, ndx) => {
+                                return (
+                                  <div className="font-tiny" key={ndx}>
+                                    <span className="negrita ml">
+                                      {item.cantidad + " " + item.servicio.nombre + " " + item.montoItemServicio + "$"}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
                           <span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>
                           <span className="negrita">

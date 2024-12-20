@@ -8,7 +8,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
-import { listaLabs } from "../constants/listas";
+import { listaLabs, tipoLab } from "../constants/listas";
 import Loader from "../components/Loader";
 
 function subtractHours(date, hours) {

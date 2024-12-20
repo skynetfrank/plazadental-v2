@@ -84,24 +84,23 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                   </li>
                 ))}
                 <li className="separator-print">
-                  <div className="row print">
+                  {props.control.montoLab > 0 ? (<div className="row print">
                     <div className="qty print">
                       <p>1</p>
                     </div>
-
                     <div className="descripcion-print">
-                      <span className="nombre-marca-print">{props.control.laboratorio}</span>
+                      <span className="nombre-marca-print">{props.control.laboratorio + " " + " ( " + props.control?.conceptoLaboratorio + " )"}</span>
                     </div>
-
                     <div className="qty-price print">
                       <p>{((props.control.montoLab * 4) * props.control.cambioBcv).toFixed(2)}</p>
                     </div>
                     <div className="qty-price total">
                       <p>{((props.control.montoLab * 4) * props.control.cambioBcv).toFixed(2)}</p>
                     </div>
-                  </div>
+                  </div>) : ("")}
+
                 </li>
-                <li className="separator-print">
+                {props.control.descuento > 0 ? (<li className="separator-print">
                   <div className="row print">
                     <div className="qty print">
                       <p>1</p>
@@ -118,7 +117,8 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                       <p>-{(props.control.descuento * props.control.cambioBcv).toFixed(2)}</p>
                     </div>
                   </div>
-                </li>
+                </li>) : ("")}
+
 
               </ul>
             </div>
