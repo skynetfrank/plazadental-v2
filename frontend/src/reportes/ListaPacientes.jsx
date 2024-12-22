@@ -27,6 +27,10 @@ function ListaPacientes() {
       header: "Nombre",
       accessorKey: "nombre",
     },
+    {
+      header: "Apellidos",
+      accessorKey: "apellido",
+    },
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
     {
@@ -107,5 +111,3 @@ function ListaPacientes() {
 }
 
 export default ListaPacientes;
-
-

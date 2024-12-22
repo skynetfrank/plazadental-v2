@@ -195,7 +195,7 @@ export default function ControlesScreen(props) {
                         <div className="flx column font-x astart show-control-facturacion">
                           <div className="flx">
                             <span className="negrita">Servicios&emsp;:</span>
-                            <div >
+                            <div>
                               {item.control.serviciosItems.map((item, ndx) => {
                                 return (
                                   <div className="font-tiny" key={ndx}>
@@ -227,9 +227,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                              (item.control.pago.montopunto +
-                                item.control.pago.montopunto2 +
-                                item.control.pago.montopunto3)
+                                (item.control.pago.montopunto +
+                                  item.control.pago.montopunto2 +
+                                  item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>
@@ -246,9 +246,13 @@ export default function ControlesScreen(props) {
                         {item.control.montoComisionPlaza ? (
                           <p>
                             Comision Plaza&ensp;: $
-                            {Number(item.control.montoComisionPlaza).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                            {Number(item.control.montoComisionPlaza) > 1
+                              ? Number(item.control.montoComisionPlaza).toFixed(2) +
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                              : Number(item.control.montoComisionPlaza).toFixed(2) +
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -256,9 +260,13 @@ export default function ControlesScreen(props) {
                         {item.control.montoComisionDr ? (
                           <p>
                             Comision Doctor: $
-                            {Number(item.control.montoComisionDr).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                            {Number(item.control.montoComisionDr) > 1
+                              ? Number(item.control.montoComisionDr).toFixed(2) +
+                                " (" +
+                                (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                              : Number(item.control.montoComisionDr).toFixed(2) +
+                                " (" +
+                                (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
