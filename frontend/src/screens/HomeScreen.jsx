@@ -6,6 +6,8 @@ import HandDollarIcon from "../icons/HandDollarIcon";
 import TuercasIcon from "../icons/TuercasIcon";
 import CalendarioIcon from "../icons/CalendarioIcon";
 import CardDollarIcon from "../icons/CardDollarIcon";
+import ToothPasteIcon from "../icons/ToothPasteIcon";
+import SpreadSheetIcon from "../icons/SpreadSheetIcon";
 
 function HomeScreen() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -28,7 +30,7 @@ function HomeScreen() {
           </Link>
           <Link to="/listaservicios">
             <button>
-              <DoctorIcon />
+              <ToothPasteIcon />
               <span>Servicios</span>
             </button>
           </Link>
@@ -51,13 +53,13 @@ function HomeScreen() {
           </a>
           <Link to="/listagasto">
             <button>
-              <TuercasIcon />
+              <CardDollarIcon />
               <span>Gastos</span>
             </button>
           </Link>
           <Link to="/analiticsventas">
             <button>
-              <CardDollarIcon />
+              <SpreadSheetIcon />
               <span>Analitics</span>
             </button>
           </Link>

@@ -113,7 +113,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>21DIC2024</span>
+            <span>22DIC2024</span>
           </footer>
         </div>
       )}
