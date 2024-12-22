@@ -123,7 +123,7 @@ export default function ControlesScreen(props) {
                     <div className="flx jsb pad-0 control-header">
                       <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
                       <p className="pad-0">{paciente.nombre + " " + paciente.apellido}</p>
-                      <span>Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
+                      <span className="doctor-name">Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
                     </div>
                     <div className="flx jcenter gap-10 pad-0">
                       <ToolTip text="Editar">

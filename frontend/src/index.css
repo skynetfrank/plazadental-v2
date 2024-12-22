@@ -37,7 +37,6 @@ body {
   background: url(/logo_bg.png) rgb(248, 248, 248) no-repeat;
   background-position: center;
   background-size: contain;
-
 }
 
 .form {
@@ -125,7 +124,6 @@ button,
 .btn-icon-container svg {
   font-size: 3rem;
 }
-
 
 .save-icon,
 .dollar-icon,
@@ -454,11 +452,9 @@ select {
   min-width: 30px;
 }
 
-
 .minw-40 {
   min-width: 40px;
 }
-
 
 .minw-360 {
   min-width: 360px;
@@ -783,12 +779,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -1431,8 +1427,9 @@ button.td-group-btn {
   font-size: 1rem;
   column-gap: 1rem;
   font-weight: bold;
-  width: 100%;
   margin-bottom: 5px;
+  padding: 5px;
+  border-bottom: 1px solid rgb(176, 176, 176);
 }
 
 .paciente-cards-container .nav__link {
@@ -1521,7 +1518,6 @@ h4 {
   text-wrap: wrap;
   line-height: 14px;
 }
-
 
 .slide-content-header {
   width: 300px;
@@ -1798,8 +1794,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus~label,
-input:not(:placeholder-shown)~label {
+.input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1912,12 +1908,12 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe>h1 {
+.titulo-recipe > h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe>h2 {
+.titulo-recipe > h2 {
   width: 100%;
   text-align: center;
 }
@@ -2172,7 +2168,6 @@ button.button.small {
   border: 1px solid rgb(183, 183, 183);
 }
 
-
 .division {
   border-bottom: 1px solid black;
   padding-bottom: 1rem;
@@ -2189,7 +2184,6 @@ button.button.small {
   border-bottom: 1px solid rgb(183, 183, 183);
   padding-bottom: 5px;
 }
-
 
 /*---- DESDE AQUI LA TABLA COMPONENTE STYLING (TANKSTACK) -----*/
 
@@ -2297,7 +2291,6 @@ input.filter-input-v8 {
   margin: 5px;
 }
 
-
 .consolidado-articulos {
   font-size: 0.8rem;
   display: flex;
@@ -2343,9 +2336,6 @@ input.filter-input-v8 {
 
 */
 
-
-
-
 #consolidado-table tr td:nth-child(5) {
   text-align: left;
 }
@@ -2383,11 +2373,9 @@ span.span-admin-consolidado {
   min-width: 240px;
 }
 
-
 .div-print-report {
   text-align: center;
 }
-
 
 /* FIN DE TANKSTACK STYLING GLOBAL COMPONENT */
 
@@ -2426,12 +2414,9 @@ span.span-admin-consolidado {
   margin: 0.3rem 1.5rem;
 }
 
-
 .show-control-facturacion {
   margin-left: 1rem;
 }
-
-
 
 @media (max-width: 575px) {
   .brand-container {
@@ -2480,7 +2465,9 @@ span.span-admin-consolidado {
   }
 }
 
-
+.doctor-name {
+  color: rgb(1, 1, 193);
+}
 @media print {
   @page {
     size: auto;

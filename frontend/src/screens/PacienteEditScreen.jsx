@@ -636,9 +636,9 @@ export default function PacienteEditScreen(props) {
                     mask="_"
                     type="text"
                     id="telefono"
-                    value={telefono}
+                    value={celular}
                     className="input"
-                    onChange={(e) => setTelefono(e.target.value)}
+                    onChange={(e) => setCelular(e.target.value)}
                   />
                   <label htmlFor="telefono" className="user-label">
                     Telefono

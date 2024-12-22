@@ -40,7 +40,6 @@ function HomeScreen() {
               <span>Cuadre</span>
             </button>
           </Link>{" "}
-
           <a
             href="https://planner-plaza-9tp7wnvii-tyrant7995gmailcoms-projects.vercel.app/"
             rel="nofollow noopener noreferrer"
@@ -60,11 +59,9 @@ function HomeScreen() {
           <Link to="/analiticsventas">
             <button>
               <SpreadSheetIcon />
-              <span>Analitics</span>
+              <span>Dinamica</span>
             </button>
           </Link>
-
-
         </div>
       ) : (
         <div className="fachada"></div>
