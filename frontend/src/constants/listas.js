@@ -76,4 +76,18 @@ export const selectBancos = [
   "Tesoro",
 ];
 
-export const tipoLab = [" ", "PROTESIS BUCAL", "MOLDEADO DE DIENTE", "ELABORACION DE CARILLAS",];
+export const tipoLab = [
+  " ",
+  "PROTESIS FIJA (corona metal porcelana)",
+  "PROTESIS FIJA (corona metal porcelana dento-gingival)",
+  "PROTESIS FIJA (corona metal porcelana sobre implante)",
+  "PROTESIS FIJA (corona metal porcelana sobre implante atornillado)",
+  "PROTESIS FIJA (corona metal porcelana con hombro ceramico)",
+  "PROTESIS FIJA (corona funda metalica)",
+  "PROTESIS FIJA (corona con frente estetico)",
+  "PROTESIS FIJA (puente maryland)",
+  "PROTESIS FIJA (perno colocado directo)",
+  "PROTESIS FIJA (perno colocado indirecto)",
+  "PROTESIS FIJA (encerado funcional por pieza)",
+  "PROTESIS FIJA (vaciado de impresion)",
+];
