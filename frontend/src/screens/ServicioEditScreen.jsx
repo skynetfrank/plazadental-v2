@@ -18,7 +18,6 @@ export default function ServicioEditScreen(props) {
   const [cambio, setCambio] = useState(1);
   const [isRegister, setIsRegister] = useState(false);
 
-
   const servicioDetails = useSelector((state) => state.servicioDetails);
   const { loading, error, servicio } = servicioDetails;
 
@@ -28,7 +27,6 @@ export default function ServicioEditScreen(props) {
   const areaArray = [" ", "GENERAL", "ORTODONCIA", "ODONTOPEDIATRIA", "CIRUGIA"];
 
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     if (successUpdate) {
@@ -54,8 +52,6 @@ export default function ServicioEditScreen(props) {
     }
   }, [dispatch, navigate, servicio, servicioId, successUpdate]);
 
-
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (isRegister) {
@@ -73,7 +69,6 @@ export default function ServicioEditScreen(props) {
     dispatch(updateServicio({ _id: servicioId, codigo, nombre, area, descripcion, preciobs, preciousd, cambio }));
   };
 
-
   const getPrecio = async (e) => {
     try {
       setPreciobs((parseFloat(e) * parseFloat(cambio)).toFixed(2));
@@ -90,9 +85,9 @@ export default function ServicioEditScreen(props) {
 
   return (
     <div className="main-container">
-      <h2 className="centrado">Servicio Nuevo</h2>
+      <h2 className="centrado">Editar Servicio</h2>
 
-      <form onSubmit={submitHandler}>
+      <form className="form-servicio" onSubmit={submitHandler}>
         {
           <React.Fragment key={99}>
             <div className="inputs-section">
@@ -102,7 +97,7 @@ export default function ServicioEditScreen(props) {
                   value={codigo}
                   type="text"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   required
                   onChange={(e) => setCodigo(e.target.value)}
@@ -117,7 +112,7 @@ export default function ServicioEditScreen(props) {
               <div className="select-wrapper area" data-title="Area">
                 <select
                   id="select-area"
-                  className="input select"
+                  className="input select input-280"
                   value={area}
                   placeholder="selecionar"
                   onChange={(e) => setArea(e.target.value)}
@@ -134,7 +129,7 @@ export default function ServicioEditScreen(props) {
                   id="name"
                   type="text"
                   placeholder=" "
-                  className="input servicio"
+                  className="input servicio input-260"
                   autoComplete="off"
                   value={nombre}
                   maxLength="50"
@@ -150,7 +145,7 @@ export default function ServicioEditScreen(props) {
                   id="descripcion"
                   type="text"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   maxLength="50"
                   required
@@ -167,7 +162,7 @@ export default function ServicioEditScreen(props) {
                   id="preciousd"
                   type="number"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   value={preciousd}
                   required
@@ -177,42 +172,11 @@ export default function ServicioEditScreen(props) {
                   Precio US$
                 </label>
               </div>
-
-              <div className="input-group">
-                <input
-                  id="preciobs"
-                  type="number"
-                  placeholder=" "
-                  className="input"
-                  autoComplete="off"
-                  value={preciobs}
-                  required
-                  onChange={(e) => setPreciobs(e.target.value)}
-                ></input>
-                <label htmlFor="preciobs" className="user-label">
-                  Precio Bs.
-                </label>
-              </div>
-
-              <div className="input-group">
-                <input
-                  id="cambio"
-                  type="number"
-                  placeholder=" "
-                  className="input"
-                  autoComplete="off"
-                  value={cambio}
-                  onChange={(e) => setCambio(e.target.value)}
-                ></input>
-                <label htmlFor="cambio" className="user-label">
-                  cambio Bs/$
-                </label>
-              </div>
             </div>
 
             <div className="centrado">
               <button className="button" type="submit">
-                Guardar Servicio
+                Actualizar Servicio
               </button>
             </div>
           </React.Fragment>

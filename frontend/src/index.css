@@ -1636,7 +1636,9 @@ hr {
   text-transform: capitalize;
 }
 
-#form-paciente {
+#form-paciente,
+#form-doctor,
+.form-servicio {
   margin: 0 auto;
   padding: 10px;
   border-radius: 10px;
@@ -1810,7 +1812,6 @@ input:not(:placeholder-shown) ~ label {
 .titulo-de-section {
   position: relative;
   top: 13px;
-  left: 165px;
   font-weight: bolder;
 }
 
@@ -2418,6 +2419,18 @@ span.span-admin-consolidado {
   margin-left: 1rem;
 }
 
+.checkbox-div span {
+  font-size: 1.3rem;
+  margin-left: 4px;
+}
+
+.input.input-260{
+  width: 260px;
+}
+.input.input-280{
+  width: 280px;
+}
+
 @media (max-width: 575px) {
   .brand-container {
     display: none;
@@ -2463,11 +2476,27 @@ span.span-admin-consolidado {
   #form-new-control {
     margin-top: 2rem;
   }
+
+  #form-paciente {
+    max-width: 320px;
+  }
+  .inputs-section {
+    justify-content: center;
+  }
+
+  .input.w300 {
+    max-width: 250px;
+  }
+
+  .checkbox-div span {
+    font-size: 1rem;
+  }
 }
 
 .doctor-name {
   color: rgb(1, 1, 193);
 }
+
 @media print {
   @page {
     size: auto;

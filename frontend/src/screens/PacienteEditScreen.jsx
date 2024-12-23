@@ -549,7 +549,7 @@ export default function PacienteEditScreen(props) {
 
   return (
     <div className="main-container">
-      <h1>Editar Paciente</h1>
+      <h1 className="centrado">Editar Paciente</h1>
       <div>
         <form id="form-paciente" onSubmit={submitHandler}>
           {loadingUpdate && <LoadingBox></LoadingBox>}

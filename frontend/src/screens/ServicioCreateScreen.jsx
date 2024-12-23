@@ -109,7 +109,7 @@ export default function ServicioCreateScreen(props) {
     <div className="main-container">
       <h2 className="centrado">Servicio Nuevo</h2>
 
-      <form onSubmit={submitHandler}>
+      <form className="form-servicio" onSubmit={submitHandler}>
         {
           <React.Fragment key={99}>
             <div className="inputs-section">
@@ -119,7 +119,7 @@ export default function ServicioCreateScreen(props) {
                   value={codigo}
                   type="text"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   required
                   onChange={(e) => setCodigo(e.target.value)}
@@ -134,7 +134,7 @@ export default function ServicioCreateScreen(props) {
               <div className="select-wrapper area" data-title="Area">
                 <select
                   id="select-area"
-                  className="input select"
+                  className="input select input-280"
                   value={area}
                   placeholder="selecionar"
                   onChange={(e) => setArea(e.target.value)}
@@ -151,7 +151,7 @@ export default function ServicioCreateScreen(props) {
                   id="name"
                   type="text"
                   placeholder=" "
-                  className="input servicio"
+                  className="input servicio input-260"
                   autoComplete="off"
                   value={nombre}
                   maxLength="50"
@@ -167,7 +167,7 @@ export default function ServicioCreateScreen(props) {
                   id="descripcion"
                   type="text"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   maxLength="50"
                   required
@@ -184,7 +184,7 @@ export default function ServicioCreateScreen(props) {
                   id="preciousd"
                   type="number"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   value={preciousd}
                   required
@@ -200,7 +200,7 @@ export default function ServicioCreateScreen(props) {
                   id="preciobs"
                   type="number"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   value={preciobs}
                   required
@@ -216,7 +216,7 @@ export default function ServicioCreateScreen(props) {
                   id="cambio"
                   type="number"
                   placeholder=" "
-                  className="input"
+                  className="input input-260"
                   autoComplete="off"
                   value={cambio}
                   onChange={(e) => setCambio(e.target.value)}
