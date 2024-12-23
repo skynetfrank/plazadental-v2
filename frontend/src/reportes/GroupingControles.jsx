@@ -39,7 +39,7 @@ function GroupingControles() {
   };
 
   const queryHandler = () => {
-    if (fechaInicio < "2024-12-11") {
+    if (fechaInicio < "2024-12-23") {
       Swal.fire({
         text: "No Hay Datos Antes del 11-12-2024",
         imageUrl: "/tiny_logo.jpg",
