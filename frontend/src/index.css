@@ -2424,12 +2424,22 @@ span.span-admin-consolidado {
   margin-left: 4px;
 }
 
-.input.input-260{
+.input.input-260 {
   width: 260px;
 }
-.input.input-280{
+.input.input-280 {
   width: 280px;
 }
+
+.nombre-doctor {
+  font-size: 1rem;
+  margin-left: 10px;
+  font-weight: bold;
+  background-color: rgb(238, 238, 238);
+  padding: 0 5px;
+  border-radius: 3px;
+  color: rgb(2, 2, 185);
+ }
 
 @media (max-width: 575px) {
   .brand-container {

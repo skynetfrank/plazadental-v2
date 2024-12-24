@@ -22,6 +22,10 @@ function ListaDoctores() {
       header: "Nombre",
       accessorKey: "nombre",
     },
+    {
+      header: "Apellido",
+      accessorKey: "apellido",
+    },
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
     { header: "Especialidad", accessorKey: "especialidad" },
@@ -91,5 +95,3 @@ function ListaDoctores() {
 }
 
 export default ListaDoctores;
-
-

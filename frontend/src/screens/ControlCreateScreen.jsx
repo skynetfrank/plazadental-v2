@@ -59,6 +59,7 @@ export default function ControlCreateScreen(props) {
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente } = pacienteDetails;
+  const [nombreDoctor, setNombreDoctor] = useState("");
 
   const controlCreate = useSelector((state) => state.controlCreate);
   const { success, control } = controlCreate;
@@ -391,13 +392,11 @@ export default function ControlCreateScreen(props) {
     setTxtformapago(textopago);
   };
 
-
-
   const getDoctor = async () => {
     const { value: idDoctor } = await Swal.fire({
       input: "select",
       inputOptions: {
-        Doctores: listaDoctores.map((s) => s.nombre),
+        Doctores: listaDoctores.map((s) => s.nombre + " " + s.apellido),
       },
       inputPlaceholder: "Seleccione un Doctor",
       showCancelButton: true,
@@ -414,17 +413,16 @@ export default function ControlCreateScreen(props) {
       },
     });
     setDoctorId(listaDoctores[Number(idDoctor)]._id);
-
+    setNombreDoctor(listaDoctores[Number(idDoctor)].nombre + " " + listaDoctores[Number(idDoctor)].apellido);
   };
 
-
-  console.log("doctorId", doctorId)
+  console.log("doctorId", doctorId);
   return (
     <div>
       <div className="flx column jcenter">
         <div>
           <span className="action-map">Agregar Control</span>
-          <h3 className="centrado font-12">{paciente?.nombre + " " + paciente?.apellido}</h3>
+          <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
         </div>
         <input
           type="date"
@@ -523,8 +521,9 @@ export default function ControlCreateScreen(props) {
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx jcenter wrap gap1">
             <div className="control-textarea-container">
-              <div className="flx">
+              <div className="flx jsb">
                 <label>Evaluacion</label>
+                <span className="nombre-doctor">{nombreDoctor ? "Doctor: " + nombreDoctor : ""}</span>
               </div>
 
               <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>

@@ -56,6 +56,8 @@ export default function ControlEditScreen(props) {
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
+  const [nombreDoctor, setNombreDoctor] = useState("");
+
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
 
@@ -106,8 +108,20 @@ export default function ControlEditScreen(props) {
       setMontoServicios(control.montoServicios || 0);
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
+
+      setNombreDoctor(
+        listaDoctores.map((doc) => {
+          if (doc._id !== doctorId) {
+            return "";
+          }
+
+          if (doc._id === doctorId) {
+            return doc.nombre;
+          }
+        })
+      );
     }
-  }, [control, controlId, dispatch, navigate, successUpdate]);
+  }, [control, controlId, dispatch, listaDoctores, navigate, successUpdate]);
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -351,6 +365,30 @@ export default function ControlEditScreen(props) {
     }
   };
 
+  const getDoctor = async () => {
+    const { value: idDoctor } = await Swal.fire({
+      input: "select",
+      inputOptions: {
+        Doctores: listaDoctores.map((s) => s.nombre + " " + s.apellido),
+      },
+      inputPlaceholder: "Seleccione un Doctor",
+      showCancelButton: true,
+
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (!value) {
+            resolve();
+            return;
+          }
+
+          resolve();
+        });
+      },
+    });
+    setDoctorId(listaDoctores[Number(idDoctor)]._id);
+    setNombreDoctor(listaDoctores[Number(idDoctor)].nombre + " " + listaDoctores[Number(idDoctor)].apellido);
+  };
+
   const handleEvaluacion = (e) => {
     e.preventDefault();
     setEvaluacion((current) => current + e.target.value);
@@ -382,6 +420,8 @@ export default function ControlEditScreen(props) {
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
   };
+
+  console.log("lista doctores", listaDoctores);
   return (
     <div>
       {loading ? (
@@ -399,6 +439,9 @@ export default function ControlEditScreen(props) {
               onChange={(e) => dateHandler(e.target.value)}
             ></input>
             <div className="flx jcenter gap1 botonera-menu">
+              <button className="font-x pad-0 m-0 negrita" onClick={() => getDoctor()}>
+                Doctores
+              </button>
               <button className="font-x pad-0 m-0 negrita" onClick={() => getServicio()}>
                 Servicios
               </button>
@@ -489,18 +532,7 @@ export default function ControlEditScreen(props) {
                 <div className="control-textarea-container">
                   <div className="flx">
                     <label>Evaluacion</label>
-                    <select
-                      value={doctorId}
-                      className="maxw-150 font-x ml"
-                      onChange={(e) => setDoctorId(e.target.value)}
-                    >
-                      <option value="">Seleccionar Doctor</option>
-                      {listaDoctores?.map((x, inx) => (
-                        <option key={inx} value={x._id}>
-                          {"Doctor " + x.nombre + " " + x.apellido}
-                        </option>
-                      ))}
-                    </select>
+                    <span className="nombre-doctor">{nombreDoctor ? "Doctor: " + nombreDoctor : ""}</span>
                   </div>
 
                   <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>

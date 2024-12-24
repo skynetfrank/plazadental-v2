@@ -65,23 +65,23 @@ export default function CuadreDiarioScreen() {
                   </div>
                 </div>
               ))}
-
             </div>
           );
         },
-
       },
       {
         header: "Servicios",
         accessorKey: "montoServicios",
         cell: (value) => {
           if (!value) {
-            return ""
+            return "";
           }
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoServicios"), 0);
+          const total = table
+            .getFilteredRowModel()
+            .rows.reduce((total, row) => total + row.getValue("montoServicios"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -91,16 +91,14 @@ export default function CuadreDiarioScreen() {
         cell: (value) => {
           const labtxt = value.row.original.laboratorio;
           if (!value) {
-            return ""
+            return "";
           }
           return (
             <div className="flx column">
               <span>${Number(value.getValue() * 4).toFixed(2)}</span>
               <span>{labtxt}</span>
             </div>
-          )
-
-
+          );
         },
         footer: ({ table }) => {
           const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
@@ -112,7 +110,7 @@ export default function CuadreDiarioScreen() {
         accessorKey: "descuento",
         cell: (value) => {
           if (!value) {
-            return ""
+            return "";
           }
           return "$" + Number(value.getValue()).toFixed(2);
         },
@@ -140,7 +138,9 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
+          const total = table
+            .getFilteredRowModel()
+            .rows.reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -151,7 +151,9 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
+          const total = table
+            .getFilteredRowModel()
+            .rows.reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -387,7 +389,6 @@ export default function CuadreDiarioScreen() {
             <span>Zelle:</span>
             <span>${Number(cash?.totalzelle).toFixed(2)}</span>
           </div>
-
         </div>{" "}
       </div>
     </div>
