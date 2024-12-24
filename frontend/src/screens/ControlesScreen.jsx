@@ -122,10 +122,14 @@ export default function ControlesScreen(props) {
                   <div>
                     <div className="flx jsb pad-0 control-header">
                       <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
-                      <p className="pad-0">{paciente.nombre + " " + paciente.apellido}</p>
-                      <span className="doctor-name">Doctor: {item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
+                      <p className="pad-0">Paciente: <strong>{paciente.nombre + " " + paciente.apellido}</strong></p>
+
                     </div>
                     <div className="flx jcenter gap-10 pad-0">
+                      <div className="controles-doctor-container">
+                        <label>Doctor</label>
+                        <span>{item.control.doctor?.nombre + " " + item.control.doctor?.apellido}</span>
+                      </div>
                       <ToolTip text="Editar">
                         <button
                           className="circle-btn"
@@ -227,9 +231,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                                (item.control.pago.montopunto +
-                                  item.control.pago.montopunto2 +
-                                  item.control.pago.montopunto3)
+                              (item.control.pago.montopunto +
+                                item.control.pago.montopunto2 +
+                                item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>
@@ -248,11 +252,11 @@ export default function ControlesScreen(props) {
                             Comision Plaza&ensp;: $
                             {Number(item.control.montoComisionPlaza) > 1
                               ? Number(item.control.montoComisionPlaza).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                              " (" +
+                              (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
                               : Number(item.control.montoComisionPlaza).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                              " (" +
+                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -262,11 +266,11 @@ export default function ControlesScreen(props) {
                             Comision Doctor: $
                             {Number(item.control.montoComisionDr) > 1
                               ? Number(item.control.montoComisionDr).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                              " (" +
+                              (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
                               : Number(item.control.montoComisionDr).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                              " (" +
+                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""

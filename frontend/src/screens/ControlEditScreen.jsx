@@ -108,20 +108,14 @@ export default function ControlEditScreen(props) {
       setMontoServicios(control.montoServicios || 0);
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
-
+      let doc = listaDoctores.find((doc) => doc._id === doctorId)
+      console.log("doc", doc)
       setNombreDoctor(
-        listaDoctores.map((doc) => {
-          if (doc._id !== doctorId) {
-            return "";
-          }
-
-          if (doc._id === doctorId) {
-            return doc.nombre;
-          }
-        })
+        doc?.nombre + " " + doc?.apellido
       );
+
     }
-  }, [control, controlId, dispatch, listaDoctores, navigate, successUpdate]);
+  }, [control, controlId, dispatch, navigate, successUpdate]);
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -421,7 +415,6 @@ export default function ControlEditScreen(props) {
     setTxtformapago(textopago);
   };
 
-  console.log("lista doctores", listaDoctores);
   return (
     <div>
       {loading ? (
@@ -530,7 +523,7 @@ export default function ControlEditScreen(props) {
             <form id="form-new-control" onSubmit={submitHandler}>
               <div className="flx jcenter wrap gap1">
                 <div className="control-textarea-container">
-                  <div className="flx">
+                  <div className="flx jsb">
                     <label>Evaluacion</label>
                     <span className="nombre-doctor">{nombreDoctor ? "Doctor: " + nombreDoctor : ""}</span>
                   </div>

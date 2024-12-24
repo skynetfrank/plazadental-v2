@@ -779,12 +779,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2 > span {
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -1796,8 +1796,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus ~ label,
-input:not(:placeholder-shown) ~ label {
+.input:focus~label,
+input:not(:placeholder-shown)~label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1909,12 +1909,12 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe > h1 {
+.titulo-recipe>h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe > h2 {
+.titulo-recipe>h2 {
   width: 100%;
   text-align: center;
 }
@@ -2427,6 +2427,7 @@ span.span-admin-consolidado {
 .input.input-260 {
   width: 260px;
 }
+
 .input.input-280 {
   width: 280px;
 }
@@ -2439,7 +2440,26 @@ span.span-admin-consolidado {
   padding: 0 5px;
   border-radius: 3px;
   color: rgb(2, 2, 185);
- }
+}
+
+
+.controles-doctor-container {
+  font-size: 1rem;
+  max-width: 100px;
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+  padding: 12px 5px 4px 5px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.controles-doctor-container label {
+  font-size: 0.8rem;
+  position: absolute;
+  top: 2px;
+  color: rgb(239, 239, 239);
+}
 
 @media (max-width: 575px) {
   .brand-container {
@@ -2490,6 +2510,7 @@ span.span-admin-consolidado {
   #form-paciente {
     max-width: 320px;
   }
+
   .inputs-section {
     justify-content: center;
   }
