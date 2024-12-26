@@ -811,7 +811,7 @@ controlRouter.delete(
     const control = await Control.findById(req.params.id);
 
     if (control) {
-      const deleteControl = await control.remove();
+      const deleteControl = await control.deleteOne({ _id: req.params.id });
       res.send({ message: "Control Eliminado", control: deleteControl });
     } else {
       res.status(404).send({ message: "Control No Encontrado" });

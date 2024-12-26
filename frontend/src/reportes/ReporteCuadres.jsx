@@ -5,7 +5,6 @@ import SimpleTable from "../components/SimpleTable";
 import { groupByDay } from "../actions/controlActions";
 import CuadreIcon from "../icons/CuadreIcon";
 
-
 function ReporteCuadres() {
   const navigate = useNavigate("");
   const dispatch = useDispatch();
@@ -50,13 +49,10 @@ function ReporteCuadres() {
         return (
           <div className="flx pad-0">
             {" "}
-            <button
-              className="btn-icon-container"
-              onClick={() => navigate(`/cuadreventas/${_id}`)}>
+            <button className="btn-icon-container" onClick={() => navigate(`/cuadreventas/${_id}`)}>
               <CuadreIcon />
               <p className="negrita azul-marino font-1">Reporte</p>
             </button>
-
           </div>
         );
       },
@@ -76,12 +72,7 @@ function ReporteCuadres() {
           <div>
             <div>
               {dailyControles ? (
-                <SimpleTable
-                  data={dailyControles}
-                  columns={columns}
-                  filterInput={false}
-                  botonera={true}
-                />
+                <SimpleTable data={dailyControles} columns={columns} filterInput={false} botonera={true} />
               ) : (
                 ""
               )}
