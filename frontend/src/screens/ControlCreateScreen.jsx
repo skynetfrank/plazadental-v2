@@ -134,6 +134,7 @@ export default function ControlCreateScreen(props) {
       setLaboratorio("");
       setConceptoLaboratorio("");
       setDescuento(0);
+      navigate("/listapacientes")
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 

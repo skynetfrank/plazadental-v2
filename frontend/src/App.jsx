@@ -113,7 +113,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>v23DIC2024alphax</span>
+            <span>v26DIC2024-alphax</span>
           </footer>
         </div>
       )}
