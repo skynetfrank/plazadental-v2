@@ -22,24 +22,33 @@ function HomeScreen() {
               <span>Pacientes</span>
             </button>
           </Link>
-          <Link to="/listadoctores">
-            <button>
-              <DoctorIcon />
-              <span>Doctores</span>
-            </button>
-          </Link>
+          {userInfo.isAdmin ? (
+            <Link to="/listadoctores">
+              <button>
+                <DoctorIcon />
+                <span>Doctores</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
           <Link to="/listaservicios">
             <button>
               <ToothPasteIcon />
               <span>Servicios</span>
             </button>
           </Link>
-          <Link to="/listacuadres">
-            <button>
-              <HandDollarIcon />
-              <span>Cuadre</span>
-            </button>
-          </Link>{" "}
+          {userInfo.isAdmin ? (
+            <Link to="/listacuadres">
+              <button>
+                <HandDollarIcon />
+                <span>Cuadre</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
+
           <a
             href="https://planner-plaza-9tp7wnvii-tyrant7995gmailcoms-projects.vercel.app/"
             rel="nofollow noopener noreferrer"
@@ -50,18 +59,27 @@ function HomeScreen() {
               <span>Planificacion</span>
             </button>
           </a>
-          <Link to="/listagasto">
-            <button>
-              <CardDollarIcon />
-              <span>Gastos</span>
-            </button>
-          </Link>
-          <Link to="/analiticsventas">
-            <button>
-              <SpreadSheetIcon />
-              <span>Dinamica</span>
-            </button>
-          </Link>
+
+          {userInfo.isAdmin ? (
+            <Link to="/listagasto">
+              <button>
+                <CardDollarIcon />
+                <span>Gastos</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
+          {userInfo.isAdmin ? (
+            <Link to="/analiticsventas">
+              <button>
+                <SpreadSheetIcon />
+                <span>Dinamica</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
         </div>
       ) : (
         <div className="fachada"></div>

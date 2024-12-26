@@ -8,20 +8,20 @@ import TrashIcon from "../icons/TrashIcon";
 import { listServicios } from "../actions/servicioActions";
 import AddCircleIcon from "../icons/AddCircleIcon";
 
-
 function ListaServicios() {
   const navigate = useNavigate("");
   const servicioList = useSelector((state) => state.servicioList);
   const { loading, servicios } = servicioList;
   const dispatch = useDispatch();
 
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   useEffect(() => {
     if (!servicios || servicios.length === 0) {
       dispatch(listServicios());
     }
-  }, [dispatch, servicios])
-
+  }, [dispatch, servicios]);
 
   const columns = [
     {
@@ -40,24 +40,25 @@ function ListaServicios() {
         const { _id, servicios } = value.row.original;
         return (
           <div className="flx pad-0">
-
-            <ToolTip text="Editar">
-              <button
-                className="circle-btn"
-                onClick={() => navigate(`/servicio/${_id}/edit`)}>
-                <EditIcon />
-              </button>
-            </ToolTip>
-
-            <ToolTip text="Eliminar">
-              <button
-                className="circle-btn"
-                onClick={() => navigate(`/controles/${_id}/edit`)}>
-                <TrashIcon />
-              </button>
-            </ToolTip>
+            {userInfo.isAdmin ? (
+              <ToolTip text="Editar">
+                <button className="circle-btn" onClick={() => navigate(`/servicio/${_id}/edit`)}>
+                  <EditIcon />
+                </button>
+              </ToolTip>
+            ) : (
+              ""
+            )}
+            {userInfo.isAdmin ? (
+              <ToolTip text="Eliminar">
+                <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
+                  <TrashIcon />
+                </button>
+              </ToolTip>
+            ) : (
+              ""
+            )}
           </div>
-
         );
       },
     },
@@ -68,10 +69,8 @@ function ListaServicios() {
       <div className="flx jcenter gap1 pad-0">
         <h2>Servicios</h2>
         <ToolTip text="Agregar Doctor">
-          <Link to='/crearservicio'>
-
+          <Link to="/crearservicio">
             <AddCircleIcon />
-
           </Link>
         </ToolTip>
       </div>
@@ -102,5 +101,3 @@ function ListaServicios() {
 }
 
 export default ListaServicios;
-
-
