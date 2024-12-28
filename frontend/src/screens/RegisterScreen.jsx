@@ -33,7 +33,7 @@ export default function RegisterScreen(props) {
     if (password !== confirmPassword) {
       alert("Su confirmacion de Password no coincide... verifique!");
     } else {
-      dispatch(register(nombre, email, apellido, cedula, password, telefono));
+      dispatch(register(nombre, apellido, cedula, telefono, email, password));
     }
   };
   useEffect(() => {

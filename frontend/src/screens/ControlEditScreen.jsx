@@ -511,7 +511,7 @@ export default function ControlEditScreen(props) {
                       className="btn-pago font-x pad-0 m-0 negrita centrado"
                       onClick={() => setShowPaymentModal(true)}
                     >
-                      Registrar Pago
+                      {txtformapago ? txtformapago : "Registrar Pago"}
                     </button>
                   </div>
                 </div>

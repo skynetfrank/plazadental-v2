@@ -359,9 +359,9 @@ function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, mont
           <button onClick={() => handleCashUsd(Number(montoPagoUsd))}>EFECTIVO DIVISAS DOLARES $</button>
           <button onClick={() => handleCashEuro(Number(montoPagoUsd))}>EFECTIVO DIVISAS EUROS</button>
           <button onClick={() => handleCashBs(Number(montoPagoBs))}>EFECTIVO BOLIVARES Bs. </button>
-          <button onClick={() => handlePagoMovil(Number(montoPagoBs), "Plaza")}>PAGOMOVIL BANCO PLAZA</button>
+          <button onClick={() => handlePagoMovil(Number(montoPagoBs), "Venezuela")}>PAGOMOVIL BANCO VENEZUELA</button>
+          <button onClick={() => handlePagoMovil(Number(montoPagoBs), "Banesco")}>PAGOMOVIL BANESCO</button>
           <button onClick={() => handlePunto(Number(montoPagoBs), "Banesco")}>PUNTO DE VENTA BANESCO</button>
-          <button onClick={() => handlePunto(Number(montoPagoBs), "Plaza")}>PUNTO DE VENTA PLAZA</button>
           <button onClick={() => handlePunto(Number(montoPagoBs), "Venezuela")}>PUNTO DE VENTA VENEZUELA</button>
           <button onClick={() => handleZelle(Number(montoPagoUsd))}>DIVISAS ZELLE US$</button>
         </div>

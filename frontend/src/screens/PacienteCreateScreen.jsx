@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPaciente } from "../actions/pacienteActions";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { PACIENTE_CREATE_RESET } from "../constants/pacienteConstants";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import { NumericFormat } from "react-number-format";
+import Swal from "sweetalert2";
 
 export default function PacienteCreateScreen(props) {
   const navigate = useNavigate();
@@ -303,13 +304,17 @@ export default function PacienteCreateScreen(props) {
 
   useEffect(() => {
     if (paciente) {
-      toast.success("Paciente Registrado con Exito!. Sera dirigido al registro de controles", {
-        position: "top-center",
-        autoClose: 1000,
+
+      Swal.fire({
+        title: "Paciente Registrado",
+        imageUrl: "/tiny_logo.jpg",
+        imageWidth: 70,
+        imageHeight: 30,
+        imageAlt: "logo",
       });
       dispatch({ type: PACIENTE_CREATE_RESET });
       dispatch({ type: CONTROL_CREATE_RESET });
-      navigate(`/crearcontrol/${paciente._id}?escita1=${"si"}`);
+      navigate("/listapacientes");
     }
   }, [dispatch, navigate, paciente]);
 
