@@ -1025,12 +1025,13 @@ img.tiny-image {
 }
 
 #tabla-cuadre tr td:nth-child(1) {
-  width: 20px;
+  min-width: 100px;
   text-align: center;
 }
 
 #tabla-cuadre tr td:nth-child(2) {
-  width: 200px;
+  min-width: 100px;
+  text-align: center;
 }
 
 #tabla-cuadre tr td:nth-child(n + 3) {
@@ -1051,11 +1052,7 @@ img.tiny-image {
 }
 
 .cuadre-descripcion p:nth-child(2) {
-  min-width: 200px;
-}
-
-.cuadre-descripcion p:nth-child(2) {
-  min-width: 200px;
+  min-width: 150px;
 }
 
 .cuadre-descripcion p:nth-child(3) {
