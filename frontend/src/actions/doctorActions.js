@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from "axios";
 import {
   DOCTOR_CREATE_FAIL,
   DOCTOR_CREATE_REQUEST,
@@ -19,17 +19,16 @@ import {
   DOCTOR_DELETE_REQUEST,
   DOCTOR_DELETE_FAIL,
   DOCTOR_DELETE_SUCCESS,
+} from "../constants/doctorConstants";
 
-} from '../constants/doctorConstants';
-
-export const createDoctor = doctor => async (dispatch, getState) => {
+export const createDoctor = (doctor) => async (dispatch, getState) => {
   dispatch({ type: DOCTOR_CREATE_REQUEST });
   const {
     userSignin: { userInfo },
   } = getState();
   try {
     const { data } = await Axios.post(
-      '/api/doctores/create',
+      "/api/doctores/create",
       {
         doctor,
       },
@@ -48,22 +47,20 @@ export const createDoctor = doctor => async (dispatch, getState) => {
   }
 };
 
-export const listDoctores =
-  ({ busqueda = '', pageNumber = '' }) =>
-    async dispatch => {
-      dispatch({
-        type: DOCTOR_LIST_REQUEST,
-      });
-      try {
-        const { data } = await Axios.get(`/api/doctores?pageNumber=${pageNumber}&nombre=${busqueda}`);
+export const listDoctores = () => async (dispatch) => {
+  dispatch({
+    type: DOCTOR_LIST_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get("/api/doctores");
 
-        dispatch({ type: DOCTOR_LIST_SUCCESS, payload: data });
-      } catch (error) {
-        dispatch({ type: DOCTOR_LIST_FAIL, payload: error.message });
-      }
-    };
+    dispatch({ type: DOCTOR_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: DOCTOR_LIST_FAIL, payload: error.message });
+  }
+};
 
-export const detailsDoctor = doctorId => async (dispatch, getState) => {
+export const detailsDoctor = (doctorId) => async (dispatch, getState) => {
   dispatch({ type: DOCTOR_DETAILS_REQUEST, payload: doctorId });
   const {
     userSignin: { userInfo },
@@ -81,7 +78,7 @@ export const detailsDoctor = doctorId => async (dispatch, getState) => {
   }
 };
 
-export const updateDoctor = doctor => async (dispatch, getState) => {
+export const updateDoctor = (doctor) => async (dispatch, getState) => {
   dispatch({ type: DOCTOR_UPDATE_REQUEST, payload: doctor });
 
   const {
@@ -98,7 +95,7 @@ export const updateDoctor = doctor => async (dispatch, getState) => {
   }
 };
 
-export const deleteDoctor = doctorId => async (dispatch, getState) => {
+export const deleteDoctor = (doctorId) => async (dispatch, getState) => {
   dispatch({ type: DOCTOR_DELETE_REQUEST, payload: doctorId });
   const {
     userSignin: { userInfo },

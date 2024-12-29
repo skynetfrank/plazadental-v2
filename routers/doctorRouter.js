@@ -8,7 +8,7 @@ const doctorRouter = express.Router();
 doctorRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const doctores = await Doctor.find({})
+    const doctores = await Doctor.find({});
     res.send({ doctores });
   })
 );
