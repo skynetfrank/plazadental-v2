@@ -33,6 +33,7 @@ export const listServicios =
 				const { data } = await Axios.get(
 					`/api/servicios`
 				);
+				localStorage.setItem("servicios", JSON.stringify(data.servicios));
 
 				dispatch({ type: SERVICIO_LIST_SUCCESS, payload: data });
 			} catch (error) {

@@ -18,31 +18,14 @@ function App() {
   const dispatch = useDispatch();
 
   const pacienteList = useSelector((state) => state.pacienteList);
-  const { pacientes } = pacienteList;
-
   const doctorList = useSelector((state) => state.doctorList);
-  const { doctores } = doctorList;
-
   const servicioAllList = useSelector((state) => state.servicioAllList);
-  const { servicios } = servicioAllList;
 
   useEffect(() => {
     dispatch(listPacientes({}));
     dispatch(listDoctores({}));
     dispatch(listAllServicios({}));
   }, [dispatch]);
-
-  useEffect(() => {
-    if (pacientes) {
-      localStorage.setItem("pacientes", JSON.stringify(pacientes));
-    }
-    if (doctores) {
-      localStorage.setItem("doctores", JSON.stringify(doctores));
-    }
-    if (servicios) {
-      localStorage.setItem("servicios", JSON.stringify(servicios));
-    }
-  }, [dispatch, doctores, pacientes, servicios]);
 
   const signoutHandler = () => {
     dispatch(signout());

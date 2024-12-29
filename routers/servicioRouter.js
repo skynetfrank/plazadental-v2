@@ -1,21 +1,12 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import Servicio from '../models/servicio.js';
-import { isAdmin, isAuth } from '../utils.js';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import Servicio from "../models/servicio.js";
+import { isAdmin, isAuth } from "../utils.js";
 
 const servicioRouter = express.Router();
 
 servicioRouter.get(
-  '/',
-  expressAsyncHandler(async (req, res) => {
-    const count = await Servicio.countDocuments({});
-    const servicios = await Servicio.find({})
-    res.send({ servicios, count });
-  })
-);
-
-servicioRouter.get(
-  '/allservices',
+  "/",
   expressAsyncHandler(async (req, res) => {
     const servicios = await Servicio.find({});
     res.send({ servicios });
@@ -23,19 +14,27 @@ servicioRouter.get(
 );
 
 servicioRouter.get(
-  '/:id',
+  "/allservices",
+  expressAsyncHandler(async (req, res) => {
+    const servicios = await Servicio.find({});
+    res.send({ servicios });
+  })
+);
+
+servicioRouter.get(
+  "/:id",
   expressAsyncHandler(async (req, res) => {
     const servicio = await Servicio.findById(req.params.id);
     if (servicio) {
       res.send(servicio);
     } else {
-      res.status(404).send({ message: 'Servicio No encontrado' });
+      res.status(404).send({ message: "Servicio No encontrado" });
     }
   })
 );
 
 servicioRouter.post(
-  '/create',
+  "/create",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -63,7 +62,7 @@ servicioRouter.post(
 );
 
 servicioRouter.put(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -77,15 +76,15 @@ servicioRouter.put(
       servicio.preciobs = req.body.preciobs;
       servicio.preciousd = req.body.preciousd;
       const updatedService = await servicio.save();
-      res.send({ message: 'Servicio Actualizado', servicio: updatedService });
+      res.send({ message: "Servicio Actualizado", servicio: updatedService });
     } else {
-      res.status(404).send({ message: 'Servicio no Encontrado' });
+      res.status(404).send({ message: "Servicio no Encontrado" });
     }
   })
 );
 
 servicioRouter.put(
-  '/searcher/:id',
+  "/searcher/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -95,24 +94,24 @@ servicioRouter.put(
     if (servicio) {
       servicio.reposicion = Number(7);
       const updatedService = await servicio.save();
-      res.send({ message: 'Servicio Actualizado', servicio: updatedService });
+      res.send({ message: "Servicio Actualizado", servicio: updatedService });
     } else {
-      res.status(404).send({ message: 'Servicio no Encontrado' });
+      res.status(404).send({ message: "Servicio no Encontrado" });
     }
   })
 );
 
 servicioRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const servicio = await Servicio.findById(req.params.id);
     if (servicio) {
       const deleteService = await servicio.remove();
-      res.send({ message: 'Servicio Eliminado', servicio: deleteService });
+      res.send({ message: "Servicio Eliminado", servicio: deleteService });
     } else {
-      res.status(404).send({ message: 'Servicio No Encontrado' });
+      res.status(404).send({ message: "Servicio No Encontrado" });
     }
   })
 );
