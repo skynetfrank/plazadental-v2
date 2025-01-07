@@ -200,7 +200,7 @@ controlRouter.get(
   "/groupedbyday",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const dia = Number(1);
+    const dia = Number(31);
     const mes = Number(12);
     const ano = Number(2024);
     const dailyControles = await Control.aggregate([
@@ -221,13 +221,7 @@ controlRouter.get(
           fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
         },
       },
-      {
-        $match: {
-          day: { $gte: dia },
-          month: { $gte: mes },
-          year: { $gte: ano },
-        },
-      },
+
       {
         $group: {
           _id: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
@@ -753,7 +747,7 @@ controlRouter.put(
       control.tasaComisionPlaza = req.body.tasaComisionPlaza;
       control.montoComisionDr = req.body.montoComisionDr;
       control.montoComisionPlaza = req.body.montoComisionPlaza;
-      control.pagoInfo = req.body.pagoInfo;
+      control.pago = req.body.pago;
       const updatedControl = await control.save();
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {
