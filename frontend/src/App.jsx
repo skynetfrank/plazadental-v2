@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import SplashSvg from "./components/SplashSvg";
 import { listPacientes } from "./actions/pacienteActions";
 import { listDoctores } from "./actions/doctorActions";
-import { listAllServicios } from "./actions/servicioActions";
+import { listAllServicios, listServicios } from "./actions/servicioActions";
 
 function App() {
   const [hoy] = useState(new Date());
@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     dispatch(listPacientes({}));
     dispatch(listDoctores({}));
-    dispatch(listAllServicios({}));
+    dispatch(listServicios({}));
   }, [dispatch]);
 
   const signoutHandler = () => {
