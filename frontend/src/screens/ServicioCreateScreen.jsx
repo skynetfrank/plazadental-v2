@@ -69,7 +69,7 @@ export default function ServicioCreateScreen(props) {
       return;
     }
 
-    dispatch(createServicio(codigo, nombre, area, descripcion, preciobs, preciousd, cambio));
+    dispatch(createServicio({ codigo, nombre, area, descripcion, preciobs, preciousd, cambio }));
   };
 
   useEffect(() => {

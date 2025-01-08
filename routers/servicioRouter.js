@@ -38,14 +38,21 @@ servicioRouter.post(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
+    console.log("req.body", req.body)
     const servicio = new Servicio({
-      codigo: req.body.codigo,
-      nombre: req.body.nombre,
-      area: req.body.area,
-      descripcion: req.body.descripcion,
-      preciobs: req.body.preciobs,
-      preciousd: req.body.preciousd,
-      cambio: req.body.cambio,
+      codigo: req.body.servicio.codigo,
+      nombre: req.body.servicio.nombre,
+      area: req.body.servicio.area,
+      descripcion: req.body.servicio.descripcion,
+      preciobs: req.body.servicio.preciobs,
+      preciousd: req.body.servicio.preciousd,
+      cambio: req.body.servicio.cambio,
+      searchstring: req.body.servicio.codigo.concat(
+        " ",
+        req.body.servicio.nombre,
+        " ",
+        req.body.servicio.area,
+      ),
     });
     const createdService = await servicio.save();
     res.send({

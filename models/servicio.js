@@ -9,12 +9,7 @@ const servicioSchema = new mongoose.Schema(
     preciobs: { type: Number, default: 0 },
     preciousd: { type: Number, default: 0 },
     cambio: { type: Number, default: 0 },
-    searchstring: {
-      type: String,
-      default: function () {
-        return this.codigo.concat(" ", this.nombre);
-      },
-    },
+    searchstring: { type: String },
   },
   {
     timestamps: true,

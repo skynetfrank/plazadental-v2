@@ -116,7 +116,7 @@ export default function CuadreDiarioScreen() {
           );
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoLab"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -130,7 +130,7 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("descuento"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },

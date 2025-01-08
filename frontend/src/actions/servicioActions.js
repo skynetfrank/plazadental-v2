@@ -58,8 +58,10 @@ export const detailsServicio = (servicioId) => async (dispatch) => {
 };
 
 export const createServicio =
-	servicio =>
+	(servicio) =>
+
 		async (dispatch, getState) => {
+			console.log("SERVICIOS", servicio)
 			dispatch({ type: SERVICIO_CREATE_REQUEST });
 			const {
 				userSignin: { userInfo },
