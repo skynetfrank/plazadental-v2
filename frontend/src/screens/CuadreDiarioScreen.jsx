@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { cuadreDia } from "../actions/controlActions";
 import CuadreDiarioTable from "../components/CuadreDiarioTable";
 import PrintIcon from "../icons/PrintIcon";
@@ -30,6 +30,21 @@ export default function CuadreDiarioScreen() {
 
   const columns = useMemo(
     () => [
+      {
+        header: "# Ver",
+        id: "id",
+        cell: (info) => {
+          return (
+            <Link to={`/detalle-control/${info.row.original._id}`}>
+              <span className="azul-brand negrita subrayado font-1">{info.row.index + 1}</span>{" "}
+            </Link>
+          );
+        },
+
+        footer: (valuefooter) => {
+          console.log("valuefooter", valuefooter.table.getFilteredRowModel().rows);
+        },
+      },
       {
         header: "Paciente",
         accessorKey: "paciente_data",
@@ -229,16 +244,16 @@ export default function CuadreDiarioScreen() {
           return (
             <div className="flx column pad-0">
               <span className="minw-100 alinear-l">
-                {"Bs" + Number(obj1.montopunto).toFixed(2) + " " + obj1.bancodestinopunto}
+                {"Bs" + Number(obj1.montopunto).toFixed(2) + " : " + obj1.bancodestinopunto}
               </span>
               {obj1.montopunto2 ? (
-                <span>{"Bs" + Number(obj1.montopunto2).toFixed(2) + " " + obj1.bancodestinopunto2}</span>
+                <span>{"Bs" + Number(obj1.montopunto2).toFixed(2) + " : " + obj1.bancodestinopunto2}</span>
               ) : (
                 ""
               )}
 
               {obj1.montopunto3 ? (
-                <span>{"Bs" + Number(obj1.montopunto3).toFixed(2) + " " + obj1.bancodestinopunto3}</span>
+                <span>{"Bs" + Number(obj1.montopunto3).toFixed(2) + " : " + obj1.bancodestinopunto3}</span>
               ) : (
                 ""
               )}
@@ -328,7 +343,7 @@ export default function CuadreDiarioScreen() {
         <button className="btn-icon-container m-0" onClick={imprimir}>
           <PrintIcon />
         </button>
-        <h3>REPORTE VENTAS DEL {parseFecha(fechaId)}</h3>
+        <h3>REPORTE DE CONTROLES DEL {parseFecha(fechaId)}</h3>
       </div>
 
       <div>{loading ? <span>Cargando Datos...</span> : <CuadreDiarioTable columns={columns} data={controles} />}</div>

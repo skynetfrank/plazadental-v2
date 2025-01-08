@@ -380,13 +380,13 @@ controlRouter.get(
     const puntoPlz2 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto2",
         },
       },
@@ -413,13 +413,13 @@ controlRouter.get(
     const puntoPlz3 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto3",
         },
       },
@@ -446,13 +446,13 @@ controlRouter.get(
     const puntoVzl = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto",
         },
       },
@@ -479,13 +479,13 @@ controlRouter.get(
     const puntoVzl2 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto2",
         },
       },
@@ -512,13 +512,13 @@ controlRouter.get(
     const puntoVzl3 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto3",
         },
       },
@@ -545,13 +545,13 @@ controlRouter.get(
     const puntobanes = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto",
         },
       },
@@ -578,13 +578,13 @@ controlRouter.get(
     const puntobanes2 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto2",
         },
       },
@@ -611,13 +611,13 @@ controlRouter.get(
     const puntobanes3 = await Control.aggregate([
       {
         $project: {
-          fecha: 1,
+          fechaControl: 1,
           pago: 1,
           createdAt: 1,
-          day: { $dayOfMonth: "$fecha" },
-          month: { $month: "$fecha" },
-          year: { $year: "$fecha" },
-          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
           banco: "$pago.punto.bancodestinopunto3",
         },
       },
@@ -644,7 +644,9 @@ controlRouter.get(
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
-
+    console.log("punto plaza:", puntoPlaza)
+    console.log("punto banesco:", puntoBanesco)
+    console.log("punto plaza:", puntoVenezuela)
     res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
   })
 );

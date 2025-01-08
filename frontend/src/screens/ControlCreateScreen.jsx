@@ -352,7 +352,7 @@ export default function ControlCreateScreen(props) {
   const getDescuento = async () => {
     const { value: discount } = await Swal.fire({
       title: "Descuento",
-      input: "number",
+      input: "text",
       inputLabel: "Descuento",
       inputPlaceholder: "Ingrese un monto",
     });
@@ -417,7 +417,7 @@ export default function ControlCreateScreen(props) {
     setNombreDoctor(listaDoctores[Number(idDoctor)].nombre + " " + listaDoctores[Number(idDoctor)].apellido);
   };
 
-  console.log("pago", pago,txtformapago);
+  console.log("pago", pago, txtformapago);
   return (
     <div>
       <div className="flx column jcenter">
@@ -510,7 +510,7 @@ export default function ControlCreateScreen(props) {
                   className="btn-pago font-x pad-0 m-0 negrita centrado"
                   onClick={() => setShowPaymentModal(true)}
                 >
-                 {txtformapago?txtformapago:"Registrar Pago"}
+                  {txtformapago ? txtformapago : "Registrar Pago"}
                 </button>
               </div>
             </div>

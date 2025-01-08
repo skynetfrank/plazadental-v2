@@ -1024,17 +1024,24 @@ img.tiny-image {
   font-size: 1rem;
 }
 
+
 #tabla-cuadre tr td:nth-child(1) {
-  min-width: 100px;
+  min-width: 20px;
   text-align: center;
 }
+
 
 #tabla-cuadre tr td:nth-child(2) {
   min-width: 100px;
   text-align: center;
 }
 
-#tabla-cuadre tr td:nth-child(n + 3) {
+#tabla-cuadre tr td:nth-child(3) {
+  min-width: 100px;
+  text-align: center;
+}
+
+#tabla-cuadre tr td:nth-child(n + 4) {
   text-align: left;
   padding-right: 5px;
 }
@@ -2456,6 +2463,10 @@ span.span-admin-consolidado {
   position: absolute;
   top: 2px;
   color: rgb(239, 239, 239);
+}
+
+.slide-content.detail {
+  width: 400px;
 }
 
 @media (max-width: 575px) {

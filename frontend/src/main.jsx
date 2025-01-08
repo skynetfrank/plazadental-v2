@@ -32,6 +32,7 @@ import GastoPrintScreen from "./screens/GastoPrintScreen";
 import GroupingControles from "./reportes/GroupingControles";
 import ServicioEditScreen from "./screens/ServicioEditScreen";
 import ControlEditScreen from "./screens/ControlEditScreen";
+import DetailControlScreen from "./screens/DetailControlScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -64,6 +65,7 @@ const router = createBrowserRouter(
         <Route path="/printgasto/:id" element={<GastoPrintScreen />}></Route>
         <Route path="/analiticsventas" element={<GroupingControles />}></Route>
         <Route path="/control/:id/edit" element={<ControlEditScreen />}></Route>
+        <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
       </Route>
     </Route>
   )

@@ -96,7 +96,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>v26DIC2024-alphax</span>
+            <span>v08ENERO2024</span>
           </footer>
         </div>
       )}
