@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Control from "../models/control.js";
+import Paciente from "../models/paciente.js";
 import { isAdmin, isAuth } from "../utils.js";
 
 import mongoose from "mongoose";
@@ -688,34 +689,24 @@ controlRouter.post(
     });
 
     const createdcontrol = await control.save();
+    if (createdcontrol) {
+      const objControl = { control: createdcontrol._id };
+      let updatedPaciente = await Paciente.findByIdAndUpdate(
+        createdcontrol.paciente,
+        { $addToSet: { controles: objControl } },
+        { new: true }
+      );
+      res.send({
+        _id: createdcontrol._id,
+        paciente: createdcontrol.paciente,
+        doctor: createdcontrol.doctor,
+        user: createdcontrol.user,
+        fechaControl: createdcontrol.fechaControl,
+        updatedPaciente: updatedPaciente.controles
+      });
+    }
 
-    res.send({
-      _id: createdcontrol._id,
-      paciente: createdcontrol.pacienteId,
-      doctor: createdcontrol.doctorId,
-      user: createdcontrol.user,
-      fechaControl: createdcontrol.fechaControl,
-      esCita1: createdcontrol.esCita1,
-      evaluacion: createdcontrol.evaluacion,
-      tratamiento: createdcontrol.tratamiento,
-      recipe: createdcontrol.recipe,
-      indicaciones: createdcontrol.indicaciones,
-      serviciosItems: createdcontrol.serviciosItems,
-      materiales: createdcontrol.materiales,
-      cambioBcv: createdcontrol.cambioBcv,
-      montoUsd: createdcontrol.montoUsd,
-      montoBs: createdcontrol.montoBs,
-      tasaIva: createdcontrol.tasaIva,
-      montoIva: createdcontrol.montoIva,
-      tasaComisionDr: createdcontrol.tasaComisionDr,
-      tasaComisionPlaza: createdcontrol.montoComisionPlaza,
-      montoComisionDr: createdcontrol.montoComisionDr,
-      montoComisionPlaza: createdcontrol.montoComisionPlaza,
-      pagoInfo: createdcontrol.pagoInfo,
-      factura: createdcontrol.factura,
-      facturaControl: createdcontrol.facturacontrol,
-      fechaFactura: createdcontrol.fechaFactura,
-    });
+
   })
 );
 

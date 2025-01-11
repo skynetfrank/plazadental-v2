@@ -954,6 +954,7 @@ h3 {
 
 .tooltip-children {
   position: relative;
+
 }
 
 .tooltip {
@@ -2467,6 +2468,18 @@ span.span-admin-consolidado {
 
 .slide-content.detail {
   width: 400px;
+}
+
+.link-to-paciente {
+  color: blue;
+  font-size: 1.6rem;
+  text-decoration: underline;
+  margin-right: 1rem;
+}
+
+.link-to-paciente:hover {
+  background: transparent;
+
 }
 
 @media (max-width: 575px) {

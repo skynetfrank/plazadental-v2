@@ -68,69 +68,69 @@ export const createPaciente =
     idOdontoImgName,
     controles
   ) =>
-  async (dispatch, getState) => {
-    dispatch({ type: PACIENTE_CREATE_REQUEST });
-    const {
-      userSignin: { userInfo },
-    } = getState();
-    try {
-      const { data } = await Axios.post(
-        "/api/pacientes/create",
-        {
-          nombre,
-          apellido,
-          cedula,
-          nombrerepresentante,
-          apellidorepresentante,
-          cedularepresentante,
-          genero,
-          estadoCivil,
-          Nacimiento,
-          edad,
-          peso,
-          estatura,
-          direccion,
-          celular,
-          telefono,
-          email,
-          contacto,
-          alergias,
-          otrasAlergias,
-          isAlergicoOtros,
-          antecedentesPersonales,
-          antecedentesFamiliares,
-          isTratadoPorMedico,
-          tratadoPorEnfermedad,
-          isOtraEnfermedad,
-          otraEnfermedad,
-          isTomaMedicamentos,
-          medicamentos,
-          dosismeds,
-          isHabitos,
-          habitos,
-          motivoEstaConsulta,
-          motivoUltimaConsulta,
-          fechaUltimaconsulta,
-          isComplicaciones,
-          complicaciones,
-          odontogramaUrl,
-          idOdontoImgName,
-          controles,
-        },
-        {
-          headers: { Authorization: `Bearer ${userInfo.token}` },
-        }
-      );
+    async (dispatch, getState) => {
+      dispatch({ type: PACIENTE_CREATE_REQUEST });
+      const {
+        userSignin: { userInfo },
+      } = getState();
+      try {
+        const { data } = await Axios.post(
+          "/api/pacientes/create",
+          {
+            nombre,
+            apellido,
+            cedula,
+            nombrerepresentante,
+            apellidorepresentante,
+            cedularepresentante,
+            genero,
+            estadoCivil,
+            Nacimiento,
+            edad,
+            peso,
+            estatura,
+            direccion,
+            celular,
+            telefono,
+            email,
+            contacto,
+            alergias,
+            otrasAlergias,
+            isAlergicoOtros,
+            antecedentesPersonales,
+            antecedentesFamiliares,
+            isTratadoPorMedico,
+            tratadoPorEnfermedad,
+            isOtraEnfermedad,
+            otraEnfermedad,
+            isTomaMedicamentos,
+            medicamentos,
+            dosismeds,
+            isHabitos,
+            habitos,
+            motivoEstaConsulta,
+            motivoUltimaConsulta,
+            fechaUltimaconsulta,
+            isComplicaciones,
+            complicaciones,
+            odontogramaUrl,
+            idOdontoImgName,
+            controles,
+          },
+          {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+          }
+        );
 
-      dispatch({
-        type: PACIENTE_CREATE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-      dispatch({ type: PACIENTE_CREATE_FAIL, payload: message });
-    }
-  };
+        dispatch({
+          type: PACIENTE_CREATE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+        dispatch({ type: PACIENTE_CREATE_FAIL, payload: message });
+      }
+    };
 
 export const listPacientes = () => async (dispatch) => {
   dispatch({

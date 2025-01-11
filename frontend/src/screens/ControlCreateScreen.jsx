@@ -110,7 +110,7 @@ export default function ControlCreateScreen(props) {
         imageHeight: 30,
         imageAlt: "logo",
       });
-      dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
+      //dispatch(addControlPaciente(pacienteId, { controlID: control._id }));
       dispatch({ type: CONTROL_CREATE_RESET });
       dispatch(detailsPaciente(pacienteId));
       setDoctorId("");

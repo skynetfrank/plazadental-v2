@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { deleteControlPaciente, detailsPaciente } from "../actions/pacienteActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -10,6 +10,7 @@ import { faFileInvoiceDollar, faMedkit, faPen, faTrash } from "@fortawesome/free
 import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import { detailsControl } from "../actions/controlActions";
+import EditIcon from "../icons/EditIcon";
 
 
 export default function DetailControlScreen(props) {
@@ -41,9 +42,14 @@ export default function DetailControlScreen(props) {
           <div className="flx column jcenter">
             <div className="flx column jsb pad-0 control-header">
               <span className="font-20">Control del {dayjs(new Date(control.fechaControl)).format("DD/MM/YYYY")}</span>
-              <p className="pad-0 font-20">
-                Paciente: <strong>{control.paciente.nombre + " " + control.paciente.apellido}</strong>
-              </p>
+              <div className="flx">
+                <p className="mr font-14">   Paciente: <strong>{control.paciente.nombre + " " + control.paciente.apellido}</strong></p>
+                <Link to={`/paciente/${control.paciente._id}/edit`} className="link-to-paciente">
+                  <EditIcon />
+                </Link>
+              </div>
+
+            
             </div>
             <div className="flx jcenter gap-10 pad-0">
               <div className="controles-doctor-container">
