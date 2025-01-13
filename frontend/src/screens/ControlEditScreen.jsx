@@ -141,6 +141,9 @@ export default function ControlEditScreen(props) {
   useEffect(() => {
     const doctorFound = listaDoctores.find((x) => x._id === doctorId);
     if (doctorFound) {
+      setNombreDoctor(
+        doctorFound?.nombre + " " + doctorFound?.apellido
+      );
       setTasaComisionDr(doctorFound.tasaComisionDoctor);
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }

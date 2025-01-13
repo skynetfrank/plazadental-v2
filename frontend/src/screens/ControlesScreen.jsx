@@ -44,6 +44,7 @@ export default function ControlesScreen(props) {
 
       setControles(sortedDesc);
     }
+
   }, [dispatch, pacienteId, paciente]);
 
   const deleteHandler = (control) => {
@@ -84,6 +85,7 @@ export default function ControlesScreen(props) {
     navigate(`/crearcontrol/${paciente._id}?escita1=${"no"}`);
   };
   console.log("controles", controles)
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
