@@ -645,9 +645,9 @@ controlRouter.get(
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
-    console.log("punto plaza:", puntoPlaza)
-    console.log("punto banesco:", puntoBanesco)
-    console.log("punto plaza:", puntoVenezuela)
+    console.log("punto plaza:", puntoPlaza);
+    console.log("punto banesco:", puntoBanesco);
+    console.log("punto plaza:", puntoVenezuela);
     res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
   })
 );
@@ -702,11 +702,9 @@ controlRouter.post(
         doctor: createdcontrol.doctor,
         user: createdcontrol.user,
         fechaControl: createdcontrol.fechaControl,
-        updatedPaciente: updatedPaciente.controles
+        updatedPaciente: updatedPaciente.controles,
       });
     }
-
-
   })
 );
 
@@ -745,6 +743,25 @@ controlRouter.put(
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {
       res.status(404).send({ message: "Control no Encontrado" });
+    }
+  })
+);
+
+controlRouter.put(
+  "/:id/abono",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const control = await Control.findById(req.params.id);
+    if (control) {
+      control.isPaid = true;
+      order.abonos = {
+        fecha: req.body.fecha,
+        monto: req.body.monto,
+      };
+      const updatedControl = await order.save();
+      res.send({ message: "Abono Registrado", control: updatedControl });
+    } else {
+      res.status(404).send({ message: "Control Not Found" });
     }
   })
 );

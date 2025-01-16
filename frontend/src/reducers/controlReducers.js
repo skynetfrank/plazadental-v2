@@ -29,6 +29,10 @@ import {
   CONTROL_CONSOLIDADO_REQUEST,
   CONTROL_CONSOLIDADO_SUCCESS,
   CONTROL_CONSOLIDADO_FAIL,
+  CONTROL_ABONO_REQUEST,
+  CONTROL_ABONO_SUCCESS,
+  CONTROL_ABONO_FAIL,
+  CONTROL_ABONO_RESET,
 } from "../constants/controlConstants";
 
 export const controlCreateReducer = (state = {}, action) => {
@@ -107,7 +111,6 @@ export const controlesByPacienteReducer = (state = { loading: true, controles: [
   }
 };
 
-
 export const orderGroupByDayReducer = (state = { loading: true, dailyControles: {} }, action) => {
   switch (action.type) {
     case GROUPBYDAY_REQUEST:
@@ -151,11 +154,7 @@ export const cuadreDiaReducer = (
   }
 };
 
-
-export const ventasControlsReducer = (
-  state = { ventas: [] },
-  action
-) => {
+export const ventasControlsReducer = (state = { ventas: [] }, action) => {
   switch (action.type) {
     case CONTROL_CONSOLIDADO_REQUEST:
       return { loading: true };
@@ -171,4 +170,17 @@ export const ventasControlsReducer = (
   }
 };
 
-
+export const controlAbonoReducer = (state = {}, action) => {
+  switch (action.type) {
+    case CONTROL_ABONO_REQUEST:
+      return { loading: true };
+    case CONTROL_ABONO_SUCCESS:
+      return { loading: false, success: true };
+    case CONTROL_ABONO_FAIL:
+      return { loading: false, error: action.payload };
+    case CONTROL_ABONO_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

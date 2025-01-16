@@ -1,6 +1,7 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import { thunk } from "redux-thunk";
 import {
+  controlAbonoReducer,
   controlCreateReducer,
   controlDeleteReducer,
   controlDetailsReducer,
@@ -59,7 +60,13 @@ import {
   userUpdateProfileReducer,
   userUpdateReducer,
 } from "./reducers/userReducers";
-import { gastoCreateReducer, gastoDeleteReducer, gastoDetailsReducer, gastoListReducer, gastoUpdateReducer } from "./reducers/gastoReducers";
+import {
+  gastoCreateReducer,
+  gastoDeleteReducer,
+  gastoDetailsReducer,
+  gastoListReducer,
+  gastoUpdateReducer,
+} from "./reducers/gastoReducers";
 
 const initialState = {
   userSignin: {
@@ -90,6 +97,7 @@ const reducer = combineReducers({
   controlUpdate: controlUpdateReducer,
   controlDelete: controlDeleteReducer,
   controlesPorPaciente: controlesByPacienteReducer,
+  controlAbono: controlAbonoReducer,
   ventasControlsReport: ventasControlsReducer,
   cuadreDia: cuadreDiaReducer,
   orderGroupDay: orderGroupByDayReducer,
