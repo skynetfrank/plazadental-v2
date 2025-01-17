@@ -9,6 +9,7 @@ import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
 import ControlIcon from "../icons/ControlIcon";
 import TrashIcon from "../icons/TrashIcon";
+import Loader from "../components/Loader";
 
 function ListaPacientes() {
   const navigate = useNavigate("");
@@ -86,7 +87,7 @@ function ListaPacientes() {
       </div>
 
       {loading ? (
-        <span>Cargando Datos....</span>
+        <Loader txt={"Obteniendo Pacientes"} />
       ) : (
         <>
           <div>

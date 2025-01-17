@@ -6,7 +6,6 @@
   padding: 0;
   outline: none;
   text-decoration: none;
-  list-style: none;
 }
 
 html {
@@ -90,6 +89,12 @@ footer {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: #203040;
 }
 
 button,
@@ -210,6 +215,10 @@ select {
 
 .flx.rgap1 {
   row-gap: 10px;
+}
+
+.flx.rgap2 {
+  row-gap: 20px;
 }
 
 .flx.gap {
@@ -779,12 +788,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -804,11 +813,6 @@ summary.summary-pago {
   border-radius: 5px;
   background-color: rgb(239, 239, 239);
   text-align: center;
-}
-
-summary {
-  margin: 0.5rem;
-  cursor: pointer;
 }
 
 .pago-resumen summary {
@@ -954,7 +958,6 @@ h3 {
 
 .tooltip-children {
   position: relative;
-
 }
 
 .tooltip {
@@ -1025,12 +1028,10 @@ img.tiny-image {
   font-size: 1rem;
 }
 
-
 #tabla-cuadre tr td:nth-child(1) {
   min-width: 20px;
   text-align: center;
 }
-
 
 #tabla-cuadre tr td:nth-child(2) {
   min-width: 100px;
@@ -1300,7 +1301,7 @@ button.td-group-btn {
 }
 
 .control-textarea-container textarea {
-  min-width: 300px;
+  width: 300px;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -1308,7 +1309,7 @@ button.td-group-btn {
 .control-textarea-container select.select-btn {
   width: 20px;
   border-radius: 3px;
-  top: 19px;
+  top: 0;
   right: 0;
 }
 
@@ -1534,6 +1535,10 @@ h4 {
 
 /*delivery style for facturacion modal */
 
+.input-select{
+  overflow-y: scroll;
+}
+
 .modal-container {
   display: flex;
   justify-content: center;
@@ -1553,6 +1558,14 @@ h4 {
   padding: 1rem 1rem 0 1rem;
   border-radius: 10px;
   margin-top: 10px;
+  position: relative;
+}
+
+.modal-content.lab {
+  min-height: 100px;
+  height: fit-content;
+  margin-top: 100px;
+  padding: 1rem;
 }
 
 .modal-content.servicios {
@@ -1605,7 +1618,7 @@ h4 {
   background: #203040;
   color: white;
   padding: 5px;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 .action-map {
@@ -1801,8 +1814,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus~label,
-input:not(:placeholder-shown)~label {
+.input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1914,12 +1927,12 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe>h1 {
+.titulo-recipe > h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe>h2 {
+.titulo-recipe > h2 {
   width: 100%;
   text-align: center;
 }
@@ -2439,14 +2452,12 @@ span.span-admin-consolidado {
 
 .nombre-doctor {
   font-size: 1rem;
-  margin-left: 10px;
   font-weight: bold;
-  background-color: rgb(238, 238, 238);
-  padding: 0 5px;
   border-radius: 3px;
   color: rgb(2, 2, 185);
+  position: relative;
+  top: -1px;
 }
-
 
 .controles-doctor-container {
   font-size: 1rem;
@@ -2479,7 +2490,58 @@ span.span-admin-consolidado {
 
 .link-to-paciente:hover {
   background: transparent;
+}
 
+#form-new-control {
+  margin-top: 2rem;
+}
+
+/*details styled */
+
+summary {
+  padding-inline: 2rem;
+  position: relative;
+  font-weight: 700;
+  cursor: pointer;
+}
+.details {
+  min-width: 360px;
+}
+
+.details::details-content {
+  display: block;
+  margin-inline: 2rem;
+  block-size: 0;
+  overflow: hidden;
+  transition-property: block-size, content-visibility;
+  transition-duration: 0.5s;
+  transition-behavior: allow-discrete;
+}
+
+.details[open]::details-content {
+  /* Fallback for browsers that don't support calc-size() function */
+  block-size: auto;
+
+  /* calc-size() function allows transition to height: auto; */
+  block-size: calc-size(auto, size);
+}
+
+.badget {
+  font-size: 1.2rem;
+  border: 1px solid grey;
+  padding: 3px 5px;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+  margin: 5px;
+}
+
+.servicios-container {
+  min-width: 340px;
+}
+
+.close-modal-btn {
+  right: 5px;
 }
 
 @media (max-width: 575px) {
@@ -2522,10 +2584,6 @@ span.span-admin-consolidado {
     font-size: 8px;
     margin-left: 3px;
     padding: 2px;
-  }
-
-  #form-new-control {
-    margin-top: 2rem;
   }
 
   #form-paciente {
