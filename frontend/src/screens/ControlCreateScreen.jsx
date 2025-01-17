@@ -339,7 +339,7 @@ export default function ControlCreateScreen(props) {
     setLaboratorio(listaLabs[Number(id)]);
     const { value: monto } = await Swal.fire({
       title: "Monto Laboratorio",
-      input: "number",
+      input: "text",
       inputPlaceholder: "Ingrese un monto",
     });
     if (monto) {

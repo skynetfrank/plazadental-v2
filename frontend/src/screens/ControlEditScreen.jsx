@@ -337,7 +337,7 @@ export default function ControlEditScreen(props) {
     setLaboratorio(listaLabs[Number(id)]);
     const { value: monto } = await Swal.fire({
       title: "Monto Laboratorio",
-      input: "number",
+      input: "text",
       inputLabel: "MontoDescuento",
       inputPlaceholder: "Ingrese un monto",
     });
@@ -353,7 +353,7 @@ export default function ControlEditScreen(props) {
   const getDescuento = async () => {
     const { value: discount } = await Swal.fire({
       title: "Descuento",
-      input: "number",
+      input: "text",
       inputLabel: "Descuento",
       inputPlaceholder: "Ingrese un monto",
     });
