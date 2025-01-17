@@ -38,7 +38,6 @@ pacienteRouter.get(
 pacienteRouter.post(
   "/create",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const paciente = new Paciente({
       nombre: req.body.nombre,
@@ -129,7 +128,6 @@ pacienteRouter.post(
 pacienteRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const pacienteId = req.params.id;
     const paciente = await Paciente.findById(pacienteId);
@@ -237,7 +235,6 @@ pacienteRouter.delete(
 pacienteRouter.put(
   "/addcontrol/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const pacienteId = req.params.id;
     const controlId = req.body.controlID;
@@ -277,7 +274,6 @@ pacienteRouter.put(
 pacienteRouter.put(
   "/deletecontrol/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const pacienteId = req.params.id;
     const controlId = req.body.controlID;

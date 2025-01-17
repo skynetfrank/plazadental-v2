@@ -575,7 +575,7 @@ export default function ControlCreateScreen(props) {
             </details>
 
             <details className="details" name="detail-control">
-              <summary>Recipe</summary>
+              <summary>Recipe Medico</summary>
               <div className="details__content">
                 <div className="control-textarea-container">
                   <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>

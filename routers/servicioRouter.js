@@ -36,7 +36,6 @@ servicioRouter.get(
 servicioRouter.post(
   "/create",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     console.log("req.body", req.body)
     const servicio = new Servicio({
@@ -71,7 +70,6 @@ servicioRouter.post(
 servicioRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const servicioId = req.params.id;
     const servicio = await Servicio.findById(servicioId);
@@ -93,7 +91,6 @@ servicioRouter.put(
 servicioRouter.put(
   "/searcher/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const servicioId = req.params.id;
     const servicio = await Servicio.findById(servicioId);
@@ -111,7 +108,6 @@ servicioRouter.put(
 servicioRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const servicio = await Servicio.findById(req.params.id);
     if (servicio) {

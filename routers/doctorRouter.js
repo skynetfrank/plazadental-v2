@@ -28,7 +28,6 @@ doctorRouter.get(
 doctorRouter.post(
   "/create",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const doctor = new Doctor({
       nombre: req.body.doctor.nombre,
@@ -74,7 +73,6 @@ doctorRouter.post(
 doctorRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const doctorId = req.params.id;
     const doctor = await Doctor.findById(doctorId);
@@ -106,7 +104,6 @@ doctorRouter.put(
 doctorRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const doctor = await Doctor.findById(req.params.id);
     if (doctor) {

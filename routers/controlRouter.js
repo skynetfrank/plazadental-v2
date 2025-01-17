@@ -711,7 +711,6 @@ controlRouter.post(
 controlRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const controlId = req.params.id;
     const control = await Control.findById(controlId);
@@ -810,7 +809,6 @@ controlRouter.get(
 controlRouter.delete(
   "/:id",
   isAuth,
-  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const control = await Control.findById(req.params.id);
 

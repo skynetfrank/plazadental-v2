@@ -794,12 +794,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2 > span {
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -1820,8 +1820,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus ~ label,
-input:not(:placeholder-shown) ~ label {
+.input:focus~label,
+input:not(:placeholder-shown)~label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1933,12 +1933,12 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe > h1 {
+.titulo-recipe>h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe > h2 {
+.titulo-recipe>h2 {
   width: 100%;
   text-align: center;
 }
@@ -2505,11 +2505,12 @@ span.span-admin-consolidado {
 /*details styled */
 
 summary {
-  padding-inline: 2rem;
+  padding-inline: 0.5rem;
   position: relative;
   font-weight: 700;
   cursor: pointer;
 }
+
 .details {
   min-width: 360px;
 }
