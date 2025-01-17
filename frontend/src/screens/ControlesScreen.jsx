@@ -44,7 +44,6 @@ export default function ControlesScreen(props) {
 
       setControles(sortedDesc);
     }
-
   }, [dispatch, pacienteId, paciente]);
 
   const deleteHandler = (control) => {
@@ -84,7 +83,7 @@ export default function ControlesScreen(props) {
   const addControlHandler = () => {
     navigate(`/crearcontrol/${paciente._id}?escita1=${"no"}`);
   };
-  console.log("controles", controles)
+  console.log("controles", controles);
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -95,8 +94,8 @@ export default function ControlesScreen(props) {
       <div className="flx jcenter gap1 pad-0">
         <h2>Controles de Consulta</h2>
         <ToolTip text="Agregar Control">
-          <button className="circle-btn m-0" onClick={addControlHandler}>
-            <ControlAddIcon />
+          <button className="add-button" onClick={addControlHandler}>
+            Agregar Nuevo Control
           </button>
         </ToolTip>
       </div>
@@ -127,15 +126,16 @@ export default function ControlesScreen(props) {
                       <span>{dayjs(new Date(item.control.fechaControl)).format("DD/MM/YYYY")}</span>
 
                       <div className="flx">
-                        <p className="mr font-14">   Paciente: <strong>{paciente.nombre + " " + paciente.apellido}</strong></p>
+                        <p className="mr font-14">
+                          {" "}
+                          Paciente: <strong>{paciente.nombre + " " + paciente.apellido}</strong>
+                        </p>
                         <Link to={`/paciente/${paciente._id}/edit`} className="link-to-paciente">
                           <ToolTip text="Editar Paciente">
                             <EditIcon />
                           </ToolTip>
                         </Link>
                       </div>
-
-
                     </div>
                     <div className="flx jcenter gap-10 pad-0">
                       <div className="controles-doctor-container">
@@ -243,9 +243,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                              (item.control.pago.montopunto +
-                                item.control.pago.montopunto2 +
-                                item.control.pago.montopunto3)
+                                (item.control.pago.montopunto +
+                                  item.control.pago.montopunto2 +
+                                  item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>
@@ -264,11 +264,11 @@ export default function ControlesScreen(props) {
                             Comision Plaza&ensp;: $
                             {Number(item.control.montoComisionPlaza) > 1
                               ? Number(item.control.montoComisionPlaza).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
                               : Number(item.control.montoComisionPlaza).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -278,11 +278,11 @@ export default function ControlesScreen(props) {
                             Comision Doctor: $
                             {Number(item.control.montoComisionDr) > 1
                               ? Number(item.control.montoComisionDr).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                                " (" +
+                                (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
                               : Number(item.control.montoComisionDr).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                                " (" +
+                                (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -296,6 +296,6 @@ export default function ControlesScreen(props) {
           })}
         </Swiper>
       </>
-    </div >
+    </div>
   );
 }

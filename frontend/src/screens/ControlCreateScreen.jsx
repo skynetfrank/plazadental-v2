@@ -424,12 +424,21 @@ export default function ControlCreateScreen(props) {
     setConceptoLaboratorio(concepto);
   };
   console.log("concepto laboratorio", conceptoLaboratorio);
+
+  const eliminarDescuentoHandler = () => {
+    setDescuento(0);
+  };
+  const eliminarLabHandler = () => {
+    setMontoLab(0);
+    setConceptoLaboratorio("");
+    setLaboratorio("");
+  };
   return (
     <div>
       <div className="flx column jcenter">
-        <div>
-          <h3 className="centrado">{paciente?.nombre + " " + paciente?.apellido}</h3>
-          <span className="badget">Nuevo Control de Cita</span>
+        <div className="flx column">
+          <span className="badget mb-1">Nuevo Control de Cita</span>
+          <h3>{paciente?.nombre + " " + paciente?.apellido}</h3>
         </div>
         <input
           type="date"
@@ -488,7 +497,7 @@ export default function ControlCreateScreen(props) {
 
                   <FontAwesomeIcon
                     icon={faTrashAlt}
-                    onClick={(e) => handleEliminarServicio(e)}
+                    onClick={(e) => eliminarLabHandler(e)}
                     className="ml minw-20 txt-align-l"
                   />
                 </div>
@@ -503,7 +512,7 @@ export default function ControlCreateScreen(props) {
 
                   <FontAwesomeIcon
                     icon={faTrashAlt}
-                    onClick={(e) => handleEliminarServicio(e)}
+                    onClick={(e) => eliminarDescuentoHandler(e)}
                     className="ml minw-20 txt-align-l"
                   />
                 </div>

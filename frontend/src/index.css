@@ -736,6 +736,12 @@ button.circle-btn {
   padding: 0;
 }
 
+button.add-button {
+  background-color: blue;
+  color: whitesmoke;
+  min-width: 170px;
+}
+
 td button:hover,
 button.circle-btn:hover {
   background-color: white;
@@ -1535,7 +1541,7 @@ h4 {
 
 /*delivery style for facturacion modal */
 
-.input-select{
+.input-select {
   overflow-y: scroll;
 }
 
@@ -2542,6 +2548,11 @@ summary {
 
 .close-modal-btn {
   right: 5px;
+}
+
+.fa-trash-can {
+  pointer-events: all;
+  cursor: pointer;
 }
 
 @media (max-width: 575px) {
