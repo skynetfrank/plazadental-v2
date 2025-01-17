@@ -9,6 +9,8 @@ import SplashSvg from "./components/SplashSvg";
 import { listPacientes } from "./actions/pacienteActions";
 import { listDoctores } from "./actions/doctorActions";
 import { listAllServicios, listServicios } from "./actions/servicioActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock, faPowerOff, faSignOut, faUnlockAlt, faUnlockKeyhole, faUserLock } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   const [hoy] = useState(new Date());
@@ -70,23 +72,23 @@ function App() {
                 <span className="negrita font-1 header-date">Caracas, {hoy.toLocaleDateString()}</span>
               </div>
             </div>
-
-            <button className="btn-bcv" onClick={cambioHandler}>
+            {userInfo ? (<button className="btn-bcv" onClick={cambioHandler}>
               <span className="header-bcv pad-1">BCV: {Number(localStorage.getItem("cambioBcv")).toFixed(2)}</span>
-            </button>
+            </button>) : ("")}
+
 
             <div>
               {userInfo ? (
                 <div className="flx header-user pad-0 negrita">
                   {userInfo.nombre.substr(0, 12)}
                   <button className="btn-icon-container" onClick={signoutHandler}>
-                    <LockIcon />
+                    <FontAwesomeIcon icon={faPowerOff} />
                   </button>
                 </div>
               ) : (
                 <Link to="/signin">
                   <button className="btn-icon-container">
-                    <LockIcon />
+                    <FontAwesomeIcon icon={faLock} />
                   </button>
                 </Link>
               )}
@@ -96,7 +98,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span>v17ENERO2025</span>
+            <span className="negrita">v17ENERO2025</span>
           </footer>
         </div>
       )}

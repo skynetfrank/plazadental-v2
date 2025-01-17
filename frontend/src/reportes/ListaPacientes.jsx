@@ -51,7 +51,7 @@ function ListaPacientes() {
                 <InfoIcon />
               </button>
             </ToolTip>
-            <ToolTip text="Editar">
+            <ToolTip text="Editar Paciente">
               <button className="circle-btn" onClick={() => navigate(`/paciente/${_id}/edit`)}>
                 <EditIcon />
               </button>
@@ -61,7 +61,7 @@ function ListaPacientes() {
                 <ControlIcon />
               </button>
             </ToolTip>
-            <ToolTip text="Eliminar">
+            <ToolTip text="Eliminar Paciente">
               <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
                 <TrashIcon />
               </button>

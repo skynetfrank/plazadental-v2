@@ -44,8 +44,10 @@ body {
   width: fit-content;
 }
 
-.form.signin {
-  margin-top: ;
+.form.sesion {
+  width: 260px;
+  max-width: 260px;
+  min-width: 260px;
 }
 
 .form-control {
@@ -71,8 +73,9 @@ input::-webkit-inner-spin-button {
 
 header {
   grid-area: header;
-  color: #a5a5a5;
-  border-bottom: 1px solid rgb(218, 218, 218);
+  color: #747474;
+  border-bottom: 1px solid rgb(181, 181, 181);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
 main {
@@ -160,8 +163,10 @@ button:hover {
   border-color: blue;
 }
 
-.btn-icon-container:has(.lock-icon):hover {
+.btn-icon-container:has(.fa-power-off):hover,
+.btn-icon-container:has(.fa-lock):hover {
   background-color: transparent;
+  color: rgb(3, 3, 185);
 }
 
 .home-buttons button {
@@ -2560,6 +2565,12 @@ summary {
   .brand-container {
     display: none;
   }
+
+
+  .form.sesion {
+    margin-top: 100px;
+  }
+
 
   .swiper {
     width: 90vw;

@@ -180,7 +180,7 @@ export default function ControlesScreen(props) {
                           <FontAwesomeIcon className="small" icon={faMedkit} />
                         </button>
                       </ToolTip>
-                      <ToolTip text="Eliminar">
+                      <ToolTip text="Eliminar Control">
                         <button className="circle-btn" onClick={() => deleteHandler(item.control)}>
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
@@ -243,9 +243,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                                (item.control.pago.montopunto +
-                                  item.control.pago.montopunto2 +
-                                  item.control.pago.montopunto3)
+                              (item.control.pago.montopunto +
+                                item.control.pago.montopunto2 +
+                                item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>
@@ -264,11 +264,11 @@ export default function ControlesScreen(props) {
                             Comision Plaza&ensp;: $
                             {Number(item.control.montoComisionPlaza) > 1
                               ? Number(item.control.montoComisionPlaza).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                              " (" +
+                              (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
                               : Number(item.control.montoComisionPlaza).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                              " (" +
+                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -278,11 +278,11 @@ export default function ControlesScreen(props) {
                             Comision Doctor: $
                             {Number(item.control.montoComisionDr) > 1
                               ? Number(item.control.montoComisionDr).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                              " (" +
+                              (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
                               : Number(item.control.montoComisionDr).toFixed(2) +
-                                " (" +
-                                (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                              " (" +
+                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
