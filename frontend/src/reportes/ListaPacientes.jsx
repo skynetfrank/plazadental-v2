@@ -41,7 +41,7 @@ function ListaPacientes() {
         const { _id, controles } = value.row.original;
         return (
           <div className="flx pad-0">
-            <ToolTip text="Ver Info">
+            <ToolTip text="Ver Informacion del Paciente">
               <button
                 className="circle-btn"
                 onClick={() => {
@@ -56,7 +56,7 @@ function ListaPacientes() {
                 <EditIcon />
               </button>
             </ToolTip>
-            <ToolTip text={"Controles " + controles.length}>
+            <ToolTip text={"Ver Controles (" + controles.length + ")"}>
               <button className="circle-btn" onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
               </button>
