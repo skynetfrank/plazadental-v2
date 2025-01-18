@@ -6,6 +6,7 @@ import {
   controlDeleteReducer,
   controlDetailsReducer,
   controlesByPacienteReducer,
+  controlListReducer,
   controlUpdateReducer,
   cuadreDiaReducer,
   orderGroupByDayReducer,
@@ -91,7 +92,7 @@ const reducer = combineReducers({
   pacienteAll: pacienteAllReducer,
   pacienteAddControl: pacienteAddControlReducer,
   pacienteDeleteControl: pacienteDeleteControlReducer,
-
+  controlList: controlListReducer,
   controlCreate: controlCreateReducer,
   controlDetails: controlDetailsReducer,
   controlUpdate: controlUpdateReducer,

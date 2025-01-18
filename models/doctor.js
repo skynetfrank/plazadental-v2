@@ -17,6 +17,7 @@ const doctorSchema = new mongoose.Schema(
 		especialidad: { type: String },
 		tasaComisionDoctor: { type: Number, default: 0.6 },
 		fotoUrl: { type: String },
+		isActivo: { type: Boolean, default: true },
 		searchstring: {
 			type: String,
 			default: function () {
@@ -27,14 +28,6 @@ const doctorSchema = new mongoose.Schema(
 					this.cedula,
 					' ',
 					this.rif,
-					' ',
-					this.direccion,
-					' ',
-					this.celular,
-					' ',
-					this.telefono,
-					' ',
-					this.email,
 					' ',
 					this.direccion,
 					' ',

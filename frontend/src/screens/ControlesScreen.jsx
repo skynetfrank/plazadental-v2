@@ -223,10 +223,11 @@ export default function ControlesScreen(props) {
                               })}
                             </div>
                           </div>
-                          <span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>
-                          <span className="negrita">
+                          {Number(item.control?.montoLab) > 0 ? (<span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>) : ("")}
+                          {Number(item.control?.descuento) > 0 ? (<span className="negrita">
                             Descuento&ensp;: ${Number(item.control?.descuento).toFixed(2)}
-                          </span>
+                          </span>) : ("")}
+
                         </div>
                       </div>
 

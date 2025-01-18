@@ -8,6 +8,7 @@ import CalendarioIcon from "../icons/CalendarioIcon";
 import CardDollarIcon from "../icons/CardDollarIcon";
 import ToothPasteIcon from "../icons/ToothPasteIcon";
 import SpreadSheetIcon from "../icons/SpreadSheetIcon";
+import { Outpatient } from "../icons/Outpatient";
 
 function HomeScreen() {
   const userSignin = useSelector((state) => state.userSignin);
@@ -38,6 +39,17 @@ function HomeScreen() {
               <span>Servicios</span>
             </button>
           </Link>
+
+          {userInfo.isAdmin ? (
+            <Link to="/listacontroles">
+              <button>
+                <Outpatient />
+                <span>Controles</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
           {userInfo.isAdmin ? (
             <Link to="/listacuadres">
               <button>

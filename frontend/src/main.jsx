@@ -33,6 +33,7 @@ import GroupingControles from "./reportes/GroupingControles";
 import ServicioEditScreen from "./screens/ServicioEditScreen";
 import ControlEditScreen from "./screens/ControlEditScreen";
 import DetailControlScreen from "./screens/DetailControlScreen";
+import ListaControles from "./reportes/ListaControles";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
         <Route path="/crearservicio" element={<ServicioCreateScreen />}></Route>
         <Route path="/servicio/:id/edit" element={<ServicioEditScreen />}></Route>
         <Route path="/listapacientes" element={<ListaPacientes />}></Route>
+        <Route path="/listacontroles" element={<ListaControles />}></Route>
         <Route path="/listadoctores" element={<ListaDoctores />}></Route>
         <Route path="/listaservicios" element={<ListaServicios />}></Route>
         <Route path="/paciente/:id" element={<PacienteScreen />}></Route>

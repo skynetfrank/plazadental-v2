@@ -8,6 +8,20 @@ import mongoose from "mongoose";
 
 const controlRouter = express.Router();
 
+
+controlRouter.get(
+  "/",
+  expressAsyncHandler(async (req, res) => {
+    const controles = await Control.find({}, { fechaControl: 1, paciente: 1, montoUsd: 1 })
+      .populate({
+        path: "paciente",
+        select: "nombre apellido",
+      }).sort({ fechaControl: -1 })
+    res.send({ controles });
+  })
+);
+
+
 controlRouter.get(
   "/summary",
   isAuth,

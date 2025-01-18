@@ -184,3 +184,21 @@ export const controlAbonoReducer = (state = {}, action) => {
       return state;
   }
 };
+
+
+export const controlListReducer = (state = { loading: true, controles: [] }, action) => {
+  switch (action.type) {
+    case CONTROL_LIST_REQUEST:
+      return { loading: true };
+    case CONTROL_LIST_SUCCESS:
+      return {
+        loading: false,
+        controles: action.payload.controles,
+      };
+    case CONTROL_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
