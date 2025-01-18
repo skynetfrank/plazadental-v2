@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
 import { listaLabs, tipoLab } from "../constants/listas";
 import Loader from "../components/Loader";
+import LabConceptSelector from "../components/LabConceptSelector";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -57,6 +58,7 @@ export default function ControlEditScreen(props) {
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const [nombreDoctor, setNombreDoctor] = useState("");
+  const [showLabConceptModal, setShowLabConceptModal] = useState(false);
 
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
@@ -418,6 +420,21 @@ export default function ControlEditScreen(props) {
     setTxtformapago(textopago);
   };
 
+
+  const handleConceptFromChild = (concepto) => {
+    setConceptoLaboratorio(concepto);
+  };
+
+
+  const eliminarDescuentoHandler = () => {
+    setDescuento(0);
+  };
+  const eliminarLabHandler = () => {
+    setMontoLab(0);
+    setConceptoLaboratorio("");
+    setLaboratorio("");
+  };
+
   return (
     <div>
       {loading ? (
@@ -425,9 +442,9 @@ export default function ControlEditScreen(props) {
       ) : (
         <>
           <div className="flx column jcenter">
-            <div>
-              <span className="action-map">Editar Control</span>
-              <h3 className="centrado font-12">{control?.paciente?.nombre + " " + control?.paciente?.apellido}</h3>
+            <div className="flx column">
+              <span className="badget mb-1">Editar Control</span>
+              <h3 className="centrado">{control?.paciente?.nombre + " " + control?.paciente?.apellido}</h3>
             </div>
             <input
               type="date"
@@ -456,39 +473,13 @@ export default function ControlEditScreen(props) {
                 Actualizar
               </button>
             </div>
-            {montoLab > 0 ? (
-              <div className="flx abase pad-0">
-                <div className="flx column astart pad-05">
-                  <label>Concepto Laboratorio</label>
-                  <input
-                    type="text"
-                    className="b-radius border-1 b-radius-05 pad-05 w-full"
-                    value={conceptoLaboratorio}
-                    list="tipoLab"
-                    required
-                    maxLength={50}
-                    onChange={(e) => setConceptoLaboratorio(e.target.value)}
-                  ></input>
-                  <datalist id="tipoLab">
-                    {tipoLab.map((x) => (
-                      <option key={x} value={x}>
-                        {x}
-                      </option>
-                    ))}
-                  </datalist>
-                </div>
-              </div>
-            ) : (
-              ""
-            )}
-            <div>
+            <div className="servicios-container">
               {serviciosItems?.length > 0 || montoUsd > 0 ? (
                 <div className="show-servicios">
                   {serviciosItems.map((m, inx) => {
                     const foundit = listaServicios.find((x) => x._id === m.servicio._id);
-
                     return (
-                      <div key={inx} className="flx mb03">
+                      <div key={inx} className="flx jsb mb03">
                         <span className="minw-10">{m.cantidad}</span>
                         <span className="maxw-200 minw-200">{foundit?.nombre + " ($" + foundit?.preciousd + ")"}</span>
 
@@ -502,12 +493,38 @@ export default function ControlEditScreen(props) {
                       </div>
                     );
                   })}
+                  {montoLab > 0 ? (
+                    <div className="flx jsb mb03">
+                      <span className="minw-10"></span>
+                      <span className="maxw-200 minw-200">Laboratorio: {conceptoLaboratorio}</span>
+                      <span className="minw-40 txt-align-r">${Number(montoLab * 4).toFixed(2)}</span>
+
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        onClick={(e) => eliminarLabHandler(e)}
+                        className="ml minw-20 txt-align-l"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {descuento > 0 ? (
+                    <div className="flx jsb mb03">
+                      <span className="minw-10"></span>
+                      <span className="maxw-200 minw-200">Menos: Descuento</span>
+                      <span className="minw-40 txt-align-r">(${Number(descuento).toFixed(2)})</span>
+
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        onClick={(e) => eliminarDescuentoHandler(e)}
+                        className="ml minw-20 txt-align-l"
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <hr />
-                  <p className="centrado negrita minw-30">
-                    Servicios: ${serviciosItems.reduce((sum, s) => sum + s.montoItemServicio, 0)}
-                  </p>
-                  <p className="centrado negrita minw-30">Laboratorio: ${montoLab * 4}</p>
-                  <p className="centrado negrita minw-30">Descuento: ${descuento}</p>
+
                   <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
                   <div className="centrado">
                     <button
@@ -522,45 +539,61 @@ export default function ControlEditScreen(props) {
                 ""
               )}
             </div>
-
             <form id="form-new-control" onSubmit={submitHandler}>
-              <div className="flx jcenter wrap gap1">
-                <div className="control-textarea-container">
-                  <div className="flx jsb">
-                    <label>Evaluacion</label>
-                    <span className="nombre-doctor">{nombreDoctor ? "Doctor: " + nombreDoctor : ""}</span>
+              <div className="flx column astart wrap rgap2">
+                <details className="details" name="detail-control">
+                  <summary>
+                    Evaluacion <span className="nombre-doctor">{nombreDoctor ? "(Doctor: " + nombreDoctor + ")" : ""}</span>
+                  </summary>
+                  <div className="details__content">
+                    <div className="control-textarea-container">
+                      <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>
+                      <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
+                        <option value="">Seleccionar</option>
+                        {conceptos.map((x, inx) => (
+                          <option key={inx} value={x}>
+                            {x}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
+                </details>
 
-                  <textarea rows="4" value={evaluacion} onChange={(e) => setEvaluacion(e.target.value)}></textarea>
-                  <select className="pos-abs select-btn" onChange={(e) => handleEvaluacion(e)}>
-                    <option value="">Seleccionar</option>
-                    {conceptos.map((x, inx) => (
-                      <option key={inx} value={x}>
-                        {x}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="control-textarea-container">
-                  <label>Tratamiento</label>
-                  <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
-                  <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
-                    <option value="">Seleccionar</option>
-                    {conceptos.map((x, inx) => (
-                      <option key={inx} value={x}>
-                        {x}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="control-textarea-container">
-                  <label>Recipe</label>
-                  <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>
-                </div>
-                <div className="control-textarea-container">
-                  <label>Indicaciones</label>
-                  <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
-                </div>
+                <details className="details" name="detail-control">
+                  <summary>Tratamiento</summary>
+                  <div className="details__content">
+                    <div className="control-textarea-container">
+                      <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
+                      <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
+                        <option value="">Seleccionar</option>
+                        {conceptos.map((x, inx) => (
+                          <option key={inx} value={x}>
+                            {x}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </details>
+
+                <details className="details" name="detail-control">
+                  <summary>Recipe Medico</summary>
+                  <div className="details__content">
+                    <div className="control-textarea-container">
+                      <textarea rows="3" value={recipe} onChange={(e) => setRecipe(e.target.value)}></textarea>
+                    </div>
+                  </div>
+                </details>
+
+                <details className="details" name="detail-control">
+                  <summary>Indicaciones</summary>
+                  <div className="details__content">
+                    <div className="control-textarea-container">
+                      <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
+                    </div>
+                  </div>
+                </details>
               </div>
             </form>
           </div>
@@ -570,6 +603,12 @@ export default function ControlEditScreen(props) {
               sendPayToParent={handlePayFromChild}
               montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
               montoPagoUsd={Number(montoUsd).toFixed(2)}
+            />
+          )}
+          {showLabConceptModal && (
+            <LabConceptSelector
+              onClose={() => setShowLabConceptModal(false)}
+              sendConceptToParent={handleConceptFromChild}
             />
           )}
         </>

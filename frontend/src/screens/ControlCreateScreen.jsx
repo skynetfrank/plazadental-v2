@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CONTROL_CREATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { addControlPaciente, detailsPaciente } from "../actions/pacienteActions";
+import { detailsPaciente } from "../actions/pacienteActions";
 import dayjs from "dayjs";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
@@ -437,7 +437,7 @@ export default function ControlCreateScreen(props) {
     <div>
       <div className="flx column jcenter">
         <div className="flx column">
-          <span className="badget mb-1">Nuevo Control de Cita</span>
+          <span className="badget mb-1">Nuevo Control</span>
           <h3>{paciente?.nombre + " " + paciente?.apellido}</h3>
         </div>
         <input
@@ -535,7 +535,6 @@ export default function ControlCreateScreen(props) {
             ""
           )}
         </div>
-
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx column astart wrap rgap2">
             <details className="details" name="detail-control">

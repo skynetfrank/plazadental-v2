@@ -42,6 +42,30 @@ function ListaControles() {
       accessorKey: "paciente.apellido",
     },
     {
+      header: "Evaluacion",
+      accessorKey: "evaluacion",
+      cell: (value) => {
+        if (!value.getValue()) {
+          return "Pendiente"
+        }
+        return (
+          <div className="td-eval"><span>{value.getValue()}</span></div>
+        )
+      },
+    },
+    {
+      header: "Tratamiento",
+      accessorKey: "tratamiento",
+      cell: (value) => {
+        if (!value.getValue()) {
+          return "Pendiente"
+        }
+        return (
+          <div className="td-eval"><span>{value.getValue()}</span></div>
+        )
+      },
+    },
+    {
       header: "Monto Consulta",
       accessorKey: "montoUsd",
       cell: (value) => {

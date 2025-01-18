@@ -2561,6 +2561,13 @@ summary {
   cursor: pointer;
 }
 
+.td-eval{
+  max-width: 100px;
+  font-size: 10px;
+  text-align: left;
+  padding: 5px;
+}
+
 @media (max-width: 575px) {
   .brand-container {
     display: none;

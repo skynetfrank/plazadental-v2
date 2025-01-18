@@ -12,7 +12,7 @@ const controlRouter = express.Router();
 controlRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const controles = await Control.find({}, { fechaControl: 1, paciente: 1, montoUsd: 1 })
+    const controles = await Control.find({}, { fechaControl: 1, paciente: 1, montoUsd: 1, evaluacion: 1, tratamiento: 1 })
       .populate({
         path: "paciente",
         select: "nombre apellido",
