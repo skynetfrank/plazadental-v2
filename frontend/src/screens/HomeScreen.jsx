@@ -16,7 +16,7 @@ function HomeScreen() {
   return (
     <div>
       {userInfo ? (
-        <div className="flx wrap jcenter home-buttons pad-0 mtop-3">
+        <div className="flx wrap jcenter home-buttons pad-0 mtop-2">
           <Link to="/listapacientes">
             <button>
               <PacientesIcon />

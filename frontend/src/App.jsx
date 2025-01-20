@@ -99,7 +99,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span className="negrita">v18ENERO2025</span>
+            <span className="negrita">20ENERO2025</span>
           </footer>
         </div>
       )}

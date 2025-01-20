@@ -3,11 +3,7 @@ import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import InfoIcon from "../icons/InfoIcon";
-import PacienteAddIcon from "../icons/PacienteAddIcon";
 import ToolTip from "../components/ToolTip";
-import EditIcon from "../icons/EditIcon";
-import ControlIcon from "../icons/ControlIcon";
-import TrashIcon from "../icons/TrashIcon";
 import Loader from "../components/Loader";
 import { listControles } from "../actions/controlActions";
 import dayjs from "dayjs";
@@ -36,10 +32,20 @@ function ListaControles() {
     {
       header: "Nombre",
       accessorKey: "paciente.nombre",
+      cell: (value) => {
+        return (
+          <div className="td-nombre-paciente"><span>{value.getValue()}</span></div>
+        )
+      },
     },
     {
       header: "Apellido",
       accessorKey: "paciente.apellido",
+      cell: (value) => {
+        return (
+          <div className="td-nombre-paciente"><span>{value.getValue()}</span></div>
+        )
+      },
     },
     {
       header: "Evaluacion",
@@ -66,7 +72,7 @@ function ListaControles() {
       },
     },
     {
-      header: "Monto Consulta",
+      header: "Monto",
       accessorKey: "montoUsd",
       cell: (value) => {
         return "$" + Number(value.getValue()).toFixed(2);
@@ -125,7 +131,7 @@ function ListaControles() {
     <div>
       <div className="flx jcenter gap1 pad-0">
         {" "}
-        <h2>Listado de Controles</h2>
+        <h3>Listado de Controles</h3>
       </div>
 
       {loading ? (

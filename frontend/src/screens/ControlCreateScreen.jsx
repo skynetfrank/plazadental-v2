@@ -433,6 +433,36 @@ export default function ControlCreateScreen(props) {
     setConceptoLaboratorio("");
     setLaboratorio("");
   };
+
+
+
+  const abonoHandler = async () => {
+    const { value: abono } = await Swal.fire({
+      title: "ABONO A CUENTA",
+      input: "text",
+      inputLabel: "Monto en US$",
+      inputPlaceholder: "Ingrese un monto",
+    });
+    if (abono) {
+      setDescuento(Number(abono));
+    }
+
+
+    const { value: date } = await Swal.fire({
+      title: "select departure date",
+      input: "date",
+      didOpen: () => {
+        const today = (new Date()).toISOString();
+        Swal.getInput().min = today.split("T")[0];
+      }
+    });
+    if (date) {
+      Swal.fire("Departure date", date);
+    }
+  }
+
+
+
   return (
     <div>
       <div className="flx column jcenter">
@@ -522,13 +552,20 @@ export default function ControlCreateScreen(props) {
               <hr />
 
               <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
-              <div className="centrado">
+              <div className="flx jsb mtop-1">
+                <button
+                  className="btn-abono font-x pad-0 m-0 negrita centrado"
+                  onClick={() => abonoHandler()}
+                >
+                  Registrar Abono
+                </button>
                 <button
                   className="btn-pago font-x pad-0 m-0 negrita centrado"
                   onClick={() => setShowPaymentModal(true)}
                 >
                   {txtformapago ? txtformapago : "Registrar Pago"}
                 </button>
+
               </div>
             </div>
           ) : (

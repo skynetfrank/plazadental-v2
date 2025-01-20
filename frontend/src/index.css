@@ -1648,11 +1648,25 @@ h4 {
   max-width: 600px;
 }
 
-.btn-pago {
+.btn-pago,
+.btn-abono {
   margin: 5px;
   width: 50px;
   padding: 3px;
+
 }
+
+.btn-abono {
+  background-color: #1d8122;
+  color: white;
+}
+
+
+.btn-abono:hover {
+  background-color: rgb(234, 234, 234);
+  color: black;
+}
+
 
 hr {
   margin: 5px 0;
@@ -2567,6 +2581,17 @@ summary {
   text-align: left;
   padding: 5px;
 }
+
+
+.td-nombre-paciente {
+  max-width: 100px;
+  min-width: 100px;
+  text-align: left;
+  padding: 5px;
+}
+
+
+
 
 @media (max-width: 575px) {
   .brand-container {

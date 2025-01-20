@@ -91,10 +91,12 @@ const controlSchema = new mongoose.Schema(
     fechaFactura: { type: Date, default: "" },
     idPacienteOld: { type: String, default: "" },
     isPaid: { type: Boolean, default: false },
-    abonos: {
-      fecha: { type: Date },
-      monto: { type: Number, default: 0 },
-    },
+    abonos:
+      [{
+        fecha: { type: Date },
+        monto: { type: Number, default: 0 },
+      }
+      ]
   },
 
   {
