@@ -59,6 +59,11 @@ export default function ControlEditScreen(props) {
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("CONTADO")
+  const [montoAbono, setMontoAbono] = useState(0)
+  const [fechaAbono, setFechaAbono] = useState("")
+  const [abonos, setAbonos] = useState({})
+  const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
 
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;

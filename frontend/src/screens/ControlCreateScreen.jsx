@@ -594,7 +594,7 @@ export default function ControlCreateScreen(props) {
                   <input type="radio" name="abono-radio" value="ABONOS" checked={selectedOption === "ABONOS"}
                     onChange={onValueChange} />
                   <span className="radio"></span>
-                  Abono a Cuenta
+                  {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
                 </label>
               </div>
 
@@ -615,6 +615,16 @@ export default function ControlCreateScreen(props) {
         </div>
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx column astart wrap rgap2">
+
+            <details className="details" name="detail-control">
+              <summary>
+                Abonos
+              </summary>
+              <div className="details__content">
+                <div></div>
+              </div>
+            </details>
+
             <details className="details" name="detail-control">
               <summary>
                 Evaluacion <span className="nombre-doctor">{nombreDoctor ? "(Doctor: " + nombreDoctor + ")" : ""}</span>
