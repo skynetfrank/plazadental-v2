@@ -83,7 +83,7 @@ export default function ControlesScreen(props) {
   const addControlHandler = () => {
     navigate(`/crearcontrol/${paciente._id}?escita1=${"no"}`);
   };
-  console.log("controles", controles);
+
 
   return loading ? (
     <LoadingBox></LoadingBox>

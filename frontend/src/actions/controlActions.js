@@ -59,7 +59,7 @@ export const createControl =
     montoLab,
     laboratorio,
     conceptoLaboratorio,
-    montoServicios
+    montoServicios, abonos
   ) =>
     async (dispatch, getState) => {
       dispatch({ type: CONTROL_CREATE_REQUEST });
@@ -97,6 +97,7 @@ export const createControl =
             laboratorio,
             conceptoLaboratorio,
             montoServicios,
+            abonos
           },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },

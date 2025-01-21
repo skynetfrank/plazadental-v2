@@ -173,6 +173,7 @@ button:hover {
   width: 160px;
   height: 160px;
   margin: 1rem;
+  /*cursor: url("./assets/teeth-icon.jpg"), auto;*/
 }
 
 .home-buttons button svg {
@@ -534,6 +535,12 @@ select {
 
 .font-14 {
   font-size: 1.4rem;
+  line-height: 16px;
+}
+
+
+.font-16 {
+  font-size: 1.6rem;
   line-height: 16px;
 }
 
@@ -2590,6 +2597,47 @@ summary {
   padding: 5px;
 }
 
+
+
+/* From Uiverse.io by Pradeepsaranbishnoi 21-01-2025 */
+.radio-button {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin: 10px;
+  position: relative;
+  align-items: center;
+  color: white;
+  font-size: 1.4rem;
+}
+
+.radio-button input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transform: translateZ(-25px);
+  transition: all 0.3s ease-in-out;
+}
+
+
+.radio-button input[type="radio"]:checked+.radio {
+  border-color: #5cb85c;
+  transform: translateZ(0px);
+  background-color: #fff;
+}
+
+
+
+/* From Uiverse.io by Pradeepsaranbishnoi */
 
 
 

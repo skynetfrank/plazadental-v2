@@ -111,7 +111,7 @@ export default function ControlEditScreen(props) {
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
       let doc = listaDoctores.find((doc) => doc._id === doctorId)
-      console.log("doc", doc)
+
       setNombreDoctor(
         doc?.nombre + " " + doc?.apellido
       );

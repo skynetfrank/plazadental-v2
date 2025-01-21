@@ -684,6 +684,7 @@ controlRouter.post(
       materiales: req.body.materiales,
       cambioBcv: req.body.cambioBcv,
       montoServicios: req.body.montoServicios,
+      abonos: req.body.abonos,
       montoUsd: req.body.montoUsd,
       montoBs: req.body.montoBs,
       tasaIva: req.body.tasaIva,
@@ -717,6 +718,7 @@ controlRouter.post(
         user: createdcontrol.user,
         fechaControl: createdcontrol.fechaControl,
         updatedPaciente: updatedPaciente.controles,
+        abonos: createdcontrol.abonos
       });
     }
   })

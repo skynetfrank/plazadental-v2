@@ -50,6 +50,7 @@ export default function ControlCreateScreen(props) {
   const [materiales, setMateriales] = useState([]);
   const [serviciosItems, setServiciosItems] = useState([]);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
   const [pago, setPago] = useState({});
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
@@ -62,6 +63,10 @@ export default function ControlCreateScreen(props) {
   const { paciente } = pacienteDetails;
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("CONTADO")
+  const [montoAbono, setMontoAbono] = useState(0)
+  const [fechaAbono, setFechaAbono] = useState("")
+  const [abonos, setAbonos] = useState({})
 
   const controlCreate = useSelector((state) => state.controlCreate);
   const { success, control } = controlCreate;
@@ -166,6 +171,8 @@ export default function ControlCreateScreen(props) {
       return;
     }
 
+
+
     dispatch(
       createControl(
         pacienteId,
@@ -193,7 +200,8 @@ export default function ControlCreateScreen(props) {
         montoLab,
         laboratorio,
         conceptoLaboratorio,
-        montoServicios
+        montoServicios,
+        abonos
       )
     );
   };
@@ -423,7 +431,7 @@ export default function ControlCreateScreen(props) {
   const handleConceptFromChild = (concepto) => {
     setConceptoLaboratorio(concepto);
   };
-  console.log("concepto laboratorio", conceptoLaboratorio);
+
 
   const eliminarDescuentoHandler = () => {
     setDescuento(0);
@@ -443,25 +451,46 @@ export default function ControlCreateScreen(props) {
       inputLabel: "Monto en US$",
       inputPlaceholder: "Ingrese un monto",
     });
-    if (abono) {
-      setDescuento(Number(abono));
+    if (!abono) {
+      Swal.fire({
+        title: "OPERACION CANCELADA",
+      })
+      setSelectedOption("CONTADO")
+      return
     }
-
 
     const { value: date } = await Swal.fire({
       title: "select departure date",
       input: "date",
       didOpen: () => {
         const today = (new Date()).toISOString();
-        Swal.getInput().min = today.split("T")[0];
+        Swal.getInput().value = today.split("T")[0];
       }
     });
-    if (date) {
-      Swal.fire("Departure date", date);
+    if (!date) {
+      Swal.fire({
+        title: "OPERACION CANCELADA",
+      })
+      setSelectedOption("CONTADO")
+      return
     }
+
+    setAbonos([{
+      fecha: new Date(date).toISOString(),
+      monto: Number(abono)
+    }])
+
+    setShowPaymentModalAbono(true)
   }
 
+  function onValueChange(event) {
+    // Updating the state with the selected radio button's value
+    setSelectedOption(event.target.value)
+    if (event.target.value === "ABONOS") {
+      abonoHandler()
+    }
 
+  }
 
   return (
     <div>
@@ -551,14 +580,26 @@ export default function ControlCreateScreen(props) {
               )}
               <hr />
 
-              <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
-              <div className="flx jsb mtop-1">
-                <button
-                  className="btn-abono font-x pad-0 m-0 negrita centrado"
-                  onClick={() => abonoHandler()}
-                >
-                  Registrar Abono
-                </button>
+              <p className="centrado negrita minw-30 font-16 mtop-1">Total Neto : ${montoUsd}</p>
+              <div className="flx jcenter">
+
+                <label className="radio-button">
+                  <input type="radio" name="abono-radio" value="CONTADO" checked={selectedOption === "CONTADO"}
+                    onChange={onValueChange} />
+                  <span className="radio"></span>
+                  Pago Completo
+                </label>
+
+                <label className="radio-button">
+                  <input type="radio" name="abono-radio" value="ABONOS" checked={selectedOption === "ABONOS"}
+                    onChange={onValueChange} />
+                  <span className="radio"></span>
+                  Abono a Cuenta
+                </label>
+              </div>
+
+
+              <div className="centrado">
                 <button
                   className="btn-pago font-x pad-0 m-0 negrita centrado"
                   onClick={() => setShowPaymentModal(true)}
@@ -642,6 +683,14 @@ export default function ControlCreateScreen(props) {
         <LabConceptSelector
           onClose={() => setShowLabConceptModal(false)}
           sendConceptToParent={handleConceptFromChild}
+        />
+      )}
+      {showPaymentModalAbono && (
+        <PaymentForm
+          onClose={() => setShowPaymentModalAbono(false)}
+          sendPayToParent={handlePayFromChild}
+          montoPagoBs={Number(abonos[0].monto * cambioBcv).toFixed(2)}
+          montoPagoUsd={Number(abonos[0].monto).toFixed(2)}
         />
       )}
     </div>
