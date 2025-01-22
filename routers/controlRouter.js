@@ -685,6 +685,7 @@ controlRouter.post(
       cambioBcv: req.body.cambioBcv,
       montoServicios: req.body.montoServicios,
       abonos: req.body.abonos,
+      formaPago: req.body.formaPago,
       montoUsd: req.body.montoUsd,
       montoBs: req.body.montoBs,
       tasaIva: req.body.tasaIva,

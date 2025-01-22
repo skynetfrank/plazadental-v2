@@ -11,6 +11,7 @@ import PaymentForm from "../components/PaymentForm";
 import { listaLabs, tipoLab } from "../constants/listas";
 import Loader from "../components/Loader";
 import LabConceptSelector from "../components/LabConceptSelector";
+import TrashIcon from "../icons/TrashIcon";
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -59,7 +60,7 @@ export default function ControlEditScreen(props) {
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("CONTADO");
+  const [selectedOption, setSelectedOption] = useState("");
   const [montoAbono, setMontoAbono] = useState(0);
   const [fechaAbono, setFechaAbono] = useState("");
   const [abonos, setAbonos] = useState([]);
@@ -154,6 +155,7 @@ export default function ControlEditScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     setMontoComisionPlaza(tasaComisionPlaza * montoUsd);
     setMontoComisionDr(tasaComisionDr * montoUsd);
     if (!doctorId) {
@@ -167,6 +169,14 @@ export default function ControlEditScreen(props) {
       return;
     }
 
+
+    setAbonos([
+      {
+        fecha: new Date(fechaAbono).toISOString(),
+        monto: Number(montoAbono),
+        formaPago: txtformapago
+      },
+    ]);
     dispatch(
       updateControl({
         _id: controlId,
@@ -435,22 +445,25 @@ export default function ControlEditScreen(props) {
   };
 
   const abonoHandler = async () => {
+
     const { value: abono } = await Swal.fire({
       title: "ABONO A CUENTA",
       input: "text",
       inputLabel: "Monto en US$",
       inputPlaceholder: "Ingrese un monto",
     });
+
+
     if (!abono) {
       Swal.fire({
-        title: "OPERACION CANCELADA",
+        title: "OPERACION CANCELADAx",
       });
-      setSelectedOption("CONTADO");
+      setSelectedOption("");
       return;
     }
 
     const { value: date } = await Swal.fire({
-      title: "select departure date",
+      title: "Fecha del Abono",
       input: "date",
       didOpen: () => {
         const today = new Date().toISOString();
@@ -461,18 +474,14 @@ export default function ControlEditScreen(props) {
       Swal.fire({
         title: "OPERACION CANCELADA",
       });
-      setSelectedOption("CONTADO");
+      setSelectedOption("");
       return;
     }
 
-    setAbonos([
-      {
-        fecha: new Date(date).toISOString(),
-        monto: Number(abono),
-      },
-    ]);
-
+    setMontoAbono(Number(abono))
+    setFechaAbono(new Date(date).toISOString())
     setShowPaymentModalAbono(true);
+
   };
 
   function onValueChange(event) {
@@ -481,7 +490,17 @@ export default function ControlEditScreen(props) {
     if (event.target.value === "ABONOS") {
       abonoHandler();
     }
+    if (event.target.value === "CONTADO") {
+      setShowPaymentModal(true)
+    }
   }
+
+  const deleteHandler = (abono) => {
+    if (window.confirm("Esta Seguro de Eliminar Este pedido?")) {
+      console.log("abono", abono)
+      //todo aliminar abono
+    }
+  };
 
   return (
     <div>
@@ -573,8 +592,8 @@ export default function ControlEditScreen(props) {
                   )}
                   <hr />
 
-                  <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
-                  <div className="flx jcenter">
+                  <p className="centrado negrita minw-30 font-16">Total: ${montoUsd}</p>
+                  {control.abonos.length > 0 ? ("") : (<div className="flx jcenter">
                     <label className="radio-button">
                       <input
                         type="radio"
@@ -598,7 +617,8 @@ export default function ControlEditScreen(props) {
                       <span className="radio"></span>
                       {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
                     </label>
-                  </div>
+                  </div>)}
+
                 </div>
               ) : (
                 ""
@@ -606,16 +626,70 @@ export default function ControlEditScreen(props) {
             </div>
             <form id="form-new-control" onSubmit={submitHandler}>
               <div className="flx column astart wrap rgap2">
-                <details className="details" name="detail-control">
-                  <summary>Abonos</summary>
+
+                {control.abonos.length > 0 ? (<details className="details" name="detail-control">
+                  <summary>Abonos {<span className="monto-pendiente">Monto Pendiente: ${(control.montoUsd) - (control.abonos.reduce((suma, abono) => suma + abono.monto, 0))}</span>}</summary>
                   <div className="details__content">
                     <div>
-                      {abonos.map((abono) => {
-                        return <span key={abono._id}>{abono.fecha}</span>;
-                      })}
+
+                      <>
+                        <table className="styled-table"
+                          id="tabla-abonos">
+                          <thead>
+                            <tr>
+                              <th>Fecha</th>
+                              <th>Monto</th>
+                              <th>Monto</th>
+                              <th>Eliminar</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {abonos?.map((abono) => (
+                              <tr key={abono._id}>
+                                <td>
+                                  <div>
+                                    <span className="font-x">
+                                      {dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div>
+                                    <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div>
+                                    <span className="font-x">{abono.formaPago}</span>
+                                  </div>
+                                </td>
+
+                                <td data-heading="Acciones">
+
+                                  <button
+                                    type="button"
+                                    className="btn-icon-container table"
+                                    onClick={() => deleteHandler(abono)}>
+                                    <TrashIcon />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <div className="flx column pad-0">
+                          <span>Monto A Pagar:{control.montoUsd}</span>
+                          <span>Total Abonado:{control.abonos.reduce((suma, abono) => suma + abono.monto, 0)}</span>
+                          <span>Monto Pendiente: ${(control.montoUsd) - (control.abonos.reduce((suma, abono) => suma + abono.monto, 0))}</span>
+                        </div>
+
+                      </>
                     </div>
                   </div>
-                </details>
+                </details>) : ("")}
+
+
+
                 <details className="details" name="detail-control">
                   <summary>
                     Evaluacion{" "}
@@ -699,8 +773,8 @@ export default function ControlEditScreen(props) {
             <PaymentForm
               onClose={() => setShowPaymentModalAbono(false)}
               sendPayToParent={handlePayFromChild}
-              montoPagoBs={Number(abonos[0].monto * cambioBcv).toFixed(2)}
-              montoPagoUsd={Number(abonos[0].monto).toFixed(2)}
+              montoPagoBs={Number(montoAbono * cambioBcv).toFixed(2)}
+              montoPagoUsd={Number(montoAbono).toFixed(2)}
             />
           )}
         </>

@@ -55,7 +55,7 @@ export default function ControlCreateScreen(props) {
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
-  const [txtformapago, setTxtformapago] = useState(0);
+  const [txtformapago, setTxtformapago] = useState("");
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
@@ -470,14 +470,16 @@ export default function ControlCreateScreen(props) {
       return;
     }
 
+
+
+    setShowPaymentModalAbono(true);
     setAbonos([
       {
         fecha: new Date(date).toISOString(),
         monto: Number(abono),
+
       },
     ]);
-
-    setShowPaymentModalAbono(true);
   };
 
   function onValueChange(event) {
@@ -618,12 +620,6 @@ export default function ControlCreateScreen(props) {
         </div>
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx column astart wrap rgap2">
-            <details className="details" name="detail-control">
-              <summary>Abonos</summary>
-              <div className="details__content">
-                <div></div>
-              </div>
-            </details>
 
             <details className="details" name="detail-control">
               <summary>
