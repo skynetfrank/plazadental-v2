@@ -59,10 +59,10 @@ export default function ControlEditScreen(props) {
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("CONTADO")
-  const [montoAbono, setMontoAbono] = useState(0)
-  const [fechaAbono, setFechaAbono] = useState("")
-  const [abonos, setAbonos] = useState({})
+  const [selectedOption, setSelectedOption] = useState("CONTADO");
+  const [montoAbono, setMontoAbono] = useState(0);
+  const [fechaAbono, setFechaAbono] = useState("");
+  const [abonos, setAbonos] = useState([]);
   const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
 
   const controlDetails = useSelector((state) => state.controlDetails);
@@ -115,14 +115,12 @@ export default function ControlEditScreen(props) {
       setMontoServicios(control.montoServicios || 0);
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
-      let doc = listaDoctores.find((doc) => doc._id === doctorId)
+      setAbonos(control.abonos || []);
+      let doc = listaDoctores.find((doc) => doc._id === doctorId);
 
-      setNombreDoctor(
-        doc?.nombre + " " + doc?.apellido
-      );
-
+      setNombreDoctor(doc?.nombre + " " + doc?.apellido);
     }
-  }, [control, controlId, dispatch, navigate, successUpdate]);
+  }, [control, controlId, dispatch, doctorId, listaDoctores, navigate, successUpdate]);
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -148,9 +146,7 @@ export default function ControlEditScreen(props) {
   useEffect(() => {
     const doctorFound = listaDoctores.find((x) => x._id === doctorId);
     if (doctorFound) {
-      setNombreDoctor(
-        doctorFound?.nombre + " " + doctorFound?.apellido
-      );
+      setNombreDoctor(doctorFound?.nombre + " " + doctorFound?.apellido);
       setTasaComisionDr(doctorFound.tasaComisionDoctor);
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }
@@ -425,11 +421,9 @@ export default function ControlEditScreen(props) {
     setTxtformapago(textopago);
   };
 
-
   const handleConceptFromChild = (concepto) => {
     setConceptoLaboratorio(concepto);
   };
-
 
   const eliminarDescuentoHandler = () => {
     setDescuento(0);
@@ -439,6 +433,55 @@ export default function ControlEditScreen(props) {
     setConceptoLaboratorio("");
     setLaboratorio("");
   };
+
+  const abonoHandler = async () => {
+    const { value: abono } = await Swal.fire({
+      title: "ABONO A CUENTA",
+      input: "text",
+      inputLabel: "Monto en US$",
+      inputPlaceholder: "Ingrese un monto",
+    });
+    if (!abono) {
+      Swal.fire({
+        title: "OPERACION CANCELADA",
+      });
+      setSelectedOption("CONTADO");
+      return;
+    }
+
+    const { value: date } = await Swal.fire({
+      title: "select departure date",
+      input: "date",
+      didOpen: () => {
+        const today = new Date().toISOString();
+        Swal.getInput().value = today.split("T")[0];
+      },
+    });
+    if (!date) {
+      Swal.fire({
+        title: "OPERACION CANCELADA",
+      });
+      setSelectedOption("CONTADO");
+      return;
+    }
+
+    setAbonos([
+      {
+        fecha: new Date(date).toISOString(),
+        monto: Number(abono),
+      },
+    ]);
+
+    setShowPaymentModalAbono(true);
+  };
+
+  function onValueChange(event) {
+    // Updating the state with the selected radio button's value
+    setSelectedOption(event.target.value);
+    if (event.target.value === "ABONOS") {
+      abonoHandler();
+    }
+  }
 
   return (
     <div>
@@ -531,13 +574,30 @@ export default function ControlEditScreen(props) {
                   <hr />
 
                   <p className="centrado negrita minw-30">Total Neto : ${montoUsd}</p>
-                  <div className="centrado">
-                    <button
-                      className="btn-pago font-x pad-0 m-0 negrita centrado"
-                      onClick={() => setShowPaymentModal(true)}
-                    >
-                      {txtformapago ? txtformapago : "Registrar Pago"}
-                    </button>
+                  <div className="flx jcenter">
+                    <label className="radio-button">
+                      <input
+                        type="radio"
+                        name="abono-radio"
+                        value="CONTADO"
+                        checked={selectedOption === "CONTADO"}
+                        onChange={onValueChange}
+                      />
+                      <span className="radio"></span>
+                      Pago Completo
+                    </label>
+
+                    <label className="radio-button">
+                      <input
+                        type="radio"
+                        name="abono-radio"
+                        value="ABONOS"
+                        checked={selectedOption === "ABONOS"}
+                        onChange={onValueChange}
+                      />
+                      <span className="radio"></span>
+                      {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
+                    </label>
                   </div>
                 </div>
               ) : (
@@ -547,8 +607,19 @@ export default function ControlEditScreen(props) {
             <form id="form-new-control" onSubmit={submitHandler}>
               <div className="flx column astart wrap rgap2">
                 <details className="details" name="detail-control">
+                  <summary>Abonos</summary>
+                  <div className="details__content">
+                    <div>
+                      {abonos.map((abono) => {
+                        return <span key={abono._id}>{abono.fecha}</span>;
+                      })}
+                    </div>
+                  </div>
+                </details>
+                <details className="details" name="detail-control">
                   <summary>
-                    Evaluacion <span className="nombre-doctor">{nombreDoctor ? "(Doctor: " + nombreDoctor + ")" : ""}</span>
+                    Evaluacion{" "}
+                    <span className="nombre-doctor">{nombreDoctor ? "(Doctor: " + nombreDoctor + ")" : ""}</span>
                   </summary>
                   <div className="details__content">
                     <div className="control-textarea-container">
@@ -569,7 +640,11 @@ export default function ControlEditScreen(props) {
                   <summary>Tratamiento</summary>
                   <div className="details__content">
                     <div className="control-textarea-container">
-                      <textarea rows="4" value={tratamiento} onChange={(e) => setTratamiento(e.target.value)}></textarea>
+                      <textarea
+                        rows="4"
+                        value={tratamiento}
+                        onChange={(e) => setTratamiento(e.target.value)}
+                      ></textarea>
                       <select className="pos-abs select-btn" onChange={(e) => handleTratamiento(e)}>
                         <option value="">Seleccionar</option>
                         {conceptos.map((x, inx) => (
@@ -595,7 +670,11 @@ export default function ControlEditScreen(props) {
                   <summary>Indicaciones</summary>
                   <div className="details__content">
                     <div className="control-textarea-container">
-                      <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
+                      <textarea
+                        rows="3"
+                        value={indicaciones}
+                        onChange={(e) => setIndicaciones(e.target.value)}
+                      ></textarea>
                     </div>
                   </div>
                 </details>
@@ -614,6 +693,14 @@ export default function ControlEditScreen(props) {
             <LabConceptSelector
               onClose={() => setShowLabConceptModal(false)}
               sendConceptToParent={handleConceptFromChild}
+            />
+          )}
+          {showPaymentModalAbono && (
+            <PaymentForm
+              onClose={() => setShowPaymentModalAbono(false)}
+              sendPayToParent={handlePayFromChild}
+              montoPagoBs={Number(abonos[0].monto * cambioBcv).toFixed(2)}
+              montoPagoUsd={Number(abonos[0].monto).toFixed(2)}
             />
           )}
         </>

@@ -63,10 +63,10 @@ export default function ControlCreateScreen(props) {
   const { paciente } = pacienteDetails;
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("CONTADO")
-  const [montoAbono, setMontoAbono] = useState(0)
-  const [fechaAbono, setFechaAbono] = useState("")
-  const [abonos, setAbonos] = useState({})
+  const [selectedOption, setSelectedOption] = useState("CONTADO");
+  const [montoAbono, setMontoAbono] = useState(0);
+  const [fechaAbono, setFechaAbono] = useState("");
+  const [abonos, setAbonos] = useState({});
 
   const controlCreate = useSelector((state) => state.controlCreate);
   const { success, control } = controlCreate;
@@ -170,8 +170,6 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
-
-
 
     dispatch(
       createControl(
@@ -432,7 +430,6 @@ export default function ControlCreateScreen(props) {
     setConceptoLaboratorio(concepto);
   };
 
-
   const eliminarDescuentoHandler = () => {
     setDescuento(0);
   };
@@ -441,8 +438,6 @@ export default function ControlCreateScreen(props) {
     setConceptoLaboratorio("");
     setLaboratorio("");
   };
-
-
 
   const abonoHandler = async () => {
     const { value: abono } = await Swal.fire({
@@ -454,42 +449,43 @@ export default function ControlCreateScreen(props) {
     if (!abono) {
       Swal.fire({
         title: "OPERACION CANCELADA",
-      })
-      setSelectedOption("CONTADO")
-      return
+      });
+      setSelectedOption("CONTADO");
+      return;
     }
 
     const { value: date } = await Swal.fire({
       title: "select departure date",
       input: "date",
       didOpen: () => {
-        const today = (new Date()).toISOString();
+        const today = new Date().toISOString();
         Swal.getInput().value = today.split("T")[0];
-      }
+      },
     });
     if (!date) {
       Swal.fire({
         title: "OPERACION CANCELADA",
-      })
-      setSelectedOption("CONTADO")
-      return
+      });
+      setSelectedOption("CONTADO");
+      return;
     }
 
-    setAbonos([{
-      fecha: new Date(date).toISOString(),
-      monto: Number(abono)
-    }])
+    setAbonos([
+      {
+        fecha: new Date(date).toISOString(),
+        monto: Number(abono),
+      },
+    ]);
 
-    setShowPaymentModalAbono(true)
-  }
+    setShowPaymentModalAbono(true);
+  };
 
   function onValueChange(event) {
     // Updating the state with the selected radio button's value
-    setSelectedOption(event.target.value)
+    setSelectedOption(event.target.value);
     if (event.target.value === "ABONOS") {
-      abonoHandler()
+      abonoHandler();
     }
-
   }
 
   return (
@@ -582,22 +578,30 @@ export default function ControlCreateScreen(props) {
 
               <p className="centrado negrita minw-30 font-16 mtop-1">Total Neto : ${montoUsd}</p>
               <div className="flx jcenter">
-
                 <label className="radio-button">
-                  <input type="radio" name="abono-radio" value="CONTADO" checked={selectedOption === "CONTADO"}
-                    onChange={onValueChange} />
+                  <input
+                    type="radio"
+                    name="abono-radio"
+                    value="CONTADO"
+                    checked={selectedOption === "CONTADO"}
+                    onChange={onValueChange}
+                  />
                   <span className="radio"></span>
                   Pago Completo
                 </label>
 
                 <label className="radio-button">
-                  <input type="radio" name="abono-radio" value="ABONOS" checked={selectedOption === "ABONOS"}
-                    onChange={onValueChange} />
+                  <input
+                    type="radio"
+                    name="abono-radio"
+                    value="ABONOS"
+                    checked={selectedOption === "ABONOS"}
+                    onChange={onValueChange}
+                  />
                   <span className="radio"></span>
                   {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
                 </label>
               </div>
-
 
               <div className="centrado">
                 <button
@@ -606,7 +610,6 @@ export default function ControlCreateScreen(props) {
                 >
                   {txtformapago ? txtformapago : "Registrar Pago"}
                 </button>
-
               </div>
             </div>
           ) : (
@@ -615,11 +618,8 @@ export default function ControlCreateScreen(props) {
         </div>
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx column astart wrap rgap2">
-
             <details className="details" name="detail-control">
-              <summary>
-                Abonos
-              </summary>
+              <summary>Abonos</summary>
               <div className="details__content">
                 <div></div>
               </div>
