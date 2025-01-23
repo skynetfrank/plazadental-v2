@@ -197,6 +197,7 @@ export default function ControlEditScreen(props) {
         laboratorio,
         conceptoLaboratorio,
         montoServicios,
+        abonos
       })
     );
   };

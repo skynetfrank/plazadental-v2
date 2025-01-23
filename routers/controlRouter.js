@@ -8,19 +8,21 @@ import mongoose from "mongoose";
 
 const controlRouter = express.Router();
 
-
 controlRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const controles = await Control.find({}, { fechaControl: 1, paciente: 1, montoUsd: 1, evaluacion: 1, tratamiento: 1 })
+    const controles = await Control.find(
+      {},
+      { fechaControl: 1, paciente: 1, montoUsd: 1, evaluacion: 1, tratamiento: 1 }
+    )
       .populate({
         path: "paciente",
         select: "nombre apellido",
-      }).sort({ fechaControl: -1 })
+      })
+      .sort({ fechaControl: -1 });
     res.send({ controles });
   })
 );
-
 
 controlRouter.get(
   "/summary",
@@ -719,7 +721,7 @@ controlRouter.post(
         user: createdcontrol.user,
         fechaControl: createdcontrol.fechaControl,
         updatedPaciente: updatedPaciente.controles,
-        abonos: createdcontrol.abonos
+        abonos: createdcontrol.abonos,
       });
     }
   })
@@ -755,6 +757,7 @@ controlRouter.put(
       control.montoComisionDr = req.body.montoComisionDr;
       control.montoComisionPlaza = req.body.montoComisionPlaza;
       control.pago = req.body.pago;
+      control.abonos = req.body.abonos;
       const updatedControl = await control.save();
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {
