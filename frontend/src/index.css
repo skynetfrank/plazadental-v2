@@ -729,6 +729,11 @@ a:hover {
   background-color: #f3f3f3;
 }
 
+.styled-table tfoot tr th:nth-child(1) {
+ text-align: right;
+}
+
+
 .styled-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;
@@ -2642,7 +2647,7 @@ summary {
 
 
 .monto-pendiente {
-  font-size: 1rem;
+  font-size: 1.3rem;
   color: red;
 }
 

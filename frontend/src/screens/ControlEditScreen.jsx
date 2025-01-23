@@ -169,14 +169,6 @@ export default function ControlEditScreen(props) {
       return;
     }
 
-
-    setAbonos([
-      {
-        fecha: new Date(fechaAbono).toISOString(),
-        monto: Number(montoAbono),
-        formaPago: txtformapago
-      },
-    ]);
     dispatch(
       updateControl({
         _id: controlId,
@@ -409,7 +401,7 @@ export default function ControlEditScreen(props) {
     setTratamiento((current) => current + e.target.value);
   };
 
-  const handlePayFromChild = (data, textopago) => {
+  const handlePayFromChild = (data, textopago, parAbono) => {
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -429,6 +421,9 @@ export default function ControlEditScreen(props) {
 
     setTotalPago(Number(suma));
     setTxtformapago(textopago);
+    setAbonos((prev) => {
+      return [...prev, parAbono];
+    });
   };
 
   const handleConceptFromChild = (concepto) => {
@@ -444,8 +439,25 @@ export default function ControlEditScreen(props) {
     setLaboratorio("");
   };
 
-  const abonoHandler = async () => {
+  function onValueChange(event) {
+    // Updating the state with the selected radio button's value
+    setSelectedOption(event.target.value);
+    if (event.target.value === "ABONOS") {
+      abonoHandler();
+    }
+    if (event.target.value === "CONTADO") {
+      setShowPaymentModal(true);
+    }
+  }
 
+  const deleteHandler = (abono) => {
+    if (window.confirm("Esta Seguro de Eliminar Este pedido?")) {
+      console.log("abono", abono);
+      //todo aliminar abono
+    }
+  };
+
+  const addAbono = async (e) => {
     const { value: abono } = await Swal.fire({
       title: "ABONO A CUENTA",
       input: "text",
@@ -453,12 +465,10 @@ export default function ControlEditScreen(props) {
       inputPlaceholder: "Ingrese un monto",
     });
 
-
     if (!abono) {
       Swal.fire({
-        title: "OPERACION CANCELADAx",
+        title: "OPERACION CANCELADAmx",
       });
-      setSelectedOption("");
       return;
     }
 
@@ -474,34 +484,20 @@ export default function ControlEditScreen(props) {
       Swal.fire({
         title: "OPERACION CANCELADA",
       });
-      setSelectedOption("");
+
       return;
     }
 
-    setMontoAbono(Number(abono))
-    setFechaAbono(new Date(date).toISOString())
+    setMontoAbono(Number(abono));
+    setFechaAbono(new Date(date).toISOString());
     setShowPaymentModalAbono(true);
-
   };
 
-  function onValueChange(event) {
-    // Updating the state with the selected radio button's value
-    setSelectedOption(event.target.value);
-    if (event.target.value === "ABONOS") {
-      abonoHandler();
-    }
-    if (event.target.value === "CONTADO") {
-      setShowPaymentModal(true)
-    }
-  }
-
-  const deleteHandler = (abono) => {
-    if (window.confirm("Esta Seguro de Eliminar Este pedido?")) {
-      console.log("abono", abono)
-      //todo aliminar abono
-    }
+  const deleteAbono = (index) => {
+    const found = abonos.slice(index);
+    setAbonos(found);
   };
-
+  console.log("abonos:", abonos);
   return (
     <div>
       {loading ? (
@@ -593,69 +589,71 @@ export default function ControlEditScreen(props) {
                   <hr />
 
                   <p className="centrado negrita minw-30 font-16">Total: ${montoUsd}</p>
-                  {control.abonos.length > 0 ? ("") : (<div className="flx jcenter">
-                    <label className="radio-button">
-                      <input
-                        type="radio"
-                        name="abono-radio"
-                        value="CONTADO"
-                        checked={selectedOption === "CONTADO"}
-                        onChange={onValueChange}
-                      />
-                      <span className="radio"></span>
-                      Pago Completo
-                    </label>
+                  {control.abonos.length > 0 ? (
+                    ""
+                  ) : (
+                    <div className="flx jcenter">
+                      <label className="radio-button">
+                        <input
+                          type="radio"
+                          name="abono-radio"
+                          value="CONTADO"
+                          checked={selectedOption === "CONTADO"}
+                          onChange={onValueChange}
+                        />
+                        <span className="radio"></span>
+                        Pago Completo
+                      </label>
 
-                    <label className="radio-button">
-                      <input
-                        type="radio"
-                        name="abono-radio"
-                        value="ABONOS"
-                        checked={selectedOption === "ABONOS"}
-                        onChange={onValueChange}
-                      />
-                      <span className="radio"></span>
-                      {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
-                    </label>
-                  </div>)}
-
+                      <label className="radio-button">
+                        <input
+                          type="radio"
+                          name="abono-radio"
+                          value="ABONOS"
+                          checked={selectedOption === "ABONOS"}
+                          onChange={onValueChange}
+                        />
+                        <span className="radio"></span>
+                        {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
+                      </label>
+                    </div>
+                  )}
                 </div>
               ) : (
                 ""
               )}
             </div>
-            <form id="form-new-control" onSubmit={submitHandler}>
-              <div className="flx column astart wrap rgap2">
-
-                {control.abonos.length > 0 ? (<details className="details" name="detail-control">
-                  <summary>Abonos {<span className="monto-pendiente">Monto Pendiente: ${(control.montoUsd) - (control.abonos.reduce((suma, abono) => suma + abono.monto, 0))}</span>}</summary>
+            <div className="mtop-2">
+              {control.abonos.length > 0 ? (
+                <details className="details" name="detail-control">
+                  <summary>
+                    Abonos{" "}
+                    {
+                      <span className="monto-pendiente">
+                        Pendiente por Pagar: $
+                        {control.montoUsd - control.abonos.reduce((suma, abono) => suma + abono.monto, 0)}
+                      </span>
+                    }
+                  </summary>
                   <div className="details__content">
                     <div>
-
+                      <button onClick={(e) => addAbono(e)}>Registrar Abono</button>
                       <>
-                        <table className="styled-table"
-                          id="tabla-abonos">
+                        <table className="styled-table" id="tabla-abonos">
                           <thead>
                             <tr>
                               <th>Fecha</th>
-                              <th>Monto</th>
+                              <th>Forma-Pago</th>
                               <th>Monto</th>
                               <th>Eliminar</th>
                             </tr>
                           </thead>
                           <tbody>
-                            {abonos?.map((abono) => (
-                              <tr key={abono._id}>
+                            {abonos?.map((abono, inx) => (
+                              <tr key={inx}>
                                 <td>
                                   <div>
-                                    <span className="font-x">
-                                      {dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}
-                                    </span>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div>
-                                    <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
+                                    <span className="font-x">{dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}</span>
                                   </div>
                                 </td>
                                 <td>
@@ -663,33 +661,45 @@ export default function ControlEditScreen(props) {
                                     <span className="font-x">{abono.formaPago}</span>
                                   </div>
                                 </td>
+                                <td>
+                                  <div>
+                                    <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
+                                  </div>
+                                </td>
 
                                 <td data-heading="Acciones">
-
                                   <button
                                     type="button"
                                     className="btn-icon-container table"
-                                    onClick={() => deleteHandler(abono)}>
+                                    onClick={() => deleteAbono(inx)}
+                                  >
                                     <TrashIcon />
                                   </button>
                                 </td>
                               </tr>
                             ))}
                           </tbody>
+                          <tfoot>
+                            <tr>
+                              <th scope="row" colSpan={2}>
+                                Total Abonado:
+                              </th>
+                              <th scope="row">
+                                ${Number(control.abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
+                              </th>
+                            </tr>
+                          </tfoot>
                         </table>
-                        <div className="flx column pad-0">
-                          <span>Monto A Pagar:{control.montoUsd}</span>
-                          <span>Total Abonado:{control.abonos.reduce((suma, abono) => suma + abono.monto, 0)}</span>
-                          <span>Monto Pendiente: ${(control.montoUsd) - (control.abonos.reduce((suma, abono) => suma + abono.monto, 0))}</span>
-                        </div>
-
                       </>
                     </div>
                   </div>
-                </details>) : ("")}
-
-
-
+                </details>
+              ) : (
+                "NO HAY ABONOS REGISTRADOS"
+              )}
+            </div>
+            <form id="form-new-control" onSubmit={submitHandler}>
+              <div className="flx column astart wrap rgap2">
                 <details className="details" name="detail-control">
                   <summary>
                     Evaluacion{" "}
@@ -775,6 +785,9 @@ export default function ControlEditScreen(props) {
               sendPayToParent={handlePayFromChild}
               montoPagoBs={Number(montoAbono * cambioBcv).toFixed(2)}
               montoPagoUsd={Number(montoAbono).toFixed(2)}
+              fechaAbono={fechaAbono}
+              montoAbono={montoAbono}
+              isAbono={true}
             />
           )}
         </>

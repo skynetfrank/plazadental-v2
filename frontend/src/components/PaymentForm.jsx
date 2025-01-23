@@ -2,7 +2,16 @@ import React, { useRef, useState } from "react";
 import Swal from "sweetalert2";
 import CloseIcon from "../icons/CloseIcon";
 
-function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, montoCobrarCashea, orderCashea }) {
+function PaymentForm({
+  onClose,
+  sendPayToParent,
+  montoPagoUsd,
+  montoPagoBs,
+  montoCobrarCashea,
+  orderCashea,
+  montoAbono,
+  fechaAbono,
+}) {
   const modalRef = useRef();
   const [data, setData] = useState("");
 
@@ -161,11 +170,11 @@ function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, mont
       paymentObject.punto.efectivousd > 0
         ? "Divisas "
         : "Punto de Venta " +
-        paymentObject.punto.bancodestinopunto +
-        " " +
-        bancodestinopunto2 +
-        " " +
-        bancodestinopunto3;
+          paymentObject.punto.bancodestinopunto +
+          " " +
+          bancodestinopunto2 +
+          " " +
+          bancodestinopunto3;
     sendPayToParent(paymentObject, txtpago);
 
     onClose();
@@ -195,8 +204,14 @@ function PaymentForm({ onClose, sendPayToParent, montoPagoUsd, montoPagoBs, mont
       },
     };
     const txtpago = "Divisas US$";
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: txtpago,
+    };
 
-    sendPayToParent(paymentObject, txtpago);
+    sendPayToParent(paymentObject, txtpago, objAbono);
+
     onClose();
   };
 

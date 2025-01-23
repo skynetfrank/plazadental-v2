@@ -380,28 +380,6 @@ export default function ControlCreateScreen(props) {
     setTratamiento((current) => current + e.target.value);
   };
 
-  const handlePayFromChild = (data, textopago) => {
-    setPago(data);
-    const bs = Number(data.efectivobs) / Number(cambioBcv);
-    const punto = Number(data.punto.montopunto) / Number(cambioBcv);
-    const punto2 = Number(data.punto.montopunto2) / Number(cambioBcv);
-    const punto3 = Number(data.punto.montopunto3) / Number(cambioBcv);
-    const pmobil = Number(data.pagomovil.montopagomovil) / Number(cambioBcv);
-
-    const suma =
-      bs +
-      punto +
-      punto2 +
-      punto3 +
-      pmobil +
-      Number(data.zelle.montozelle) +
-      Number(data.efectivousd) +
-      Number(data.efectivoeuros);
-
-    setTotalPago(Number(suma));
-    setTxtformapago(textopago);
-  };
-
   const getDoctor = async () => {
     const { value: idDoctor } = await Swal.fire({
       input: "select",
@@ -439,48 +417,7 @@ export default function ControlCreateScreen(props) {
     setLaboratorio("");
   };
 
-  const abonoHandler = async () => {
-    const { value: abono } = await Swal.fire({
-      title: "ABONO A CUENTA",
-      input: "text",
-      inputLabel: "Monto en US$",
-      inputPlaceholder: "Ingrese un monto",
-    });
-    if (!abono) {
-      Swal.fire({
-        title: "OPERACION CANCELADA",
-      });
-      setSelectedOption("CONTADO");
-      return;
-    }
-
-    const { value: date } = await Swal.fire({
-      title: "select departure date",
-      input: "date",
-      didOpen: () => {
-        const today = new Date().toISOString();
-        Swal.getInput().value = today.split("T")[0];
-      },
-    });
-    if (!date) {
-      Swal.fire({
-        title: "OPERACION CANCELADA",
-      });
-      setSelectedOption("CONTADO");
-      return;
-    }
-
-
-
-    setShowPaymentModalAbono(true);
-    setAbonos([
-      {
-        fecha: new Date(date).toISOString(),
-        monto: Number(abono),
-
-      },
-    ]);
-  };
+ 
 
   function onValueChange(event) {
     // Updating the state with the selected radio button's value
@@ -489,6 +426,29 @@ export default function ControlCreateScreen(props) {
       abonoHandler();
     }
   }
+
+  const handlePayFromChild = (data, textopago, parAbono) => {
+    setPago(data);
+    const bs = Number(data.efectivobs) / Number(cambioBcv);
+    const punto = Number(data.punto.montopunto) / Number(cambioBcv);
+    const punto2 = Number(data.punto.montopunto2) / Number(cambioBcv);
+    const punto3 = Number(data.punto.montopunto3) / Number(cambioBcv);
+    const pmobil = Number(data.pagomovil.montopagomovil) / Number(cambioBcv);
+
+    const suma =
+      bs +
+      punto +
+      punto2 +
+      punto3 +
+      pmobil +
+      Number(data.zelle.montozelle) +
+      Number(data.efectivousd) +
+      Number(data.efectivoeuros);
+
+    setTotalPago(Number(suma));
+    setTxtformapago(textopago);
+    setAbonos(parAbono);
+  };
 
   return (
     <div>
@@ -620,7 +580,6 @@ export default function ControlCreateScreen(props) {
         </div>
         <form id="form-new-control" onSubmit={submitHandler}>
           <div className="flx column astart wrap rgap2">
-
             <details className="details" name="detail-control">
               <summary>
                 Evaluacion <span className="nombre-doctor">{nombreDoctor ? "(Doctor: " + nombreDoctor + ")" : ""}</span>
@@ -683,6 +642,7 @@ export default function ControlCreateScreen(props) {
           sendPayToParent={handlePayFromChild}
           montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
           montoPagoUsd={Number(montoUsd).toFixed(2)}
+          isAbono={false}
         />
       )}
       {showLabConceptModal && (
@@ -695,8 +655,11 @@ export default function ControlCreateScreen(props) {
         <PaymentForm
           onClose={() => setShowPaymentModalAbono(false)}
           sendPayToParent={handlePayFromChild}
-          montoPagoBs={Number(abonos[0].monto * cambioBcv).toFixed(2)}
-          montoPagoUsd={Number(abonos[0].monto).toFixed(2)}
+          montoPagoBs={Number(montoAbono * cambioBcv).toFixed(2)}
+          montoPagoUsd={Number(montoAbono).toFixed(2)}
+          fechaAbono={fechaAbono}
+          montoAbono={montoAbono}
+          isAbono={true}
         />
       )}
     </div>
