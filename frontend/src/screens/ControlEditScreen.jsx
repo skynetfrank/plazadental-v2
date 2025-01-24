@@ -197,7 +197,7 @@ export default function ControlEditScreen(props) {
         laboratorio,
         conceptoLaboratorio,
         montoServicios,
-        abonos
+        abonos,
       })
     );
   };
@@ -638,7 +638,7 @@ export default function ControlEditScreen(props) {
                   </summary>
                   <div className="details__content">
                     <div>
-                      <button onClick={(e) => addAbono(e)}>Registrar Abono</button>
+                      <button className="simple-button"onClick={(e) => addAbono(e)}>Registrar Abono</button>
                       <>
                         <table className="styled-table" id="tabla-abonos">
                           <thead>
@@ -688,6 +688,7 @@ export default function ControlEditScreen(props) {
                               <th scope="row">
                                 ${Number(control.abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                               </th>
+                              <th></th>
                             </tr>
                           </tfoot>
                         </table>

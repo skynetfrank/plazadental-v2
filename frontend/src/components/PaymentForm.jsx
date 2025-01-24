@@ -139,46 +139,15 @@ function PaymentForm({
       },
     };
 
-    sendPayToParent(paymentObject, "Pago-Mixto");
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: "Pago-Mixto",
+    };
+
+    sendPayToParent(paymentObject, "Pago-Mixto", objAbono);
     onClose();
   }
-
-  const handlePunto = (monto, banco) => {
-    const paymentObject = {
-      efectivousd,
-      efectivobs,
-      efectivoeuros,
-      punto: {
-        montopunto: monto,
-        bancopunto,
-        bancodestinopunto: banco,
-        montopunto2,
-        bancopunto2,
-        bancodestinopunto2,
-        montopunto3,
-        bancopunto3,
-        bancodestinopunto3,
-      },
-      pagomovil: { montopagomovil, bancopagomovil, bancodestinopagomovil },
-      zelle: { montozelle, zelletitular, zelleref },
-      cashea: {
-        monto: montoCobrarCashea,
-        orden: orderCashea,
-      },
-    };
-    const txtpago =
-      paymentObject.punto.efectivousd > 0
-        ? "Divisas "
-        : "Punto de Venta " +
-          paymentObject.punto.bancodestinopunto +
-          " " +
-          bancodestinopunto2 +
-          " " +
-          bancodestinopunto3;
-    sendPayToParent(paymentObject, txtpago);
-
-    onClose();
-  };
 
   const handleCashUsd = (monto) => {
     const paymentObject = {
@@ -215,6 +184,50 @@ function PaymentForm({
     onClose();
   };
 
+  const handlePunto = (monto, banco) => {
+    const paymentObject = {
+      efectivousd,
+      efectivobs,
+      efectivoeuros,
+      punto: {
+        montopunto: monto,
+        bancopunto,
+        bancodestinopunto: banco,
+        montopunto2,
+        bancopunto2,
+        bancodestinopunto2,
+        montopunto3,
+        bancopunto3,
+        bancodestinopunto3,
+      },
+      pagomovil: { montopagomovil, bancopagomovil, bancodestinopagomovil },
+      zelle: { montozelle, zelletitular, zelleref },
+      cashea: {
+        monto: montoCobrarCashea,
+        orden: orderCashea,
+      },
+    };
+    const txtpago =
+      paymentObject.punto.efectivousd > 0
+        ? "Divisas "
+        : "Punto de Venta " +
+          paymentObject.punto.bancodestinopunto +
+          " " +
+          bancodestinopunto2 +
+          " " +
+          bancodestinopunto3;
+
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: txtpago,
+    };
+
+    sendPayToParent(paymentObject, txtpago, objAbono);
+
+    onClose();
+  };
+
   const handleCashEuro = (monto) => {
     const paymentObject = {
       efectivousd,
@@ -239,7 +252,12 @@ function PaymentForm({
       },
     };
     const txtpago = "Divisas Euros";
-    sendPayToParent(paymentObject, txtpago);
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: txtpago,
+    };
+    sendPayToParent(paymentObject, txtpago, objAbono);
     onClose();
   };
 
@@ -267,7 +285,12 @@ function PaymentForm({
       },
     };
     const txtpago = "Efectivo Bolivares";
-    sendPayToParent(paymentObject, txtpago);
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: txtpago,
+    };
+    sendPayToParent(paymentObject, txtpago, objAbono);
     onClose();
   };
 
@@ -298,7 +321,12 @@ function PaymentForm({
         orden: orderCashea,
       },
     };
-    sendPayToParent(paymentObject, "Pagomovil " + banco);
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: "Pagomovil " + banco,
+    };
+    sendPayToParent(paymentObject, "Pagomovil " + banco, objAbono);
     onClose();
   };
 
@@ -349,7 +377,13 @@ function PaymentForm({
         orden: orderCashea,
       },
     };
-    sendPayToParent(paymentObject, "Zelle");
+    const objAbono = {
+      fecha: fechaAbono,
+      monto: montoAbono,
+      formaPago: "Zelle",
+    };
+
+    sendPayToParent(paymentObject, "Zelle", objAbono);
     onClose();
   };
 
