@@ -804,12 +804,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image > svg {
+.dash-info-image>svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2 > span {
+.dash-info-detail h2>span {
   font-size: 14px;
 }
 
@@ -1841,8 +1841,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus ~ label,
-input:not(:placeholder-shown) ~ label {
+.input:focus~label,
+input:not(:placeholder-shown)~label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1954,12 +1954,12 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe > h1 {
+.titulo-recipe>h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe > h2 {
+.titulo-recipe>h2 {
   width: 100%;
   text-align: center;
 }
@@ -2620,7 +2620,7 @@ summary {
   transition: all 0.3s ease-in-out;
 }
 
-.radio-button input[type="radio"]:checked + .radio {
+.radio-button input[type="radio"]:checked+.radio {
   border-color: #5cb85c;
   transform: translateZ(0px);
   background-color: #fff;
@@ -2631,7 +2631,18 @@ summary {
 .monto-pendiente {
   font-size: 1.3rem;
   color: red;
+  margin-left: 5px;
 }
+
+
+.abonos-cancelados {
+  font-size: 1.3rem;
+  color: blue;
+  margin-left: 5px;
+}
+
+
+
 
 #tabla-abonos {
   font-size: 1rem;

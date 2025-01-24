@@ -65,6 +65,8 @@ export default function ControlEditScreen(props) {
   const [fechaAbono, setFechaAbono] = useState("");
   const [abonos, setAbonos] = useState([]);
   const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
+  const [totalAbonado, setTotalAbonado] = useState(0);
+
 
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
@@ -73,6 +75,28 @@ export default function ControlEditScreen(props) {
   const { success: successUpdate } = controlUpdate;
 
   const dispatch = useDispatch();
+
+
+  const conceptos = [
+    "Profilaxis Dental                       ",
+    "1 sesion de Limpieza Ultrsonica         ",
+    "Aplicacion de Fluor                     ",
+    "Caries Clase I                          ",
+    "Caries Clase II                         ",
+    "Caries Clase III                        ",
+    "Caries Clase IV                         ",
+    "Caries Clase V                          ",
+    "Instalacion de Brackets Superior        ",
+    "Instalacion de Brackets Inferior        ",
+    "Blanqueamiento Dental                   ",
+    "Control de Ortodoncia                   ",
+    "Arco 12 Niti                            ",
+    "Arco 14 Niti                            ",
+    "Arco 16 Niti                            ",
+    "Bracket Caido                           ",
+  ];
+
+  const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
     if (successUpdate) {
@@ -123,27 +147,6 @@ export default function ControlEditScreen(props) {
     }
   }, [control, controlId, dispatch, doctorId, listaDoctores, navigate, successUpdate]);
 
-  const conceptos = [
-    "Profilaxis Dental                       ",
-    "1 sesion de Limpieza Ultrsonica         ",
-    "Aplicacion de Fluor                     ",
-    "Caries Clase I                          ",
-    "Caries Clase II                         ",
-    "Caries Clase III                        ",
-    "Caries Clase IV                         ",
-    "Caries Clase V                          ",
-    "Instalacion de Brackets Superior        ",
-    "Instalacion de Brackets Inferior        ",
-    "Blanqueamiento Dental                   ",
-    "Control de Ortodoncia                   ",
-    "Arco 12 Niti                            ",
-    "Arco 14 Niti                            ",
-    "Arco 16 Niti                            ",
-    "Bracket Caido                           ",
-  ];
-
-  const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
   useEffect(() => {
     const doctorFound = listaDoctores.find((x) => x._id === doctorId);
     if (doctorFound) {
@@ -152,6 +155,7 @@ export default function ControlEditScreen(props) {
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }
   }, [doctorId, listaDoctores]);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -458,7 +462,10 @@ export default function ControlEditScreen(props) {
     }
   };
 
-  const addAbono = async (e) => {
+  const addAbono = async () => {
+
+    const sumaAbonos = abonos.reduce((suma, abono) => suma + abono.monto, 0)
+
     const { value: abono } = await Swal.fire({
       title: "ABONO A CUENTA",
       input: "text",
@@ -472,6 +479,16 @@ export default function ControlEditScreen(props) {
       });
       return;
     }
+    if ((control.montoUsd - (Number(sumaAbonos) + Number(abono))) < 0) {
+      console.log("control.montoUsd - (Number(sumaAbonos) + Number(abono))", control.montoUsd - (Number(sumaAbonos) + Number(abono)))
+      Swal.fire({
+        title: "PAGO MAYOR A DEUDA",
+      });
+      return;
+    }
+
+
+
 
     const { value: date } = await Swal.fire({
       title: "Fecha del Abono",
@@ -495,9 +512,13 @@ export default function ControlEditScreen(props) {
   };
 
   const deleteAbono = (index) => {
-    const found = abonos.slice(index);
+
+    const found = abonos.filter((x, inx) => inx !== index);
     setAbonos(found);
   };
+
+
+
   console.log("abonos:", abonos);
   return (
     <div>
@@ -630,15 +651,15 @@ export default function ControlEditScreen(props) {
                   <summary>
                     Abonos{" "}
                     {
-                      <span className="monto-pendiente">
-                        Pendiente por Pagar: $
-                        {control.montoUsd - control.abonos.reduce((suma, abono) => suma + abono.monto, 0)}
+                      <span className={control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0 ? "monto-pendiente" : "abonos-cancelados"}>
+                        {control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0 ? "Pendiente por Pagar: $" : "Deuda Cancelada: $"}
+                        {Number(control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                       </span>
                     }
                   </summary>
                   <div className="details__content">
                     <div>
-                      <button className="simple-button"onClick={(e) => addAbono(e)}>Registrar Abono</button>
+                      <button className="simple-button" onClick={(e) => addAbono(e)}>Registrar Abono</button>
                       <>
                         <table className="styled-table" id="tabla-abonos">
                           <thead>
@@ -686,7 +707,7 @@ export default function ControlEditScreen(props) {
                                 Total Abonado:
                               </th>
                               <th scope="row">
-                                ${Number(control.abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
+                                ${Number(abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                               </th>
                               <th></th>
                             </tr>

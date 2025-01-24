@@ -417,7 +417,7 @@ export default function ControlCreateScreen(props) {
     setLaboratorio("");
   };
 
- 
+
 
   function onValueChange(event) {
     // Updating the state with the selected radio button's value
@@ -449,6 +449,47 @@ export default function ControlCreateScreen(props) {
     setTxtformapago(textopago);
     setAbonos(parAbono);
   };
+
+  const abonoHandler = async () => {
+
+    const { value: abono } = await Swal.fire({
+      title: "ABONO A CUENTA",
+      input: "text",
+      inputLabel: "Monto en US$",
+      inputPlaceholder: "Ingrese un monto",
+    });
+
+
+    if (!abono) {
+      Swal.fire({
+        title: "OPERACION CANCELADAx",
+      });
+      setSelectedOption("");
+      return;
+    }
+
+    const { value: date } = await Swal.fire({
+      title: "Fecha del Abono",
+      input: "date",
+      didOpen: () => {
+        const today = new Date().toISOString();
+        Swal.getInput().value = today.split("T")[0];
+      },
+    });
+    if (!date) {
+      Swal.fire({
+        title: "OPERACION CANCELADA",
+      });
+      setSelectedOption("");
+      return;
+    }
+
+    setMontoAbono(Number(abono))
+    setFechaAbono(new Date(date).toISOString())
+    setShowPaymentModalAbono(true);
+
+  };
+
 
   return (
     <div>

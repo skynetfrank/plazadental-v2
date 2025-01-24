@@ -18,7 +18,6 @@ import { deleteControl } from "../actions/controlActions";
 import { faFileInvoiceDollar, faMedkit, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
-import ControlAddIcon from "../icons/ControlAddIcon";
 import EditIcon from "../icons/EditIcon";
 
 export default function ControlesScreen(props) {
