@@ -436,7 +436,7 @@ export default function ControlCreateScreen(props) {
     }
   }
 
-  const handlePayFromChild = (data, textopago, parAbono) => {
+  const handlePayFromChild = (data, textopago, parAbono, parIsAbono) => {
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -457,6 +457,13 @@ export default function ControlCreateScreen(props) {
     setTotalPago(Number(suma));
     setFormaPago(textopago);
     setAbonos(parAbono);
+    if (parIsAbono) {
+      setCondiciones("CREDITO")
+    }
+    if (!parIsAbono) {
+      setCondiciones("CONTADO")
+    }
+
   };
 
   const abonoHandler = async () => {

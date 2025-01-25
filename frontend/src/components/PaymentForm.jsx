@@ -146,7 +146,7 @@ function PaymentForm({
       formaPago: "Pago-Mixto",
     };
 
-    sendPayToParent(paymentObject, "Pago-Mixto", objAbono);
+    sendPayToParent(paymentObject, "Pago-Mixto", isAbono ? objAbono : [], isAbono);
     onClose();
   }
 
@@ -181,7 +181,7 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
 
     onClose();
   };
@@ -225,7 +225,7 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, objAbono);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
 
     onClose();
   };
@@ -259,7 +259,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, objAbono);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
     onClose();
   };
 
@@ -292,7 +292,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, objAbono);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
     onClose();
   };
 
@@ -328,7 +328,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: "Pagomovil " + banco,
     };
-    sendPayToParent(paymentObject, "Pagomovil " + banco, objAbono);
+    sendPayToParent(paymentObject, "Pagomovil " + banco, isAbono ? objAbono : []);
     onClose();
   };
 
@@ -385,7 +385,7 @@ function PaymentForm({
       formaPago: "Zelle",
     };
 
-    sendPayToParent(paymentObject, "Zelle", objAbono);
+    sendPayToParent(paymentObject, "Zelle", isAbono ? objAbono : []);
     onClose();
   };
 
