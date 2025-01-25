@@ -55,7 +55,7 @@ export default function ControlCreateScreen(props) {
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
-  const [txtformapago, setTxtformapago] = useState("");
+  const [formaPago, setFormaPago] = useState("");
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
@@ -66,7 +66,8 @@ export default function ControlCreateScreen(props) {
   const [selectedOption, setSelectedOption] = useState("CONTADO");
   const [montoAbono, setMontoAbono] = useState(0);
   const [fechaAbono, setFechaAbono] = useState("");
-  const [abonos, setAbonos] = useState({});
+  const [abonos, setAbonos] = useState([]);
+  const [condiciones, setCondiciones] = useState("");
 
   const controlCreate = useSelector((state) => state.controlCreate);
   const { success, control } = controlCreate;
@@ -147,6 +148,8 @@ export default function ControlCreateScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log("formaPago", formaPago)
+    console.log("condiciones", condiciones)
     setMontoComisionPlaza(tasaComisionPlaza * montoUsd);
     setMontoComisionDr(tasaComisionDr * montoUsd);
     if (!doctorId) {
@@ -199,7 +202,9 @@ export default function ControlCreateScreen(props) {
         laboratorio,
         conceptoLaboratorio,
         montoServicios,
-        abonos
+        abonos,
+        condiciones,
+        formaPago
       )
     );
   };
@@ -423,7 +428,11 @@ export default function ControlCreateScreen(props) {
     // Updating the state with the selected radio button's value
     setSelectedOption(event.target.value);
     if (event.target.value === "ABONOS") {
+      setCondiciones("CREDITO")
       abonoHandler();
+    }
+    if (event.target.value === "CONTADO") {
+      setCondiciones("CONTADO")
     }
   }
 
@@ -446,7 +455,7 @@ export default function ControlCreateScreen(props) {
       Number(data.efectivoeuros);
 
     setTotalPago(Number(suma));
-    setTxtformapago(textopago);
+    setFormaPago(textopago);
     setAbonos(parAbono);
   };
 
@@ -611,7 +620,7 @@ export default function ControlCreateScreen(props) {
                   className="btn-pago font-x pad-0 m-0 negrita centrado"
                   onClick={() => setShowPaymentModal(true)}
                 >
-                  {txtformapago ? txtformapago : "Registrar Pago"}
+                  {formaPago ? formaPago : "Registrar Pago"}
                 </button>
               </div>
             </div>

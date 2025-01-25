@@ -92,13 +92,9 @@ const controlSchema = new mongoose.Schema(
     idPacienteOld: { type: String, default: "" },
     isPaid: { type: Boolean, default: false },
     formaPago: { type: String, default: "" },
-    abonos:
-      [{
-        fecha: { type: Date },
-        monto: { type: Number },
-        formaPago: { type: String },
-      }
-      ]
+    condiciones: { type: String },
+
+    abonos: []
   },
 
   {

@@ -11,6 +11,7 @@ function PaymentForm({
   orderCashea,
   montoAbono,
   fechaAbono,
+  isAbono,
 }) {
   const modalRef = useRef();
   const [data, setData] = useState("");
@@ -173,13 +174,14 @@ function PaymentForm({
       },
     };
     const txtpago = "Divisas US$";
+
     const objAbono = {
       fecha: fechaAbono,
       monto: montoAbono,
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, objAbono);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
 
     onClose();
   };
@@ -211,11 +213,11 @@ function PaymentForm({
       paymentObject.punto.efectivousd > 0
         ? "Divisas "
         : "Punto de Venta " +
-          paymentObject.punto.bancodestinopunto +
-          " " +
-          bancodestinopunto2 +
-          " " +
-          bancodestinopunto3;
+        paymentObject.punto.bancodestinopunto +
+        " " +
+        bancodestinopunto2 +
+        " " +
+        bancodestinopunto3;
 
     const objAbono = {
       fecha: fechaAbono,

@@ -688,6 +688,7 @@ controlRouter.post(
       montoServicios: req.body.montoServicios,
       abonos: req.body.abonos,
       formaPago: req.body.formaPago,
+      condiciones: req.body.condiciones,
       montoUsd: req.body.montoUsd,
       montoBs: req.body.montoBs,
       tasaIva: req.body.tasaIva,
@@ -758,6 +759,8 @@ controlRouter.put(
       control.montoComisionPlaza = req.body.montoComisionPlaza;
       control.pago = req.body.pago;
       control.abonos = req.body.abonos;
+      control.condiciones = req.body.condiciones;
+      control.formaPago = req.body.formaPago;
       const updatedControl = await control.save();
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {

@@ -54,7 +54,7 @@ export default function ControlEditScreen(props) {
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
-  const [txtformapago, setTxtformapago] = useState(0);
+  const [formaPago, setFormaPago] = useState(0);
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
@@ -66,6 +66,7 @@ export default function ControlEditScreen(props) {
   const [abonos, setAbonos] = useState([]);
   const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
   const [totalAbonado, setTotalAbonado] = useState(0);
+  const [condiciones, setCondiciones] = useState("");
 
 
   const controlDetails = useSelector((state) => state.controlDetails);
@@ -141,6 +142,8 @@ export default function ControlEditScreen(props) {
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
       setAbonos(control.abonos || []);
+      setFormaPago(control.formaPago || "")
+      setCondiciones(control.condiciones || "")
       let doc = listaDoctores.find((doc) => doc._id === doctorId);
 
       setNombreDoctor(doc?.nombre + " " + doc?.apellido);
@@ -202,6 +205,8 @@ export default function ControlEditScreen(props) {
         conceptoLaboratorio,
         montoServicios,
         abonos,
+        formaPago,
+        condiciones
       })
     );
   };
@@ -425,7 +430,7 @@ export default function ControlEditScreen(props) {
       Number(data.efectivoeuros);
 
     setTotalPago(Number(suma));
-    setTxtformapago(textopago);
+    setFormaPago(textopago);
     setAbonos((prev) => {
       return [...prev, parAbono];
     });
@@ -443,17 +448,6 @@ export default function ControlEditScreen(props) {
     setConceptoLaboratorio("");
     setLaboratorio("");
   };
-
-  function onValueChange(event) {
-    // Updating the state with the selected radio button's value
-    setSelectedOption(event.target.value);
-    if (event.target.value === "ABONOS") {
-      abonoHandler();
-    }
-    if (event.target.value === "CONTADO") {
-      setShowPaymentModal(true);
-    }
-  }
 
   const deleteHandler = (abono) => {
     if (window.confirm("Esta Seguro de Eliminar Este pedido?")) {
@@ -517,6 +511,17 @@ export default function ControlEditScreen(props) {
     setAbonos(found);
   };
 
+
+  function onValueChange(event) {
+    // Updating the state with the selected radio button's value
+    setSelectedOption(event.target.value);
+    if (event.target.value === "ABONOS") {
+      addAbono()
+    }
+    if (event.target.value === "CONTADO") {
+      setShowPaymentModal(true);
+    }
+  }
 
 
   console.log("abonos:", abonos);
@@ -718,7 +723,7 @@ export default function ControlEditScreen(props) {
                   </div>
                 </details>
               ) : (
-                "NO HAY ABONOS REGISTRADOS"
+                ""
               )}
             </div>
             <form id="form-new-control" onSubmit={submitHandler}>

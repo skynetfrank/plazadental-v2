@@ -61,6 +61,7 @@ export const createControl =
     conceptoLaboratorio,
     montoServicios,
     abonos,
+    condiciones,
     formaPago
   ) =>
     async (dispatch, getState) => {
@@ -100,6 +101,7 @@ export const createControl =
             conceptoLaboratorio,
             montoServicios,
             abonos,
+            condiciones,
             formaPago
           },
           {
