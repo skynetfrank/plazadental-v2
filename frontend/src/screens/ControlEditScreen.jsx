@@ -54,7 +54,7 @@ export default function ControlEditScreen(props) {
   const [idServ, setIdServ] = useState("");
   const [precio, setPrecio] = useState(0);
   const [totalPago, setTotalPago] = useState(0);
-  const [formaPago, setFormaPago] = useState(0);
+  const [formaPago, setFormaPago] = useState("");
   const [listaDoctores] = useState(JSON.parse(localStorage.getItem("doctores")));
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
@@ -68,7 +68,6 @@ export default function ControlEditScreen(props) {
   const [totalAbonado, setTotalAbonado] = useState(0);
   const [condiciones, setCondiciones] = useState("");
 
-
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
 
@@ -76,7 +75,6 @@ export default function ControlEditScreen(props) {
   const { success: successUpdate } = controlUpdate;
 
   const dispatch = useDispatch();
-
 
   const conceptos = [
     "Profilaxis Dental                       ",
@@ -142,8 +140,8 @@ export default function ControlEditScreen(props) {
       setLaboratorio(control.laboratorio || "");
       setDescuento(control.descuento || 0);
       setAbonos(control.abonos || []);
-      setFormaPago(control.formaPago || "")
-      setCondiciones(control.condiciones || "")
+      setFormaPago(control.formaPago || "");
+      setCondiciones(control.condiciones || "");
       let doc = listaDoctores.find((doc) => doc._id === doctorId);
 
       setNombreDoctor(doc?.nombre + " " + doc?.apellido);
@@ -158,7 +156,6 @@ export default function ControlEditScreen(props) {
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
     }
   }, [doctorId, listaDoctores]);
-
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -206,7 +203,7 @@ export default function ControlEditScreen(props) {
         montoServicios,
         abonos,
         formaPago,
-        condiciones
+        condiciones,
       })
     );
   };
@@ -431,9 +428,11 @@ export default function ControlEditScreen(props) {
 
     setTotalPago(Number(suma));
     setFormaPago(textopago);
-    setAbonos((prev) => {
-      return [...prev, parAbono];
-    });
+    if (parAbono) {
+      setAbonos((prev) => {
+        return [...prev, parAbono];
+      });
+    }
   };
 
   const handleConceptFromChild = (concepto) => {
@@ -457,8 +456,7 @@ export default function ControlEditScreen(props) {
   };
 
   const addAbono = async () => {
-
-    const sumaAbonos = abonos.reduce((suma, abono) => suma + abono.monto, 0)
+    const sumaAbonos = abonos.reduce((suma, abono) => suma + abono.monto, 0);
 
     const { value: abono } = await Swal.fire({
       title: "ABONO A CUENTA",
@@ -473,16 +471,16 @@ export default function ControlEditScreen(props) {
       });
       return;
     }
-    if ((control.montoUsd - (Number(sumaAbonos) + Number(abono))) < 0) {
-      console.log("control.montoUsd - (Number(sumaAbonos) + Number(abono))", control.montoUsd - (Number(sumaAbonos) + Number(abono)))
+    if (control.montoUsd - (Number(sumaAbonos) + Number(abono)) < 0) {
+      console.log(
+        "control.montoUsd - (Number(sumaAbonos) + Number(abono))",
+        control.montoUsd - (Number(sumaAbonos) + Number(abono))
+      );
       Swal.fire({
         title: "PAGO MAYOR A DEUDA",
       });
       return;
     }
-
-
-
 
     const { value: date } = await Swal.fire({
       title: "Fecha del Abono",
@@ -506,25 +504,22 @@ export default function ControlEditScreen(props) {
   };
 
   const deleteAbono = (index) => {
-
     const found = abonos.filter((x, inx) => inx !== index);
     setAbonos(found);
   };
-
 
   function onValueChange(event) {
     // Updating the state with the selected radio button's value
     setSelectedOption(event.target.value);
     if (event.target.value === "ABONOS") {
-      addAbono()
+      addAbono();
     }
     if (event.target.value === "CONTADO") {
       setShowPaymentModal(true);
     }
   }
 
-
-  console.log("abonos:", abonos);
+  console.log("abonos", abonos.length);
   return (
     <div>
       {loading ? (
@@ -614,8 +609,10 @@ export default function ControlEditScreen(props) {
                     ""
                   )}
                   <hr />
-
-                  <p className="centrado negrita minw-30 font-16">Total: ${montoUsd}</p>
+                  <div className="flx column">
+                    <p className="centrado negrita minw-30 font-16">Total: ${Number(montoUsd).toFixed(2)}</p>
+                    <p>{formaPago ? formaPago : ""}</p>
+                  </div>
                   {control.abonos.length > 0 ? (
                     ""
                   ) : (
@@ -651,20 +648,30 @@ export default function ControlEditScreen(props) {
               )}
             </div>
             <div className="mtop-2">
-              {control.abonos.length > 0 ? (
+              {abonos.length > 0 ? (
                 <details className="details" name="detail-control">
                   <summary>
                     Abonos{" "}
                     {
-                      <span className={control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0 ? "monto-pendiente" : "abonos-cancelados"}>
-                        {control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0 ? "Pendiente por Pagar: $" : "Deuda Cancelada: $"}
+                      <span
+                        className={
+                          control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0
+                            ? "monto-pendiente"
+                            : "abonos-cancelados"
+                        }
+                      >
+                        {control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0
+                          ? "Pendiente por Pagar: $"
+                          : "Deuda Cancelada: $"}
                         {Number(control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                       </span>
                     }
                   </summary>
                   <div className="details__content">
                     <div>
-                      <button className="simple-button" onClick={(e) => addAbono(e)}>Registrar Abono</button>
+                      <button className="simple-button" onClick={(e) => addAbono(e)}>
+                        Registrar Abono
+                      </button>
                       <>
                         <table className="styled-table" id="tabla-abonos">
                           <thead>
@@ -676,35 +683,40 @@ export default function ControlEditScreen(props) {
                             </tr>
                           </thead>
                           <tbody>
-                            {abonos?.map((abono, inx) => (
-                              <tr key={inx}>
-                                <td>
-                                  <div>
-                                    <span className="font-x">{dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}</span>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div>
-                                    <span className="font-x">{abono.formaPago}</span>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div>
-                                    <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
-                                  </div>
-                                </td>
+                            {abonos?.map((abono, inx) => {
+                              if (!abono.fecha) {
+                                return "";
+                              }
+                              return (
+                                <tr key={inx}>
+                                  <td>
+                                    <div>
+                                      <span className="font-x">{dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}</span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <span className="font-x">{abono.formaPago}</span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div>
+                                      <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
+                                    </div>
+                                  </td>
 
-                                <td data-heading="Acciones">
-                                  <button
-                                    type="button"
-                                    className="btn-icon-container table"
-                                    onClick={() => deleteAbono(inx)}
-                                  >
-                                    <TrashIcon />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
+                                  <td data-heading="Acciones">
+                                    <button
+                                      type="button"
+                                      className="btn-icon-container table"
+                                      onClick={() => deleteAbono(inx)}
+                                    >
+                                      <TrashIcon />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                           <tfoot>
                             <tr>

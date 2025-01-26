@@ -15,10 +15,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const localdb = "mongodb://localhost/plazadentaldb";
+const localdb = "mongodb://127.0.0.1:27017/plazadentaldb";
 //process.env.MONGODB_URI;
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(localdb)
   .then(() => console.log("mongodb =>: conectado"))
   .catch((e) => console.log(e.message));
 

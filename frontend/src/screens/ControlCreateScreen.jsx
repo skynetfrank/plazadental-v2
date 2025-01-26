@@ -148,8 +148,8 @@ export default function ControlCreateScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("formaPago", formaPago)
-    console.log("condiciones", condiciones)
+    console.log("formaPago", formaPago);
+    console.log("condiciones", condiciones);
     setMontoComisionPlaza(tasaComisionPlaza * montoUsd);
     setMontoComisionDr(tasaComisionDr * montoUsd);
     if (!doctorId) {
@@ -422,17 +422,15 @@ export default function ControlCreateScreen(props) {
     setLaboratorio("");
   };
 
-
-
   function onValueChange(event) {
     // Updating the state with the selected radio button's value
     setSelectedOption(event.target.value);
     if (event.target.value === "ABONOS") {
-      setCondiciones("CREDITO")
+      setCondiciones("CREDITO");
       abonoHandler();
     }
     if (event.target.value === "CONTADO") {
-      setCondiciones("CONTADO")
+      setCondiciones("CONTADO");
     }
   }
 
@@ -456,25 +454,25 @@ export default function ControlCreateScreen(props) {
 
     setTotalPago(Number(suma));
     setFormaPago(textopago);
-    setAbonos(parAbono);
-    if (parIsAbono) {
-      setCondiciones("CREDITO")
-    }
-    if (!parIsAbono) {
-      setCondiciones("CONTADO")
+    if (parAbono) {
+      setAbonos(parAbono);
     }
 
+    if (parIsAbono) {
+      setCondiciones("CREDITO");
+    }
+    if (!parIsAbono) {
+      setCondiciones("CONTADO");
+    }
   };
 
   const abonoHandler = async () => {
-
     const { value: abono } = await Swal.fire({
       title: "ABONO A CUENTA",
       input: "text",
       inputLabel: "Monto en US$",
       inputPlaceholder: "Ingrese un monto",
     });
-
 
     if (!abono) {
       Swal.fire({
@@ -500,12 +498,10 @@ export default function ControlCreateScreen(props) {
       return;
     }
 
-    setMontoAbono(Number(abono))
-    setFechaAbono(new Date(date).toISOString())
+    setMontoAbono(Number(abono));
+    setFechaAbono(new Date(date).toISOString());
     setShowPaymentModalAbono(true);
-
   };
-
 
   return (
     <div>

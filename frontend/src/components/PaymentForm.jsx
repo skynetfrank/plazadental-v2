@@ -14,28 +14,25 @@ function PaymentForm({
   isAbono,
 }) {
   const modalRef = useRef();
-  const [data, setData] = useState("");
-
-  const [cambio] = useState(Number(localStorage.getItem("cambioBcv")).toFixed(2));
 
   const [efectivousd, setEfectivousd] = useState("");
   const [efectivoeuros, setEfectivoeuros] = useState("");
   const [efectivobs, setEfectivobs] = useState("");
 
   const [montopunto, setMontopunto] = useState("");
-  const [bancopunto, setBancopunto] = useState("");
+  const [bancopunto] = useState("");
   const [bancodestinopunto, setBancodestinopunto] = useState("");
 
   const [montopunto2, setMontopunto2] = useState("");
-  const [bancopunto2, setBancopunto2] = useState("");
+  const [bancopunto2] = useState("");
   const [bancodestinopunto2, setBancodestinopunto2] = useState("");
 
   const [montopunto3, setMontopunto3] = useState("");
-  const [bancopunto3, setBancopunto3] = useState("");
+  const [bancopunto3] = useState("");
   const [bancodestinopunto3, setBancodestinopunto3] = useState("");
 
   const [montopagomovil, setMontopagomovil] = useState("");
-  const [bancopagomovil, setBancopagomovil] = useState("");
+  const [bancopagomovil] = useState("");
   const [bancodestinopagomovil, setBancodestinopagomovil] = useState("");
 
   const [montozelle, setMontozelle] = useState("");
@@ -43,28 +40,7 @@ function PaymentForm({
   const [zelleref, setZelleref] = useState("");
 
   const [openMix, setOpenMix] = useState("");
-
-  const [memo, setMemo] = useState("");
-
-  const [totalPago, setTotalPago] = useState(0);
-
-  const listaBancos = [
-    "",
-    "Banesco",
-    "Venezuela",
-    "Mercantil",
-    "Provincial",
-    "Plaza",
-    "Caribe",
-    "Banco BNC",
-    "Banco BOD",
-    "Tesoro",
-    "Vzlano Cdto",
-    "Banca Amiga",
-    "Bicentenario",
-    "Otro Banco",
-  ];
-  const bancosDemoda = ["", "Banesco", "Venezuela", "Plaza", "Otro Banco"];
+  const bancosDemoda = ["", "Banesco", "Venezuela", "Plaza", "Otro Banco", "BNC"];
 
   if (montoPagoUsd <= 0) {
     Swal.fire("No Ha Registrado Servicios!");
@@ -146,7 +122,7 @@ function PaymentForm({
       formaPago: "Pago-Mixto",
     };
 
-    sendPayToParent(paymentObject, "Pago-Mixto", isAbono ? objAbono : [], isAbono);
+    sendPayToParent(paymentObject, "Pago-Mixto", isAbono ? objAbono : "", isAbono);
     onClose();
   }
 
@@ -181,7 +157,7 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
 
     onClose();
   };
@@ -213,11 +189,11 @@ function PaymentForm({
       paymentObject.punto.efectivousd > 0
         ? "Divisas "
         : "Punto de Venta " +
-        paymentObject.punto.bancodestinopunto +
-        " " +
-        bancodestinopunto2 +
-        " " +
-        bancodestinopunto3;
+          paymentObject.punto.bancodestinopunto +
+          " " +
+          bancodestinopunto2 +
+          " " +
+          bancodestinopunto3;
 
     const objAbono = {
       fecha: fechaAbono,
@@ -225,7 +201,7 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
 
     onClose();
   };
@@ -259,7 +235,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -292,7 +268,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -328,7 +304,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: "Pagomovil " + banco,
     };
-    sendPayToParent(paymentObject, "Pagomovil " + banco, isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, "Pagomovil " + banco, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -385,7 +361,7 @@ function PaymentForm({
       formaPago: "Zelle",
     };
 
-    sendPayToParent(paymentObject, "Zelle", isAbono ? objAbono : []);
+    sendPayToParent(paymentObject, "Zelle", isAbono ? objAbono : "");
     onClose();
   };
 
