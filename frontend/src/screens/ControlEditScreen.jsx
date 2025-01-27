@@ -67,6 +67,7 @@ export default function ControlEditScreen(props) {
   const [showPaymentModalAbono, setShowPaymentModalAbono] = useState(false);
   const [totalAbonado, setTotalAbonado] = useState(0);
   const [condiciones, setCondiciones] = useState("");
+  const [isPaid, setIsPaid] = useState(false);
 
   const controlDetails = useSelector((state) => state.controlDetails);
   const { loading, error, control } = controlDetails;
@@ -142,6 +143,7 @@ export default function ControlEditScreen(props) {
       setAbonos(control.abonos || []);
       setFormaPago(control.formaPago || "");
       setCondiciones(control.condiciones || "");
+      setIsPaid(control.isPaid || false)
       let doc = listaDoctores.find((doc) => doc._id === doctorId);
 
       setNombreDoctor(doc?.nombre + " " + doc?.apellido);
@@ -408,7 +410,7 @@ export default function ControlEditScreen(props) {
     setTratamiento((current) => current + e.target.value);
   };
 
-  const handlePayFromChild = (data, textopago, parAbono) => {
+  const handlePayFromChild = (data, textopago, parAbono,parIsAbono) => {
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -428,6 +430,13 @@ export default function ControlEditScreen(props) {
 
     setTotalPago(Number(suma));
     setFormaPago(textopago);
+    
+    if (parIsAbono) {
+      setCondiciones("CREDITO");
+    }
+    if (!parIsAbono) {
+      setCondiciones("CONTADO");
+    }
     if (parAbono) {
       setAbonos((prev) => {
         return [...prev, parAbono];
@@ -467,7 +476,7 @@ export default function ControlEditScreen(props) {
 
     if (!abono) {
       Swal.fire({
-        title: "OPERACION CANCELADAmx",
+        title: "OPERACION CANCELADA",
       });
       return;
     }
@@ -497,7 +506,7 @@ export default function ControlEditScreen(props) {
 
       return;
     }
-
+    setIsPaid(false)
     setMontoAbono(Number(abono));
     setFechaAbono(new Date(date).toISOString());
     setShowPaymentModalAbono(true);
