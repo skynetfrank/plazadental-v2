@@ -56,33 +56,50 @@ export default function ControlesScreen(props) {
       confirmButtonText: "Si, Eminar",
       cancelButtonText: "Cancelar",
     }).then((result) => {
-      let pw = prompt("Ingrese su clave", "");
-
-      if (pw !== "matias01") {
-        Swal.fire({
-          title: "Clave Erronea, verifique...",
-          text: "Ingrese Su Clave de Administrador",
-          icon: "warning",
-        });
+      //new way for delete
+      Swal.fire({
+        title: "Eliminar Control",
+        input: "password",
+        inputLabel: "Password",
+        inputPlaceholder: "Ingrese su clave",
+        inputAttributes: {
+          maxlength: "10",
+          autocapitalize: "off",
+          autocorrect: "off",
+        },
+      }).then((result) => {
+        console.log("result:", result);
         return;
-      }
-      if (pw === "matias01") {
-        dispatch(deleteControl(control._id));
-        dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
-        dispatch(detailsPaciente(pacienteId));
-        Swal.fire({
-          title: "Control Eliminado con Exito!",
-          text: "Eliminar Control",
-          icon: "success",
-        });
-      }
+        /*  if (password !== "matias01") {
+          Swal.fire({
+            title: "Clave Erronea, verifique...",
+            text: "Ingrese Su Clave de Administrador",
+            icon: "warning",
+          });
+          return;
+        }
+        if (pw === "matias01") {
+          dispatch(deleteControl(control._id));
+          dispatch(deleteControlPaciente(pacienteId, { controlID: control._id }));
+          dispatch(detailsPaciente(pacienteId));
+          Swal.fire({
+            title: "Control Eliminado con Exito!",
+            text: "Eliminar Control",
+            icon: "success",
+          });
+        }
+        return; */
+      });
+
+      //hasta aqui new way
+
+      //let password= prompt("Ingrese su clave", "");
     });
   };
 
   const addControlHandler = () => {
     navigate(`/crearcontrol/${paciente._id}?escita1=${"no"}`);
   };
-
 
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -222,11 +239,20 @@ export default function ControlesScreen(props) {
                               })}
                             </div>
                           </div>
-                          {Number(item.control?.montoLab) > 0 ? (<span className="negrita">Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}</span>) : ("")}
-                          {Number(item.control?.descuento) > 0 ? (<span className="negrita">
-                            Descuento&ensp;: ${Number(item.control?.descuento).toFixed(2)}
-                          </span>) : ("")}
-
+                          {Number(item.control?.montoLab) > 0 ? (
+                            <span className="negrita">
+                              Laboratorio: ${Number(item.control?.montoLab * 4).toFixed(2)}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                          {Number(item.control?.descuento) > 0 ? (
+                            <span className="negrita">
+                              Descuento&ensp;: ${Number(item.control?.descuento).toFixed(2)}
+                            </span>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
 
@@ -243,9 +269,9 @@ export default function ControlesScreen(props) {
                             {" "}
                             {itemPago.montopunto > 0
                               ? "Punto Bancario: " +
-                              (item.control.pago.montopunto +
-                                item.control.pago.montopunto2 +
-                                item.control.pago.montopunto3)
+                                (item.control.pago.montopunto +
+                                  item.control.pago.montopunto2 +
+                                  item.control.pago.montopunto3)
                               : ""}
                           </p>
                           <p>
@@ -264,11 +290,11 @@ export default function ControlesScreen(props) {
                             Comision Plaza&ensp;: $
                             {Number(item.control.montoComisionPlaza) > 1
                               ? Number(item.control.montoComisionPlaza).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
                               : Number(item.control.montoComisionPlaza).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
+                                " (" +
+                                (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
@@ -278,11 +304,11 @@ export default function ControlesScreen(props) {
                             Comision Doctor: $
                             {Number(item.control.montoComisionDr) > 1
                               ? Number(item.control.montoComisionDr).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                                " (" +
+                                (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
                               : Number(item.control.montoComisionDr).toFixed(2) +
-                              " (" +
-                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
+                                " (" +
+                                (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}
                           </p>
                         ) : (
                           ""
