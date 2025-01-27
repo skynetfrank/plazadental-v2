@@ -68,7 +68,7 @@ export default function ControlCreateScreen(props) {
   const [fechaAbono, setFechaAbono] = useState("");
   const [abonos, setAbonos] = useState([]);
   const [condiciones, setCondiciones] = useState("");
-
+  const [isPaid, setIsPaid] = useState(false);
   const controlCreate = useSelector((state) => state.controlCreate);
   const { success, control } = controlCreate;
 
@@ -204,7 +204,8 @@ export default function ControlCreateScreen(props) {
         montoServicios,
         abonos,
         condiciones,
-        formaPago
+        formaPago,
+        isPaid
       )
     );
   };

@@ -702,6 +702,7 @@ controlRouter.post(
       montoComisionDr: req.body.montoComisionDr,
       montoComisionPlaza: req.body.montoComisionPlaza,
       pago: req.body.pago,
+      isPaid: req.body.isPaid,
       factura: req.body.factura,
       facturaControl: req.body.facturacontrol,
       fechaFactura: req.body.fechaFactura,
@@ -761,6 +762,7 @@ controlRouter.put(
       control.abonos = req.body.abonos;
       control.condiciones = req.body.condiciones;
       control.formaPago = req.body.formaPago;
+      control.isPaid = req.body.isPaid;
       const updatedControl = await control.save();
       res.send({ message: "Control Actualizado", control: updatedControl });
     } else {
