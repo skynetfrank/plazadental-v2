@@ -62,8 +62,7 @@ export const createControl =
     montoServicios,
     abonos,
     condiciones,
-    formaPago,
-    isPaid
+    formaPago
   ) =>
     async (dispatch, getState) => {
       dispatch({ type: CONTROL_CREATE_REQUEST });
@@ -103,8 +102,7 @@ export const createControl =
             montoServicios,
             abonos,
             condiciones,
-            formaPago,
-            isPaid
+            formaPago
           },
           {
             headers: { Authorization: `Bearer ${userInfo.token}` },
