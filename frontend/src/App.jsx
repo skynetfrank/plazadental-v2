@@ -10,7 +10,14 @@ import { listPacientes } from "./actions/pacienteActions";
 import { listDoctores } from "./actions/doctorActions";
 import { listAllServicios, listServicios } from "./actions/servicioActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faPowerOff, faSignOut, faUnlockAlt, faUnlockKeyhole, faUserLock } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLock,
+  faPowerOff,
+  faSignOut,
+  faUnlockAlt,
+  faUnlockKeyhole,
+  faUserLock,
+} from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 
 function App() {
@@ -70,13 +77,18 @@ function App() {
               </Link>
               <div className="flx column pad-0 brand-container ml">
                 <h2>Plaza Dental</h2>
-                <span className="negrita font-1 header-date">Caracas, {dayjs(hoy.toLocaleDateString()).format("DD/MM/YYYY")}</span>
+                <span className="negrita font-1 header-date">
+                  Caracas, {dayjs(hoy.toLocaleDateString()).format("DD/MM/YYYY")}
+                </span>
               </div>
             </div>
-            {userInfo ? (<button className="btn-bcv" onClick={cambioHandler}>
-              <span className="header-bcv pad-1">BCV: {Number(localStorage.getItem("cambioBcv")).toFixed(2)}</span>
-            </button>) : ("")}
-
+            {userInfo ? (
+              <button className="btn-bcv" onClick={cambioHandler}>
+                <span className="header-bcv pad-1">BCV: {Number(localStorage.getItem("cambioBcv")).toFixed(2)}</span>
+              </button>
+            ) : (
+              ""
+            )}
 
             <div>
               {userInfo ? (
@@ -99,7 +111,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span className="negrita">27ENERO2025</span>
+            <span className="negrita">28ENERO2025</span>
           </footer>
         </div>
       )}
