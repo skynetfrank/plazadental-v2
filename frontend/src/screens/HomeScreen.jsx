@@ -94,7 +94,7 @@ function HomeScreen() {
           ) : (
             ""
           )}
-          {userInfo.email === "rony@admin.com" ? (<a
+          {userInfo.email === "rony@gmail.com" ? (<a
             href="https://plaza-stock-49ze4p6ks-franklin-bolivars-projects.vercel.app/"
             rel="nofollow noopener noreferrer"
             target="_blank"
