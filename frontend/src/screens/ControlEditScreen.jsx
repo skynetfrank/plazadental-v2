@@ -410,7 +410,7 @@ export default function ControlEditScreen(props) {
     setTratamiento((current) => current + e.target.value);
   };
 
-  const handlePayFromChild = (data, textopago, parAbono,parIsAbono) => {
+  const handlePayFromChild = (data, textopago, parAbono, parIsAbono) => {
     setPago(data);
     const bs = Number(data.efectivobs) / Number(cambioBcv);
     const punto = Number(data.punto.montopunto) / Number(cambioBcv);
@@ -430,7 +430,7 @@ export default function ControlEditScreen(props) {
 
     setTotalPago(Number(suma));
     setFormaPago(textopago);
-    
+
     if (parIsAbono) {
       setCondiciones("CREDITO");
     }
@@ -622,35 +622,33 @@ export default function ControlEditScreen(props) {
                     <p className="centrado negrita minw-30 font-16">Total: ${Number(montoUsd).toFixed(2)}</p>
                     <p>{formaPago ? formaPago : ""}</p>
                   </div>
-                  {control.abonos.length > 0 ? (
-                    ""
-                  ) : (
-                    <div className="flx jcenter">
-                      <label className="radio-button">
-                        <input
-                          type="radio"
-                          name="abono-radio"
-                          value="CONTADO"
-                          checked={selectedOption === "CONTADO"}
-                          onChange={onValueChange}
-                        />
-                        <span className="radio"></span>
-                        Pago Completo
-                      </label>
 
-                      <label className="radio-button">
-                        <input
-                          type="radio"
-                          name="abono-radio"
-                          value="ABONOS"
-                          checked={selectedOption === "ABONOS"}
-                          onChange={onValueChange}
-                        />
-                        <span className="radio"></span>
-                        {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
-                      </label>
-                    </div>
-                  )}
+                  <div className="flx jcenter">
+                    <label className="radio-button">
+                      <input
+                        type="radio"
+                        name="abono-radio"
+                        value="CONTADO"
+                        checked={selectedOption === "CONTADO"}
+                        onChange={onValueChange}
+                      />
+                      <span className="radio"></span>
+                      Pago Completo
+                    </label>
+
+                    <label className="radio-button">
+                      <input
+                        type="radio"
+                        name="abono-radio"
+                        value="ABONOS"
+                        checked={selectedOption === "ABONOS"}
+                        onChange={onValueChange}
+                      />
+                      <span className="radio"></span>
+                      {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
+                    </label>
+                  </div>
+
                 </div>
               ) : (
                 ""
@@ -660,21 +658,7 @@ export default function ControlEditScreen(props) {
               {abonos.length > 0 ? (
                 <details className="details" name="detail-control">
                   <summary>
-                    Abonos{" "}
-                    {
-                      <span
-                        className={
-                          control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0
-                            ? "monto-pendiente"
-                            : "abonos-cancelados"
-                        }
-                      >
-                        {control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0) > 0
-                          ? "Pendiente por Pagar: $"
-                          : "Deuda Cancelada: $"}
-                        {Number(control.montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
-                      </span>
-                    }
+                    Abonos
                   </summary>
                   <div className="details__content">
                     <div>
