@@ -35,7 +35,7 @@ userRouter.post(
 					apellido: user.apellido,
 					cedula: user.cedula,
 					telefono: user.telefono,
-					email: user.telefono,
+					email: user.email,
 					password: user.password,
 					isAdmin: user.isAdmin,
 					isVendedor: user.isVendedor,
