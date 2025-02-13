@@ -24,7 +24,16 @@ export default function ServicioEditScreen(props) {
   const servicioUpdate = useSelector((state) => state.servicioUpdate);
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = servicioUpdate;
 
-  const areaArray = [" ", "GENERAL", "ORTODONCIA", "ODONTOPEDIATRIA", "CIRUGIA"];
+  const areaArray = [
+    " ",
+    "GENERAL",
+    "ORTODONCIA",
+    "ODONTOPEDIATRIA",
+    "CIRUGIA",
+    "ENDODONCIA",
+    "PROTESIS",
+    "PERIODONCIA",
+  ];
 
   const dispatch = useDispatch();
 

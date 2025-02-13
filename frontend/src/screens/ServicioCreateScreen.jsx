@@ -18,7 +18,7 @@ export default function ServicioCreateScreen(props) {
   const servicioCreate = useSelector((state) => state.servicioCreate);
   const { success, servicio } = servicioCreate;
 
-  const areaArray = [" ", "GENERAL", "ORTODONCIA", "ODONTOPEDIATRIA", "CIRUGIA"];
+  const areaArray = [" ", "GENERAL", "ORTODONCIA", "ODONTOPEDIATRIA", "CIRUGIA","ENDODONCIA","PROTESIS","PERIODONCIA"];
 
   const dispatch = useDispatch();
 
