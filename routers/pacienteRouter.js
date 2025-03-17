@@ -8,8 +8,7 @@ const pacienteRouter = express.Router();
 pacienteRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const pacientes = await Paciente.find({})
-      .sort({ nombre: 1 })
+    const pacientes = await Paciente.find({}).sort({ nombre: 1 });
     res.send({ pacientes });
   })
 );
@@ -224,7 +223,7 @@ pacienteRouter.delete(
   expressAsyncHandler(async (req, res) => {
     const paciente = await Paciente.findById(req.params.id);
     if (paciente) {
-      const deletepaciente = await paciente.remove();
+      const deletepaciente = await paciente.deleteOne({ _id: req.params.id });
       res.send({ message: "Paciente Eliminado", paciente: deletepaciente });
     } else {
       res.status(404).send({ message: "Paciente No Encontrado" });

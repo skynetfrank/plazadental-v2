@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { listPacientes } from "../actions/pacienteActions";
+import { deleteControlPaciente, deletePaciente, listPacientes } from "../actions/pacienteActions";
 import InfoIcon from "../icons/InfoIcon";
 import PacienteAddIcon from "../icons/PacienteAddIcon";
 import ToolTip from "../components/ToolTip";
@@ -10,11 +10,17 @@ import EditIcon from "../icons/EditIcon";
 import ControlIcon from "../icons/ControlIcon";
 import TrashIcon from "../icons/TrashIcon";
 import Loader from "../components/Loader";
+import Swal from "sweetalert2";
 
 function ListaPacientes() {
   const navigate = useNavigate("");
+
   const pacienteList = useSelector((state) => state.pacienteList);
   const { loading, pacientes } = pacienteList;
+
+  const pacienteDelete = useSelector((state) => state.pacienteDelete);
+  const { error: errorDelete, success: successDelete } = pacienteDelete;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +28,75 @@ function ListaPacientes() {
       dispatch(listPacientes({}));
     }
   }, [dispatch, pacientes]);
+
+  useEffect(() => {
+    if (successDelete) {
+      Swal.fire({
+        title: "Eliminar Paciente",
+        text: "Paciente Ha sido Eliminado con exito",
+      });
+      dispatch(listPacientes({}));
+    }
+  }, [dispatch, successDelete]);
+  const deleteHandler = (id, controles) => {
+    if (controles > 0) {
+      Swal.fire({
+        title: "Eliminar Paciente",
+        text: "Paciente tiene controles asignados, No se puede eliminar",
+      });
+      return;
+    }
+    Swal.fire({
+      title: "Eliminar Paciente",
+      text: "Esta seguro de Eliminar Este Paciente?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Eminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      console.log("result.value", result);
+      if (result.isDismissed) {
+        return
+      }
+      //new way for delete
+      Swal.fire({
+        title: "Eliminar Control",
+        input: "password",
+        inputLabel: "Password",
+        inputPlaceholder: "Ingrese su clave",
+        inputAttributes: {
+          maxlength: "10",
+          autocapitalize: "off",
+          autocorrect: "off",
+        },
+      }).then((result) => {
+        if (result.value !== "matias01") {
+          Swal.fire({
+            title: "Clave Erronea, verifique...",
+            text: "Ingrese Su Clave de Administrador",
+            icon: "warning",
+          });
+          return;
+        }
+        if (result.value === "matias01") {
+          dispatch(deletePaciente(id));
+
+          Swal.fire({
+            title: "Control Eliminado!",
+            text: "Eliminar Control",
+            icon: "success",
+          });
+        }
+      });
+
+      //hasta aqui new way
+
+      //let password= prompt("Ingrese su clave", "");
+    });
+    console.log("eliminar:", id, controles);
+  };
 
   const columns = [
     {
@@ -62,7 +137,7 @@ function ListaPacientes() {
               </button>
             </ToolTip>
             <ToolTip text="Eliminar Paciente">
-              <button className="circle-btn" onClick={() => navigate(`/controles/${_id}/edit`)}>
+              <button className="circle-btn" onClick={() => deleteHandler(_id, controles.length)}>
                 <TrashIcon />
               </button>
             </ToolTip>
