@@ -658,13 +658,84 @@ controlRouter.get(
       },
     ]);
 
+    const abonos = await Control.aggregate([
+      {
+        $unwind: "$abonos",
+      },
+      {
+        $project: {
+          _id: 1,
+          fechaControl: 1,
+          paciente: 1,
+          doctor: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoLab: 1,
+          montoServicios: 1,
+          descuento: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          cambioBcv: 1,
+          montoUsd: 1,
+          pago: 1,
+          abonos: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$fechaControl" },
+          month: { $month: "$fechaControl" },
+          year: { $year: "$fechaControl" },
+          //fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          //fecha: { $dateToString: { format: "%Y-%m-%d", date: "$abonos.fecha" } },
+        },
+      },
+
+      {
+        $lookup: {
+          from: "servicios",
+          localField: "serviciosItems.servicio",
+          foreignField: "_id",
+          as: "servicio_data",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "doctors",
+          localField: "doctor",
+          foreignField: "_id",
+          as: "doctor_data",
+        },
+      },
+      {
+        $unwind: "$doctor_data",
+      },
+      {
+        $lookup: {
+          from: "pacientes",
+          localField: "paciente",
+          foreignField: "_id",
+          as: "paciente_data",
+        },
+      },
+      {
+        $unwind: "$paciente_data",
+      },
+
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+    ]).sort({ fecha: 1 });
+
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
     console.log("punto plaza:", puntoPlaza);
     console.log("punto banesco:", puntoBanesco);
     console.log("punto plaza:", puntoVenezuela);
-    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
+    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, abonos });
   })
 );
 
@@ -682,8 +753,6 @@ controlRouter.get(
     const count = await Control.countDocuments({});
 
     const controles = await Control.aggregate([
-
-
       {
         $unwind: "$abonos",
       },
@@ -719,8 +788,6 @@ controlRouter.get(
       {
         $unwind: "$paciente_data",
       },
-
-
     ]).sort({ fecha: 1 });
 
     const cash = await Control.aggregate([
@@ -1055,11 +1122,10 @@ controlRouter.get(
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
-    console.log("controles", controles)
+    console.log("controles", controles);
     res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
   })
 );
-
 
 controlRouter.post(
   "/create",

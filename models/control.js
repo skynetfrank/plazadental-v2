@@ -93,7 +93,13 @@ const controlSchema = new mongoose.Schema(
     isPaid: { type: Boolean, default: false },
     formaPago: { type: String, default: "" },
     condiciones: { type: String },
-    abonos: []
+    abonos: [
+      {
+        fecha: { type: Date },
+        monto: { type: Number },
+        formaPago: { type: String },
+      },
+    ],
   },
 
   {

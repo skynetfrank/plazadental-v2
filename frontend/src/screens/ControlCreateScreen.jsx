@@ -486,10 +486,10 @@ export default function ControlCreateScreen(props) {
     const { value: date } = await Swal.fire({
       title: "Fecha del Abono",
       input: "date",
-      didOpen: () => {
+      /*  didOpen: () => {
         const today = new Date().toISOString();
         Swal.getInput().value = today.split("T")[0];
-      },
+      }, */
     });
     if (!date) {
       Swal.fire({
@@ -498,9 +498,9 @@ export default function ControlCreateScreen(props) {
       setSelectedOption("");
       return;
     }
-
+console.log("date", date);
     setMontoAbono(Number(abono));
-    setFechaAbono(new Date(date).toISOString());
+    setFechaAbono(date);
     setShowPaymentModalAbono(true);
   };
 

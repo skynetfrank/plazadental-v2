@@ -6,12 +6,15 @@ import { CONTROL_UPDATE_RESET } from "../constants/controlConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
+import utc from "dayjs-plugin-utc";
 import Swal from "sweetalert2";
 import PaymentForm from "../components/PaymentForm";
 import { listaLabs, tipoLab } from "../constants/listas";
 import Loader from "../components/Loader";
 import LabConceptSelector from "../components/LabConceptSelector";
 import TrashIcon from "../icons/TrashIcon";
+
+dayjs.extend(utc);
 
 function subtractHours(date, hours) {
   date.setHours(date.getHours() - hours);
@@ -143,7 +146,7 @@ export default function ControlEditScreen(props) {
       setAbonos(control.abonos || []);
       setFormaPago(control.formaPago || "");
       setCondiciones(control.condiciones || "");
-      setIsPaid(control.isPaid || false)
+      setIsPaid(control.isPaid || false);
       let doc = listaDoctores.find((doc) => doc._id === doctorId);
 
       setNombreDoctor(doc?.nombre + " " + doc?.apellido);
@@ -494,10 +497,10 @@ export default function ControlEditScreen(props) {
     const { value: date } = await Swal.fire({
       title: "Fecha del Abono",
       input: "date",
-      didOpen: () => {
+      /*  didOpen: () => {
         const today = new Date().toISOString();
         Swal.getInput().value = today.split("T")[0];
-      },
+      }, */
     });
     if (!date) {
       Swal.fire({
@@ -506,9 +509,9 @@ export default function ControlEditScreen(props) {
 
       return;
     }
-    setIsPaid(false)
+    setIsPaid(false);
     setMontoAbono(Number(abono));
-    setFechaAbono(new Date(date).toISOString());
+    setFechaAbono(new Date(date));
     setShowPaymentModalAbono(true);
   };
 
@@ -528,7 +531,7 @@ export default function ControlEditScreen(props) {
     }
   }
 
-  console.log("abonos", abonos.length);
+  console.log("fecha abono", fechaAbono);
   return (
     <div>
       {loading ? (
@@ -648,7 +651,6 @@ export default function ControlEditScreen(props) {
                       {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
                     </label>
                   </div>
-
                 </div>
               ) : (
                 ""
@@ -657,9 +659,7 @@ export default function ControlEditScreen(props) {
             <div className="mtop-2">
               {abonos.length > 0 ? (
                 <details className="details" name="detail-control">
-                  <summary>
-                    Abonos
-                  </summary>
+                  <summary>Abonos</summary>
                   <div className="details__content">
                     <div>
                       <button className="simple-button" onClick={(e) => addAbono(e)}>
@@ -684,7 +684,7 @@ export default function ControlEditScreen(props) {
                                 <tr key={inx}>
                                   <td>
                                     <div>
-                                      <span className="font-x">{dayjs(fechaAbono.fecha).format("DD/MM/YYYY")}</span>
+                                      <span className="font-x">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")}</span>
                                     </div>
                                   </td>
                                   <td>
