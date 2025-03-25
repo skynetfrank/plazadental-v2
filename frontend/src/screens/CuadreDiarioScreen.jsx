@@ -49,14 +49,18 @@ export default function CuadreDiarioScreen() {
         header: "Paciente",
         accessorKey: "paciente_data",
         cell: (value) => {
-          return value.getValue().nombre + " " + value.getValue().apellido;
+          const nombre = value.getValue().nombre;
+          const apellido = value.getValue().apellido;
+          return nombre.toLowerCase() + " " + apellido.toLowerCase();
         },
       },
       {
         header: "Doctor",
         accessorKey: "doctor_data",
         cell: (value) => {
-          return value.getValue().nombre + " " + value.getValue().apellido;
+          const nombre = value.getValue().nombre;
+          const apellido = value.getValue().apellido;
+          return nombre.toLowerCase() + " " + apellido.toLowerCase();
         },
       },
       {
@@ -74,7 +78,7 @@ export default function CuadreDiarioScreen() {
               {serviciosItems.map((item, inx) => (
                 <div key={item.producto + inx}>
                   <div className="cuadre-descripcion flx font-x pad-0">
-                    <p>{item.cantidad}</p>
+                    <p className="mr-05 centrado">{item.cantidad} </p>
                     <p>{servicio_data[inx]?.nombre}</p>
                     <p>(${item.precioServ})</p>
                   </div>
@@ -85,7 +89,7 @@ export default function CuadreDiarioScreen() {
         },
       },
       {
-        header: "Servicios",
+        header: "Monto Servicios",
         accessorKey: "montoServicios",
         cell: (value) => {
           if (!value) {
@@ -101,7 +105,7 @@ export default function CuadreDiarioScreen() {
         },
       },
       {
-        header: "Laboratorio",
+        header: "Monto Laboratorio",
         accessorKey: "montoLab",
         cell: (value) => {
           const labtxt = value.row.original.laboratorio;

@@ -398,6 +398,10 @@ select {
   margin-left: 1rem;
 }
 
+.mr-05{
+  margin-right: 5px;
+}
+
 .mr {
   margin-right: 1rem;
 }
