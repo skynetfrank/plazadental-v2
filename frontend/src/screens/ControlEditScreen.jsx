@@ -648,7 +648,7 @@ export default function ControlEditScreen(props) {
                         onChange={onValueChange}
                       />
                       <span className="radio"></span>
-                      {Number(abonos[0]?.monto) > 0 ? "$" + Number(abonos[0]?.monto).toFixed(2) : " Abono a Cuenta"}
+                      Abono
                     </label>
                   </div>
                 </div>

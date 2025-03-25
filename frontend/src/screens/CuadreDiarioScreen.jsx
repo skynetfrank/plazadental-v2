@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { cuadreDia } from "../actions/controlActions";
 import CuadreDiarioTable from "../components/CuadreDiarioTable";
 import PrintIcon from "../icons/PrintIcon";
+import dayjs from "dayjs";
 
 export default function CuadreDiarioScreen() {
   const params = useParams();
@@ -51,7 +52,7 @@ export default function CuadreDiarioScreen() {
         cell: (value) => {
           const nombre = value.getValue().nombre;
           const apellido = value.getValue().apellido;
-          return nombre.toLowerCase() + " " + apellido.toLowerCase();
+          return nombre.toUpperCase() + " " + apellido.toUpperCase();
         },
       },
       {
@@ -60,7 +61,7 @@ export default function CuadreDiarioScreen() {
         cell: (value) => {
           const nombre = value.getValue().nombre;
           const apellido = value.getValue().apellido;
-          return nombre.toLowerCase() + " " + apellido.toLowerCase();
+          return nombre.toUpperCase() + " " + apellido.toUpperCase();
         },
       },
       {
@@ -138,12 +139,48 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(total).toFixed(2);
         },
       },
+      {
+        header: "Abonos",
+        accessorKey: "abonos",
+
+        cell: (value) => {
+          const { abonos } = value.row.original;
+          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0)
+          if (!abonos || abonos.length === 0) {
+            return " ";
+          }
+          return (
+
+            <div>
+              <details>
+                <summary>ver</summary>
+                {abonos.map((abono, inx) => {
+                  return (<div key={inx}>
+                    <div className="cuadre-descripcion flx font-x pad-0">
+                      <span className="minw-60 mr-05 centrado">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
+                      <span>${abono.monto}</span>
+                    </div>
+                  </div>)
+                }
+                )}
+                {<spna>Total: ${Number(totalAbonado).toFixed(2)}</spna>}
+              </details>
+
+
+
+            </div>
+          );
+        },
+      },
 
       {
         header: "Monto A Pagar",
         accessorKey: "montoUsd",
         cell: (value) => {
-          return "$" + Number(value.getValue()).toFixed(2);
+          const { abonos } = value.row.original;
+          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0)
+          const porpagar = Number(value.getValue()) - Number(totalAbonado)
+          return "$" + Number(porpagar).toFixed(2);
         },
         footer: ({ table }) => {
           const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
@@ -247,17 +284,17 @@ export default function CuadreDiarioScreen() {
 
           return (
             <div className="flx column pad-0">
-              <span className="minw-100 alinear-l">
-                {"Bs" + Number(obj1.montopunto).toFixed(2) + " : " + obj1.bancodestinopunto}
+              <span className="minw-50">
+                {"Bs" + Number(obj1.montopunto).toFixed(2) + "  " + obj1.bancodestinopunto}
               </span>
               {obj1.montopunto2 ? (
-                <span>{"Bs" + Number(obj1.montopunto2).toFixed(2) + " : " + obj1.bancodestinopunto2}</span>
+                <span>{"Bs" + Number(obj1.montopunto2).toFixed(2) + "  " + obj1.bancodestinopunto2}</span>
               ) : (
                 ""
               )}
 
               {obj1.montopunto3 ? (
-                <span>{"Bs" + Number(obj1.montopunto3).toFixed(2) + " : " + obj1.bancodestinopunto3}</span>
+                <span>{"Bs" + Number(obj1.montopunto3).toFixed(2) + "  " + obj1.bancodestinopunto3}</span>
               ) : (
                 ""
               )}

@@ -277,6 +277,7 @@ controlRouter.get(
           montoLab: 1,
           montoServicios: 1,
           descuento: 1,
+          abonos: 1,
           montoComisionDr: 1,
           montoComisionPlaza: 1,
           cambioBcv: 1,

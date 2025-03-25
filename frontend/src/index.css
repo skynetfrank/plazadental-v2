@@ -398,7 +398,7 @@ select {
   margin-left: 1rem;
 }
 
-.mr-05{
+.mr-05 {
   margin-right: 5px;
 }
 
@@ -472,6 +472,17 @@ select {
 
 .minw-40 {
   min-width: 40px;
+}
+
+
+.minw-50 {
+  min-width: 50px;
+}
+
+
+
+.minw-60 {
+  min-width: 60px;
 }
 
 .minw-360 {
@@ -1056,16 +1067,20 @@ img.tiny-image {
 #tabla-cuadre tr td:nth-child(2) {
   min-width: 100px;
   text-align: center;
+  font-size: 8px;
 }
 
 #tabla-cuadre tr td:nth-child(3) {
   min-width: 100px;
   text-align: center;
+  font-size: 8px;
 }
+
 
 #tabla-cuadre tr td:nth-child(n + 4) {
   text-align: left;
   padding-right: 5px;
+
 }
 
 #tabla-cuadre tr td:nth-child(n + 5) {
