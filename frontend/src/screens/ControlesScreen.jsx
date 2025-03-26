@@ -15,7 +15,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { deleteControl } from "../actions/controlActions";
-import { faFileInvoiceDollar, faMedkit, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faFileContract, faFileInvoiceDollar, faMedkit, faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
@@ -194,6 +194,11 @@ export default function ControlesScreen(props) {
                       <ToolTip text="Ver Recipe">
                         <button className="circle-btn" onClick={() => navigate(`/printrecipe/${item.control._id}`)}>
                           <FontAwesomeIcon className="small" icon={faMedkit} />
+                        </button>
+                      </ToolTip>
+                      <ToolTip text="Ver Constancia">
+                        <button className="circle-btn" onClick={() => navigate(`/printconstancia/${item.control._id}`)}>
+                          <FontAwesomeIcon className="small" icon={faFileContract} />
                         </button>
                       </ToolTip>
                       <ToolTip text="Eliminar Control">

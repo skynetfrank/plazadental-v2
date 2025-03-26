@@ -34,6 +34,7 @@ import ServicioEditScreen from "./screens/ServicioEditScreen";
 import ControlEditScreen from "./screens/ControlEditScreen";
 import DetailControlScreen from "./screens/DetailControlScreen";
 import ListaControles from "./reportes/ListaControles";
+import PrintConstanciaScreen from "./screens/PrintConstanciaScreen";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -61,6 +62,7 @@ const router = createBrowserRouter(
         <Route path="/listacuadres" element={<ReporteCuadres />} />
         <Route path="/printfactura/:id" element={<PrintFacturaScreen />} exact></Route>
         <Route path="/printrecipe/:id" element={<PrintRecipeScreen />} exact></Route>
+        <Route path="/printconstancia/:id" element={<PrintConstanciaScreen />} exact></Route>
         <Route path="/creargasto" element={<GastoCreateScreen />}></Route>
         <Route path="/listagasto" element={<ReporteGastos />}></Route>
         <Route path="/gasto/:id/edit" element={<GastoEditScreen />}></Route>

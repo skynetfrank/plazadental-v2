@@ -127,6 +127,7 @@ export const orderGroupByDayReducer = (state = { loading: true, dailyControles: 
 export const cuadreDiaReducer = (
   state = {
     controles: [],
+    abonos: [],
     cash: {},
     puntoPlaza: [],
     puntoVenezuela: [],
@@ -142,6 +143,7 @@ export const cuadreDiaReducer = (
       return {
         loading: false,
         controles: action.payload.controles,
+        abonos: action.payload.abonos,
         cash: action.payload.cash[0],
         puntoPlaza: action.payload.puntoPlaza,
         puntoVenezuela: action.payload.puntoVenezuela,

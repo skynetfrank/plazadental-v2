@@ -35,6 +35,7 @@ export default function ControlEditScreen(props) {
   const [evaluacion, setEvaluacion] = useState("");
   const [tratamiento, setTratamiento] = useState("");
   const [recipe, setRecipe] = useState("");
+  const [constancia, setConstancia] = useState("");
   const [indicaciones, setIndicaciones] = useState("");
   const [montoLab, setMontoLab] = useState("");
   const [laboratorio, setLaboratorio] = useState("");
@@ -136,6 +137,7 @@ export default function ControlEditScreen(props) {
       setMateriales(control.materiales || []);
       setServiciosItems(control.serviciosItems || []);
       setRecipe(control.recipe || "");
+      setConstancia(control.constancia || "");
       setIndicaciones(control.indicaciones || "");
       setPago(control.pago || {});
       setMontoLab(control.montoLab || 0);
@@ -188,6 +190,7 @@ export default function ControlEditScreen(props) {
         evaluacion,
         tratamiento,
         recipe,
+        constancia,
         indicaciones,
         serviciosItems,
         materiales,
@@ -532,6 +535,15 @@ export default function ControlEditScreen(props) {
   }
 
   console.log("fecha abono", fechaAbono);
+
+
+  useEffect(() => {
+    if (!constancia) {
+      setConstancia("Por medio de la presente se hace constar que el paciente " + control?.paciente.nombre + " " + control?.paciente.apellido + " " + "Cedula de Identidad " + control?.paciente.cedula + ", asistió a consulta el dia de hoy " + dayjs(new Date().toLocaleDateString()).format("DD-MM-YYYY"))
+    }
+
+  }, [])
+
   return (
     <div>
       {loading ? (
@@ -676,7 +688,7 @@ export default function ControlEditScreen(props) {
                             </tr>
                           </thead>
                           <tbody>
-                            {abonos?.map((abono, inx) => {
+                            {abonos?.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()).map((abono, inx) => {
                               if (!abono.fecha) {
                                 return "";
                               }
@@ -792,6 +804,14 @@ export default function ControlEditScreen(props) {
                         value={indicaciones}
                         onChange={(e) => setIndicaciones(e.target.value)}
                       ></textarea>
+                    </div>
+                  </div>
+                </details>
+                <details className="details" name="detail-control">
+                  <summary>Constancia</summary>
+                  <div className="details__content">
+                    <div className="control-textarea-container">
+                      <textarea rows="3" value={constancia} onChange={(e) => setConstancia(e.target.value)}></textarea>
                     </div>
                   </div>
                 </details>

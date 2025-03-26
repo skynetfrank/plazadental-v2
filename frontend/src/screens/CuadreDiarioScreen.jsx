@@ -13,7 +13,7 @@ export default function CuadreDiarioScreen() {
   const [ventaDolares, setVentaDolares] = useState(0);
   const dispatch = useDispatch();
   const ventaDia = useSelector((state) => state.cuadreDia);
-  const { loading, controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
+  const { loading, controles, abonos, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
 
   useEffect(() => {
     dispatch(cuadreDia(fechaId));
@@ -43,7 +43,7 @@ export default function CuadreDiarioScreen() {
         },
 
         footer: (valuefooter) => {
-          console.log("valuefooter", valuefooter.table.getFilteredRowModel().rows);
+          //console.log("valuefooter", valuefooter.table.getFilteredRowModel().rows);
         },
       },
       {
@@ -378,6 +378,8 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
+  console.log("abonos:", abonos)
+
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">
@@ -447,6 +449,8 @@ export default function CuadreDiarioScreen() {
           </div>
         </div>{" "}
       </div>
+
+
     </div>
   );
 }

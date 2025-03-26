@@ -32,6 +32,7 @@ export default function ControlCreateScreen(props) {
   const [evaluacion, setEvaluacion] = useState("");
   const [tratamiento, setTratamiento] = useState("");
   const [recipe, setRecipe] = useState("");
+  const [constancia, setConstancia] = useState("");
   const [indicaciones, setIndicaciones] = useState("");
   const [montoLab, setMontoLab] = useState("");
   const [laboratorio, setLaboratorio] = useState("");
@@ -99,6 +100,7 @@ export default function ControlCreateScreen(props) {
     if (!paciente || paciente._id !== pacienteId) {
       dispatch(detailsPaciente(pacienteId));
     }
+
   }, [dispatch, paciente, pacienteId]);
 
   useEffect(() => {
@@ -137,6 +139,7 @@ export default function ControlCreateScreen(props) {
       setMateriales([]);
       setServiciosItems([]);
       setRecipe("");
+      setConstancia("");
       setIndicaciones("");
       setPago({});
       setLaboratorio("");
@@ -184,6 +187,7 @@ export default function ControlCreateScreen(props) {
         evaluacion,
         tratamiento,
         recipe,
+        constancia,
         indicaciones,
         serviciosItems,
         materiales,
@@ -498,11 +502,16 @@ export default function ControlCreateScreen(props) {
       setSelectedOption("");
       return;
     }
-console.log("date", date);
+    console.log("date", date);
     setMontoAbono(Number(abono));
     setFechaAbono(date);
     setShowPaymentModalAbono(true);
   };
+
+  useEffect(() => {
+    setConstancia("Por medio de la presente se hace constar que el paciente " + paciente.nombre + " " + paciente.apellido + " " + "Cedula de Identidad " + paciente.cedula + ", asistió a consulta el dia de hoy " + dayjs(new Date().toLocaleDateString()).format("DD-MM-YYYY"))
+  }, [])
+
 
   return (
     <div>
@@ -684,6 +693,14 @@ console.log("date", date);
               <div className="details__content">
                 <div className="control-textarea-container">
                   <textarea rows="3" value={indicaciones} onChange={(e) => setIndicaciones(e.target.value)}></textarea>
+                </div>
+              </div>
+            </details>
+            <details className="details" name="detail-control">
+              <summary>Constancia</summary>
+              <div className="details__content">
+                <div className="control-textarea-container">
+                  <textarea rows="3" value={constancia} onChange={(e) => setConstancia(e.target.value)}></textarea>
                 </div>
               </div>
             </details>

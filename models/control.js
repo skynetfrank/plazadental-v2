@@ -19,6 +19,7 @@ const controlSchema = new mongoose.Schema(
     evaluacion: { type: String },
     tratamiento: { type: String },
     recipe: { type: String },
+    constancia: { type: String },
     indicaciones: { type: String },
     serviciosItems: [
       {

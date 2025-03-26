@@ -1124,7 +1124,7 @@ controlRouter.get(
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
     console.log("controles", controles);
-    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
+    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, abonos });
   })
 );
 
@@ -1141,6 +1141,7 @@ controlRouter.post(
       evaluacion: req.body.evaluacion,
       tratamiento: req.body.tratamiento,
       recipe: req.body.recipe,
+      constancia: req.body.constancia,
       indicaciones: req.body.indicaciones,
       serviciosItems: req.body.serviciosItems,
       materiales: req.body.materiales,
@@ -1202,6 +1203,7 @@ controlRouter.put(
       control.evaluacion = req.body.evaluacion;
       control.tratamiento = req.body.tratamiento;
       control.recipe = req.body.recipe;
+      control.constancia = req.body.constancia;
       control.indicaciones = req.body.indicaciones;
       control.serviciosItems = req.body.serviciosItems;
       control.cambioBcv = req.body.cambioBcv;

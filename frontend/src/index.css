@@ -1983,6 +1983,13 @@ button.button.small {
   text-align: center;
 }
 
+
+.titulo-recipe.constancia>h2 {
+ margin-top: 130px;
+}
+
+
+
 .totales-print {
   border: none;
   column-gap: 15px;
@@ -2195,6 +2202,11 @@ button.button.small {
   border: 1px solid black;
   padding: 30px 30px 30px 30px;
   border-radius: 15px;
+}
+
+.detalle-recipe-print.constancia{
+  border: none;
+  margin-top: 30px;
 }
 
 .detalle-recipe-print p {
@@ -2694,6 +2706,12 @@ summary {
   margin: 0;
   font-size: 1rem;
   font-weight: bold;
+}
+
+.constancia-att{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
 }
 
 @media (max-width: 575px) {

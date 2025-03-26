@@ -111,7 +111,7 @@ function App() {
             <Outlet />
           </main>
           <footer>
-            <span className="negrita">25MAR2025</span>
+            <span className="negrita">26MAR2025</span>
           </footer>
         </div>
       )}
