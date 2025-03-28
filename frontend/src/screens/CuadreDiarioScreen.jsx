@@ -34,6 +34,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "# Ver",
         id: "id",
+        enableGrouping: false,
         cell: (info) => {
           return (
             <Link to={`/detalle-control/${info.row.original._id}`}>
@@ -49,6 +50,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Paciente",
         accessorKey: "paciente_data",
+        enableGrouping: false,
         cell: (value) => {
           const nombre = value.getValue().nombre;
           const apellido = value.getValue().apellido;
@@ -67,6 +69,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Servicios Facturados",
         accessorKey: "serviciosItems",
+        enableGrouping: false,
 
         cell: (value) => {
           const { serviciosItems, servicio_data } = value.row.original;
@@ -92,6 +95,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Monto Servicios",
         accessorKey: "montoServicios",
+        enableGrouping: false,
         cell: (value) => {
           if (!value) {
             return "";
@@ -108,6 +112,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Monto Laboratorio",
         accessorKey: "montoLab",
+        enableGrouping: false,
         cell: (value) => {
           const labtxt = value.row.original.laboratorio;
           if (!value) {
@@ -128,6 +133,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Descuento",
         accessorKey: "descuento",
+        enableGrouping: false,
         cell: (value) => {
           if (!value) {
             return "";
@@ -142,32 +148,30 @@ export default function CuadreDiarioScreen() {
       {
         header: "Abonos",
         accessorKey: "abonos",
+        enableGrouping: false,
 
         cell: (value) => {
           const { abonos } = value.row.original;
-          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0)
+          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
           if (!abonos || abonos.length === 0) {
             return " ";
           }
           return (
-
             <div>
               <details>
                 <summary>ver</summary>
                 {abonos.map((abono, inx) => {
-                  return (<div key={inx}>
-                    <div className="cuadre-descripcion flx font-x pad-0">
-                      <span className="minw-60 mr-05 centrado">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
-                      <span>${abono.monto}</span>
+                  return (
+                    <div key={inx}>
+                      <div className="cuadre-descripcion flx font-x pad-0">
+                        <span className="minw-60 mr-05 centrado">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
+                        <span>${abono.monto}</span>
+                      </div>
                     </div>
-                  </div>)
-                }
-                )}
+                  );
+                })}
                 {<spna>Total: ${Number(totalAbonado).toFixed(2)}</spna>}
               </details>
-
-
-
             </div>
           );
         },
@@ -176,10 +180,11 @@ export default function CuadreDiarioScreen() {
       {
         header: "Monto A Pagar",
         accessorKey: "montoUsd",
+        enableGrouping: false,
         cell: (value) => {
           const { abonos } = value.row.original;
-          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0)
-          const porpagar = Number(value.getValue()) - Number(totalAbonado)
+          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
+          const porpagar = Number(value.getValue()) - Number(totalAbonado);
           return "$" + Number(porpagar).toFixed(2);
         },
         footer: ({ table }) => {
@@ -190,6 +195,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Comision Doctor",
         accessorKey: "montoComisionDr",
+        enableGrouping: false,
         cell: (value) => {
           return "$" + Number(value.getValue()).toFixed(2);
         },
@@ -203,6 +209,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Comision Plaza",
         accessorKey: "montoComisionPlaza",
+        enableGrouping: false,
         cell: (value) => {
           return "$" + Number(value.getValue()).toFixed(2);
         },
@@ -216,6 +223,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Cambio",
         accessorKey: "cambioBcv",
+        enableGrouping: false,
         cell: (value) => {
           return Number(value.getValue()).toFixed(2);
         },
@@ -226,6 +234,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Dolares",
         accessorKey: "pago.efectivousd",
+        enableGrouping: false,
         cell: (value) => {
           if (!value) {
             return "-";
@@ -242,6 +251,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Euros",
         accessorKey: "pago.efectivoeuros",
+        enableGrouping: false,
         cell: (value) => {
           if (!value) {
             return "-";
@@ -258,6 +268,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Bolivares",
         accessorKey: "pago.efectivobs",
+        enableGrouping: false,
         cell: (value) => {
           if (!value) {
             return "-";
@@ -274,6 +285,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Punto Venta",
         accessorKey: "pago.punto.montopunto",
+        enableGrouping: false,
 
         cell: ({ row }) => {
           const obj1 = row.original.pago.punto;
@@ -319,6 +331,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Pago Movil",
         accessorKey: "pago.pagomovil.montopagomovil",
+        enableGrouping: false,
         cell: ({ row }) => {
           const obj1 = row.original.pago.pagomovil;
 
@@ -342,6 +355,7 @@ export default function CuadreDiarioScreen() {
       {
         header: "Zelle",
         accessorKey: "pago.zelle.montozelle",
+        enableGrouping: false,
         cell: ({ row }) => {
           const obj1 = row.original.pago.zelle;
 
@@ -378,7 +392,7 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
-  console.log("abonos:", abonos)
+  console.log("abonos:", abonos);
 
   return (
     <div className="cuadre-container flx column mtop-2">
@@ -449,8 +463,6 @@ export default function CuadreDiarioScreen() {
           </div>
         </div>{" "}
       </div>
-
-
     </div>
   );
 }

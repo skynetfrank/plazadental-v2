@@ -55,8 +55,7 @@ function GroupingReventasTable({ data, columns }) {
         />
 
         <span className="pagination-totalpages">
-          Pagina {table.getState().pagination.pageIndex + 1} de{" "}
-          {table.getPageCount()}
+          Pagina {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
         </span>
       </div>
 
@@ -74,24 +73,17 @@ function GroupingReventasTable({ data, columns }) {
                             // If the header can be grouped, let's add a toggle
                             <button
                               {...{
-                                onClick:
-                                  header.column.getToggleGroupingHandler(),
+                                onClick: header.column.getToggleGroupingHandler(),
                                 style: {
                                   cursor: "pointer",
                                 },
                               }}
-                              className={
-                                header.column.getIsGrouped()
-                                  ? "th-ungroup-btn"
-                                  : "th-group-btn"
-                              }>
+                              className={header.column.getIsGrouped() ? "th-ungroup-btn" : "th-group-btn"}
+                            >
                               {header.column.getIsGrouped() ? `🛑` : ``}
                             </button>
                           ) : null}{" "}
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          {flexRender(header.column.columnDef.header, header.getContext())}
                         </div>
                       )}
                     </th>
@@ -114,14 +106,14 @@ function GroupingReventasTable({ data, columns }) {
                             background: cell.getIsGrouped()
                               ? "#dedede"
                               : cell.getIsAggregated()
-                                ? "#bebdbd"
-                                : cell.getIsPlaceholder()
-                                  ? "#bebdbd"
-                                  : "white",
-                            fontWeight: cell.getIsAggregated()
-                              ? "bold" : "normal",
+                              ? "#bebdbd"
+                              : cell.getIsPlaceholder()
+                              ? "#bebdbd"
+                              : "white",
+                            fontWeight: cell.getIsAggregated() ? "bold" : "normal",
                           },
-                        }}>
+                        }}
+                      >
                         {cell.getIsGrouped() ? (
                           // If it's a grouped cell, add an expander and row count
                           <>
@@ -129,38 +121,29 @@ function GroupingReventasTable({ data, columns }) {
                               {...{
                                 onClick: row.getToggleExpandedHandler(),
                                 style: {
-                                  cursor: row.getCanExpand()
-                                    ? "pointer"
-                                    : "normal",
+                                  cursor: row.getCanExpand() ? "pointer" : "normal",
                                 },
                               }}
-                              className="td-group-btn">
+                              className="td-group-btn"
+                            >
                               {row.getIsExpanded() ? (
                                 <MinusCircleIcon className="td-group-icon" />
                               ) : (
                                 <PlusCircleIcon className="td-group-icon" />
                               )}{" "}
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}{" "}
-                              {row.subRows.length} ITEMS
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())} {row.subRows.length} ITEMS
                             </button>
                           </>
                         ) : cell.getIsAggregated() ? (
                           // If the cell is aggregated, use the Aggregated
                           // renderer for cell
                           flexRender(
-                            cell.column.columnDef.aggregatedCell ??
-                            cell.column.columnDef.cell,
+                            cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell,
                             cell.getContext()
                           )
                         ) : cell.getIsPlaceholder() ? null : ( // For cells with repeated values, render null
                           // Otherwise, just render the regular cell
-                          flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )
+                          flexRender(cell.column.columnDef.cell, cell.getContext())
                         )}
                       </td>
                     );
@@ -173,12 +156,7 @@ function GroupingReventasTable({ data, columns }) {
             {table.getFooterGroups().map((footerGroup) => (
               <tr key={footerGroup.id}>
                 {footerGroup.headers.map((footer) => (
-                  <th key={footer.id}>
-                    {flexRender(
-                      footer.column.columnDef.footer,
-                      footer.getContext()
-                    )}
-                  </th>
+                  <th key={footer.id}>{flexRender(footer.column.columnDef.footer, footer.getContext())}</th>
                 ))}
               </tr>
             ))}
@@ -187,24 +165,16 @@ function GroupingReventasTable({ data, columns }) {
 
         <div className="tankstack-pagination-container">
           <div className="tankstack-pagination-botonera">
-            <button
-              onClick={() => table.setPageIndex(0)}
-              disabled={!table.getCanPreviousPage()}>
+            <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
               {"primero"}
             </button>
-            <button
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}>
+            <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
               {"anterior"}
             </button>
-            <button
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}>
+            <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
               {"siguiente"}
             </button>
-            <button
-              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-              disabled={!table.getCanNextPage()}>
+            <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
               {"ultimo"}
             </button>
           </div>
