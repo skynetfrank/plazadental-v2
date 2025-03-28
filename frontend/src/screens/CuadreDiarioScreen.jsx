@@ -5,6 +5,7 @@ import { cuadreDia } from "../actions/controlActions";
 import CuadreDiarioTable from "../components/CuadreDiarioTable";
 import PrintIcon from "../icons/PrintIcon";
 import dayjs from "dayjs";
+import GroupingCuadreTableV2 from "../components/GroupingCuadreTableV2";
 
 export default function CuadreDiarioScreen() {
   const params = useParams();
@@ -59,12 +60,7 @@ export default function CuadreDiarioScreen() {
       },
       {
         header: "Doctor",
-        accessorKey: "doctor_data",
-        cell: (value) => {
-          const nombre = value.getValue().nombre;
-          const apellido = value.getValue().apellido;
-          return nombre.toUpperCase() + " " + apellido.toUpperCase();
-        },
+        accessorKey: "doctor_data.nombre",
       },
       {
         header: "Servicios Facturados",
@@ -403,7 +399,7 @@ export default function CuadreDiarioScreen() {
         <h3>REPORTE DE CONTROLES DEL {parseFecha(fechaId)}</h3>
       </div>
 
-      <div>{loading ? <span>Cargando Datos...</span> : <CuadreDiarioTable columns={columns} data={controles} />}</div>
+      <div>{loading ? <span>Cargando Datos...</span> : <GroupingCuadreTableV2 columns={columns} data={controles} />}</div>
       <span>Observaciones: ____________________________________________________________________________________</span>
       <div className="mtop-1">
         <span>

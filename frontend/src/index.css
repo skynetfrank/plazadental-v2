@@ -1268,7 +1268,7 @@ div:where(.swal2-container) .swal2-select {
 }
 
 button.th-group-btn {
-  background-color: green;
+  background-color: rgb(228, 228, 228);
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -1292,7 +1292,7 @@ button.td-group-btn {
   column-gap: 3px;
   background-color: darkturquoise;
   color: #111111;
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 3px 0;
   min-width: 230px;
@@ -2283,7 +2283,7 @@ button.button.small {
 }
 
 button.th-group-btn {
-  background-color: green;
+  background-color: rgb(222, 222, 222);
   width: 20px;
   height: 20px;
   border-radius: 3px;
@@ -2298,6 +2298,7 @@ button.th-ungroup-btn {
   padding: 0;
   border: none;
   background-color: transparent;
+  min-width: 30px;
 }
 
 .td-group-icon {
@@ -2417,6 +2418,8 @@ input.filter-input-v8 {
   text-align: left;
 }
 
+
+
 .btn-query-report,
 .btn-close-report {
   border: none;
@@ -2488,7 +2491,7 @@ span.span-admin-consolidado {
 }
 
 .table button {
-  margin: 0.3rem 1.5rem;
+  margin: 0.3rem;
 }
 
 .show-control-facturacion {

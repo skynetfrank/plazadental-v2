@@ -11,11 +11,12 @@ import {
 } from "@tanstack/react-table";
 import MinusCircleIcon from "../icons/MinusCircleIcon";
 import PlusCircleIcon from "../icons/PlusCircleIcon";
+import CogIcon from "../icons/CogIcon";
 
-function GroupingReventasTable({ data, columns }) {
+function GroupingCuadreTableV2({ data, columns }) {
   const [grouping, setGrouping] = useState([]);
   const [sorting, setSorting] = useState([]);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 20 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 100 });
 
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -44,23 +45,9 @@ function GroupingReventasTable({ data, columns }) {
   });
 
   return (
-    <div className="tankstack-table-container table">
-      <div className="filterv8-container">
-        <input
-          type="text"
-          className="filter-input-v8"
-          value={globalFilter}
-          placeholder="Buscar"
-          onChange={(e) => setGlobalFilter(e.target.value)}
-        />
-
-        <span className="pagination-totalpages">
-          Pagina {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
-        </span>
-      </div>
-
+    <div>
       <div>
-        <table id="consolidado-table">
+        <table id="tabla-cuadre" className="styled-table m-0">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -80,7 +67,7 @@ function GroupingReventasTable({ data, columns }) {
                               }}
                               className={header.column.getIsGrouped() ? "th-ungroup-btn" : "th-group-btn"}
                             >
-                              {header.column.getIsGrouped() ? `🛑` : ``}
+                              {header.column.getIsGrouped() ? `🛑` : <CogIcon className="td-group-icon" />}
                             </button>
                           ) : null}{" "}
                           {flexRender(header.column.columnDef.header, header.getContext())}
@@ -131,7 +118,7 @@ function GroupingReventasTable({ data, columns }) {
                               ) : (
                                 <PlusCircleIcon className="td-group-icon" />
                               )}{" "}
-                              {flexRender(cell.column.columnDef.cell, cell.getContext())} {row.subRows.length} ITEMS
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
                             </button>
                           </>
                         ) : cell.getIsAggregated() ? (
@@ -162,26 +149,9 @@ function GroupingReventasTable({ data, columns }) {
             ))}
           </tfoot>
         </table>
-
-        <div className="tankstack-pagination-container">
-          <div className="tankstack-pagination-botonera">
-            <button onClick={() => table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}>
-              {"primero"}
-            </button>
-            <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-              {"anterior"}
-            </button>
-            <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-              {"siguiente"}
-            </button>
-            <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
-              {"ultimo"}
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-export default GroupingReventasTable;
+export default GroupingCuadreTableV2;

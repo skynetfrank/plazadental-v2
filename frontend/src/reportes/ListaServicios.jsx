@@ -1,15 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ToolTip from "../components/ToolTip";
 import EditIcon from "../icons/EditIcon";
 import TrashIcon from "../icons/TrashIcon";
 import { listServicios } from "../actions/servicioActions";
 import AddCircleIcon from "../icons/AddCircleIcon";
+import ExcelExport from "../components/ExcelExport";
+import dayjs from "dayjs";
+
 
 function ListaServicios() {
   const navigate = useNavigate("");
+  const [jsonforexcel, setJsonforexcel] = useState([]);
   const servicioList = useSelector((state) => state.servicioList);
   const { loading, servicios } = servicioList;
   const dispatch = useDispatch();
@@ -20,6 +24,20 @@ function ListaServicios() {
   useEffect(() => {
     if (!servicios || servicios.length === 0) {
       dispatch(listServicios());
+    }
+    if (servicios) {
+      const data = servicios.map((x) => {
+        return {
+          codigo: x.codigo,
+          nombre: x.nombre,
+          area: x.area,
+          descripcion: x.descripcion,
+          preciousd: x.preciousd,
+
+        };
+
+      });
+      setJsonforexcel(data.flat());
     }
   }, [dispatch, servicios]);
 
@@ -73,6 +91,9 @@ function ListaServicios() {
             <AddCircleIcon />
           </Link>
         </ToolTip>
+        <div>
+          <ExcelExport data={jsonforexcel} fileName={"servicios " + dayjs(new Date()).format("DD-MM-YYYY")} />
+        </div>
       </div>
 
       {loading ? (
