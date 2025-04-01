@@ -151,7 +151,7 @@ export default function CuadreDiarioScreen() {
           if (!abonos || abonos.length === 0) {
             return ""
           }
-          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
+          const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
 
           return (
             <div>
@@ -167,7 +167,7 @@ export default function CuadreDiarioScreen() {
                     </div>
                   );
                 })}
-                {<spna>Total: ${Number(totalAbonado).toFixed(2)}</spna>}
+                {<span>Total: ${Number(totalAbonado).toFixed(2)}</span>}
               </details>
             </div>
           );
@@ -186,7 +186,6 @@ export default function CuadreDiarioScreen() {
           }
           const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
           const porpagar = Number(value.getValue()) - Number(totalAbonado);
-          console.log("total abonado", totalAbonado)
           return "$" + Number(porpagar).toFixed(2);
         },
         footer: ({ table }) => {
@@ -407,14 +406,6 @@ export default function CuadreDiarioScreen() {
 
       <div>{loading ? <span>Cargando Datos...</span> : <GroupingCuadreTableV2 columns={columns} data={controles} />}</div>
 
-      {abonosCuadre?.length > 0 ? (
-        <div>{loading ? <span>Cargando Datos...</span> :
-          <div>
-            <h3>ABONOS A CUENTA DE {parseFecha(fechaId)}</h3>
-            <GroupingCuadreTableV2 columns={columns} data={abonosCuadre} />
-          </div>
-        }
-        </div>) : ("")}
 
       <span>Observaciones: ____________________________________________________________________________________</span>
       <div className="mtop-1">

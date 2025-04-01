@@ -733,6 +733,7 @@ controlRouter.get(
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
+
     console.log("punto plaza:", puntoPlaza);
     console.log("punto banesco:", puntoBanesco);
     console.log("punto plaza:", puntoVenezuela);
