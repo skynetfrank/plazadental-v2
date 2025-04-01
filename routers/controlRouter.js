@@ -659,7 +659,7 @@ controlRouter.get(
       },
     ]);
 
-    const abonos = await Control.aggregate([
+    const abonosCuadre = await Control.aggregate([
       {
         $unwind: "$abonos",
       },
@@ -736,7 +736,7 @@ controlRouter.get(
     console.log("punto plaza:", puntoPlaza);
     console.log("punto banesco:", puntoBanesco);
     console.log("punto plaza:", puntoVenezuela);
-    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, abonos });
+    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, abonosCuadre });
   })
 );
 

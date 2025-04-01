@@ -143,7 +143,7 @@ export const cuadreDiaReducer = (
       return {
         loading: false,
         controles: action.payload.controles,
-        abonos: action.payload.abonos,
+        abonosCuadre: action.payload.abonosCuadre,
         cash: action.payload.cash[0],
         puntoPlaza: action.payload.puntoPlaza,
         puntoVenezuela: action.payload.puntoVenezuela,

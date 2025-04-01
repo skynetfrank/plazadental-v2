@@ -14,7 +14,7 @@ export default function CuadreDiarioScreen() {
   const [ventaDolares, setVentaDolares] = useState(0);
   const dispatch = useDispatch();
   const ventaDia = useSelector((state) => state.cuadreDia);
-  const { loading, controles, abonos, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
+  const { loading, controles, abonosCuadre, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
 
   useEffect(() => {
     dispatch(cuadreDia(fechaId));
@@ -76,7 +76,7 @@ export default function CuadreDiarioScreen() {
           return (
             <div>
               {serviciosItems.map((item, inx) => (
-                <div key={item.producto + inx}>
+                <div key={inx}>
                   <div className="cuadre-descripcion flx font-x pad-0">
                     <p className="mr-05 centrado">{item.cantidad} </p>
                     <p>{servicio_data[inx]?.nombre}</p>
@@ -148,10 +148,11 @@ export default function CuadreDiarioScreen() {
 
         cell: (value) => {
           const { abonos } = value.row.original;
-          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
           if (!abonos || abonos.length === 0) {
-            return " ";
+            return ""
           }
+          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
+
           return (
             <div>
               <details>
@@ -179,8 +180,13 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
         cell: (value) => {
           const { abonos } = value.row.original;
-          const totalAbonado = abonos.reduce((total, x) => total + x.monto, 0);
+
+          if (!abonos || abonos.length === 0) {
+            return
+          }
+          const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
           const porpagar = Number(value.getValue()) - Number(totalAbonado);
+          console.log("total abonado", totalAbonado)
           return "$" + Number(porpagar).toFixed(2);
         },
         footer: ({ table }) => {
@@ -388,7 +394,7 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
-  console.log("abonos:", abonos);
+  console.log("abonosCuadre (aggregated):", abonosCuadre);
 
   return (
     <div className="cuadre-container flx column mtop-2">
@@ -400,6 +406,16 @@ export default function CuadreDiarioScreen() {
       </div>
 
       <div>{loading ? <span>Cargando Datos...</span> : <GroupingCuadreTableV2 columns={columns} data={controles} />}</div>
+
+      {abonosCuadre?.length > 0 ? (
+        <div>{loading ? <span>Cargando Datos...</span> :
+          <div>
+            <h3>ABONOS A CUENTA DE {parseFecha(fechaId)}</h3>
+            <GroupingCuadreTableV2 columns={columns} data={abonosCuadre} />
+          </div>
+        }
+        </div>) : ("")}
+
       <span>Observaciones: ____________________________________________________________________________________</span>
       <div className="mtop-1">
         <span>
