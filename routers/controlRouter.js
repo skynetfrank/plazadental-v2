@@ -265,7 +265,7 @@ controlRouter.get(
 
     const count = await Control.countDocuments({});
 
-    const controles = await Control.aggregate([
+    const controlesPagos = await Control.aggregate([
       {
         $project: {
           _id: 1,
@@ -329,6 +329,103 @@ controlRouter.get(
         },
       },
     ]).sort({ fecha: 1 });
+
+
+    const controlesAbonos = await Control.aggregate([
+      {
+        $project: {
+          _id: 1,
+          fechaControl: 1,
+          paciente: 1,
+          doctor: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoLab: 1,
+          montoServicios: 1,
+          descuento: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          cambioBcv: 1,
+          montoUsd: 1,
+          pago: 1,
+          abonos: 1,
+          createdAt: 1,
+          abonosHoy: "$abonos",
+        },
+      },
+      {
+        $unwind: "$abonosHoy",
+      },
+      {
+        $project: {
+          _id: 1,
+          fechaControl: 1,
+          isAbono: { $literal: "ABONO" },
+          paciente: 1,
+          doctor: 1,
+          serviciosItems: 1,
+          laboratorio: 1,
+          montoLab: 1,
+          montoServicios: 1,
+          descuento: 1,
+          montoComisionDr: 1,
+          montoComisionPlaza: 1,
+          cambioBcv: 1,
+          montoUsd: 1,
+          pago: 1,
+          abonos: 1,
+          abonosHoy: 1,
+          createdAt: 1,
+          day: { $dayOfMonth: "$abonosHoy.fecha" },
+          month: { $month: "$abonosHoy.fecha" },
+          year: { $year: "$abonosHoy.fecha" },
+          fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          fecha2: { $dateToString: { format: "%Y-%m-%d", date: "$abonosHoy.fecha" } },
+        },
+      },
+
+
+      {
+        $lookup: {
+          from: "servicios",
+          localField: "serviciosItems.servicio",
+          foreignField: "_id",
+          as: "servicio_data",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "doctors",
+          localField: "doctor",
+          foreignField: "_id",
+          as: "doctor_data",
+        },
+      },
+      {
+        $unwind: "$doctor_data",
+      },
+      {
+        $lookup: {
+          from: "pacientes",
+          localField: "paciente",
+          foreignField: "_id",
+          as: "paciente_data",
+        },
+      },
+      {
+        $unwind: "$paciente_data",
+      },
+
+      {
+        $match: {
+          day: { $eq: dia },
+          month: { $eq: mes },
+          year: { $eq: ano },
+        },
+      },
+    ]).sort({ fecha: 1 });
+
 
     const cash = await Control.aggregate([
       {
@@ -659,85 +756,15 @@ controlRouter.get(
       },
     ]);
 
-    const abonosCuadre = await Control.aggregate([
-      {
-        $unwind: "$abonos",
-      },
-      {
-        $project: {
-          _id: 1,
-          fechaControl: 1,
-          paciente: 1,
-          doctor: 1,
-          serviciosItems: 1,
-          laboratorio: 1,
-          montoLab: 1,
-          montoServicios: 1,
-          descuento: 1,
-          montoComisionDr: 1,
-          montoComisionPlaza: 1,
-          cambioBcv: 1,
-          montoUsd: 1,
-          pago: 1,
-          abonos: 1,
-          createdAt: 1,
-          day: { $dayOfMonth: "$abonos.fecha" },
-          month: { $month: "$abonos.fecha" },
-          year: { $year: "$abonos.fecha" },
-          //fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
-          fecha2: { $dateToString: { format: "%Y-%m-%d", date: "$abonos.fecha" } },
-        },
-      },
-
-      {
-        $lookup: {
-          from: "servicios",
-          localField: "serviciosItems.servicio",
-          foreignField: "_id",
-          as: "servicio_data",
-        },
-      },
-
-      {
-        $lookup: {
-          from: "doctors",
-          localField: "doctor",
-          foreignField: "_id",
-          as: "doctor_data",
-        },
-      },
-      {
-        $unwind: "$doctor_data",
-      },
-      {
-        $lookup: {
-          from: "pacientes",
-          localField: "paciente",
-          foreignField: "_id",
-          as: "paciente_data",
-        },
-      },
-      {
-        $unwind: "$paciente_data",
-      },
-
-      {
-        $match: {
-          day: { $eq: dia },
-          month: { $eq: mes },
-          year: { $eq: ano },
-        },
-      },
-    ]).sort({ fecha: 1 });
-
     const puntoPlaza = [...puntoPlz, ...puntoPlz2, ...puntoPlz3];
     const puntoVenezuela = [...puntoVzl, ...puntoVzl2, ...puntoVzl3];
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
 
-    console.log("punto plaza:", puntoPlaza);
-    console.log("punto banesco:", puntoBanesco);
-    console.log("punto plaza:", puntoVenezuela);
-    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, abonosCuadre });
+    const controles = [...controlesPagos, ...controlesAbonos];
+
+
+
+    res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
   })
 );
 

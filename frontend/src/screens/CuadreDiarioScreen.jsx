@@ -14,7 +14,7 @@ export default function CuadreDiarioScreen() {
   const [ventaDolares, setVentaDolares] = useState(0);
   const dispatch = useDispatch();
   const ventaDia = useSelector((state) => state.cuadreDia);
-  const { loading, controles, abonosCuadre, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
+  const { loading, controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
 
   useEffect(() => {
     dispatch(cuadreDia(fechaId));
@@ -68,22 +68,27 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
 
         cell: (value) => {
-          const { serviciosItems, servicio_data } = value.row.original;
+          const { serviciosItems, servicio_data, isAbono,fecha } = value.row.original;
 
           if (!serviciosItems) {
             return " ";
           }
           return (
             <div>
-              {serviciosItems.map((item, inx) => (
-                <div key={inx}>
-                  <div className="cuadre-descripcion flx font-x pad-0">
-                    <p className="mr-05 centrado">{item.cantidad} </p>
-                    <p>{servicio_data[inx]?.nombre}</p>
-                    <p>(${item.precioServ})</p>
+
+              {
+                isAbono === "ABONO" ? ("ABONO A CONTROL DEL "+dayjs(fecha).format("DD-MM-YYYY")) : (serviciosItems.map((item, inx) => (
+                  <div key={inx}>
+                    <div className="cuadre-descripcion flx font-x pad-0">
+                      <p className="mr-05 centrado">{item.cantidad} </p>
+                      <p>{servicio_data[inx]?.nombre}</p>
+                      <p>(${item.precioServ})</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )))
+
+
+              }
             </div>
           );
         },
@@ -393,8 +398,7 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
-  console.log("abonosCuadre (aggregated):", abonosCuadre);
-
+  console.log("controles:", controles)
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">
