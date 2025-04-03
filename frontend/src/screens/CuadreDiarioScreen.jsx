@@ -68,16 +68,17 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
 
         cell: (value) => {
-          const { serviciosItems, servicio_data, isAbono,fecha } = value.row.original;
+          const { serviciosItems, servicio_data, isAbono, fecha } = value.row.original;
 
           if (!serviciosItems) {
             return " ";
           }
           return (
             <div>
-
-              {
-                isAbono === "ABONO" ? ("ABONO A CONTROL DEL "+dayjs(fecha).format("DD-MM-YYYY")) : (serviciosItems.map((item, inx) => (
+              {isAbono === "ABONO" ? (
+                <span className="font-x">{"ABONO A CONTROL DEL " + dayjs(fecha).format("DD-MM-YYYY")}</span>
+              ) : (
+                serviciosItems.map((item, inx) => (
                   <div key={inx}>
                     <div className="cuadre-descripcion flx font-x pad-0">
                       <p className="mr-05 centrado">{item.cantidad} </p>
@@ -85,10 +86,8 @@ export default function CuadreDiarioScreen() {
                       <p>(${item.precioServ})</p>
                     </div>
                   </div>
-                )))
-
-
-              }
+                ))
+              )}
             </div>
           );
         },
@@ -98,7 +97,8 @@ export default function CuadreDiarioScreen() {
         accessorKey: "montoServicios",
         enableGrouping: false,
         cell: (value) => {
-          if (!value) {
+          const { isAbono } = value.row.original;
+          if (!value || isAbono === "ABONO") {
             return "";
           }
           return "$" + Number(value.getValue()).toFixed(2);
@@ -116,7 +116,8 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
         cell: (value) => {
           const labtxt = value.row.original.laboratorio;
-          if (!value) {
+          const { isAbono } = value.row.original;
+          if (!value || isAbono === "ABONO") {
             return "";
           }
           return (
@@ -136,7 +137,8 @@ export default function CuadreDiarioScreen() {
         accessorKey: "descuento",
         enableGrouping: false,
         cell: (value) => {
-          if (!value) {
+          const { isAbono } = value.row.original;
+          if (!value || isAbono === "ABONO") {
             return "";
           }
           return "$" + Number(value.getValue()).toFixed(2);
@@ -154,7 +156,7 @@ export default function CuadreDiarioScreen() {
         cell: (value) => {
           const { abonos } = value.row.original;
           if (!abonos || abonos.length === 0) {
-            return ""
+            return "";
           }
           const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
 
@@ -184,14 +186,12 @@ export default function CuadreDiarioScreen() {
         accessorKey: "montoUsd",
         enableGrouping: false,
         cell: (value) => {
-          const { abonos } = value.row.original;
+          const { abonos, isAbono, montoUsd, abonosHoy } = value.row.original;
 
-          if (!abonos || abonos.length === 0) {
-            return
-          }
           const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
           const porpagar = Number(value.getValue()) - Number(totalAbonado);
-          return "$" + Number(porpagar).toFixed(2);
+
+          return isAbono === "ABONO" ? "$" + Number(abonosHoy.monto).toFixed(2) : "$" + Number(montoUsd).toFixed(2);
         },
         footer: ({ table }) => {
           const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
@@ -203,6 +203,10 @@ export default function CuadreDiarioScreen() {
         accessorKey: "montoComisionDr",
         enableGrouping: false,
         cell: (value) => {
+          const { isAbono } = value.row.original;
+          if (!value || isAbono === "ABONO") {
+            return "";
+          }
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
@@ -217,6 +221,10 @@ export default function CuadreDiarioScreen() {
         accessorKey: "montoComisionPlaza",
         enableGrouping: false,
         cell: (value) => {
+          const { isAbono } = value.row.original;
+          if (!value || isAbono === "ABONO") {
+            return "";
+          }
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
@@ -398,7 +406,7 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
-  console.log("controles:", controles)
+  console.log("controles:", controles);
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">
@@ -408,8 +416,9 @@ export default function CuadreDiarioScreen() {
         <h3>REPORTE DE CONTROLES DEL {parseFecha(fechaId)}</h3>
       </div>
 
-      <div>{loading ? <span>Cargando Datos...</span> : <GroupingCuadreTableV2 columns={columns} data={controles} />}</div>
-
+      <div>
+        {loading ? <span>Cargando Datos...</span> : <GroupingCuadreTableV2 columns={columns} data={controles} />}
+      </div>
 
       <span>Observaciones: ____________________________________________________________________________________</span>
       <div className="mtop-1">

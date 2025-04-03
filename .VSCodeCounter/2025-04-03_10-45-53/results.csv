@@ -1,0 +1,179 @@
+"filename", "language", "JSON", "JavaScript", "JavaScript JSX", "CSS", "Markdown", "HTML", "comment", "blank", "total"
+"c:\NEW_PLAZA\plazadental-v2\frontend\README.md", "Markdown", 0, 0, 0, 0, 5, 0, 0, 4, 9
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@fortawesome-D46myhqq.js", "JavaScript", 0, 495, 0, 0, 0, 0, 0, 62, 557
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@remix-run-CDTKzl14.js", "JavaScript", 0, 1, 0, 0, 0, 0, 11, 0, 12
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@tanstack-D2dsDbMT.js", "JavaScript", 0, 6, 0, 0, 0, 0, 16, 1, 23
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\axios-CCb-kr4I.js", "JavaScript", 0, 6, 0, 0, 0, 0, 0, 1, 7
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\dayjs-Bof1u0Bp.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\dayjs-plugin-utc-N-J57KDX.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\file-saver-BltXWcXH.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\index-DHiXkKyp.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\index-gXdRFcSl.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\prop-types-DePnx8Ce.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-dom-Ccb256YQ.js", "JavaScript", 0, 9, 0, 0, 0, 0, 7, 1, 17
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-jk4j9Fmt.js", "JavaScript", 0, 3, 0, 0, 0, 0, 14, 1, 18
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-number-format-C6akExkf.js", "JavaScript", 0, 9, 0, 0, 0, 0, 0, 1, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-redux-C1pLMJR6.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-router-CJLUTN7I.js", "JavaScript", 0, 2, 0, 0, 0, 0, 9, 0, 11
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-router-dom-gJztbWZE.js", "JavaScript", 0, 2, 0, 0, 0, 0, 8, 1, 11
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-to-print-CPJx1Te-.js", "JavaScript", 0, 13, 0, 0, 0, 0, 2, 1, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\redux-C_QmFX3e.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\redux-thunk-CWbY1Mp_.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\scheduler-CzFDRTuY.js", "JavaScript", 0, 2, 0, 0, 0, 0, 7, 1, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\sweetalert2-D3pEHXw3.js", "JavaScript", 0, 62, 0, 0, 0, 0, 3, 1, 66
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\swiper-BK7NJXpM.js", "JavaScript", 0, 1, 0, 0, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\swiper-Ds_YmOBQ.css", "CSS", 0, 0, 0, 1, 0, 0, 0, 1, 2
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\use-sync-external-store-BI_05Gk9.js", "JavaScript", 0, 2, 0, 0, 0, 0, 7, 1, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\xlsx-YQvpTstd.js", "JavaScript", 0, 95, 0, 0, 0, 0, 0, 1, 96
+"c:\NEW_PLAZA\plazadental-v2\frontend\dist\index.html", "HTML", 0, 0, 0, 0, 0, 37, 0, 4, 41
+"c:\NEW_PLAZA\plazadental-v2\frontend\eslint.config.js", "JavaScript", 0, 37, 0, 0, 0, 0, 0, 2, 39
+"c:\NEW_PLAZA\plazadental-v2\frontend\index.html", "HTML", 0, 0, 0, 0, 0, 13, 0, 3, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\package.json", "JSON", 45, 0, 0, 0, 0, 0, 0, 1, 46
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\App.jsx", "JavaScript JSX", 0, 0, 112, 0, 0, 0, 0, 11, 123
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\controlActions.js", "JavaScript", 0, 261, 0, 0, 0, 0, 1, 17, 279
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\doctorActions.js", "JavaScript", 0, 105, 0, 0, 0, 0, 0, 9, 114
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\gastoActions.js", "JavaScript", 0, 136, 0, 0, 0, 0, 0, 9, 145
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\pacienteActions.js", "JavaScript", 0, 230, 0, 0, 0, 0, 0, 12, 242
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\productActions.js", "JavaScript", 0, 193, 0, 0, 0, 0, 0, 13, 206
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\servicioActions.js", "JavaScript", 0, 157, 0, 0, 0, 0, 0, 13, 170
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\userActions.js", "JavaScript", 0, 189, 0, 0, 0, 0, 0, 10, 199
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\AdminRoute.jsx", "JavaScript JSX", 0, 0, 9, 0, 0, 0, 0, 4, 13
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\BrandHeader.jsx", "JavaScript JSX", 0, 0, 9, 0, 0, 0, 0, 1, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrint.jsx", "JavaScript JSX", 0, 0, 143, 0, 0, 0, 2, 16, 161
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrintConstancia.jsx", "JavaScript JSX", 0, 0, 65, 0, 0, 0, 2, 19, 86
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrintRecipe.jsx", "JavaScript JSX", 0, 0, 156, 0, 0, 0, 13, 11, 180
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\CuadreDiarioTable.jsx", "JavaScript JSX", 0, 0, 153, 0, 0, 0, 5, 9, 167
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\DocFooter.jsx", "JavaScript JSX", 0, 0, 24, 0, 0, 0, 0, 1, 25
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ExcelExport.jsx", "JavaScript JSX", 0, 0, 19, 0, 0, 0, 0, 3, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\FacturacionTable.jsx", "JavaScript JSX", 0, 0, 83, 0, 0, 0, 0, 10, 93
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\FooterFirma.jsx", "JavaScript JSX", 0, 0, 8, 0, 0, 0, 0, 1, 9
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GlobalFilter.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 1, 14
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingCuadreTableV2.jsx", "JavaScript JSX", 0, 0, 147, 0, 0, 0, 5, 6, 158
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingProductosTable.jsx", "JavaScript JSX", 0, 0, 167, 0, 0, 0, 5, 9, 181
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingReventasTable.jsx", "JavaScript JSX", 0, 0, 174, 0, 0, 0, 5, 9, 188
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\IterarPago.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 4, 4
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\LabConceptSelector.jsx", "JavaScript JSX", 0, 0, 51, 0, 0, 0, 0, 7, 58
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Loader.jsx", "JavaScript JSX", 0, 0, 9, 0, 0, 0, 0, 2, 11
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\LoadingBox.jsx", "JavaScript JSX", 0, 0, 4, 0, 0, 0, 0, 2, 6
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\MessageBox.jsx", "JavaScript JSX", 0, 0, 5, 0, 0, 0, 0, 3, 8
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Pagination.jsx", "JavaScript JSX", 0, 0, 20, 0, 0, 0, 0, 4, 24
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\PaymentForm.jsx", "JavaScript JSX", 0, 0, 551, 0, 0, 0, 0, 47, 598
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Playground.jsx", "JavaScript JSX", 0, 0, 370, 0, 0, 0, 3, 33, 406
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ProtectedRoute.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 4, 17
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ReportTable.jsx", "JavaScript JSX", 0, 0, 72, 0, 0, 0, 4, 6, 82
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ServiciosForm.jsx", "JavaScript JSX", 0, 0, 145, 0, 0, 0, 0, 21, 166
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\SimpleTable.jsx", "JavaScript JSX", 0, 0, 94, 0, 0, 0, 0, 8, 102
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\SplashSvg.jsx", "JavaScript JSX", 0, 0, 16, 0, 0, 0, 0, 4, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ToolTip.jsx", "JavaScript JSX", 0, 0, 14, 0, 0, 0, 0, 2, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\controlConstants.js", "JavaScript", 0, 39, 0, 0, 0, 0, 0, 12, 51
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\doctorConstants.js", "JavaScript", 0, 20, 0, 0, 0, 0, 0, 5, 25
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\gastoConstants.js", "JavaScript", 0, 37, 0, 0, 0, 0, 0, 10, 47
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\listas.js", "JavaScript", 0, 158, 0, 0, 0, 0, 0, 6, 164
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\pacienteConstants.js", "JavaScript", 0, 32, 0, 0, 0, 0, 0, 8, 40
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\productConstants.js", "JavaScript", 0, 39, 0, 0, 0, 0, 0, 11, 50
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\servicioConstants.js", "JavaScript", 0, 31, 0, 0, 0, 0, 0, 9, 40
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\userConstants.js", "JavaScript", 0, 32, 0, 0, 0, 0, 0, 11, 43
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\AddCircleIcon.jsx", "JavaScript JSX", 0, 0, 24, 0, 0, 0, 0, 2, 26
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\AddDocIcon.jsx", "JavaScript JSX", 0, 0, 8, 0, 0, 0, 0, 2, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CalendarioIcon.jsx", "JavaScript JSX", 0, 0, 20, 0, 0, 0, 0, 2, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CardDollarIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CheckIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CloseIcon.jsx", "JavaScript JSX", 0, 0, 22, 0, 0, 0, 0, 2, 24
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CogIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 1, 13
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ControlAddIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 2, 14
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ControlIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 3, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CuadreIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DashboardIcon.jsx", "JavaScript JSX", 0, 0, 23, 0, 0, 0, 0, 2, 25
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DoctorIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 3, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DollarIcon.jsx", "JavaScript JSX", 0, 0, 20, 0, 0, 0, 0, 2, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EditIcon.jsx", "JavaScript JSX", 0, 0, 20, 0, 0, 0, 0, 2, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EmpleadoIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 1, 14
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EmpleadosIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\GastosIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\HandDollarIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\InfoIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 2, 14
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\InvoiceDollarIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\LockIcon.jsx", "JavaScript JSX", 0, 0, 21, 0, 0, 0, 0, 2, 23
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\MinusCircleIcon.jsx", "JavaScript JSX", 0, 0, 15, 0, 0, 0, 0, 1, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\OdontologoIcon.jsx", "JavaScript JSX", 0, 0, 16, 0, 0, 0, 0, 1, 17
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\Outpatient.jsx", "JavaScript JSX", 0, 0, 21, 0, 0, 0, 0, 1, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacienteAddIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 3, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacienteInfoIcon.jsx", "JavaScript JSX", 0, 0, 12, 0, 0, 0, 0, 3, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacientesIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 3, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PeopleIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PlusCircleIcon.jsx", "JavaScript JSX", 0, 0, 15, 0, 0, 0, 0, 1, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\Printicon.jsx", "JavaScript JSX", 0, 0, 21, 0, 0, 0, 0, 2, 23
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ReporteIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\SaveIcon.jsx", "JavaScript JSX", 0, 0, 8, 0, 0, 0, 0, 2, 10
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\SpreadSheetIcon.jsx", "JavaScript JSX", 0, 0, 7, 0, 0, 0, 0, 1, 8
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\StockIcon.jsx", "JavaScript JSX", 0, 0, 16, 0, 0, 0, 0, 1, 17
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ToolsIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ToothPasteIcon.jsx", "JavaScript JSX", 0, 0, 7, 0, 0, 0, 0, 1, 8
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\TrashIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 2, 15
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\TuercasIcon.jsx", "JavaScript JSX", 0, 0, 13, 0, 0, 0, 0, 3, 16
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UnlockIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UserCircleIcon.jsx", "JavaScript JSX", 0, 0, 20, 0, 0, 0, 0, 2, 22
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UserIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UsersIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\VentasIcon.jsx", "JavaScript JSX", 0, 0, 18, 0, 0, 0, 0, 2, 20
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\constancia.jsx", "JavaScript JSX", 0, 0, 15, 0, 0, 0, 0, 6, 21
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\index.css", "CSS", 0, 0, 0, 2223, 0, 0, 79, 514, 2816
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\main.jsx", "JavaScript JSX", 0, 0, 81, 0, 0, 0, 1, 4, 86
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\controlReducers.js", "JavaScript", 0, 193, 0, 0, 0, 0, 0, 13, 206
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\doctorReducers.js", "JavaScript", 0, 89, 0, 0, 0, 0, 0, 5, 94
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\gastoReducers.js", "JavaScript", 0, 96, 0, 0, 0, 0, 0, 6, 102
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\pacienteReducers.js", "JavaScript", 0, 143, 0, 0, 0, 0, 0, 9, 152
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\productReducers.js", "JavaScript", 0, 196, 0, 0, 0, 0, 0, 10, 206
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\servicioReducers.js", "JavaScript", 0, 161, 0, 0, 0, 0, 0, 10, 171
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\userReducers.js", "JavaScript", 0, 149, 0, 0, 0, 0, 0, 4, 153
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\GroupingControles.jsx", "JavaScript JSX", 0, 0, 208, 0, 0, 0, 2, 23, 233
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaControles.jsx", "JavaScript JSX", 0, 0, 155, 0, 0, 0, 0, 8, 163
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaDoctores.jsx", "JavaScript JSX", 0, 0, 90, 0, 0, 0, 0, 8, 98
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaPacientes.jsx", "JavaScript JSX", 0, 0, 173, 0, 0, 0, 3, 14, 190
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaServicios.jsx", "JavaScript JSX", 0, 0, 114, 0, 0, 0, 0, 11, 125
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ReporteCuadres.jsx", "JavaScript JSX", 0, 0, 78, 0, 0, 0, 0, 10, 88
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ReporteGastos.jsx", "JavaScript JSX", 0, 0, 123, 0, 0, 0, 1, 13, 137
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlCreateScreen.jsx", "JavaScript JSX", 0, 0, 676, 0, 0, 0, 8, 55, 739
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlEditScreen.jsx", "JavaScript JSX", 0, 0, 778, 0, 0, 0, 9, 64, 851
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlesScreen.jsx", "JavaScript JSX", 0, 0, 308, 0, 0, 0, 6, 19, 333
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\CuadreDiarioScreen.jsx", "JavaScript JSX", 0, 0, 447, 0, 0, 0, 1, 28, 476
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DetailControlScreen.jsx", "JavaScript JSX", 0, 0, 168, 0, 0, 0, 0, 14, 182
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorCreateScreen.jsx", "JavaScript JSX", 0, 0, 294, 0, 0, 0, 0, 14, 308
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorEditScreen.jsx", "JavaScript JSX", 0, 0, 305, 0, 0, 0, 0, 16, 321
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorListScreen.js", "JavaScript", 0, 116, 0, 0, 0, 0, 0, 13, 129
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoCreateScreen.jsx", "JavaScript JSX", 0, 0, 297, 0, 0, 0, 2, 30, 329
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoEditScreen.jsx", "JavaScript JSX", 0, 0, 318, 0, 0, 0, 22, 30, 370
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoPrintScreen.jsx", "JavaScript JSX", 0, 0, 101, 0, 0, 0, 0, 12, 113
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\HomeScreen.jsx", "JavaScript JSX", 0, 0, 110, 0, 0, 0, 0, 8, 118
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteCreateScreen.jsx", "JavaScript JSX", 0, 0, 944, 0, 0, 0, 7, 42, 993
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteEditScreen.jsx", "JavaScript JSX", 0, 0, 1109, 0, 0, 0, 7, 55, 1171
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteScreen.jsx", "JavaScript JSX", 0, 0, 120, 0, 0, 0, 0, 8, 128
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintConstanciaScreen.jsx", "JavaScript JSX", 0, 0, 44, 0, 0, 0, 0, 7, 51
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintFacturaScreen.jsx", "JavaScript JSX", 0, 0, 130, 0, 0, 0, 0, 7, 137
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintRecipeScreen.jsx", "JavaScript JSX", 0, 0, 44, 0, 0, 0, 0, 7, 51
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ProfileScreen.jsx", "JavaScript JSX", 0, 0, 147, 0, 0, 0, 0, 8, 155
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\RegisterScreen.jsx", "JavaScript JSX", 0, 0, 134, 0, 0, 0, 0, 8, 142
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ServicioCreateScreen.jsx", "JavaScript JSX", 0, 0, 221, 0, 0, 0, 0, 20, 241
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ServicioEditScreen.jsx", "JavaScript JSX", 0, 0, 181, 0, 0, 0, 0, 16, 197
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\SigninScreen.jsx", "JavaScript JSX", 0, 0, 75, 0, 0, 0, 0, 7, 82
+"c:\NEW_PLAZA\plazadental-v2\frontend\src\store.js", "JavaScript", 0, 132, 0, 0, 0, 0, 0, 10, 142
+"c:\NEW_PLAZA\plazadental-v2\frontend\vite.config.js", "JavaScript", 0, 31, 0, 0, 0, 0, 1, 2, 34
+"c:\NEW_PLAZA\plazadental-v2\models\control.js", "JavaScript", 0, 106, 0, 0, 0, 0, 0, 6, 112
+"c:\NEW_PLAZA\plazadental-v2\models\doctor.js", "JavaScript", 0, 43, 0, 0, 0, 0, 0, 2, 45
+"c:\NEW_PLAZA\plazadental-v2\models\gasto.js", "JavaScript", 0, 24, 0, 0, 0, 0, 0, 3, 27
+"c:\NEW_PLAZA\plazadental-v2\models\paciente.js", "JavaScript", 0, 97, 0, 0, 0, 0, 0, 3, 100
+"c:\NEW_PLAZA\plazadental-v2\models\producto.js", "JavaScript", 0, 37, 0, 0, 0, 0, 0, 3, 40
+"c:\NEW_PLAZA\plazadental-v2\models\servicio.js", "JavaScript", 0, 18, 0, 0, 0, 0, 0, 3, 21
+"c:\NEW_PLAZA\plazadental-v2\models\usuario.js", "JavaScript", 0, 20, 0, 0, 0, 0, 0, 2, 22
+"c:\NEW_PLAZA\plazadental-v2\package.json", "JSON", 28, 0, 0, 0, 0, 0, 0, 0, 28
+"c:\NEW_PLAZA\plazadental-v2\routers\controlRouter.js", "JavaScript", 0, 1272, 0, 0, 0, 0, 1, 67, 1340
+"c:\NEW_PLAZA\plazadental-v2\routers\doctorRouter.js", "JavaScript", 0, 108, 0, 0, 0, 0, 0, 11, 119
+"c:\NEW_PLAZA\plazadental-v2\routers\gastoRouter.js", "JavaScript", 0, 134, 0, 0, 0, 0, 0, 14, 148
+"c:\NEW_PLAZA\plazadental-v2\routers\pacienteRouter.js", "JavaScript", 0, 262, 0, 0, 0, 0, 32, 16, 310
+"c:\NEW_PLAZA\plazadental-v2\routers\productRouter.js", "JavaScript", 0, 286, 0, 0, 0, 0, 5, 27, 318
+"c:\NEW_PLAZA\plazadental-v2\routers\servicioRouter.js", "JavaScript", 0, 112, 0, 0, 0, 0, 0, 11, 123
+"c:\NEW_PLAZA\plazadental-v2\routers\userRouter.js", "JavaScript", 0, 159, 0, 0, 0, 0, 0, 14, 173
+"c:\NEW_PLAZA\plazadental-v2\server.js", "JavaScript", 0, 37, 0, 0, 0, 0, 1, 9, 47
+"c:\NEW_PLAZA\plazadental-v2\utils.js", "JavaScript", 0, 38, 0, 0, 0, 0, 0, 3, 41
+"c:\NEW_PLAZA\plazadental-v2\vercel.json", "JSON", 15, 0, 0, 0, 0, 0, 0, 1, 16
+"Total", "-", 88, 6471, 11297, 2225, 5, 50, 317, 1957, 22410

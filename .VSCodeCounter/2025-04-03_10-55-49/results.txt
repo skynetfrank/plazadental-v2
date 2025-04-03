@@ -1,0 +1,223 @@
+Date : 2025-04-03 10:55:49
+Directory : c:\NEW_PLAZA\plazadental-v2
+Total : 177 files,  20136 codes, 317 comments, 1957 blanks, all 22410 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |        102 |     11,297 |        113 |        909 |     12,319 |
+| JavaScript     |         66 |      6,471 |        125 |        519 |      7,115 |
+| CSS            |          3 |      2,225 |         79 |        516 |      2,820 |
+| JSON           |          3 |         88 |          0 |          2 |         90 |
+| HTML           |          2 |         50 |          0 |          7 |         57 |
+| Markdown       |          1 |          5 |          0 |          4 |          9 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                 | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                    |        177 |     20,136 |        317 |      1,957 |     22,410 |
+| . (Files)                                                                            |          4 |        118 |          1 |         13 |        132 |
+| frontend                                                                             |        159 |     17,340 |        278 |      1,762 |     19,380 |
+| frontend (Files)                                                                     |          5 |        131 |          1 |         12 |        144 |
+| frontend\dist                                                                        |         26 |        755 |         84 |         88 |        927 |
+| frontend\dist (Files)                                                                |          1 |         37 |          0 |          4 |         41 |
+| frontend\dist\assets                                                                 |         25 |        718 |         84 |         84 |        886 |
+| frontend\src                                                                         |        128 |     16,454 |        193 |      1,662 |     18,309 |
+| frontend\src (Files)                                                                 |          4 |      2,548 |         80 |        539 |      3,167 |
+| frontend\src\actions                                                                 |          7 |      1,271 |          1 |         83 |      1,355 |
+| frontend\src\components                                                              |         28 |      2,534 |         44 |        247 |      2,825 |
+| frontend\src\constants                                                               |          8 |        388 |          0 |         72 |        460 |
+| frontend\src\icons                                                                   |         44 |        678 |          0 |         89 |        767 |
+| frontend\src\reducers                                                                |          7 |      1,027 |          0 |         57 |      1,084 |
+| frontend\src\reportes                                                                |          7 |        941 |          6 |         87 |      1,034 |
+| frontend\src\screens                                                                 |         23 |      7,067 |         62 |        488 |      7,617 |
+| models                                                                               |          7 |        345 |          0 |         22 |        367 |
+| routers                                                                              |          7 |      2,333 |         38 |        160 |      2,531 |
++--------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                             | language       | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\NEW_PLAZA\plazadental-v2\frontend\README.md                                       | Markdown       |          5 |          0 |          4 |          9 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@fortawesome-D46myhqq.js            | JavaScript     |        495 |          0 |         62 |        557 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@remix-run-CDTKzl14.js              | JavaScript     |          1 |         11 |          0 |         12 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\@tanstack-D2dsDbMT.js               | JavaScript     |          6 |         16 |          1 |         23 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\axios-CCb-kr4I.js                   | JavaScript     |          6 |          0 |          1 |          7 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\dayjs-Bof1u0Bp.js                   | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\dayjs-plugin-utc-N-J57KDX.js        | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\file-saver-BltXWcXH.js              | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\index-DHiXkKyp.js                   | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\index-gXdRFcSl.css                  | CSS            |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\prop-types-DePnx8Ce.js              | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-dom-Ccb256YQ.js               | JavaScript     |          9 |          7 |          1 |         17 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-jk4j9Fmt.js                   | JavaScript     |          3 |         14 |          1 |         18 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-number-format-C6akExkf.js     | JavaScript     |          9 |          0 |          1 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-redux-C1pLMJR6.js             | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-router-CJLUTN7I.js            | JavaScript     |          2 |          9 |          0 |         11 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-router-dom-gJztbWZE.js        | JavaScript     |          2 |          8 |          1 |         11 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\react-to-print-CPJx1Te-.js          | JavaScript     |         13 |          2 |          1 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\redux-C_QmFX3e.js                   | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\redux-thunk-CWbY1Mp_.js             | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\scheduler-CzFDRTuY.js               | JavaScript     |          2 |          7 |          1 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\sweetalert2-D3pEHXw3.js             | JavaScript     |         62 |          3 |          1 |         66 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\swiper-BK7NJXpM.js                  | JavaScript     |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\swiper-Ds_YmOBQ.css                 | CSS            |          1 |          0 |          1 |          2 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\use-sync-external-store-BI_05Gk9.js | JavaScript     |          2 |          7 |          1 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\assets\xlsx-YQvpTstd.js                    | JavaScript     |         95 |          0 |          1 |         96 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\dist\index.html                                 | HTML           |         37 |          0 |          4 |         41 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\eslint.config.js                                | JavaScript     |         37 |          0 |          2 |         39 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\index.html                                      | HTML           |         13 |          0 |          3 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\package.json                                    | JSON           |         45 |          0 |          1 |         46 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\App.jsx                                     | JavaScript JSX |        112 |          0 |         11 |        123 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\controlActions.js                   | JavaScript     |        261 |          1 |         17 |        279 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\doctorActions.js                    | JavaScript     |        105 |          0 |          9 |        114 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\gastoActions.js                     | JavaScript     |        136 |          0 |          9 |        145 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\pacienteActions.js                  | JavaScript     |        230 |          0 |         12 |        242 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\productActions.js                   | JavaScript     |        193 |          0 |         13 |        206 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\servicioActions.js                  | JavaScript     |        157 |          0 |         13 |        170 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\actions\userActions.js                      | JavaScript     |        189 |          0 |         10 |        199 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\AdminRoute.jsx                   | JavaScript JSX |          9 |          0 |          4 |         13 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\BrandHeader.jsx                  | JavaScript JSX |          9 |          0 |          1 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrint.jsx             | JavaScript JSX |        143 |          2 |         16 |        161 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrintConstancia.jsx   | JavaScript JSX |         65 |          2 |         19 |         86 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ComponentToPrintRecipe.jsx       | JavaScript JSX |        156 |         13 |         11 |        180 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\CuadreDiarioTable.jsx            | JavaScript JSX |        153 |          5 |          9 |        167 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\DocFooter.jsx                    | JavaScript JSX |         24 |          0 |          1 |         25 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ExcelExport.jsx                  | JavaScript JSX |         19 |          0 |          3 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\FacturacionTable.jsx             | JavaScript JSX |         83 |          0 |         10 |         93 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\FooterFirma.jsx                  | JavaScript JSX |          8 |          0 |          1 |          9 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GlobalFilter.jsx                 | JavaScript JSX |         13 |          0 |          1 |         14 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingCuadreTableV2.jsx        | JavaScript JSX |        147 |          5 |          6 |        158 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingProductosTable.jsx       | JavaScript JSX |        167 |          5 |          9 |        181 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\GroupingReventasTable.jsx        | JavaScript JSX |        174 |          5 |          9 |        188 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\IterarPago.js                    | JavaScript     |          0 |          0 |          4 |          4 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\LabConceptSelector.jsx           | JavaScript JSX |         51 |          0 |          7 |         58 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Loader.jsx                       | JavaScript JSX |          9 |          0 |          2 |         11 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\LoadingBox.jsx                   | JavaScript JSX |          4 |          0 |          2 |          6 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\MessageBox.jsx                   | JavaScript JSX |          5 |          0 |          3 |          8 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Pagination.jsx                   | JavaScript JSX |         20 |          0 |          4 |         24 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\PaymentForm.jsx                  | JavaScript JSX |        551 |          0 |         47 |        598 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\Playground.jsx                   | JavaScript JSX |        370 |          3 |         33 |        406 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ProtectedRoute.jsx               | JavaScript JSX |         13 |          0 |          4 |         17 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ReportTable.jsx                  | JavaScript JSX |         72 |          4 |          6 |         82 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ServiciosForm.jsx                | JavaScript JSX |        145 |          0 |         21 |        166 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\SimpleTable.jsx                  | JavaScript JSX |         94 |          0 |          8 |        102 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\SplashSvg.jsx                    | JavaScript JSX |         16 |          0 |          4 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\components\ToolTip.jsx                      | JavaScript JSX |         14 |          0 |          2 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\controlConstants.js               | JavaScript     |         39 |          0 |         12 |         51 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\doctorConstants.js                | JavaScript     |         20 |          0 |          5 |         25 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\gastoConstants.js                 | JavaScript     |         37 |          0 |         10 |         47 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\listas.js                         | JavaScript     |        158 |          0 |          6 |        164 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\pacienteConstants.js              | JavaScript     |         32 |          0 |          8 |         40 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\productConstants.js               | JavaScript     |         39 |          0 |         11 |         50 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\servicioConstants.js              | JavaScript     |         31 |          0 |          9 |         40 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\constants\userConstants.js                  | JavaScript     |         32 |          0 |         11 |         43 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\AddCircleIcon.jsx                     | JavaScript JSX |         24 |          0 |          2 |         26 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\AddDocIcon.jsx                        | JavaScript JSX |          8 |          0 |          2 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CalendarioIcon.jsx                    | JavaScript JSX |         20 |          0 |          2 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CardDollarIcon.jsx                    | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CheckIcon.jsx                         | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CloseIcon.jsx                         | JavaScript JSX |         22 |          0 |          2 |         24 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CogIcon.jsx                           | JavaScript JSX |         12 |          0 |          1 |         13 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ControlAddIcon.jsx                    | JavaScript JSX |         12 |          0 |          2 |         14 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ControlIcon.jsx                       | JavaScript JSX |         12 |          0 |          3 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\CuadreIcon.jsx                        | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DashboardIcon.jsx                     | JavaScript JSX |         23 |          0 |          2 |         25 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DoctorIcon.jsx                        | JavaScript JSX |         13 |          0 |          3 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\DollarIcon.jsx                        | JavaScript JSX |         20 |          0 |          2 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EditIcon.jsx                          | JavaScript JSX |         20 |          0 |          2 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EmpleadoIcon.jsx                      | JavaScript JSX |         13 |          0 |          1 |         14 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\EmpleadosIcon.jsx                     | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\GastosIcon.jsx                        | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\HandDollarIcon.jsx                    | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\InfoIcon.jsx                          | JavaScript JSX |         12 |          0 |          2 |         14 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\InvoiceDollarIcon.jsx                 | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\LockIcon.jsx                          | JavaScript JSX |         21 |          0 |          2 |         23 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\MinusCircleIcon.jsx                   | JavaScript JSX |         15 |          0 |          1 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\OdontologoIcon.jsx                    | JavaScript JSX |         16 |          0 |          1 |         17 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\Outpatient.jsx                        | JavaScript JSX |         21 |          0 |          1 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacienteAddIcon.jsx                   | JavaScript JSX |         12 |          0 |          3 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacienteInfoIcon.jsx                  | JavaScript JSX |         12 |          0 |          3 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PacientesIcon.jsx                     | JavaScript JSX |         13 |          0 |          3 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PeopleIcon.jsx                        | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\PlusCircleIcon.jsx                    | JavaScript JSX |         15 |          0 |          1 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\Printicon.jsx                         | JavaScript JSX |         21 |          0 |          2 |         23 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ReporteIcon.jsx                       | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\SaveIcon.jsx                          | JavaScript JSX |          8 |          0 |          2 |         10 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\SpreadSheetIcon.jsx                   | JavaScript JSX |          7 |          0 |          1 |          8 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\StockIcon.jsx                         | JavaScript JSX |         16 |          0 |          1 |         17 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ToolsIcon.jsx                         | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\ToothPasteIcon.jsx                    | JavaScript JSX |          7 |          0 |          1 |          8 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\TrashIcon.jsx                         | JavaScript JSX |         13 |          0 |          2 |         15 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\TuercasIcon.jsx                       | JavaScript JSX |         13 |          0 |          3 |         16 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UnlockIcon.jsx                        | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UserCircleIcon.jsx                    | JavaScript JSX |         20 |          0 |          2 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UserIcon.jsx                          | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\UsersIcon.jsx                         | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\VentasIcon.jsx                        | JavaScript JSX |         18 |          0 |          2 |         20 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\icons\constancia.jsx                        | JavaScript JSX |         15 |          0 |          6 |         21 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\index.css                                   | CSS            |      2,223 |         79 |        514 |      2,816 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\main.jsx                                    | JavaScript JSX |         81 |          1 |          4 |         86 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\controlReducers.js                 | JavaScript     |        193 |          0 |         13 |        206 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\doctorReducers.js                  | JavaScript     |         89 |          0 |          5 |         94 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\gastoReducers.js                   | JavaScript     |         96 |          0 |          6 |        102 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\pacienteReducers.js                | JavaScript     |        143 |          0 |          9 |        152 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\productReducers.js                 | JavaScript     |        196 |          0 |         10 |        206 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\servicioReducers.js                | JavaScript     |        161 |          0 |         10 |        171 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reducers\userReducers.js                    | JavaScript     |        149 |          0 |          4 |        153 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\GroupingControles.jsx              | JavaScript JSX |        208 |          2 |         23 |        233 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaControles.jsx                 | JavaScript JSX |        155 |          0 |          8 |        163 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaDoctores.jsx                  | JavaScript JSX |         90 |          0 |          8 |         98 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaPacientes.jsx                 | JavaScript JSX |        173 |          3 |         14 |        190 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ListaServicios.jsx                 | JavaScript JSX |        114 |          0 |         11 |        125 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ReporteCuadres.jsx                 | JavaScript JSX |         78 |          0 |         10 |         88 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\reportes\ReporteGastos.jsx                  | JavaScript JSX |        123 |          1 |         13 |        137 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlCreateScreen.jsx             | JavaScript JSX |        676 |          8 |         55 |        739 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlEditScreen.jsx               | JavaScript JSX |        778 |          9 |         64 |        851 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ControlesScreen.jsx                 | JavaScript JSX |        308 |          6 |         19 |        333 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\CuadreDiarioScreen.jsx              | JavaScript JSX |        447 |          1 |         28 |        476 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DetailControlScreen.jsx             | JavaScript JSX |        168 |          0 |         14 |        182 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorCreateScreen.jsx              | JavaScript JSX |        294 |          0 |         14 |        308 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorEditScreen.jsx                | JavaScript JSX |        305 |          0 |         16 |        321 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\DoctorListScreen.js                 | JavaScript     |        116 |          0 |         13 |        129 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoCreateScreen.jsx               | JavaScript JSX |        297 |          2 |         30 |        329 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoEditScreen.jsx                 | JavaScript JSX |        318 |         22 |         30 |        370 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\GastoPrintScreen.jsx                | JavaScript JSX |        101 |          0 |         12 |        113 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\HomeScreen.jsx                      | JavaScript JSX |        110 |          0 |          8 |        118 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteCreateScreen.jsx            | JavaScript JSX |        944 |          7 |         42 |        993 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteEditScreen.jsx              | JavaScript JSX |      1,109 |          7 |         55 |      1,171 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PacienteScreen.jsx                  | JavaScript JSX |        120 |          0 |          8 |        128 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintConstanciaScreen.jsx           | JavaScript JSX |         44 |          0 |          7 |         51 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintFacturaScreen.jsx              | JavaScript JSX |        130 |          0 |          7 |        137 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\PrintRecipeScreen.jsx               | JavaScript JSX |         44 |          0 |          7 |         51 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ProfileScreen.jsx                   | JavaScript JSX |        147 |          0 |          8 |        155 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\RegisterScreen.jsx                  | JavaScript JSX |        134 |          0 |          8 |        142 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ServicioCreateScreen.jsx            | JavaScript JSX |        221 |          0 |         20 |        241 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\ServicioEditScreen.jsx              | JavaScript JSX |        181 |          0 |         16 |        197 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\screens\SigninScreen.jsx                    | JavaScript JSX |         75 |          0 |          7 |         82 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\src\store.js                                    | JavaScript     |        132 |          0 |         10 |        142 |
+| c:\NEW_PLAZA\plazadental-v2\frontend\vite.config.js                                  | JavaScript     |         31 |          1 |          2 |         34 |
+| c:\NEW_PLAZA\plazadental-v2\models\control.js                                        | JavaScript     |        106 |          0 |          6 |        112 |
+| c:\NEW_PLAZA\plazadental-v2\models\doctor.js                                         | JavaScript     |         43 |          0 |          2 |         45 |
+| c:\NEW_PLAZA\plazadental-v2\models\gasto.js                                          | JavaScript     |         24 |          0 |          3 |         27 |
+| c:\NEW_PLAZA\plazadental-v2\models\paciente.js                                       | JavaScript     |         97 |          0 |          3 |        100 |
+| c:\NEW_PLAZA\plazadental-v2\models\producto.js                                       | JavaScript     |         37 |          0 |          3 |         40 |
+| c:\NEW_PLAZA\plazadental-v2\models\servicio.js                                       | JavaScript     |         18 |          0 |          3 |         21 |
+| c:\NEW_PLAZA\plazadental-v2\models\usuario.js                                        | JavaScript     |         20 |          0 |          2 |         22 |
+| c:\NEW_PLAZA\plazadental-v2\package.json                                             | JSON           |         28 |          0 |          0 |         28 |
+| c:\NEW_PLAZA\plazadental-v2\routers\controlRouter.js                                 | JavaScript     |      1,272 |          1 |         67 |      1,340 |
+| c:\NEW_PLAZA\plazadental-v2\routers\doctorRouter.js                                  | JavaScript     |        108 |          0 |         11 |        119 |
+| c:\NEW_PLAZA\plazadental-v2\routers\gastoRouter.js                                   | JavaScript     |        134 |          0 |         14 |        148 |
+| c:\NEW_PLAZA\plazadental-v2\routers\pacienteRouter.js                                | JavaScript     |        262 |         32 |         16 |        310 |
+| c:\NEW_PLAZA\plazadental-v2\routers\productRouter.js                                 | JavaScript     |        286 |          5 |         27 |        318 |
+| c:\NEW_PLAZA\plazadental-v2\routers\servicioRouter.js                                | JavaScript     |        112 |          0 |         11 |        123 |
+| c:\NEW_PLAZA\plazadental-v2\routers\userRouter.js                                    | JavaScript     |        159 |          0 |         14 |        173 |
+| c:\NEW_PLAZA\plazadental-v2\server.js                                                | JavaScript     |         37 |          1 |          9 |         47 |
+| c:\NEW_PLAZA\plazadental-v2\utils.js                                                 | JavaScript     |         38 |          0 |          3 |         41 |
+| c:\NEW_PLAZA\plazadental-v2\vercel.json                                              | JSON           |         15 |          0 |          1 |         16 |
+| Total                                                                                |                |     20,136 |        317 |      1,957 |     22,410 |
++--------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
