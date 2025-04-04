@@ -68,15 +68,33 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
 
         cell: (value) => {
-          const { serviciosItems, servicio_data, isAbono, fecha } = value.row.original;
-
+          const { serviciosItems, servicio_data, isAbono, fecha, abonos } = value.row.original;
+          const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
           if (!serviciosItems) {
             return " ";
           }
           return (
             <div>
               {isAbono === "ABONO" ? (
-                <span className="font-x">{"ABONO A CONTROL DEL " + dayjs(fecha).format("DD-MM-YYYY")}</span>
+                <div className="flx pad-0">
+                  <span className="font-x">{"ABONO A CONTROL DEL " + dayjs(fecha).format("DD-MM-YYYY")}</span>
+                  <details>
+                    <summary>ver</summary>
+                    {abonos.map((abono, inx) => {
+                      return (
+                        <div key={inx}>
+                          <div className="cuadre-descripcion flx font-x pad-0">
+                            <span className="minw-60 mr-05 centrado">
+                              {dayjs(abono.fecha).utc().format("DD-MM-YYYY")}{" "}
+                            </span>
+                            <span>${abono.monto}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {<span>Total: ${Number(totalAbonado).toFixed(2)}</span>}
+                  </details>
+                </div>
               ) : (
                 serviciosItems.map((item, inx) => (
                   <div key={inx}>
