@@ -68,7 +68,7 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
 
         cell: (value) => {
-          const { serviciosItems, servicio_data, isAbono, fecha, abonos } = value.row.original;
+          const { serviciosItems, servicio_data, isAbono, fecha, abonos, montoUsd } = value.row.original;
           const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
           if (!serviciosItems) {
             return " ";
@@ -76,23 +76,25 @@ export default function CuadreDiarioScreen() {
           return (
             <div>
               {isAbono === "ABONO" ? (
-                <div className="flx pad-0">
+                <div className="flx pad-0 gap05">
                   <span className="font-x">{"ABONO A CONTROL DEL " + dayjs(fecha).format("DD-MM-YYYY")}</span>
-                  <details>
+                  <details className="minw-100 ml">
                     <summary>ver</summary>
                     {abonos.map((abono, inx) => {
                       return (
-                        <div key={inx}>
-                          <div className="cuadre-descripcion flx font-x pad-0">
-                            <span className="minw-60 mr-05 centrado">
-                              {dayjs(abono.fecha).utc().format("DD-MM-YYYY")}{" "}
-                            </span>
-                            <span>${abono.monto}</span>
-                          </div>
+                        <div key={inx} className="flx pad-0 ml">
+                          <span className="minw-50">
+                            {dayjs(abono.fecha).utc().format("DD-MM-YYYY")}{" "}
+                          </span>
+                          <span>${abono.monto}</span>
                         </div>
                       );
                     })}
-                    {<span>Total: ${Number(totalAbonado).toFixed(2)}</span>}
+                    {<div className="flx pad-0 column">
+                      <span className="minw-80">Total Pagado: ${Number(totalAbonado).toFixed(2)}</span>
+                      <span className="minw-80 negrita">Total Pendiente: ${(Number(montoUsd) - Number(totalAbonado)).toFixed(2)}</span>
+                    </div>
+                    }
                   </details>
                 </div>
               ) : (
@@ -166,41 +168,10 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(total).toFixed(2);
         },
       },
-      {
-        header: "Abonos",
-        accessorKey: "abonos",
-        enableGrouping: false,
 
-        cell: (value) => {
-          const { abonos } = value.row.original;
-          if (!abonos || abonos.length === 0) {
-            return "";
-          }
-          const totalAbonado = abonos?.reduce((total, x) => total + x.monto, 0);
-
-          return (
-            <div>
-              <details>
-                <summary>ver</summary>
-                {abonos.map((abono, inx) => {
-                  return (
-                    <div key={inx}>
-                      <div className="cuadre-descripcion flx font-x pad-0">
-                        <span className="minw-60 mr-05 centrado">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
-                        <span>${abono.monto}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-                {<span>Total: ${Number(totalAbonado).toFixed(2)}</span>}
-              </details>
-            </div>
-          );
-        },
-      },
 
       {
-        header: "Monto A Pagar",
+        header: "Monto",
         accessorKey: "montoUsd",
         enableGrouping: false,
         cell: (value) => {

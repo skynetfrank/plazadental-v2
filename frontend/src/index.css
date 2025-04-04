@@ -1076,6 +1076,12 @@ img.tiny-image {
   font-size: 8px;
 }
 
+#tabla-cuadre tr td:nth-child(4) {
+  font-size: 8px;
+  min-width: 300px;
+
+}
+
 
 #tabla-cuadre tr td:nth-child(n + 4) {
   text-align: left;
@@ -1985,7 +1991,7 @@ button.button.small {
 
 
 .titulo-recipe.constancia>h2 {
- margin-top: 130px;
+  margin-top: 130px;
 }
 
 
@@ -2204,7 +2210,7 @@ button.button.small {
   border-radius: 15px;
 }
 
-.detalle-recipe-print.constancia{
+.detalle-recipe-print.constancia {
   border: none;
   margin-top: 30px;
 }
@@ -2711,7 +2717,7 @@ summary {
   font-weight: bold;
 }
 
-.constancia-att{
+.constancia-att {
   width: 100%;
   text-align: center;
   margin-bottom: 60px;
