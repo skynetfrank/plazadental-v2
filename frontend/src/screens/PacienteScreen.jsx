@@ -15,6 +15,8 @@ export default function PacienteScreen(props) {
   const { paciente, loading, error } = pacienteDetails;
   const dispatch = useDispatch();
 
+  const cloudinaryx = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/";
+
   useEffect(() => {
     if (!paciente || (paciente && paciente._id !== pacienteId)) {
       dispatch(detailsPaciente(pacienteId));
@@ -120,6 +122,17 @@ export default function PacienteScreen(props) {
         <div className="flx column division">
           <h4>Contacto</h4>
           <span>{paciente.contacto ? paciente.contacto : "No Disponible"}</span>
+        </div>
+        <div className="division">
+          <h4>Odontograma</h4>
+
+          <div className="content">
+            <img
+              className="odograma-small"
+              src={cloudinaryx + paciente.idPacienteOld + ".jpg"}
+              alt="Sin Odontograma Asignado"
+            />
+          </div>
         </div>
       </div>
     </div>
