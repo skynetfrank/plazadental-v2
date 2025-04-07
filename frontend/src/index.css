@@ -2707,12 +2707,27 @@ summary {
   width: 200px;
   pointer-events: all;
   cursor: pointer;
-
 }
 
 .odograma-small:hover {
   width: 300px;
 }
+
+/* CANVAS COMPONENT */
+.odontograma-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem;
+}
+.canvas-container {
+  height: 300px;
+  width: 500px;
+  border: 2px solid #000;
+}
+
+/*FIN DE CANVAS COMPONENT */
 
 @media (max-width: 575px) {
   .brand-container {

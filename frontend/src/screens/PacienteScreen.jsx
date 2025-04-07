@@ -125,14 +125,23 @@ export default function PacienteScreen(props) {
         </div>
         <div className="division">
           <h4>Odontograma</h4>
-
-          <div className="content">
-            <img
-              className="odograma-small"
-              src={cloudinaryx + paciente.idPacienteOld + ".jpg"}
-              alt="Sin Odontograma Asignado"
-            />
-          </div>
+          {paciente?.idPacienteOld ? (
+            <div>
+              <Link to={`/odontograma/${paciente._id}`}>
+                <img
+                  className="odograma-small"
+                  src={cloudinaryx + paciente.idPacienteOld + ".jpg"}
+                  alt="Sin Odontograma Asignado"
+                />
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Link to={`/odontograma/${paciente._id}`} className="btn-lookalike bg-blue">
+                Crear Odontograma
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

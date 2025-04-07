@@ -14,7 +14,7 @@ import { StockIcon } from "../icons/StockIcon";
 function HomeScreen() {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  console.log("userInfo", userInfo)
+  console.log("userInfo", userInfo);
   return (
     <div>
       {userInfo ? (
@@ -94,19 +94,21 @@ function HomeScreen() {
           ) : (
             ""
           )}
-          {userInfo.email === "rony@gmail.com" ? (<a
-            href="https://plaza-stock-49ze4p6ks-franklin-bolivars-projects.vercel.app/"
-            rel="nofollow noopener noreferrer"
-            target="_blank"
-          >
-            <button>
-              <StockIcon />
-              <span>Plaza Stock</span>
-            </button>
-          </a>) : ("")}
-
+          {userInfo.email === "rony@gmail.com" ? (
+            <a
+              href="https://plaza-stock-49ze4p6ks-franklin-bolivars-projects.vercel.app/"
+              rel="nofollow noopener noreferrer"
+              target="_blank"
+            >
+              <button>
+                <StockIcon />
+                <span>Plaza Stock</span>
+              </button>
+            </a>
+          ) : (
+            ""
+          )}
         </div>
-
       ) : (
         <div className="fachada"></div>
       )}
