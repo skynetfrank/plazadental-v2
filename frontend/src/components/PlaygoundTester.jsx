@@ -1,17 +1,21 @@
-import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Odontograma() {
   const params = useParams();
-  const { odogramaId, nombre, apellido } = params;
+  const { id: pacienteId } = params;
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!pacienteId) {
+      navigate("/");
+    }
+  }, [navigate, pacienteId]);
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
-  const cloudinaryx = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/";
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -23,24 +27,6 @@ export default function Odontograma() {
     context.strokeStyle = "black";
     context.lineWidth = 5;
     contextRef.current = context;
-    const image = new Image();
-
-    if (!odogramaId || odogramaId === "undefined" || odogramaId === "null" || odogramaId === " ") {
-      image.src = "/odograma.jpg";
-      contextRef.current.font = "15px Arial";
-      contextRef.current.fillStyle = "#000000";
-    } else {
-      image.src = cloudinaryx + odogramaId;
-    }
-
-    image.onload = () => {
-      context.drawImage(image, 0, 0, 500, 500);
-      contextRef.current.fillText(
-        "Paciente: " + nombre + " " + apellido + " " + " Creado el dia: " + dayjs(new Date()).format("DD/MM/YYYY"),
-        20,
-        490
-      );
-    };
   }, []);
 
   const startDrawing = ({ nativeEvent }) => {
@@ -80,9 +66,9 @@ export default function Odontograma() {
 
   const saveImageToLocal = (event) => {
     let link = event.currentTarget;
-    link.setAttribute("download", "canvas.jpg");
-    let image2 = canvasRef.current.toDataURL("image/jpg");
-    link.setAttribute("href", image2);
+    link.setAttribute("download", "canvas.png");
+    let image = canvasRef.current.toDataURL("image/png");
+    link.setAttribute("href", image);
   };
 
   return (

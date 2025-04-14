@@ -2722,8 +2722,7 @@ summary {
   margin: 1rem;
 }
 .canvas-container {
-  height: 300px;
-  width: 500px;
+ 
   border: 2px solid #000;
 }
 

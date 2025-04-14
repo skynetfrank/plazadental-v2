@@ -36,6 +36,7 @@ import DetailControlScreen from "./screens/DetailControlScreen";
 import ListaControles from "./reportes/ListaControles";
 import PrintConstanciaScreen from "./screens/PrintConstanciaScreen";
 import Odontograma from "./components/Odontograma";
+import CanvasDeepSea from "./components/CanvasDeepSea";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -71,7 +72,7 @@ const router = createBrowserRouter(
         <Route path="/analiticsventas" element={<GroupingControles />}></Route>
         <Route path="/control/:id/edit" element={<ControlEditScreen />}></Route>
         <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
-        <Route path="/odontograma/:id" element={<Odontograma />}></Route>
+        <Route path="/odontograma/:nombre/:apellido/:odogramaId" element={<CanvasDeepSea />}></Route>
       </Route>
     </Route>
   )

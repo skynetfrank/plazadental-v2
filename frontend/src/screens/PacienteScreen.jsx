@@ -127,7 +127,7 @@ export default function PacienteScreen(props) {
           <h4>Odontograma</h4>
           {paciente?.idPacienteOld ? (
             <div>
-              <Link to={`/odontograma/${paciente._id}`}>
+              <Link to={`/odontograma/${paciente.nombre}/${paciente.apellido}/${paciente.idPacienteOld}`}>
                 <img
                   className="odograma-small"
                   src={cloudinaryx + paciente.idPacienteOld + ".jpg"}
@@ -137,7 +137,10 @@ export default function PacienteScreen(props) {
             </div>
           ) : (
             <div>
-              <Link to={`/odontograma/${paciente._id}`} className="btn-lookalike bg-blue">
+              <Link
+                to={`/odontograma/${paciente.nombre}/${paciente.apellido}/${paciente.iPacienteOld}`}
+                className="btn-lookalike bg-blue"
+              >
                 Crear Odontograma
               </Link>
             </div>
