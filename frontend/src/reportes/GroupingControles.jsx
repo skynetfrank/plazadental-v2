@@ -52,7 +52,7 @@ function GroupingControles() {
     dispatch(ventasControls(fechaInicio, fechaFinal));
   };
 
-  useEffect(() => { }, [dispatch]);
+  useEffect(() => {}, [dispatch]);
 
   const resetHandler = () => {
     const f1 = dayjs(new Date()).format("YYYY-MM-DD");

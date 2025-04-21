@@ -217,38 +217,83 @@ controlRouter.get(
   "/groupedbyday",
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const dia = Number(31);
-    const mes = Number(12);
-    const ano = Number(2024);
-    const dailyControles = await Control.aggregate([
+    const controles = await Control.aggregate([
       {
         $project: {
           fechaControl: 1,
-          paciente: 1,
-          doctor: 1,
-          serviciosItems: 1,
-          cambioBcv: 1,
           montoUsd: 1,
-          montoComisionDr: 1,
-          montoComisionPlaza: 1,
-          pago: 1,
-          day: { $dayOfMonth: "$fechaControl" },
-          month: { $month: "$fechaControl" },
-          year: { $year: "$fechaControl" },
           fecha: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          abonos: 1,
+          abonosHoy: "$abonos",
+        },
+      },
+      {
+        $match: {
+          fechaControl: { $gte: new Date("2024-12-31") },
         },
       },
 
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$fechaControl" } },
+          _id: "$fecha",
           controles: { $sum: 1 },
           monto: { $sum: "$montoUsd" },
+        },
+      },
+      { $sort: { _id: -1 } },
+    ]);
+
+    const abonos = await Control.aggregate([
+      {
+        $project: {
+          fechaControl: 1,
+          montoUsd: 1,
+          abonos: 1,
+          abonosHoy: "$abonos",
+        },
+      },
+      {
+        $match: {
+          fechaControl: { $gte: new Date("2024-12-31") },
+        },
+      },
+      {
+        $unwind: "$abonosHoy",
+      },
+      {
+        $project: {
+          _id: 1,
+          fechaControl: 1,
+          montoUsd: 1,
+          montoAbono: "$abonosHoy.monto",
+          abonosHoy: 1,
+          fecha: "$abonosHoy.fecha",
+        },
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$fecha" } },
+          controles: { $sum: 1 },
+          monto: { $sum: "$montoAbono" },
         },
       },
 
       { $sort: { _id: -1 } },
     ]);
+
+    const allControles = [...controles, ...abonos];
+    const agruparPorTipo = Object.groupBy(allControles, (control) => control._id);
+    //console.log("agruparPorTipo", agruparPorTipo);
+
+    const arrayValues = Object.values(agruparPorTipo);
+
+    const dailyControles = arrayValues
+      .map((x) => {
+        return { _id: x[0]._id, monto: x[0].monto, controles: x[0].controles };
+      })
+      .sort((a, b) => {
+        return new Date(a._id) - new Date(b._id);
+      }).reverse();
 
     res.send(dailyControles);
   })
@@ -330,7 +375,6 @@ controlRouter.get(
       },
     ]).sort({ fecha: 1 });
 
-
     const controlesAbonos = await Control.aggregate([
       {
         $project: {
@@ -384,7 +428,6 @@ controlRouter.get(
         },
       },
 
-
       {
         $lookup: {
           from: "servicios",
@@ -425,7 +468,6 @@ controlRouter.get(
         },
       },
     ]).sort({ fecha: 1 });
-
 
     const cash = await Control.aggregate([
       {
@@ -761,8 +803,6 @@ controlRouter.get(
     const puntoBanesco = [...puntobanes, ...puntobanes2, ...puntobanes3];
 
     const controles = [...controlesPagos, ...controlesAbonos];
-
-
 
     res.send({ controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco });
   })

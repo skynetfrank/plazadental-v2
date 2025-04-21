@@ -12,6 +12,8 @@ export default function CuadreDiarioScreen() {
   const { id: fechaId } = params;
   const [subtotalcuadre, setSubtotalcuadre] = useState(0);
   const [ventaDolares, setVentaDolares] = useState(0);
+  const [totalAbonoDivisas, setTotalAbonoDivisas] = useState(0);
+
   const dispatch = useDispatch();
   const ventaDia = useSelector((state) => state.cuadreDia);
   const { loading, controles, cash, puntoPlaza, puntoVenezuela, puntoBanesco, cambio } = ventaDia;
@@ -24,7 +26,11 @@ export default function CuadreDiarioScreen() {
     if (controles) {
       const totalVentaBs = controles.reduce((sum, order) => Number(order.montoUsd) * Number(order.cambioBcv) + sum, 0);
       const totalVentaUsd = controles.reduce((sum, order) => Number(order.montoUsd) + sum, 0);
-
+      const tAbonoUsd = controles.reduce(
+        (sum, control) => (control?.abonosHoy?.formaPago === "Divisas US$" ? control?.abonosHoy?.monto + sum : 0),
+        0
+      );
+      console.log("totalAbonos", tAbonoUsd);
       setSubtotalcuadre(totalVentaBs);
       setVentaDolares(totalVentaUsd);
     }
@@ -83,17 +89,18 @@ export default function CuadreDiarioScreen() {
                     {abonos.map((abono, inx) => {
                       return (
                         <div key={inx} className="flx pad-0 ml">
-                          <span className="minw-50">
-                            {dayjs(abono.fecha).utc().format("DD-MM-YYYY")}{" "}
-                          </span>
+                          <span className="minw-50">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
                           <span>${abono.monto}</span>
                         </div>
                       );
                     })}
-                    {<div className="flx pad-0 column">
-                      <span className="minw-80">Total Pagado: ${Number(totalAbonado).toFixed(2)}</span>
-                      <span className="minw-80 negrita">Total Pendiente: ${(Number(montoUsd) - Number(totalAbonado)).toFixed(2)}</span>
-                    </div>
+                    {
+                      <div className="flx pad-0 column">
+                        <span className="minw-80">Total Pagado: ${Number(totalAbonado).toFixed(2)}</span>
+                        <span className="minw-80 negrita">
+                          Total Pendiente: ${(Number(montoUsd) - Number(totalAbonado)).toFixed(2)}
+                        </span>
+                      </div>
                     }
                   </details>
                 </div>
@@ -168,7 +175,6 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(total).toFixed(2);
         },
       },
-
 
       {
         header: "Monto",

@@ -186,7 +186,6 @@ export const controlAbonoReducer = (state = {}, action) => {
   }
 };
 
-
 export const controlListReducer = (state = { loading: true, controles: [] }, action) => {
   switch (action.type) {
     case CONTROL_LIST_REQUEST:
@@ -202,4 +201,3 @@ export const controlListReducer = (state = { loading: true, controles: [] }, act
       return state;
   }
 };
-

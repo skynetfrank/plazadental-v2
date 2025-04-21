@@ -536,13 +536,21 @@ export default function ControlEditScreen(props) {
 
   console.log("fecha abono", fechaAbono);
 
-
   useEffect(() => {
     if (!constancia) {
-      setConstancia("Por medio de la presente se hace constar que el paciente " + control?.paciente.nombre + " " + control?.paciente.apellido + " " + "Cedula de Identidad " + control?.paciente.cedula + ", asistió a consulta el dia de hoy " + dayjs(new Date().toLocaleDateString()).format("DD-MM-YYYY"))
+      setConstancia(
+        "Por medio de la presente se hace constar que el paciente " +
+          control?.paciente.nombre +
+          " " +
+          control?.paciente.apellido +
+          " " +
+          "Cedula de Identidad " +
+          control?.paciente.cedula +
+          ", asistió a consulta el dia de hoy " +
+          dayjs(new Date().toLocaleDateString()).format("DD-MM-YYYY")
+      );
     }
-
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -648,7 +656,8 @@ export default function ControlEditScreen(props) {
                         onChange={onValueChange}
                       />
                       <span className="radio"></span>
-                      Pago Completo
+                      Pago Completo{" "}
+                      {Number(montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                     </label>
 
                     <label className="radio-button">
@@ -688,40 +697,44 @@ export default function ControlEditScreen(props) {
                             </tr>
                           </thead>
                           <tbody>
-                            {abonos?.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()).map((abono, inx) => {
-                              if (!abono.fecha) {
-                                return "";
-                              }
-                              return (
-                                <tr key={inx}>
-                                  <td>
-                                    <div>
-                                      <span className="font-x">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")}</span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div>
-                                      <span className="font-x">{abono.formaPago}</span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div>
-                                      <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
-                                    </div>
-                                  </td>
+                            {abonos
+                              ?.sort((a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime())
+                              .map((abono, inx) => {
+                                const totalAbonado = abonos.reduce((suma, abono) => suma + abono.monto, 0);
+                                console.log("montoUsd", montoUsd, "totalAbonado", totalAbonado);
+                                if (!abono.fecha) {
+                                  return "";
+                                }
+                                return (
+                                  <tr key={inx}>
+                                    <td>
+                                      <div>
+                                        <span className="font-x">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")}</span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div>
+                                        <span className="font-x">{abono.formaPago}</span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div>
+                                        <span className="font-x">${Number(abono.monto).toFixed(2)}</span>
+                                      </div>
+                                    </td>
 
-                                  <td data-heading="Acciones">
-                                    <button
-                                      type="button"
-                                      className="btn-icon-container table"
-                                      onClick={() => deleteAbono(inx)}
-                                    >
-                                      <TrashIcon />
-                                    </button>
-                                  </td>
-                                </tr>
-                              );
-                            })}
+                                    <td data-heading="Acciones">
+                                      <button
+                                        type="button"
+                                        className="btn-icon-container table"
+                                        onClick={() => deleteAbono(inx)}
+                                      >
+                                        <TrashIcon />
+                                      </button>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
                           </tbody>
                           <tfoot>
                             <tr>
@@ -731,7 +744,15 @@ export default function ControlEditScreen(props) {
                               <th scope="row">
                                 ${Number(abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
                               </th>
-                              <th></th>
+                            </tr>
+
+                            <tr>
+                              <th scope="row" colSpan={2}>
+                                Monto Pendiente:
+                              </th>
+                              <th scope="row">
+                                ${Number(montoUsd - abonos.reduce((suma, abono) => suma + abono.monto, 0)).toFixed(2)}
+                              </th>
                             </tr>
                           </tfoot>
                         </table>
@@ -823,7 +844,7 @@ export default function ControlEditScreen(props) {
               onClose={() => setShowPaymentModal(false)}
               sendPayToParent={handlePayFromChild}
               montoPagoBs={Number(montoUsd * cambioBcv).toFixed(2)}
-              montoPagoUsd={Number(montoUsd).toFixed(2)}
+              montoPagoUsd={Number(montoUsd - (abonos.reduce((suma, abono) => suma + abono.monto, 0) || 0)).toFixed(2)}
             />
           )}
           {showLabConceptModal && (

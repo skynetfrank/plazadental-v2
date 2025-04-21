@@ -10,7 +10,7 @@ function ReporteCuadres() {
   const dispatch = useDispatch();
 
   const groupDay = useSelector((state) => state.orderGroupDay);
-  const { loading, dailyControles } = groupDay;
+  const { loading, dailyControles, dailyAbonos } = groupDay;
 
   useEffect(() => {
     dispatch(groupByDay());
@@ -32,11 +32,22 @@ function ReporteCuadres() {
         return parseFecha(new Date(value.getValue()).toISOString());
       },
     },
-    { header: "Controles", accessorKey: "controles" },
+
+    {
+      header: "Controles",
+      accessorKey: "controles",
+      cell: (value) => {
+        const { nabonos } = value.row.original;
+        console.log("nabonos", nabonos);
+        return value.getValue();
+      },
+    },
     {
       header: "Monto US$",
       accessorKey: "monto",
       cell: (value) => {
+        const { nabonos } = value.row.original;
+        console.log("nabonos", nabonos);
         return "$" + Number(value.getValue()).toFixed(2);
       },
     },
