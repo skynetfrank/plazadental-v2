@@ -131,9 +131,13 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
+          console.log("table-row", table.getFilteredRowModel()
+            .rows)
           const total = table
             .getFilteredRowModel()
-            .rows.reduce((total, row) => total + row.getValue("montoServicios"), 0);
+            .rows
+            .filter((row) => !row.original.isAbono)
+            .reduce((total, row) => total + row.getValue("montoServicios"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -155,7 +159,7 @@ export default function CuadreDiarioScreen() {
           );
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoLab"), 0);
+          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoLab") * 4, 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -189,7 +193,10 @@ export default function CuadreDiarioScreen() {
           return isAbono === "ABONO" ? "$" + Number(abonosHoy.monto).toFixed(2) : "$" + Number(montoUsd).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoUsd"), 0);
+          const total = table.getFilteredRowModel()
+            .rows
+            .filter((row) => !row.original.isAbono)
+            .reduce((total, row) => total + row.getValue("montoUsd"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -207,7 +214,9 @@ export default function CuadreDiarioScreen() {
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
-            .rows.reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
+            .rows
+            .filter((row) => !row.original.isAbono)
+            .reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -225,7 +234,9 @@ export default function CuadreDiarioScreen() {
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
-            .rows.reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
+            .rows
+            .filter((row) => !row.original.isAbono)
+            .reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -245,6 +256,7 @@ export default function CuadreDiarioScreen() {
         accessorKey: "pago.efectivousd",
         enableGrouping: false,
         cell: (value) => {
+          const { isAbono } = value.row.original;
           if (!value) {
             return "-";
           }
