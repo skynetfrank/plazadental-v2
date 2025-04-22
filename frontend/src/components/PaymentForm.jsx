@@ -122,7 +122,7 @@ function PaymentForm({
       formaPago: "Pago-Mixto",
     };
 
-    sendPayToParent(paymentObject, "Pago-Mixto", isAbono ? objAbono : "", isAbono);
+    sendPayToParent(isAbono ? {} : paymentObject, "Pago-Mixto", isAbono ? objAbono : "", isAbono);
     onClose();
   }
 
