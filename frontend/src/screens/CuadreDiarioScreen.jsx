@@ -131,12 +131,10 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          console.log("table-row", table.getFilteredRowModel()
-            .rows)
+          console.log("table-row", table.getFilteredRowModel().rows);
           const total = table
             .getFilteredRowModel()
-            .rows
-            .filter((row) => !row.original.isAbono)
+            .rows.filter((row) => !row.original.isAbono)
             .reduce((total, row) => total + row.getValue("montoServicios"), 0);
           return "$" + Number(total).toFixed(2);
         },
@@ -159,7 +157,9 @@ export default function CuadreDiarioScreen() {
           );
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel().rows.reduce((total, row) => total + row.getValue("montoLab") * 4, 0);
+          const total = table
+            .getFilteredRowModel()
+            .rows.reduce((total, row) => total + row.getValue("montoLab") * 4, 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -193,9 +193,9 @@ export default function CuadreDiarioScreen() {
           return isAbono === "ABONO" ? "$" + Number(abonosHoy.monto).toFixed(2) : "$" + Number(montoUsd).toFixed(2);
         },
         footer: ({ table }) => {
-          const total = table.getFilteredRowModel()
-            .rows
-            .filter((row) => !row.original.isAbono)
+          const total = table
+            .getFilteredRowModel()
+            .rows.filter((row) => !row.original.isAbono)
             .reduce((total, row) => total + row.getValue("montoUsd"), 0);
           return "$" + Number(total).toFixed(2);
         },
@@ -214,8 +214,7 @@ export default function CuadreDiarioScreen() {
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
-            .rows
-            .filter((row) => !row.original.isAbono)
+            .rows.filter((row) => !row.original.isAbono)
             .reduce((total, row) => total + row.getValue("montoComisionDr"), 0);
           return "$" + Number(total).toFixed(2);
         },
@@ -234,8 +233,7 @@ export default function CuadreDiarioScreen() {
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
-            .rows
-            .filter((row) => !row.original.isAbono)
+            .rows.filter((row) => !row.original.isAbono)
             .reduce((total, row) => total + row.getValue("montoComisionPlaza"), 0);
           return "$" + Number(total).toFixed(2);
         },
@@ -257,7 +255,7 @@ export default function CuadreDiarioScreen() {
         enableGrouping: false,
         cell: (value) => {
           const { isAbono } = value.row.original;
-          if (!value) {
+          if (!value.getValue()) {
             return "-";
           }
           return "$" + Number(value.getValue()).toFixed(2);
@@ -274,7 +272,7 @@ export default function CuadreDiarioScreen() {
         accessorKey: "pago.efectivoeuros",
         enableGrouping: false,
         cell: (value) => {
-          if (!value) {
+          if (!value.getValue()) {
             return "-";
           }
           return "€" + Number(value.getValue()).toFixed(2);
@@ -291,11 +289,18 @@ export default function CuadreDiarioScreen() {
         accessorKey: "pago.efectivobs",
         enableGrouping: false,
         cell: (value) => {
-          if (!value) {
+          if (!value.getValue()) {
             return "-";
           }
           return "Bs" + Number(value.getValue()).toFixed(2);
         },
+        /*************  ✨ Windsurf Command ⭐  *************/
+        /**
+         * Footer for Bolivares column.
+         * @param {{table: import('react-table').TableInstance<any>}} param0
+         * @returns {string} "Bs" + total amount of bolivares in the filtered rows
+         */
+        /*******  55c727b5-eb5d-4e7f-ac8f-da8d4f8d7b9c  *******/
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
