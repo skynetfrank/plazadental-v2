@@ -30,9 +30,11 @@ export default function CuadreDiarioScreen() {
         (sum, control) => (control?.abonosHoy?.formaPago === "Divisas US$" ? control?.abonosHoy?.monto + sum : 0),
         0
       );
-      console.log("totalAbonos", tAbonoUsd);
+
       setSubtotalcuadre(totalVentaBs);
       setVentaDolares(totalVentaUsd);
+      setTotalAbonoDivisas(tAbonoUsd)
+
     }
   }, [controles]);
 
@@ -83,22 +85,25 @@ export default function CuadreDiarioScreen() {
             <div>
               {isAbono === "ABONO" ? (
                 <div className="flx pad-0 gap05">
-                  <span className="font-x">{"ABONO A CONTROL DEL " + dayjs(fecha).format("DD-MM-YYYY")}</span>
-                  <details className="minw-100 ml">
+                  <div className="flx column">
+                    <span className="font-x">Abono a control del</span>
+                    <span className="font-x">{dayjs(fecha).format("DD-MM-YYYY")}</span>
+                  </div>
+                  <details className="minw-100">
                     <summary>ver</summary>
                     {abonos.map((abono, inx) => {
                       return (
-                        <div key={inx} className="flx pad-0 ml">
-                          <span className="minw-50">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
+                        <div key={inx} className="flx pad-0">
+                          <span className="minw-60">{dayjs(abono.fecha).utc().format("DD-MM-YYYY")} </span>
                           <span>${abono.monto}</span>
                         </div>
                       );
                     })}
                     {
                       <div className="flx pad-0 column">
-                        <span className="minw-80">Total Pagado: ${Number(totalAbonado).toFixed(2)}</span>
-                        <span className="minw-80 negrita">
-                          Total Pendiente: ${(Number(montoUsd) - Number(totalAbonado)).toFixed(2)}
+                        <span className="minw-100">Abonado: ${Number(totalAbonado).toFixed(2)}</span>
+                        <span className="minw-100 negrita">
+                          Pendiente: ${(Number(montoUsd) - Number(totalAbonado)).toFixed(2)}
                         </span>
                       </div>
                     }
@@ -131,7 +136,7 @@ export default function CuadreDiarioScreen() {
           return "$" + Number(value.getValue()).toFixed(2);
         },
         footer: ({ table }) => {
-          console.log("table-row", table.getFilteredRowModel().rows);
+
           const total = table
             .getFilteredRowModel()
             .rows.filter((row) => !row.original.isAbono)
@@ -254,17 +259,24 @@ export default function CuadreDiarioScreen() {
         accessorKey: "pago.efectivousd",
         enableGrouping: false,
         cell: (value) => {
-          const { isAbono } = value.row.original;
-          if (!value.getValue()) {
-            return "-";
-          }
-          return "$" + Number(value.getValue()).toFixed(2);
+          const { isAbono, abonosHoy } = value.row.original;
+
+
+          return isAbono === "ABONO" ? "$" + abonosHoy?.monto : "$" + Number(value.getValue()).toFixed(2);
         },
+
+
         footer: ({ table }) => {
+          const xtotal = controles.reduce(
+            (sum, control) => (control?.abonosHoy?.formaPago === "Divisas US$" ? control?.abonosHoy?.monto + sum : 0),
+            0
+          )
+
           const total = table
             .getFilteredRowModel()
             .rows.reduce((total, row) => total + row.original.pago.efectivousd, 0);
-          return "$" + Number(total).toFixed(2);
+
+          return "$" + Number(total + xtotal).toFixed(2);
         },
       },
       {
@@ -398,7 +410,7 @@ export default function CuadreDiarioScreen() {
         footer: ({ table }) => {
           const total = table
             .getFilteredRowModel()
-            .rows.reduce((total, row) => total + row.original.pago.zelle.montozelle, 0);
+            .rows.reduce((total, row) => total + row.original.pago?.zelle?.montozelle, 0);
           return "$" + Number(total).toFixed(2);
         },
       },
@@ -418,7 +430,8 @@ export default function CuadreDiarioScreen() {
     return xfecha;
   };
 
-  console.log("controles:", controles);
+
+  console.log("totalAbonos", totalAbonoDivisas);
   return (
     <div className="cuadre-container flx column mtop-2">
       <div className="flx pad-0">

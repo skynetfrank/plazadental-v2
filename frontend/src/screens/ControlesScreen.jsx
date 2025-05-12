@@ -296,7 +296,7 @@ export default function ControlesScreen(props) {
                             {Number(item.control.montoComisionPlaza) > 1
                               ? Number(item.control.montoComisionPlaza).toFixed(2) +
                               " (" +
-                              (Number(item.control.tasaComisionPlaza).toFixed(0) + "%)")
+                              (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")
                               : Number(item.control.montoComisionPlaza).toFixed(2) +
                               " (" +
                               (Number(item.control.tasaComisionPlaza * 100).toFixed(0) + "%)")}
@@ -310,7 +310,7 @@ export default function ControlesScreen(props) {
                             {Number(item.control.montoComisionDr) > 1
                               ? Number(item.control.montoComisionDr).toFixed(2) +
                               " (" +
-                              (Number(item.control.tasaComisionDr).toFixed(0) + "%)")
+                              (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")
                               : Number(item.control.montoComisionDr).toFixed(2) +
                               " (" +
                               (Number(item.control.tasaComisionDr * 100).toFixed(0) + "%)")}

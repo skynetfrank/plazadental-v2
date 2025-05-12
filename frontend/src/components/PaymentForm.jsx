@@ -42,6 +42,29 @@ function PaymentForm({
   const [openMix, setOpenMix] = useState("");
   const bancosDemoda = ["", "Banesco", "Venezuela", "Plaza", "Otro Banco", "BNC"];
 
+  const [abonoObject, setAbonObject] = useState({
+    efectivousd: 0,
+    efectivobs: 0,
+    efectivoeuros: 0,
+    punto: {
+      montopunto: 0,
+      bancopunto: "",
+      bancodestinopunto: "",
+      montopunto2: 0,
+      bancopunto2: "",
+      bancodestinopunto2: "",
+      montopunto3: 0,
+      bancopunto3: "",
+      bancodestinopunto3: "",
+    },
+    pagomovil: { montopagomovil: 0, bancopagomovil: "", bancodestinopagomovil: "" },
+    zelle: { montozelle: 0, zelletitular: "", zelleref: "" },
+    cashea: {
+      monto: 0,
+      orden: "",
+    },
+  })
+
   if (montoPagoUsd <= 0) {
     Swal.fire("No Ha Registrado Servicios!");
     onClose();
@@ -122,7 +145,7 @@ function PaymentForm({
       formaPago: "Pago-Mixto",
     };
 
-    sendPayToParent(isAbono ? {} : paymentObject, "Pago-Mixto", isAbono ? objAbono : "", isAbono);
+    sendPayToParent(isAbono ? abonoObject : paymentObject, "Pago-Mixto", isAbono ? objAbono : "", isAbono);
     onClose();
   }
 
@@ -157,12 +180,13 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, txtpago, isAbono ? objAbono : "");
 
     onClose();
   };
 
   const handlePunto = (monto, banco) => {
+
     const paymentObject = {
       efectivousd,
       efectivobs,
@@ -189,11 +213,11 @@ function PaymentForm({
       paymentObject.punto.efectivousd > 0
         ? "Divisas "
         : "Punto de Venta " +
-          paymentObject.punto.bancodestinopunto +
-          " " +
-          bancodestinopunto2 +
-          " " +
-          bancodestinopunto3;
+        paymentObject.punto.bancodestinopunto +
+        " " +
+        bancodestinopunto2 +
+        " " +
+        bancodestinopunto3;
 
     const objAbono = {
       fecha: fechaAbono,
@@ -201,7 +225,7 @@ function PaymentForm({
       formaPago: txtpago,
     };
 
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, txtpago, isAbono ? objAbono : "");
 
     onClose();
   };
@@ -235,7 +259,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, txtpago, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -268,7 +292,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: txtpago,
     };
-    sendPayToParent(paymentObject, txtpago, isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, txtpago, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -304,7 +328,7 @@ function PaymentForm({
       monto: montoAbono,
       formaPago: "Pagomovil " + banco,
     };
-    sendPayToParent(paymentObject, "Pagomovil " + banco, isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, "Pagomovil " + banco, isAbono ? objAbono : "");
     onClose();
   };
 
@@ -361,7 +385,7 @@ function PaymentForm({
       formaPago: "Zelle",
     };
 
-    sendPayToParent(paymentObject, "Zelle", isAbono ? objAbono : "");
+    sendPayToParent(isAbono ? abonoObject : paymentObject, "Zelle", isAbono ? objAbono : "");
     onClose();
   };
 

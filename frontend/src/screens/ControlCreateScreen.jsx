@@ -145,7 +145,8 @@ export default function ControlCreateScreen(props) {
       setLaboratorio("");
       setConceptoLaboratorio("");
       setDescuento(0);
-      navigate("/listapacientes");
+      //navigate("/listapacientes");
+      navigate(`/controles/${pacienteId}`)
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
@@ -602,6 +603,7 @@ export default function ControlCreateScreen(props) {
               <hr />
 
               <p className="centrado negrita minw-30 font-16 mtop-1">Total Neto : ${montoUsd}</p>
+              {/*
               <div className="flx jcenter">
                 <label className="radio-button">
                   <input
@@ -636,6 +638,7 @@ export default function ControlCreateScreen(props) {
                   {formaPago ? formaPago : "Registrar Pago"}
                 </button>
               </div>
+             */}
             </div>
           ) : (
             ""
