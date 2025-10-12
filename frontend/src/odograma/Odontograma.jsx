@@ -205,6 +205,257 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
   const fecha = strToDMA(dateToAMD(new Date()));
   const localStorageKey = `odontogramaState_${idPaciente}`;
 
+  const extraccion = useCallback((posx, posy, ctx) => {
+    if (esDibujable(posx, posy)) {
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(posx - 10, calibrarY(posy) - 75);
+      ctx.lineTo(posx + 10, calibrarY(posy) + 75);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(posx + 10, calibrarY(posy) - 75);
+      ctx.lineTo(posx - 10, calibrarY(posy) + 75);
+      ctx.stroke();
+    }
+  }, []); // No tiene dependencias externas al hook
+
+  // Función para dibujar acciones de un solo clic
+  const drawAction = useCallback(
+    (ctx, command) => {
+      let { type, x, y, color } = command;
+      ctx.fillStyle = color;
+      ctx.strokeStyle = color;
+      ctx.font = "bold 16px serif";
+
+      // La lógica de dibujo para cada acción se mantiene casi idéntica
+      // Solo se cambia la forma de acceder al contexto (ctx)
+      switch (type) {
+        case MARCAR_EXTRACCION:
+          extraccion(x, y, ctx);
+          break;
+        case DIENTE_AUSENTE:
+          ausente(x, y, ctx);
+          break;
+        case MARCAR_CARIES:
+          ctx.beginPath();
+          ctx.arc(x, y, 5, 0, 2 * Math.PI);
+          ctx.fill();
+          break;
+        case LINEA_VERTICAL:
+          ctx.strokeStyle = "rgb(0, 0,255)";
+          ctx.moveTo(x - 3, y);
+          ctx.lineTo(x - 3, y - 10);
+          ctx.moveTo(x + 2, y);
+          ctx.lineTo(x + 2, y - 10);
+          ctx.moveTo(x - 3, y);
+          ctx.lineTo(x - 3, y + 10);
+          ctx.moveTo(x + 2, y);
+          ctx.lineTo(x + 2, y + 10);
+          break;
+        case MARCAR_IMPLANTE:
+          y = y - 5;
+          ctx.lineWidth = 3;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 10, y);
+          ctx.moveTo(x, y);
+          ctx.lineTo(x - 10, y);
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y + 7);
+          ctx.moveTo(x, y + 8);
+          ctx.lineTo(x + 10, y + 8);
+          ctx.moveTo(x, y + 8);
+          ctx.lineTo(x - 10, y + 8);
+          break;
+        case MARCAR_PUENTE_FIJO:
+          let xoffset = 12;
+          x = x - xoffset;
+          ctx.beginPath();
+          ctx.arc(x, y, 4, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.lineTo(x + 20, y);
+          ctx.arc(x + 25, y, 4, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_REMOVIBLE:
+          x = x - 15;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.arc(x, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.closePath();
+          ctx.lineTo(x + 10, y - 6);
+          ctx.lineTo(x + 17, y);
+          ctx.lineTo(x + 25, y - 6);
+          ctx.lineTo(x + 32, y);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(x + 35, y, 3, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_HIPERSENSE:
+          y = y - 15;
+          x = x - 5;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x, y);
+          ctx.lineTo(x + 8, y + 4);
+          ctx.lineTo(x, y + 8);
+          ctx.lineTo(x + 8, y + 12);
+          ctx.lineTo(x, y + 16);
+          ctx.lineTo(x + 8, y + 20);
+          ctx.lineTo(x, y + 24);
+          break;
+        case MARCAR_APICAL:
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(x, y, 6, 0, 2 * Math.PI);
+          ctx.strokeStyle = color;
+          ctx.closePath();
+          break;
+        case MARCAR_FISTULA:
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(x, y, 7, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_EMPAQ_ALIMENTO:
+          ctx.fillText("E", x - 7, y + 5);
+          break;
+        case MARCAR_INFRAOCLUSION:
+          x = x - 5;
+          y = y - 5;
+          ctx.lineWidth = 2;
+          ctx.moveTo(x + 5, y - 10);
+          ctx.lineTo(x + 5, y);
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 10, y);
+          ctx.lineTo(x + 5, y + 15);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_PROFUNDIDAD_SONDAJE:
+          ctx.fillText("PS", x - 10, y + 5);
+          break;
+        case MARCAR_INSERSION_CLINICA:
+          ctx.fillText("N.I.C", x - 20, y + 5);
+          break;
+        case MARCAR_SANGRAMIENTO_SONDAJE:
+          ctx.fillText("S.S", x - 12, y + 5);
+          break;
+        case MARCAR_SELLANTE:
+          ctx.font = "bold 25px Verdana";
+          ctx.fillText("S", x - 12, y + 5);
+          break;
+        case MARCAR_MUCOSA_MASTICADORA:
+          ctx.fillText("M.M", x - 15, y + 5);
+          break;
+        case MARCAR_DEFECTO_MUCOGINGIVAL:
+          ctx.fillText("D.M.G", x - 25, y + 5);
+          break;
+        case MARCAR_MOVILIDAD_DENTARIA:
+          ctx.fillText("M.O.V.", x - 25, y + 5);
+          break;
+        case MARCAR_COMPROMISO_FURCACION:
+          ctx.fillText("C.F.", x - 15, y + 5);
+          break;
+        case MARCAR_PROTESIS_DEFECTUOSA:
+          ctx.fillText("P.D.", x - 13, y + 5);
+          break;
+        case MARCAR_FRENILLO:
+          ctx.fillText("Y", x - 7, y + 5);
+          break;
+        case MARCAR_EXTRUSION:
+          ctx.lineWidth = 2;
+          x = x - 5;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 5, y - 15);
+          ctx.lineTo(x + 10, y);
+          ctx.moveTo(x + 5, y);
+          ctx.lineTo(x + 5, y + 10);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_INCLINACION:
+          ctx.lineWidth = 2;
+          y = y - 5;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 10, y + 5);
+          ctx.lineTo(x, y + 10);
+          ctx.moveTo(x + 5, y + 5);
+          ctx.lineTo(x - 10, y + 5);
+          ctx.fill();
+          ctx.closePath();
+          break;
+        case MARCAR_ROTACION:
+          ctx.lineWidth = 2;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 5, y - 15);
+          ctx.lineTo(x + 10, y);
+          ctx.moveTo(x, y);
+          ctx.fill();
+          ctx.arc(x - 5, y, 10, 0, Math.PI, false);
+          break;
+        case MARCAR_FRACTURA:
+          ctx.strokeStyle = color;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x - 5, y);
+          ctx.lineTo(x - 5, y + 5);
+          ctx.lineTo(x - 10, y + 5);
+          ctx.lineTo(x - 10, y + 10);
+          ctx.lineTo(x - 15, y + 10);
+          break;
+        case LINEA_HORIZONTAL:
+          ctx.strokeStyle = "rgb(0, 0,255)";
+          x = x - 10;
+          y = y - 3;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + 20, y);
+          ctx.moveTo(x, y + 5);
+          ctx.lineTo(x + 20, y + 5);
+          break;
+        default:
+          break;
+      }
+      ctx.stroke();
+    },
+    [extraccion]
+  );
+
+  const executeCommand = useCallback(
+    (ctx, command) => {
+      const { type, color, size, points } = command;
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = size || 3;
+      ctx.lineCap = "round";
+      ctx.font = "bold 16px serif";
+
+      switch (type) {
+        case MARCAR_AREA:
+          if (points && points.length > 1) {
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+              ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.stroke();
+          }
+          break;
+        // La lógica de dibujo de handleMouseUp se mueve aquí
+        default:
+          // Reutilizamos la lógica de handleMouseUp para los clics simples
+          drawAction(ctx, command);
+          break;
+      }
+    },
+    [drawAction]
+  );
+
   const redrawCanvas = useCallback(
     (commands) => {
       const canvas = canvasRef.current;
@@ -219,249 +470,15 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
       ctx.drawImage(odogramaImageRef.current, 0, 30);
       ctx.font = "bold 16px Arial";
       ctx.fillStyle = "#000000";
-      ctx.fillText(`Examen Clinico Intraoral - ${fecha}`, 15, 20);
+      // ctx.fillText(`Examen Clinico Intraoral - ${fecha}`, 15, 20);
+      ctx.fillText(`Odograma: ${nombrePaciente} ${apellidoPaciente} - ${fecha}`, 15, 20);
       ctx.font = "bold 14px Arial";
-      ctx.fillText(`ID: ${idPaciente}`, 325, 20);
-      ctx.font = "bold 12px Arial";
-      ctx.fillText(`fecha: ${fecha}`, 425, 450);
-      ctx.fillText(`Odograma: ${nombrePaciente} ${apellidoPaciente}`, 15, 450);
 
       // 3. Re-ejecutar todos los comandos del historial
       commands.forEach((command) => executeCommand(ctx, command));
     },
-    [fecha, idPaciente, nombrePaciente, apellidoPaciente]
+    [nombrePaciente, apellidoPaciente, fecha, executeCommand]
   );
-
-  // Función para dibujar acciones de un solo clic
-  const drawAction = (ctx, command) => {
-    let { type, x, y, color } = command;
-    ctx.fillStyle = color;
-    ctx.strokeStyle = color;
-    ctx.font = "bold 16px serif";
-
-    // La lógica de dibujo para cada acción se mantiene casi idéntica
-    // Solo se cambia la forma de acceder al contexto (ctx)
-    switch (type) {
-      case MARCAR_EXTRACCION:
-        extraccion(x, y, ctx);
-        break;
-      case DIENTE_AUSENTE:
-        ausente(x, y, ctx);
-        break;
-      case MARCAR_CARIES:
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, 2 * Math.PI);
-        ctx.fill();
-        break;
-      case LINEA_VERTICAL:
-        ctx.strokeStyle = "rgb(0, 0,255)";
-        ctx.moveTo(x - 3, y);
-        ctx.lineTo(x - 3, y - 10);
-        ctx.moveTo(x + 2, y);
-        ctx.lineTo(x + 2, y - 10);
-        ctx.moveTo(x - 3, y);
-        ctx.lineTo(x - 3, y + 10);
-        ctx.moveTo(x + 2, y);
-        ctx.lineTo(x + 2, y + 10);
-        break;
-      case MARCAR_IMPLANTE:
-        y = y - 5;
-        ctx.lineWidth = 3;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 10, y);
-        ctx.moveTo(x, y);
-        ctx.lineTo(x - 10, y);
-        ctx.moveTo(x, y);
-        ctx.lineTo(x, y + 7);
-        ctx.moveTo(x, y + 8);
-        ctx.lineTo(x + 10, y + 8);
-        ctx.moveTo(x, y + 8);
-        ctx.lineTo(x - 10, y + 8);
-        break;
-      case MARCAR_PUENTE_FIJO:
-        let xoffset = 12;
-        x = x - xoffset;
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.lineTo(x + 20, y);
-        ctx.arc(x + 25, y, 4, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_REMOVIBLE:
-        x = x - 15;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.arc(x, y, 3, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
-        ctx.lineTo(x + 10, y - 6);
-        ctx.lineTo(x + 17, y);
-        ctx.lineTo(x + 25, y - 6);
-        ctx.lineTo(x + 32, y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(x + 35, y, 3, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_HIPERSENSE:
-        y = y - 15;
-        x = x - 5;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x, y);
-        ctx.lineTo(x + 8, y + 4);
-        ctx.lineTo(x, y + 8);
-        ctx.lineTo(x + 8, y + 12);
-        ctx.lineTo(x, y + 16);
-        ctx.lineTo(x + 8, y + 20);
-        ctx.lineTo(x, y + 24);
-        break;
-      case MARCAR_APICAL:
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x, y, 6, 0, 2 * Math.PI);
-        ctx.strokeStyle = color;
-        ctx.closePath();
-        break;
-      case MARCAR_FISTULA:
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(x, y, 7, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_EMPAQ_ALIMENTO:
-        ctx.fillText("E", x - 7, y + 5);
-        break;
-      case MARCAR_INFRAOCLUSION:
-        x = x - 5;
-        y = y - 5;
-        ctx.lineWidth = 2;
-        ctx.moveTo(x + 5, y - 10);
-        ctx.lineTo(x + 5, y);
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 10, y);
-        ctx.lineTo(x + 5, y + 15);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_PROFUNDIDAD_SONDAJE:
-        ctx.fillText("PS", x - 10, y + 5);
-        break;
-      case MARCAR_INSERSION_CLINICA:
-        ctx.fillText("N.I.C", x - 20, y + 5);
-        break;
-      case MARCAR_SANGRAMIENTO_SONDAJE:
-        ctx.fillText("S.S", x - 12, y + 5);
-        break;
-      case MARCAR_SELLANTE:
-        ctx.font = "bold 25px Verdana";
-        ctx.fillText("S", x - 12, y + 5);
-        break;
-      case MARCAR_MUCOSA_MASTICADORA:
-        ctx.fillText("M.M", x - 15, y + 5);
-        break;
-      case MARCAR_DEFECTO_MUCOGINGIVAL:
-        ctx.fillText("D.M.G", x - 25, y + 5);
-        break;
-      case MARCAR_MOVILIDAD_DENTARIA:
-        ctx.fillText("M.O.V.", x - 25, y + 5);
-        break;
-      case MARCAR_COMPROMISO_FURCACION:
-        ctx.fillText("C.F.", x - 15, y + 5);
-        break;
-      case MARCAR_PROTESIS_DEFECTUOSA:
-        ctx.fillText("P.D.", x - 13, y + 5);
-        break;
-      case MARCAR_FRENILLO:
-        ctx.fillText("Y", x - 7, y + 5);
-        break;
-      case MARCAR_EXTRUSION:
-        ctx.lineWidth = 2;
-        x = x - 5;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 5, y - 15);
-        ctx.lineTo(x + 10, y);
-        ctx.moveTo(x + 5, y);
-        ctx.lineTo(x + 5, y + 10);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_INCLINACION:
-        ctx.lineWidth = 2;
-        y = y - 5;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 10, y + 5);
-        ctx.lineTo(x, y + 10);
-        ctx.moveTo(x + 5, y + 5);
-        ctx.lineTo(x - 10, y + 5);
-        ctx.fill();
-        ctx.closePath();
-        break;
-      case MARCAR_ROTACION:
-        ctx.lineWidth = 2;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 5, y - 15);
-        ctx.lineTo(x + 10, y);
-        ctx.moveTo(x, y);
-        ctx.fill();
-        ctx.arc(x - 5, y, 10, 0, Math.PI, false);
-        break;
-      case MARCAR_FRACTURA:
-        ctx.strokeStyle = color;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x - 5, y);
-        ctx.lineTo(x - 5, y + 5);
-        ctx.lineTo(x - 10, y + 5);
-        ctx.lineTo(x - 10, y + 10);
-        ctx.lineTo(x - 15, y + 10);
-        break;
-      case LINEA_HORIZONTAL:
-        ctx.strokeStyle = "rgb(0, 0,255)";
-        x = x - 10;
-        y = y - 3;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 20, y);
-        ctx.moveTo(x, y + 5);
-        ctx.lineTo(x + 20, y + 5);
-        break;
-      default:
-        break;
-    }
-    ctx.stroke();
-  };
-
-  const executeCommand = (ctx, command) => {
-    const { type, x, y, color, size, points } = command;
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-    ctx.lineWidth = size || 3;
-    ctx.lineCap = "round";
-    ctx.font = "bold 16px serif";
-
-    switch (type) {
-      case MARCAR_AREA:
-        if (points && points.length > 1) {
-          ctx.beginPath();
-          ctx.moveTo(points[0].x, points[0].y);
-          for (let i = 1; i < points.length; i++) {
-            ctx.lineTo(points[i].x, points[i].y);
-          }
-          ctx.stroke();
-        }
-        break;
-      // La lógica de dibujo de handleMouseUp se mueve aquí
-      default:
-        // Reutilizamos la lógica de handleMouseUp para los clics simples
-        drawAction(ctx, command);
-        break;
-    }
-  };
 
   useEffect(() => {
     // Al montar, intentar cargar el estado desde localStorage
@@ -507,11 +524,14 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     localStorage.setItem(localStorageKey, JSON.stringify(stateToSave));
   }, [history, redoStack, localStorageKey]);
 
-  const addCommandToHistory = (command) => {
-    const newHistory = [...history, command];
-    setHistory(newHistory);
-    setRedoStack([]); // Limpiar el stack de rehacer
-  };
+  const addCommandToHistory = useCallback(
+    (command) => {
+      const newHistory = [...history, command];
+      setHistory(newHistory);
+      setRedoStack([]); // Limpiar el stack de rehacer
+    },
+    [history]
+  );
 
   const getPointerPosition = useCallback(
     (evt) => {
@@ -578,7 +598,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     lastPositionRef.current = pointsToDraw[pointsToDraw.length - 1];
 
     animationFrameIdRef.current = requestAnimationFrame(optimizedDrawLoop);
-  }, [esDibujable]);
+  }, []); // esDibujable y calibrarY no dependen de props/estado, no necesitan ser dependencias
 
   const handleMouseDown = (e) => {
     // Para eventos táctiles, prevenimos el scroll de la página
@@ -603,88 +623,78 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     ctx.strokeStyle = currentColor;
   };
 
-  const handleMouseMove = (e) => {
-    if (e.type === "touchmove") {
-      e.preventDefault();
-    }
-    if (currentAction === MARCAR_AREA && isMouseDownRef.current) {
-      const currentPosition = getPointerPosition(e);
-      pendingDrawRequestsRef.current.push(currentPosition);
-
-      // Dibujamos el segmento directamente para feedback visual inmediato
-      const ctx = contextRef.current;
-      ctx.beginPath();
-      ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
-      if (esDibujable(currentPosition.x, currentPosition.y)) {
-        ctx.lineTo(currentPosition.x, currentPosition.y);
-        ctx.stroke();
+  const handleMouseMove = useCallback(
+    (e) => {
+      if (e.type === "touchmove") {
+        e.preventDefault();
       }
-      lastPositionRef.current = currentPosition;
-    }
-  };
+      if (currentAction === MARCAR_AREA && isMouseDownRef.current) {
+        const currentPosition = getPointerPosition(e);
+        pendingDrawRequestsRef.current.push(currentPosition);
 
-  const handleMouseUp = (e) => {
-    isMouseDownRef.current = false;
+        // Dibujamos el segmento directamente para feedback visual inmediato
+        const ctx = contextRef.current;
+        ctx.beginPath();
+        ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
+        if (esDibujable(currentPosition.x, currentPosition.y)) {
+          ctx.lineTo(currentPosition.x, currentPosition.y);
+          ctx.stroke();
+        }
+        lastPositionRef.current = currentPosition;
+      }
+    },
+    [currentAction, getPointerPosition, currentColor]
+  ); // Añadido currentColor por si acaso, aunque se usa en mousedown
 
-    if (e.type === "touchend") {
-      e.preventDefault();
-    }
-    const p = getPointerPosition(e);
-    let { x, y } = p;
+  const handleMouseUp = useCallback(
+    (e) => {
+      isMouseDownRef.current = false;
 
-    if (!esDibujable(x, y)) {
-      // Limpiar el dibujo libre si se suelta fuera del área
+      if (e.type === "touchend") {
+        e.preventDefault();
+      }
+      const p = getPointerPosition(e);
+      let { x, y } = p;
+
+      if (!esDibujable(x, y)) {
+        // Limpiar el dibujo libre si se suelta fuera del área
+        if (currentAction === MARCAR_AREA) {
+          pendingDrawRequestsRef.current = [];
+          redrawCanvas(history);
+        }
+        return;
+      }
+
+      const command = { type: currentAction, x, y, color: currentColor, size: 3 };
+
       if (currentAction === MARCAR_AREA) {
+        if (pendingDrawRequestsRef.current.length > 1) {
+          command.points = [...pendingDrawRequestsRef.current];
+          addCommandToHistory(command);
+        } else {
+          // Si fue solo un clic, no un arrastre, redibujamos para limpiar el punto
+          redrawCanvas(history);
+        }
         pendingDrawRequestsRef.current = [];
-        redrawCanvas(history);
-      }
-      return;
-    }
-
-    const command = { type: currentAction, x, y, color: currentColor, size: 3 };
-
-    if (currentAction === MARCAR_AREA) {
-      if (pendingDrawRequestsRef.current.length > 1) {
-        command.points = [...pendingDrawRequestsRef.current];
-        addCommandToHistory(command);
       } else {
-        // Si fue solo un clic, no un arrastre, redibujamos para limpiar el punto
-        redrawCanvas(history);
+        // Para acciones de un solo clic, se dibuja y se guarda el comando
+        drawAction(contextRef.current, command);
+        addCommandToHistory(command);
       }
-      pendingDrawRequestsRef.current = [];
-    } else {
-      // Para acciones de un solo clic, se dibuja y se guarda el comando
-      drawAction(contextRef.current, command);
-      addCommandToHistory(command);
-    }
-  };
+    },
+    [currentAction, getPointerPosition, redrawCanvas, history, addCommandToHistory, drawAction, currentColor]
+  );
 
-  const extraccion = (posx, posy, ctx) => {
-    if (!ctx) ctx = contextRef.current;
-    if (esDibujable(posx, posy)) {
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(posx - 10, calibrarY(posy) - 75);
-      ctx.lineTo(posx + 10, calibrarY(posy) + 75);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(posx + 10, calibrarY(posy) - 75);
-      ctx.lineTo(posx - 10, calibrarY(posy) + 75);
-      ctx.stroke();
-    }
-  };
-
-  const ausente = (posx, posy, ctx) => {
-    if (!ctx) ctx = contextRef.current;
+  const ausente = useCallback((posx, posy, ctx) => {
     if (esDibujable(posx, posy)) {
       ctx.beginPath();
       ctx.moveTo(posx, calibrarY(posy) - 75);
       ctx.lineTo(posx, calibrarY(posy) + 75);
       ctx.stroke();
     }
-  };
+  }, []); // No tiene dependencias externas al hook
 
-  const handleDownload = () => {
+  const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
     const link = document.createElement("a");
     link.href = canvas.toDataURL("image/jpeg", 1.0);
@@ -692,16 +702,16 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
+  }, [idPaciente]);
 
-  const handleClearCanvas = () => {
+  const handleClearCanvas = useCallback(() => {
     // Simplemente vuelve a dibujar el canvas inicial
     setHistory([]);
     setRedoStack([]);
     redrawCanvas([]);
-  };
+  }, [redrawCanvas]);
 
-  const handleUndo = () => {
+  const handleUndo = useCallback(() => {
     if (history.length === 0) return;
 
     const lastState = history[history.length - 1];
@@ -710,9 +720,9 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     const newHistory = history.slice(0, history.length - 1);
     setHistory(newHistory);
     redrawCanvas(newHistory);
-  };
+  }, [history, redoStack, redrawCanvas]);
 
-  const handleRedo = () => {
+  const handleRedo = useCallback(() => {
     if (redoStack.length === 0) return; // No rehacer si no hay nada en el stack
 
     const nextState = redoStack[redoStack.length - 1];
@@ -723,7 +733,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     setRedoStack(newRedoStack);
 
     redrawCanvas(newHistory);
-  };
+  }, [history, redoStack, redrawCanvas]);
 
   // Efecto para manejar los eventos táctiles de forma manual y poder usar { passive: false }
   useEffect(() => {
