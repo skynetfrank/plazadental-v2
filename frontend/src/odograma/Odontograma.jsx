@@ -600,28 +600,31 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     animationFrameIdRef.current = requestAnimationFrame(optimizedDrawLoop);
   }, []); // esDibujable y calibrarY no dependen de props/estado, no necesitan ser dependencias
 
-  const handleMouseDown = (e) => {
-    // Para eventos táctiles, prevenimos el scroll de la página
-    if (e.type === "touchstart") {
-      e.preventDefault();
-    }
-    if (currentAction === SIN_SELECCION) {
-      alert("No has seleccionado ningun comando");
-      return;
-    }
-    isMouseDownRef.current = true;
-    const ctx = contextRef.current;
-    const currentPosition = getPointerPosition(e);
-    lastPositionRef.current = currentPosition;
+  const handleMouseDown = useCallback(
+    (e) => {
+      // Para eventos táctiles, prevenimos el scroll de la página
+      if (e.type === "touchstart") {
+        e.preventDefault();
+      }
+      if (currentAction === SIN_SELECCION) {
+        alert("No has seleccionado ningun comando");
+        return;
+      }
+      isMouseDownRef.current = true;
+      const ctx = contextRef.current;
+      const currentPosition = getPointerPosition(e);
+      lastPositionRef.current = currentPosition;
 
-    if (currentAction === MARCAR_AREA) {
-      pendingDrawRequestsRef.current = [currentPosition];
-    }
+      if (currentAction === MARCAR_AREA) {
+        pendingDrawRequestsRef.current = [currentPosition];
+      }
 
-    ctx.lineWidth = 3; // currentSize
-    ctx.lineCap = "round";
-    ctx.strokeStyle = currentColor;
-  };
+      ctx.lineWidth = 3; // currentSize
+      ctx.lineCap = "round";
+      ctx.strokeStyle = currentColor;
+    },
+    [currentAction, getPointerPosition, currentColor]
+  );
 
   const handleMouseMove = useCallback(
     (e) => {
