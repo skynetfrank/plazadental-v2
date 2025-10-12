@@ -200,6 +200,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
   const [currentAction, setCurrentAction] = useState(SIN_SELECCION);
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [isSaving, setIsSaving] = useState(false); // Estado para el feedback de guardado
   const odogramaImageRef = useRef(null); // Ref para la imagen base
 
   const fecha = strToDMA(dateToAMD(new Date()));
@@ -697,6 +698,41 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     }
   }, []); // No tiene dependencias externas al hook
 
+  const handleSaveToCloudinary = useCallback(async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    setIsSaving(true);
+    // Obtener la imagen como base64. Usamos jpeg para consistencia con la descarga.
+    const image = canvas.toDataURL("image/jpeg", 1.0);
+
+    // El public_id debe incluir la carpeta para que Cloudinary sepa dónde sobrescribir.
+    const publicId = `odontogramas/${idPaciente}`;
+
+    try {
+      const response = await fetch("https://api.cloudinary.com/v1_1/plazasky/image/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          file: image,
+          upload_preset: "plaza_preset", // Tu upload preset
+          public_id: publicId,
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Guardado en Cloudinary exitoso:", data);
+      alert("Odontograma guardado en la nube exitosamente.");
+    } catch (error) {
+      console.error("Error al guardar en Cloudinary:", error);
+      alert("Hubo un error al guardar el odontograma en la nube.");
+    } finally {
+      setIsSaving(false);
+    }
+  }, [idPaciente]);
+
   const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
     const link = document.createElement("a");
@@ -812,6 +848,15 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
             </button>
             <button id="download" className="btn-dibujo t-tip" data-tip="Descargar" onClick={handleDownload}>
               <img src={downloadIcon} alt="Descargar" />
+            </button>
+            <button
+              id="save-cloud"
+              className="btn-dibujo t-tip"
+              data-tip="Guardar en Cloud"
+              onClick={handleSaveToCloudinary}
+              disabled={isSaving}
+            >
+              {isSaving ? "..." : "☁️"}
             </button>
           </div>
           <hr />
