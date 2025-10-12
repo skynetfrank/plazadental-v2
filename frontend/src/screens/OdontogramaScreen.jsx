@@ -11,6 +11,7 @@ const OdontogramaScreen = () => {
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
   };
   const cloudinary = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/" + odogramaId + ".jpg";
+  const imageID = odogramaId;
   return (
     <div
       style={{
@@ -28,6 +29,7 @@ const OdontogramaScreen = () => {
         apellidoPaciente={apellido}
         onCerrar={handleCerrarOdontograma}
         imageUrl={cloudinary}
+        imageID={imageID}
       />
     </div>
   );

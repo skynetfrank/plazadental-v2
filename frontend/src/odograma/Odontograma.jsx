@@ -187,7 +187,7 @@ const colorButtons = [
   { id: "btncolor-azul", color: "rgba(0, 0, 255, 0.9)" },
   { id: "btncolor-verde", color: "#008800" },
 ];
-const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, imageUrl }) => {
+const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, imageUrl, imageID }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const isMouseDownRef = useRef(false);
@@ -468,7 +468,11 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // 2. Dibujar imagen base y texto
-      ctx.drawImage(odogramaImageRef.current, 0, 30);
+      // Se escala la imagen para que ocupe todo el ancho del canvas, manteniendo la proporción.
+      const img = odogramaImageRef.current;
+      const scale = canvas.width / img.naturalWidth;
+      const scaledHeight = img.naturalHeight * scale;
+      ctx.drawImage(img, 0, 30, canvas.width, scaledHeight);
       ctx.font = "bold 16px Arial";
       ctx.fillStyle = "#000000";
       // ctx.fillText(`Examen Clinico Intraoral - ${fecha}`, 15, 20);
@@ -718,7 +722,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
         body: JSON.stringify({
           file: image,
           upload_preset: "plaza_preset", // Tu upload preset
-          public_id: publicId,
+          public_id: imageID,
         }),
       });
 
