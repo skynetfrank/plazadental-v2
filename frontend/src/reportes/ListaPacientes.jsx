@@ -38,6 +38,7 @@ function ListaPacientes() {
       dispatch(listPacientes({}));
     }
   }, [dispatch, successDelete]);
+  const cloudinaryx = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/";
   const deleteHandler = (id, controles) => {
     if (controles > 0) {
       Swal.fire({
@@ -58,7 +59,7 @@ function ListaPacientes() {
     }).then((result) => {
       console.log("result.value", result);
       if (result.isDismissed) {
-        return
+        return;
       }
       //new way for delete
       Swal.fire({
@@ -110,6 +111,10 @@ function ListaPacientes() {
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
     {
+      header: "odograma URL",
+      accessorKey: "idPacienteOld",
+    },
+    {
       header: "Acciones",
       accessorKey: "_id",
       cell: (value) => {
@@ -146,7 +151,7 @@ function ListaPacientes() {
       },
     },
   ];
-
+  console.log("pacientes:", pacientes);
   return (
     <div>
       <div className="flx jcenter gap1 pad-0">

@@ -122,7 +122,11 @@ export default function PacienteScreen(props) {
         <div className="flx column division">
           <h4>Contacto</h4>
           <span>{paciente.contacto ? paciente.contacto : "No Disponible"}</span>
-        </div>
+            </div>
+            
+
+
+            
         <div className="division">
           <h4>Odontograma</h4>
           {paciente?.idPacienteOld ? (
