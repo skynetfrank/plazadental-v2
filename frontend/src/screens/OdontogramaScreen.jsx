@@ -1,21 +1,16 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import Odontograma from "../odograma/Odontograma";
 
-
 const OdontogramaScreen = () => {
-  // Datos de ejemplo para pasar como props al componente Odontograma
-  const pacienteInfo = {
-    id: "PAC-001",
-    nombre: "Carlos",
-    apellido: "Sanchez",
-  };
+  // Obtener los parámetros de la URL
+  const { odogramaId, nombre, apellido } = useParams();
 
-  // Función de ejemplo que se pasará como prop `onCerrar`
   const handleCerrarOdontograma = () => {
     console.log("El componente hijo ha solicitado cerrar.");
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
   };
-
+  const cloudinary = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/" + odogramaId + ".jpg";
   return (
     <div
       style={{
@@ -28,10 +23,11 @@ const OdontogramaScreen = () => {
       }}
     >
       <Odontograma
-        idPaciente={pacienteInfo.id}
-        nombrePaciente={pacienteInfo.nombre}
-        apellidoPaciente={pacienteInfo.apellido}
+        idPaciente={odogramaId}
+        nombrePaciente={nombre}
+        apellidoPaciente={apellido}
         onCerrar={handleCerrarOdontograma}
+        imageUrl={cloudinary}
       />
     </div>
   );

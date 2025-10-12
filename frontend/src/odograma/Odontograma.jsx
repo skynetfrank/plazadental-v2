@@ -187,8 +187,7 @@ const colorButtons = [
   { id: "btncolor-azul", color: "rgba(0, 0, 255, 0.9)" },
   { id: "btncolor-verde", color: "#008800" },
 ];
-
-const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar }) => {
+const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, imageUrl }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const isMouseDownRef = useRef(false);
@@ -482,18 +481,25 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar })
     canvas.width = 530;
     canvas.height = 460;
 
-    if (!odogramaImageRef.current) {
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-      img.onload = () => {
-        odogramaImageRef.current = img;
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      odogramaImageRef.current = img;
+      redrawCanvas(initialHistory);
+    };
+    img.onerror = () => {
+      console.error(`Error al cargar la imagen desde: ${imageUrl}. Usando imagen de respaldo.`);
+      // Si falla la carga desde Cloudinary, usa la imagen base local
+      const fallbackImg = new Image();
+      fallbackImg.src = odogramaBaseImage;
+      fallbackImg.onload = () => {
+        odogramaImageRef.current = fallbackImg;
         redrawCanvas(initialHistory);
       };
-      img.src = odogramaBaseImage;
-    } else {
-      redrawCanvas(initialHistory);
-    }
-  }, [localStorageKey, redrawCanvas]); // Se ejecuta solo una vez al montar
+    };
+    // Usa la URL de Cloudinary si existe, de lo contrario, la imagen base
+    img.src = imageUrl || odogramaBaseImage;
+  }, [localStorageKey, redrawCanvas, imageUrl]); // Se ejecuta si la URL de la imagen cambia
 
   // Guardar en localStorage cada vez que el historial cambie
   useEffect(() => {
@@ -796,7 +802,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar })
             </button>
           </div>
           <hr />
-        
         </div>
         <div className="canvas-container">
           <canvas
