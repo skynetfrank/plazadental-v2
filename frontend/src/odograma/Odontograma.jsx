@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Swal from "sweetalert2";
 
-import { Undo, Redo, CloudUpload } from "lucide-react";
+import { Undo, Redo, CloudUpload, Printer } from "lucide-react";
 
 import odogramaBaseImage from "./images/odograma1.jpg"; // Importamos la imagen local
 // --- Importación de íconos para la botonera ---
@@ -766,6 +766,37 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     document.body.removeChild(link);
   }, [idPaciente]);
 
+  const handlePrint = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const dataUrl = canvas.toDataURL("image/jpeg", 1.0);
+    const printWindow = window.open("", "_blank", "height=600,width=800");
+
+    if (printWindow) {
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Imprimir Odontograma</title>
+            <style>
+              @page { size: auto;  margin: 0mm; }
+              body { margin: 0; text-align: center; }
+              img { max-width: 100%; max-height: 98vh; }
+            </style>
+          </head>
+          <body>
+            <img src="${dataUrl}" />
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.onload = function () {
+        printWindow.print();
+        printWindow.close();
+      };
+    }
+  }, []);
+
   const handleClearCanvas = useCallback(() => {
     // Simplemente vuelve a dibujar el canvas inicial
     setHistory([]);
@@ -880,6 +911,9 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
               disabled={isSaving}
             >
               {isSaving ? "..." : <CloudUpload />}
+            </button>
+            <button id="print" className="btn-dibujo t-tip" data-tip="Imprimir" onClick={handlePrint}>
+              <Printer />
             </button>
           </div>
           <hr />
