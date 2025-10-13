@@ -4,7 +4,7 @@ import Odontograma from "../odograma/Odontograma";
 
 const OdontogramaScreen = () => {
   // Obtener los parámetros de la URL
-  const { odogramaId, nombre, apellido } = useParams();
+  const { nombre, idPaciente, odogramaId } = useParams();
 
 
   const handleCerrarOdontograma = () => {
@@ -26,9 +26,8 @@ const OdontogramaScreen = () => {
     >
       <Odontograma
         key={odogramaId} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
-        idPaciente={odogramaId}
+        idPaciente={idPaciente}
         nombrePaciente={nombre}
-        apellidoPaciente={apellido}
         onCerrar={handleCerrarOdontograma}
         imageUrl={cloudinary}
         imageID={imageID}

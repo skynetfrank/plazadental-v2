@@ -22,7 +22,7 @@ export default function PacienteScreen(props) {
       dispatch(detailsPaciente(pacienteId));
     }
   }, [dispatch, pacienteId, paciente]);
-
+  console.log("paciente:", paciente);
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -54,14 +54,14 @@ export default function PacienteScreen(props) {
               {paciente.alergias.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.alergias.map((alergia) => {
-                    if (alergia === "") {
-                      return "";
-                    }
-                    if (alergia === " ") {
-                      return "";
-                    }
-                    return alergia + ", ";
-                  })}
+                  if (alergia === "") {
+                    return "";
+                  }
+                  if (alergia === " ") {
+                    return "";
+                  }
+                  return alergia + ", ";
+                })}
             </p>
             {paciente.otrasAlergias ? (
               <div>
@@ -79,11 +79,11 @@ export default function PacienteScreen(props) {
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No refiere"
               : paciente.antecedentesPersonales.map((bgp, inx) => {
-                  if (bgp === "") {
-                    return "";
-                  }
-                  return <p key={inx}>{bgp}</p>;
-                })}
+                if (bgp === "") {
+                  return "";
+                }
+                return <p key={inx}>{bgp}</p>;
+              })}
           </div>
         </div>
         <div className="division">
@@ -111,22 +111,22 @@ export default function PacienteScreen(props) {
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.antecedentesFamiliares.map((bgf) => {
-                    if (bgf === "") {
-                      return "";
-                    }
-                    return bgf + " ";
-                  })}
+                  if (bgf === "") {
+                    return "";
+                  }
+                  return bgf + " ";
+                })}
             </p>
           </div>
         </div>
         <div className="flx column division">
           <h4>Contacto</h4>
           <span>{paciente.contacto ? paciente.contacto : "No Disponible"}</span>
-            </div>
-            
+        </div>
 
 
-            
+
+
         <div className="division">
           <h4>Odontograma</h4>
           {paciente?.idPacienteOld ? (
@@ -142,7 +142,7 @@ export default function PacienteScreen(props) {
           ) : (
             <div>
               <Link
-                to={`/odontograma/${paciente.nombre}/${paciente.apellido}/${paciente.iPacienteOld}`}
+                to={`/odontograma/${paciente.nombre + " " + paciente.apellido}/${paciente._id}/${paciente.iPacienteOld}`}
                 className="btn-lookalike bg-blue"
               >
                 Crear Odontograma
