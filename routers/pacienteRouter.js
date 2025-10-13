@@ -2,8 +2,14 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Paciente from "../models/paciente.js";
 import { isAdmin, isAuth } from "../utils.js";
-
 const pacienteRouter = express.Router();
+import cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 pacienteRouter.get(
   "/",
@@ -42,7 +48,7 @@ pacienteRouter.post(
   expressAsyncHandler(async (req, res) => {
     const { image, imageID } = req.body;
 
-    if (!image || !idPaciente) {
+    if (!image || !imageID) {
       res.status(400);
       throw new Error("No se proporcionó la imagen o el ID del paciente.");
     }
@@ -50,7 +56,7 @@ pacienteRouter.post(
     try {
       const uploadResponse = await cloudinary.v2.uploader.upload(image, {
         folder: "odontogramas", // La carpeta en Cloudinary
-        public_id: imageID + ".jpg", // El ID que se usará como nombre del archivo
+        public_id: imageID, // El ID que se usará como nombre del archivo
         overwrite: true, // ¡La clave! Permite sobrescribir la imagen existente
         resource_type: "image", // Especifica que es una imagen
       });
