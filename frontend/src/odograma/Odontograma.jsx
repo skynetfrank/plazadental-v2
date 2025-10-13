@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Swal from "sweetalert2";
 
 import { Undo, Redo, CloudUpload } from "lucide-react";
 
@@ -612,7 +613,12 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
         e.preventDefault();
       }
       if (currentAction === SIN_SELECCION) {
-        alert("No has seleccionado ningun comando");
+        Swal.fire({
+          title: "Modo Dibujo",
+          text: "No has seleccionado ningún comando.",
+          icon: "warning",
+          confirmButtonText: "Entendido",
+        });
         return;
       }
       isMouseDownRef.current = true;
@@ -730,10 +736,21 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
       }
 
       console.log("Respuesta del servidor:", data);
-      alert("Odontograma guardado exitosamente.");
+      Swal.fire({
+        title: "Guardado",
+        text: "Odontograma guardado exitosamente.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
     } catch (error) {
       console.error("Error al guardar en Cloudinary:", error);
-      alert("Hubo un error al guardar el odontograma en la nube.");
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un error al guardar el odontograma en la nube.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
     } finally {
       setIsSaving(false);
     }
