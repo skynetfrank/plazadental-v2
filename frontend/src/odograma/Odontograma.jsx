@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
-import { Undo, Redo } from "lucide-react";
+import { Undo, Redo, CloudUpload } from "lucide-react";
 
 import odogramaBaseImage from "./images/odograma1.jpg"; // Importamos la imagen local
 // --- Importación de íconos para la botonera ---
@@ -862,7 +862,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
               onClick={handleSaveToCloudinary}
               disabled={isSaving}
             >
-              {isSaving ? "..." : "☁️"}
+              {isSaving ? "..." : <CloudUpload />}
             </button>
           </div>
           <hr />
