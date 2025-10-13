@@ -6,11 +6,12 @@ const OdontogramaScreen = () => {
   // Obtener los parámetros de la URL
   const { odogramaId, nombre, apellido } = useParams();
 
+
   const handleCerrarOdontograma = () => {
     console.log("El componente hijo ha solicitado cerrar.");
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
   };
-  const cloudinary = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/" + odogramaId + ".jpg";
+  const cloudinary = odogramaId ? "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/" + odogramaId + ".jpg" : "";
   const imageID = odogramaId;
   return (
     <div
