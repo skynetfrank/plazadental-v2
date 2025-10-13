@@ -34,6 +34,40 @@ pacienteRouter.get(
   })
 );
 
+// @desc    Subir o sobrescribir imagen de odontograma
+// @route   POST /api/pacientes/upload-odontograma
+// @access  Private (deberías proteger esta ruta)
+pacienteRouter.post(
+  "/upload-odontograma",
+  expressAsyncHandler(async (req, res) => {
+    const { image, imageID } = req.body;
+
+    if (!image || !idPaciente) {
+      res.status(400);
+      throw new Error("No se proporcionó la imagen o el ID del paciente.");
+    }
+
+    try {
+      const uploadResponse = await cloudinary.v2.uploader.upload(image, {
+        folder: "odontogramas", // La carpeta en Cloudinary
+        public_id: imageID + ".jpg", // El ID que se usará como nombre del archivo
+        overwrite: true, // ¡La clave! Permite sobrescribir la imagen existente
+        resource_type: "image", // Especifica que es una imagen
+      });
+
+      console.log("Imagen subida/sobrescrita:", uploadResponse.secure_url);
+      res.status(200).json({
+        message: "Imagen guardada correctamente",
+        url: uploadResponse.secure_url,
+      });
+    } catch (error) {
+      console.error("Error al subir a Cloudinary:", error);
+      res.status(500);
+      throw new Error("Error del servidor al intentar guardar la imagen.");
+    }
+  })
+);
+
 pacienteRouter.post(
   "/create",
   isAuth,

@@ -710,32 +710,34 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     // Obtener la imagen como base64. Usamos jpeg para consistencia con la descarga.
     const image = canvas.toDataURL("image/jpeg", 1.0);
 
-    // El public_id debe incluir la carpeta para que Cloudinary sepa dónde sobrescribir.
-    const publicId = `odontogramas/${idPaciente}`;
-
     try {
-      const response = await fetch("https://api.cloudinary.com/v1_1/plazasky/image/upload", {
+      // Ahora la petición se hace a nuestro propio backend
+      const response = await fetch("/api/pacientes/upload-odontograma", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          file: image,
-          upload_preset: "plaza_preset", // Tu upload preset
-          public_id: imageID,
+          image, // La imagen en base64
+          imageID, // El ID para que el backend sepa qué imagen sobrescribir
         }),
       });
 
       const data = await response.json();
-      console.log("Guardado en Cloudinary exitoso:", data);
-      alert("Odontograma guardado en la nube exitosamente.");
+
+      if (!response.ok) {
+        throw new Error(data.message || "Error en el servidor");
+      }
+
+      console.log("Respuesta del servidor:", data);
+      alert("Odontograma guardado exitosamente.");
     } catch (error) {
       console.error("Error al guardar en Cloudinary:", error);
       alert("Hubo un error al guardar el odontograma en la nube.");
     } finally {
       setIsSaving(false);
     }
-  }, [idPaciente]);
+  }, [idPaciente, imageID]);
 
   const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
