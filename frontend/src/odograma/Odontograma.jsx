@@ -475,16 +475,19 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
       const scale = canvas.width / img.naturalWidth;
       const scaledHeight = img.naturalHeight * scale;
       ctx.drawImage(img, 0, 30, canvas.width, scaledHeight);
-      ctx.font = "bold 16px Arial";
-      ctx.fillStyle = "#000000";
-      // ctx.fillText(`Examen Clinico Intraoral - ${fecha}`, 15, 20);
-      ctx.fillText(`Odograma: ${nombrePaciente} ${apellidoPaciente} - ${fecha}`, 15, 20);
-      ctx.font = "bold 14px Arial";
+
+      // --- VALIDACIÓN ---
+      // Solo escribir el nombre si estamos usando la imagen base (no una guardada de Cloudinary)
+      if (!imageUrl) {
+        ctx.font = "bold 16px Arial";
+        ctx.fillStyle = "#000000";
+        ctx.fillText(`Odograma: ${nombrePaciente} ${apellidoPaciente} - ${fecha}`, 15, 20);
+      }
 
       // 3. Re-ejecutar todos los comandos del historial
       commands.forEach((command) => executeCommand(ctx, command));
     },
-    [nombrePaciente, apellidoPaciente, fecha, executeCommand]
+    [nombrePaciente, apellidoPaciente, fecha, executeCommand, imageUrl]
   );
 
   useEffect(() => {
@@ -505,25 +508,29 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
     canvas.width = 530;
     canvas.height = 460;
 
+    // --- Lógica de carga de imagen refactorizada ---
+    // 1. Determinar la fuente de la imagen
+    const imageSource = imageUrl || odogramaBaseImage;
+
+    // 2. Crear y configurar el objeto de imagen
     const img = new Image();
     img.crossOrigin = "Anonymous";
+
+    // 3. Manejar la carga exitosa
     img.onload = () => {
       odogramaImageRef.current = img;
       redrawCanvas(initialHistory);
     };
+
+    // 4. Manejar errores de carga (ej. URL de Cloudinary rota)
     img.onerror = () => {
-      console.error(`Error al cargar la imagen desde: ${imageUrl}. Usando imagen de respaldo.`);
-      // Si falla la carga desde Cloudinary, usa la imagen base local
-      const fallbackImg = new Image();
-      fallbackImg.src = odogramaBaseImage;
-      fallbackImg.onload = () => {
-        odogramaImageRef.current = fallbackImg;
-        redrawCanvas(initialHistory);
-      };
+      console.error(`Error al cargar la imagen desde: ${imageSource}. Se intentará usar la imagen de respaldo.`);
+      img.src = odogramaBaseImage; // Intenta cargar la imagen base como fallback
     };
-    // Usa la URL de Cloudinary si existe, de lo contrario, la imagen base
-    img.src = imageUrl || odogramaBaseImage;
-  }, [localStorageKey, redrawCanvas, imageUrl]); // Se ejecuta si la URL de la imagen cambia
+
+    // 5. Iniciar la carga de la imagen
+    img.src = imageSource;
+  }, []); // Ahora se ejecuta solo una vez al montar, gracias a la 'key' en el padre.
 
   // Guardar en localStorage cada vez que el historial cambie
   useEffect(() => {

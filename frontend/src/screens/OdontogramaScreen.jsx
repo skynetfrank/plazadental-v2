@@ -25,6 +25,7 @@ const OdontogramaScreen = () => {
       }}
     >
       <Odontograma
+        key={odogramaId} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
         idPaciente={odogramaId}
         nombrePaciente={nombre}
         apellidoPaciente={apellido}
