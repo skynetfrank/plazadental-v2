@@ -343,4 +343,25 @@ label {
 }
 /*FIN DEL MEDIA QUERIES FEBB */
 
+/* --- ESTILOS PARA EL BACKDROP --- */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de todo */
+  cursor: pointer;
+}
+
+.backdrop-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  cursor: default; /* El cursor normal sobre la imagen */
+}
 /* FIN DE ODONTOGRAMA STYLES  12 OCTUBRE 2025 */

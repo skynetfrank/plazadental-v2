@@ -2748,6 +2748,7 @@ canvas#canvas {
 div#draw-panel {
   width: 310px;
   /* Un ancho fijo para el panel de herramientas */
+  max-height: 375px;
   padding: 10px;
   background-color: rgb(184, 179, 179);
   /* margin-top: 2rem; */
@@ -2892,6 +2893,32 @@ label {
   mix-blend-mode: multiply;
 }
 
+/* --- ESTILOS PARA EL BACKDROP --- */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Asegura que esté por encima de todo */
+  cursor: pointer;
+}
+
+.backdrop-image {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  cursor: default;
+  /* El cursor normal sobre la imagen */
+}
+
+/* FIN DE ODONTOGRAMA STYLES  12 OCTUBRE 2025 */
+
 /* ----- MY CUSTOM LOADING SPINNER  */
 
 .myspinner-container {
@@ -3021,6 +3048,7 @@ label {
   .odograma__container {
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
   }
 
   .canvas-container {
@@ -3042,7 +3070,7 @@ label {
     width: 90%;
     max-width: 530px;
     /* Un ancho máximo para que no se vea mal en tablets */
-    height: auto;
+
     /* Permite que la altura se ajuste al contenido */
     /* flex-grow: 1; /* Ocupa el espacio restante si es necesario */
   }

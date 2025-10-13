@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Swal from "sweetalert2";
 
-import { Undo, Redo, CloudUpload, Printer } from "lucide-react";
+import { Undo, Redo, CloudUpload, Printer, Expand } from "lucide-react";
 
 import odogramaBaseImage from "./images/odograma1.jpg"; // Importamos la imagen local
 // --- Importación de íconos para la botonera ---
@@ -202,6 +202,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
   const [isSaving, setIsSaving] = useState(false); // Estado para el feedback de guardado
+  const [showBackdrop, setShowBackdrop] = useState(false); // Estado para el backdrop
   const odogramaImageRef = useRef(null); // Ref para la imagen base
 
   const fecha = strToDMA(dateToAMD(new Date()));
@@ -915,6 +916,9 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
             <button id="print" className="btn-dibujo t-tip" data-tip="Imprimir" onClick={handlePrint}>
               <Printer />
             </button>
+            <button id="expand" className="btn-dibujo t-tip" data-tip="Ver en grande" onClick={() => setShowBackdrop(true)}>
+              <Expand />
+            </button>
           </div>
           <hr />
         </div>
@@ -928,6 +932,16 @@ const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, i
             onMouseLeave={() => (isMouseDownRef.current = false)} // Extra: para evitar que se quede dibujando si el mouse sale del canvas
           />
         </div>
+        {showBackdrop && (
+          <div className="backdrop" onClick={() => setShowBackdrop(false)}>
+            <img
+              src={canvasRef.current.toDataURL("image/jpeg", 1.0)}
+              alt="Odontograma"
+              className="backdrop-image"
+              onClick={(e) => e.stopPropagation()} // Evita que el clic en la imagen cierre el backdrop
+            />
+          </div>
+        )}
       </div>
     </div>
   );
