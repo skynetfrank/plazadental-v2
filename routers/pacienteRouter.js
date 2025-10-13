@@ -2,6 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Paciente from "../models/paciente.js";
 import { isAdmin, isAuth } from "../utils.js";
+import cloudinary from "cloudinary";
 const pacienteRouter = express.Router();
 
 pacienteRouter.get(
