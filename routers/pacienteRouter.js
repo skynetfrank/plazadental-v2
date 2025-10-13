@@ -54,7 +54,6 @@ pacienteRouter.post(
         public_id: imageID, // El ID que se usará como nombre del archivo
         overwrite: true, // ¡La clave! Permite sobrescribir la imagen existente
         resource_type: "image", // Especifica que es una imagen
-        upload_preset: "test_plaza",
       });
 
       //console.log("Imagen subida/sobrescrita:", uploadResponse.secure_url);
