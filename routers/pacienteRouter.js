@@ -69,7 +69,7 @@ pacienteRouter.post(
     } catch (error) {
       console.error("Error al subir a Cloudinary:", error);
       res.status(500);
-      throw new Error("Error del servidor al intentar guardar la imagen.");
+      throw new Error("Error del servidor al intentar guardar la imagen." + error);
     }
   })
 );
