@@ -47,6 +47,7 @@ pacienteRouter.post(
   "/upload-odontograma",
   expressAsyncHandler(async (req, res) => {
     const { image, imageID } = req.body;
+    //console.log("imagen recibid en el backend:", image );
 
     if (!image || !imageID) {
       res.status(400);
@@ -61,15 +62,15 @@ pacienteRouter.post(
         resource_type: "image", // Especifica que es una imagen
       });
 
-      console.log("Imagen subida/sobrescrita:", uploadResponse.secure_url);
+      //console.log("Imagen subida/sobrescrita:", uploadResponse.secure_url);
       res.status(200).json({
         message: "Imagen guardada correctamente",
         url: uploadResponse.secure_url,
       });
     } catch (error) {
-      console.error("Error al subir a Cloudinary:", error);
+      //console.error("Error al subir a Cloudinary:", error.message);
       res.status(500);
-      throw new Error("Error del servidor al intentar guardar la imagen." + error);
+      throw new Error("Error" + error.message);
     }
   })
 );
