@@ -13,6 +13,17 @@ import cloudinary from "cloudinary";
 
 dotenv.config();
 
+// --- Bloque de depuración para Cloudinary ---
+// Imprime las variables de entorno para verificar que se están cargando.
+// ¡IMPORTANTE! Asegúrate de eliminar este bloque antes de pasar a producción
+// para no exponer tus credenciales en los logs.
+console.log("--- Cloudinary Environment Variables ---");
+console.log("Cloud Name:", process.env.CLOUDINARY_CLOUD_NAME ? "Loaded" : "MISSING");
+console.log("API Key:", process.env.CLOUDINARY_API_KEY ? "Loaded" : "MISSING");
+console.log("API Secret:", process.env.CLOUDINARY_API_SECRET ? "Loaded" : "MISSING");
+console.log("------------------------------------");
+// --- Fin del bloque de depuración ---
+
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,

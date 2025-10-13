@@ -3,13 +3,6 @@ import expressAsyncHandler from "express-async-handler";
 import Paciente from "../models/paciente.js";
 import { isAdmin, isAuth } from "../utils.js";
 const pacienteRouter = express.Router();
-import cloudinary from "cloudinary";
-
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 pacienteRouter.get(
   "/",
