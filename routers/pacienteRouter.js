@@ -51,7 +51,7 @@ pacienteRouter.post(
     try {
       const uploadResponse = await cloudinary.v2.uploader.upload(image, {
         folder: "odontogramas", // La carpeta en Cloudinary
-        public_id: imageID, // El ID que se usará como nombre del archivo
+        public_id: imageID.replace(".jpg", ""), // Quitamos la extensión para que Cloudinary no la duplique
         overwrite: true, // ¡La clave! Permite sobrescribir la imagen existente
         resource_type: "image", // Especifica que es una imagen
       });

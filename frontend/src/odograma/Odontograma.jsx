@@ -472,12 +472,12 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
       const scaledHeight = img.naturalHeight * scale;
       ctx.drawImage(img, 0, 30, canvas.width, scaledHeight);
 
-      // --- VALIDACIÓN ---
-      // Solo escribir el nombre si estamos usando la imagen base (no una guardada de Cloudinary)
-      if (!imageUrl) {
+      // --- VALIDACIÓN MEJORADA ---
+      // Solo se escribe el nombre y la fecha si la imagen cargada es la imagen base (odontograma nuevo).
+      if (odogramaImageRef.current.src.includes(odogramaBaseImage)) {
         ctx.font = "bold 16px Arial";
         ctx.fillStyle = "#000000";
-        ctx.fillText(`Odograma: ${nombrePaciente} ${apellidoPaciente} - ${fecha}`, 15, 20);
+        ctx.fillText(`Odograma: ${nombrePaciente} - ${fecha}`, 15, 20);
       }
 
       // 3. Re-ejecutar todos los comandos del historial
@@ -825,7 +825,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
         },
         body: JSON.stringify({
           image, // La imagen en base64
-          imageID: idPaciente + ".jpg", 
+          imageID: idPaciente + ".jpg",
           idPaciente// El ID para que el backend sepa qué imagen sobrescribir
         }),
       });
