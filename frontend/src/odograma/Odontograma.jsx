@@ -468,9 +468,12 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
       // 2. Dibujar imagen base y texto
       // Se escala la imagen para que ocupe todo el ancho del canvas, manteniendo la proporción.
       const img = odogramaImageRef.current;
+      // --- SOLUCIÓN ---
+      // El desplazamiento solo se aplica si es la imagen base (odontograma nuevo).
+      const yOffset = odogramaImageRef.current.src.includes(odogramaBaseImage) ? 30 : 0;
       const scale = canvas.width / img.naturalWidth;
       const scaledHeight = img.naturalHeight * scale;
-      ctx.drawImage(img, 0, 30, canvas.width, scaledHeight);
+      ctx.drawImage(img, 0, yOffset, canvas.width, scaledHeight);
 
       // --- VALIDACIÓN MEJORADA ---
       // Solo se escribe el nombre y la fecha si la imagen cargada es la imagen base (odontograma nuevo).
