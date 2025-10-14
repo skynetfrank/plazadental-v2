@@ -1,18 +1,14 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Odontograma from "../odograma/Odontograma";
 
 const OdontogramaScreen = () => {
-  // Obtener los parámetros de la URL
-  const { nombre, idPaciente, odogramaId } = useParams();
-
+  // Obtener los parámetros de la URL configurada en main.jsx : path="/odontograma/:mode/:nombre/:idPaciente/:imageUrl"
+  const { mode, nombre, idPaciente, imageUrl } = useParams();
 
   const handleCerrarOdontograma = () => {
-    console.log("El componente hijo ha solicitado cerrar.");
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
   };
-  const cloudinary = odogramaId ? "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/" + odogramaId + ".jpg" : "";
-  const imageID = odogramaId;
+
   return (
     <div
       style={{
@@ -25,12 +21,12 @@ const OdontogramaScreen = () => {
       }}
     >
       <Odontograma
-        key={odogramaId} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
+        key={idPaciente} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
         idPaciente={idPaciente}
         nombrePaciente={nombre}
         onCerrar={handleCerrarOdontograma}
-        imageUrl={cloudinary}
-        imageID={imageID}
+        imageUrl={imageUrl}
+        mode={mode}
       />
     </div>
   );

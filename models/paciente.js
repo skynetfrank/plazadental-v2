@@ -89,6 +89,7 @@ const pacienteSchema = new mongoose.Schema(
       },
     },
     migraId: { type: String },
+    dentalChartUrl: { type: String },
   },
   {
     timestamps: true,
@@ -96,4 +97,3 @@ const pacienteSchema = new mongoose.Schema(
 );
 const Paciente = mongoose.model("Paciente", pacienteSchema);
 export default Paciente;
-

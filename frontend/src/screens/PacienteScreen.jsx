@@ -10,12 +10,12 @@ import PacienteInfoIcon from "../icons/PacienteInfoIcon";
 export default function PacienteScreen(props) {
   const params = useParams();
   const { id: pacienteId } = params;
-
+  const EDITMODE = "EDITAR";
+  const CREATEMODE = "CREAR";
+  const IMAGEURL = "/images/odograma1.jpg";
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente, loading, error } = pacienteDetails;
   const dispatch = useDispatch();
-
-  const cloudinaryx = "https://res.cloudinary.com/plazasky/image/upload/v1661258482/odontogramas/";
 
   useEffect(() => {
     if (!paciente || (paciente && paciente._id !== pacienteId)) {
@@ -126,22 +126,22 @@ export default function PacienteScreen(props) {
 
         <div className="division">
           <h4>Odontograma</h4>
-          {paciente?.idPacienteOld ? (
+          {paciente?.dentalChartUrl ? (
             <div>
-              <Link to={`/odontograma/${paciente.nombre}/${paciente.apellido}/${paciente.idPacienteOld}`}>
-                <img
-                  className="odograma-small"
-                  src={cloudinaryx + paciente.idPacienteOld + ".jpg"}
-                  alt="Sin Odontograma Asignado"
-                />
+              <Link
+                to={`/odontograma/${EDITMODE}/${paciente.nombre + " " + paciente.apellido}/${paciente._id}/${
+                  paciente.dentalChartUrl
+                }`}
+              >
+                <img className="odograma-small" src={paciente.dentalChartUrl} alt="Odontograma" />
               </Link>
             </div>
           ) : (
             <div>
               <Link
-                to={`/odontograma/${paciente.nombre + " " + paciente.apellido}/${paciente._id}/${
-                  paciente.iPacienteOld
-                }`}
+                to={`/odontograma/${CREATEMODE}/${paciente.nombre + " " + paciente.apellido}/${
+                  paciente._id
+                }/${IMAGEURL}`}
                 className="btn-lookalike bg-blue"
               >
                 Crear Odontograma
