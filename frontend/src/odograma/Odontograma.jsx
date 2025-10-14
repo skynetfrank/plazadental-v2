@@ -487,7 +487,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, onCerrar, imageUrl, imageID }
       // 3. Re-ejecutar todos los comandos del historial
       commands.forEach((command) => executeCommand(ctx, command));
     },
-    [nombrePaciente, apellidoPaciente, fecha, executeCommand, imageUrl]
+    [executeCommand, fecha, imageUrl, nombrePaciente]
   );
 
   useEffect(() => {
