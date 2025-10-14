@@ -3091,6 +3091,7 @@ label {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    gap: 0px;
   }
 
   .canvas-container {
@@ -3116,6 +3117,14 @@ label {
     /* Permite que la altura se ajuste al contenido */
     /* flex-grow: 1; /* Ocupa el espacio restante si es necesario */
   }
+  /* --- INICIO: Invertir orden en móvil --- */
+  div#draw-panel {
+    order: 2; /* Manda la botonera al final */
+  }
+  .canvas-container {
+    order: 1; /* Pone el canvas al principio */
+  }
+  /* --- FIN: Invertir orden en móvil --- */
 
   .btn-dibujo {
     width: 45px;
