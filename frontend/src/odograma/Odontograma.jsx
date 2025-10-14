@@ -500,12 +500,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
         e.preventDefault();
       }
       if (currentAction === SIN_SELECCION) {
-        Swal.fire({
-          title: "Modo Dibujo",
-          text: "No has seleccionado ningún comando.",
-          icon: "warning",
-          confirmButtonText: "Entendido",
-        });
         return;
       }
       isMouseDownRef.current = true;
