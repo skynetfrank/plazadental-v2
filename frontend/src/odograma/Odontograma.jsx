@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Swal from "sweetalert2";
-
 import { Undo, Redo, CloudUpload, Printer, Expand } from "lucide-react";
-
 import odogramaBaseImage from "./images/odograma1.jpg"; // Importamos la imagen local
 // --- Importación de íconos para la botonera ---
 import markerIcon from "./images/marker-icon.png";
@@ -33,10 +31,7 @@ const MARCAR_FRACTURA = 4;
 const LINEA_VERTICAL = 5;
 const LINEA_HORIZONTAL = 6;
 const DIENTE_AUSENTE = 7;
-const MARCAR_BOX_UP = 8;
-const MARCAR_BOX_DOWN = 9;
 const MARCAR_IMPLANTE = 10;
-const MARCAR_LIMPIAR = 12;
 const MARCAR_PUENTE_FIJO = 13;
 const MARCAR_REMOVIBLE = 14;
 const MARCAR_HIPERSENSE = 15;
@@ -188,7 +183,8 @@ const colorButtons = [
   { id: "btncolor-azul", color: "rgba(0, 0, 255, 0.9)" },
   { id: "btncolor-verde", color: "#008800" },
 ];
-const Odontograma = ({ idPaciente, nombrePaciente, onCerrar, mode, imageUrl, }) => {
+// eslint-disable-next-line react/prop-types
+const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const isMouseDownRef = useRef(false);
@@ -716,53 +712,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, onCerrar, mode, imageUrl, }) 
     }
   }, []); // No tiene dependencias externas al hook
 
-  const handleSaveToCloudinary = useCallback(async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    setIsSaving(true);
-    // Obtener la imagen como base64. Usamos jpeg para consistencia con la descarga.
-    const image = canvas.toDataURL("image/jpeg", 1.0);
-
-    try {
-      // Ahora la petición se hace a nuestro propio backend
-      const response = await fetch("/api/pacientes/upload-odontograma", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          image, // La imagen en base64
-          imageID, // El ID para que el backend sepa qué imagen sobrescribir
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Error en el servidor");
-      }
-
-      console.log("Respuesta del servidor:", data);
-      Swal.fire({
-        title: "Guardado",
-        text: "Odontograma guardado exitosamente.",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    } catch (error) {
-      console.error("Error al guardar en Cloudinary:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Hubo un error al guardar el odontograma en la nube.",
-        icon: "error",
-        confirmButtonText: "Cerrar",
-      });
-    } finally {
-      setIsSaving(false);
-    }
-  }, [idPaciente, imageID]);
 
   const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
@@ -856,6 +805,55 @@ const Odontograma = ({ idPaciente, nombrePaciente, onCerrar, mode, imageUrl, }) 
       canvas.removeEventListener("touchend", handleMouseUp, eventOptions);
     };
   }, [handleMouseDown, handleMouseMove, handleMouseUp]); // Dependencias
+
+
+  const handleSaveToCloudinary = useCallback(async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    setIsSaving(true);
+    // Obtener la imagen como base64. Usamos jpeg para consistencia con la descarga.
+    const image = canvas.toDataURL("image/jpeg", 1.0);
+
+    try {
+      // Ahora la petición se hace a nuestro propio backend
+      const response = await fetch("/api/pacientes/upload-odontograma", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          image, // La imagen en base64
+          imageID: idPaciente + ".jpg", // El ID para que el backend sepa qué imagen sobrescribir
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Error en el servidor");
+      }
+
+      console.log("Respuesta del servidor:", data);
+      Swal.fire({
+        title: "Guardado",
+        text: "Odontograma guardado exitosamente.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error("Error al guardar en Cloudinary:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Hubo un error al guardar el odontograma en la nube.",
+        icon: "error",
+        confirmButtonText: "Cerrar",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }, [idPaciente]);
 
   return (
     <div className="child__container">
