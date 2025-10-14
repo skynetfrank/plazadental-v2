@@ -130,6 +130,7 @@ button,
 
 .btn-icon-container svg {
   font-size: 3rem;
+  color: #333; /* Color inicial para los íconos */
 }
 
 .save-icon,
@@ -2253,6 +2254,23 @@ button.button.small {
   padding-bottom: 5px;
 }
 
+.btn-odontograma {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #457B9D; /* Professional Blue from the odontogram palette */
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-odontograma:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: #5a8aa8;
+}
 /*---- DESDE AQUI LA TABLA COMPONENTE STYLING (TANKSTACK) -----*/
 
 .tankstack-table-container table {
@@ -2772,8 +2790,8 @@ img {
   pointer-events: none;
 }
 
-button,
-a#saveToImage {
+.odograma__container button,
+.odograma__container a#saveToImage {
   border-radius: 5px;
   border: 1px solid rgb(133, 129, 129);
   pointer-events: all;

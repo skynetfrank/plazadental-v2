@@ -123,16 +123,13 @@ export default function PacienteScreen(props) {
         </div>
 
         <div className="division">
-
-          <div>
-            <Link
-              to={`/odontograma/${paciente._id}/${paciente.nombre} ${paciente.apellido
-                }/${paciente.dentalChartUrl ? encodeURIComponent(paciente.dentalChartUrl) : "new"
-                }`}
-            >
-              <h4>Odontograma</h4>
-            </Link>
-          </div>
+          <Link
+            className="btn-odontograma"
+            to={`/odontograma/${paciente._id}/${paciente.nombre} ${paciente.apellido}/${paciente.dentalChartUrl ? encodeURIComponent(paciente.dentalChartUrl) : "new"
+              }`}
+          >
+            Odontograma
+          </Link>
         </div>
       </div>
     </div>
