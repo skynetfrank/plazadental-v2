@@ -188,7 +188,7 @@ const colorButtons = [
   { id: "btncolor-azul", color: "rgba(0, 0, 255, 0.9)" },
   { id: "btncolor-verde", color: "#008800" },
 ];
-const Odontograma = ({ idPaciente, nombrePaciente, apellidoPaciente, onCerrar, imageUrl, imageID }) => {
+const Odontograma = ({ idPaciente, nombrePaciente, onCerrar, imageUrl, imageID }) => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const isMouseDownRef = useRef(false);
