@@ -2751,9 +2751,9 @@ div#draw-panel {
   max-height: 460px;
   padding: 10px;
   background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  /* margin-top: 2rem; */
+  border-radius: 12px; /* Esquinas más suaves */
+  border: 1px solid #c9cbce; /* Borde sutil para definir el contorno */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); /* Sombra un poco más pronunciada */
 }
 
 .color-panel {
