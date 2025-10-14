@@ -9,26 +9,13 @@ const OdontogramaScreen = () => {
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
   };
 
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-      }}
-    >
-      <Odontograma
-        key={idPaciente} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
-        idPaciente={idPaciente}
-        nombrePaciente={nombre}
-        imageUrl={imageUrl}
-        onCerrar={handleCerrarOdontograma}
-      />
-    </div>
-  );
+  return <Odontograma
+    key={idPaciente} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
+    idPaciente={idPaciente}
+    nombrePaciente={nombre}
+    imageUrl={imageUrl}
+    onCerrar={handleCerrarOdontograma}
+  />;
 };
 
 export default OdontogramaScreen;
