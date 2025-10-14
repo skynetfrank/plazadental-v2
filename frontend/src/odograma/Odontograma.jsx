@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import odogramaBaseImage from "./images/odograma1.jpg"; // Importamos la imagen local
 import ActionButtons from "./ActionButtons";
 
@@ -53,6 +54,7 @@ const dateToAMD = (cfecha) => {
 
 // eslint-disable-next-line react/prop-types
 const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
+  const navigate = useNavigate();
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const isMouseDownRef = useRef(false);
@@ -730,7 +732,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
 
   return (
     <div className="child__container">
-      <button id="btn-cerrar" onClick={onCerrar}>
+      <button id="btn-cerrar" onClick={() => navigate(-1)}>
         Volver
       </button>
       <div className="odograma__container">

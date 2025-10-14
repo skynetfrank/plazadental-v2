@@ -119,10 +119,11 @@ const ActionButtons = ({
                             onClick={() => setCurrentColor(btn.color)}
                         />
                     ))}
-                    <button id="color-actual" className="btn-color" style={{ backgroundColor: currentColor }}>
-                        actual
-                    </button>
+
                 </div>
+                <button id="color-actual" className="btn-color" style={{ backgroundColor: currentColor }}>
+                    actual
+                </button>
             </div>
             <hr />
             <div id="botonera-grafica">
