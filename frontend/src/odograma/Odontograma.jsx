@@ -825,7 +825,8 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
         },
         body: JSON.stringify({
           image, // La imagen en base64
-          imageID: idPaciente + ".jpg", // El ID para que el backend sepa qué imagen sobrescribir
+          imageID: idPaciente + ".jpg", 
+          idPaciente// El ID para que el backend sepa qué imagen sobrescribir
         }),
       });
 

@@ -10,9 +10,7 @@ import PacienteInfoIcon from "../icons/PacienteInfoIcon";
 export default function PacienteScreen(props) {
   const params = useParams();
   const { id: pacienteId } = params;
-  const EDITMODE = "EDITAR";
-  const CREATEMODE = "CREAR";
-  const IMAGEURL = "/images/odograma1.jpg";
+
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
   const { paciente, loading, error } = pacienteDetails;
   const dispatch = useDispatch();
@@ -128,7 +126,9 @@ export default function PacienteScreen(props) {
 
           <div>
             <Link
-              to={`/odontograma/${paciente._id}/${paciente.nombre + " " + paciente.apellido}/ ${paciente.dentalChartUrl}`}
+              to={`/odontograma/${paciente._id}/${paciente.nombre} ${paciente.apellido
+                }/${paciente.dentalChartUrl ? encodeURIComponent(paciente.dentalChartUrl) : "new"
+                }`}
             >
               <h4>Odontograma</h4>
             </Link>

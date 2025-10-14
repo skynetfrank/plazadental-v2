@@ -40,8 +40,8 @@ pacienteRouter.get(
 pacienteRouter.post(
   "/upload-odontograma",
   expressAsyncHandler(async (req, res) => {
-    const { image, imageID } = req.body;
-    //console.log("imagen recibid en el backend:", image );
+    const { image, imageID, idPaciente } = req.body;
+    console.log("imagen recibid en el backend:", imageID);
 
     if (!image || !imageID) {
       res.status(400);
@@ -56,7 +56,18 @@ pacienteRouter.post(
         resource_type: "image", // Especifica que es una imagen
       });
 
-      //console.log("Imagen subida/sobrescrita:", uploadResponse.secure_url);
+      // --- MODIFICACIÓN ---
+      // Una vez subida la imagen, guardamos la URL en el documento del paciente.
+      const paciente = await Paciente.findById(idPaciente);
+
+      if (paciente) {
+        paciente.dentalChartUrl = uploadResponse.secure_url;
+        await paciente.save();
+      } else {
+        // Si no se encuentra el paciente, es un caso anómalo.
+        return res.status(404).send({ message: "Paciente no encontrado para guardar la URL del odontograma." });
+      }
+
       res.status(200).json({
         message: "Imagen guardada correctamente",
         url: uploadResponse.secure_url,
