@@ -53,7 +53,7 @@ const dateToAMD = (cfecha) => {
 };
 
 // eslint-disable-next-line react/prop-types
-const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
+const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   const navigate = useNavigate();
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
@@ -84,6 +84,15 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
       ctx.beginPath();
       ctx.moveTo(posx + 10, calibrarY(posy) - 75);
       ctx.lineTo(posx - 10, calibrarY(posy) + 75);
+      ctx.stroke();
+    }
+  }, []); // No tiene dependencias externas al hook
+
+  const ausente = useCallback((posx, posy, ctx) => {
+    if (esDibujable(posx, posy)) {
+      ctx.beginPath();
+      ctx.moveTo(posx, calibrarY(posy) - 75);
+      ctx.lineTo(posx, calibrarY(posy) + 75);
       ctx.stroke();
     }
   }, []); // No tiene dependencias externas al hook
@@ -292,7 +301,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
       }
       ctx.stroke();
     },
-    [extraccion]
+    [ausente, extraccion]
   );
 
   const executeCommand = useCallback(
@@ -356,7 +365,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
       // 3. Re-ejecutar todos los comandos del historial
       commands.forEach((command) => executeCommand(ctx, command));
     },
-    [executeCommand, fecha, imageUrl, nombrePaciente]
+    [executeCommand, fecha, nombrePaciente]
   );
 
   useEffect(() => {
@@ -577,16 +586,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
     [currentAction, getPointerPosition, redrawCanvas, history, addCommandToHistory, drawAction, currentColor]
   );
 
-  const ausente = useCallback((posx, posy, ctx) => {
-    if (esDibujable(posx, posy)) {
-      ctx.beginPath();
-      ctx.moveTo(posx, calibrarY(posy) - 75);
-      ctx.lineTo(posx, calibrarY(posy) + 75);
-      ctx.stroke();
-    }
-  }, []); // No tiene dependencias externas al hook
-
-
   const handleDownload = useCallback(() => {
     const canvas = canvasRef.current;
     const link = document.createElement("a");
@@ -680,7 +679,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
     };
   }, [handleMouseDown, handleMouseMove, handleMouseUp]); // Dependencias
 
-
   const handleSaveToCloudinary = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -699,7 +697,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
         body: JSON.stringify({
           image, // La imagen en base64
           imageID: idPaciente + ".jpg",
-          idPaciente// El ID para que el backend sepa qué imagen sobrescribir
+          idPaciente, // El ID para que el backend sepa qué imagen sobrescribir
         }),
       });
 
