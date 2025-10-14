@@ -54,14 +54,14 @@ export default function PacienteScreen(props) {
               {paciente.alergias.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.alergias.map((alergia) => {
-                    if (alergia === "") {
-                      return "";
-                    }
-                    if (alergia === " ") {
-                      return "";
-                    }
-                    return alergia + ", ";
-                  })}
+                  if (alergia === "") {
+                    return "";
+                  }
+                  if (alergia === " ") {
+                    return "";
+                  }
+                  return alergia + ", ";
+                })}
             </p>
             {paciente.otrasAlergias ? (
               <div>
@@ -79,11 +79,11 @@ export default function PacienteScreen(props) {
             {paciente.antecedentesPersonales.every((elem) => elem === "")
               ? "No refiere"
               : paciente.antecedentesPersonales.map((bgp, inx) => {
-                  if (bgp === "") {
-                    return "";
-                  }
-                  return <p key={inx}>{bgp}</p>;
-                })}
+                if (bgp === "") {
+                  return "";
+                }
+                return <p key={inx}>{bgp}</p>;
+              })}
           </div>
         </div>
         <div className="division">
@@ -111,11 +111,11 @@ export default function PacienteScreen(props) {
               {paciente.antecedentesFamiliares.every((elem) => elem === " ")
                 ? "No Refiere"
                 : paciente.antecedentesFamiliares.map((bgf) => {
-                    if (bgf === "") {
-                      return "";
-                    }
-                    return bgf + " ";
-                  })}
+                  if (bgf === "") {
+                    return "";
+                  }
+                  return bgf + " ";
+                })}
             </p>
           </div>
         </div>
@@ -126,28 +126,12 @@ export default function PacienteScreen(props) {
 
         <div className="division">
           <h4>Odontograma</h4>
-          {paciente?.dentalChartUrl ? (
-            <div>
-              <Link
-                to={`/odontograma/${EDITMODE}/${paciente.nombre + " " + paciente.apellido}/${paciente._id}/${
-                  paciente.dentalChartUrl
-                }`}
-              >
-                <img className="odograma-small" src={paciente.dentalChartUrl} alt="Odontograma" />
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <Link
-                to={`/odontograma/${CREATEMODE}/${paciente.nombre + " " + paciente.apellido}/${
-                  paciente._id
-                }/${IMAGEURL}`}
-                className="btn-lookalike bg-blue"
-              >
-                Crear Odontograma
-              </Link>
-            </div>
-          )}
+          <div>
+            <Link
+              to={`/odontograma/${paciente._id}/${paciente.nombre + " " + paciente.apellido}/ ${paciente.dentalChartUrl}`}
+            >
+            </Link>
+          </div>
         </div>
       </div>
     </div>

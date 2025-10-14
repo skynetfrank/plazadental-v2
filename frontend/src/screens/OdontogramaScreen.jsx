@@ -3,7 +3,7 @@ import Odontograma from "../odograma/Odontograma";
 
 const OdontogramaScreen = () => {
   // Obtener los parámetros de la URL configurada en main.jsx : path="/odontograma/:mode/:nombre/:idPaciente/:imageUrl"
-  const { mode, nombre, idPaciente, imageUrl } = useParams();
+  const { idPaciente, nombre, imageUrl } = useParams();
 
   const handleCerrarOdontograma = () => {
     alert("Cerrando Odontograma. Revisa la consola para más detalles.");
@@ -24,9 +24,8 @@ const OdontogramaScreen = () => {
         key={idPaciente} // ¡LA CLAVE! Esto fuerza el reinicio del componente al cambiar de paciente
         idPaciente={idPaciente}
         nombrePaciente={nombre}
-        onCerrar={handleCerrarOdontograma}
         imageUrl={imageUrl}
-        mode={mode}
+        onCerrar={handleCerrarOdontograma}
       />
     </div>
   );

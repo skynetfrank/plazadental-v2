@@ -73,7 +73,7 @@ const router = createBrowserRouter(
         <Route path="/analiticsventas" element={<GroupingControles />}></Route>
         <Route path="/control/:id/edit" element={<ControlEditScreen />}></Route>
         <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
-        <Route path="/odontograma/:mode/:nombre/:idPaciente/:imageUrl" element={<OdontogramaScreen />}></Route>
+        <Route path="/odontograma/:idPaciente/:nombre/:imageUrl" element={<OdontogramaScreen />}></Route>
       </Route>
     </Route>
   )
