@@ -488,13 +488,14 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
 
   useEffect(() => {
     // Al montar, intentar cargar el estado desde localStorage
-    const savedStateJSON = localStorage.getItem(localStorageKey);
     let initialHistory = [];
-    if (savedStateJSON) {
-      const savedState = JSON.parse(savedStateJSON);
-      initialHistory = savedState.history || [];
-      setHistory(initialHistory);
-      setRedoStack(savedState.redoStack || []);
+    // Solo cargamos desde localStorage si es un odontograma nuevo (sin imageUrl)
+    if (!imageUrl) {
+      const savedStateJSON = localStorage.getItem(localStorageKey);
+      if (savedStateJSON) {
+        const savedState = JSON.parse(savedStateJSON);
+        initialHistory = savedState.history || [];
+      }
     }
 
     // Inicializar el canvas y redibujar el historial cargado

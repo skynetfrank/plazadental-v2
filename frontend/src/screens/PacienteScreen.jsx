@@ -125,11 +125,12 @@ export default function PacienteScreen(props) {
         </div>
 
         <div className="division">
-          <h4>Odontograma</h4>
+
           <div>
             <Link
               to={`/odontograma/${paciente._id}/${paciente.nombre + " " + paciente.apellido}/ ${paciente.dentalChartUrl}`}
             >
+              <h4>Odontograma</h4>
             </Link>
           </div>
         </div>
