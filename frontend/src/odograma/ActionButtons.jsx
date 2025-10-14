@@ -86,7 +86,7 @@ const actionButtons = [
 const colorButtons = [
     { id: "btncolor-black", color: "#343A40" }, // Dark Gray
     { id: "btncolor-red", color: "#E63946" },   // Vibrant Red
-    { id: "btncolor-blue", color: "#457B9D" },  // Professional Blue
+    { id: "btncolor-blue", color: "#4546EF" },  // New Professional Blue
     { id: "btncolor-green", color: "#2A9D8F" }, // Teal Green
     { id: "btncolor-orange", color: "#F4A261" }, // Soft Orange
 ];

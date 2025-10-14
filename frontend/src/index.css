@@ -130,7 +130,8 @@ button,
 
 .btn-icon-container svg {
   font-size: 3rem;
-  color: #333; /* Color inicial para los íconos */
+  color: #333;
+  /* Color inicial para los íconos */
 }
 
 .save-icon,
@@ -2240,7 +2241,8 @@ button.button.small {
 .division {
   border-bottom: 1px solid black;
   padding-bottom: 1rem;
-  min-width: 200px;
+  min-width: 100%;
+  text-align: center;
 }
 
 .division h4 {
@@ -2261,7 +2263,8 @@ button.button.small {
   font-size: 1.4rem;
   font-weight: bold;
   color: #fff;
-  background-color: #457B9D; /* Professional Blue from the odontogram palette */
+  background-color: rgb(0, 0, 177);
+  /* Professional Blue from the odontogram palette */
   border-radius: 6px;
   transition: all 0.2s ease-in-out;
 }
@@ -2271,6 +2274,7 @@ button.button.small {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   background-color: #5a8aa8;
 }
+
 /*---- DESDE AQUI LA TABLA COMPONENTE STYLING (TANKSTACK) -----*/
 
 .tankstack-table-container table {
@@ -2769,9 +2773,12 @@ div#draw-panel {
   max-height: 460px;
   padding: 10px;
   background-color: #f8f9fa;
-  border-radius: 12px; /* Esquinas más suaves */
-  border: 1px solid #c9cbce; /* Borde sutil para definir el contorno */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); /* Sombra un poco más pronunciada */
+  border-radius: 12px;
+  /* Esquinas más suaves */
+  border: 1px solid #c9cbce;
+  /* Borde sutil para definir el contorno */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  /* Sombra un poco más pronunciada */
 }
 
 .color-panel {
@@ -2790,13 +2797,12 @@ img {
   pointer-events: none;
 }
 
-.odograma__container button,
-.odograma__container a#saveToImage {
+/* Estilo específico para el botón de guardar como imagen */
+a#saveToImage {
   border-radius: 5px;
   border: 1px solid rgb(133, 129, 129);
   pointer-events: all;
   cursor: pointer;
-  color: #ffffff;
 }
 
 a#saveToImage {
@@ -2808,6 +2814,7 @@ a#saveToImage {
 
 #btn-cerrar {
   background-color: transparent;
+  color: #333; /* Color de texto oscuro para el botón volver */
   color: var(--tooltip-color);
   padding: 3px;
   font-size: 0.7rem;
@@ -2841,9 +2848,9 @@ a#saveToImage:hover {
 }
 
 .btn-color.activo {
-  border: 3px solid #457B9D;
+  border: 3px solid #4546EF;
   transform: scale(1.1);
-  box-shadow: 0 0 8px rgba(69, 123, 157, 0.6);
+  box-shadow: 0 0 8px rgba(69, 70, 239, 0.6);
 }
 
 label {
@@ -2874,8 +2881,8 @@ label {
   width: 40px;
   height: 40px;
   margin: 3px;
-  color: #0000ff;
-  font-weight: 700;
+  color: #4546EF; /* Color azul uniforme para texto e íconos SVG */
+  font-weight: bold;
   cursor: pointer;
   position: relative;
   display: flex;
@@ -2899,7 +2906,7 @@ label {
 }
 
 .btn-dibujo.activo {
-  border: 3px solid #457B9D;
+  border: 3px solid #4546EF;
 }
 
 .btn-dibujo img {
