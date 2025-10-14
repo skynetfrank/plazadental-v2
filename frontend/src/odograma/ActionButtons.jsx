@@ -146,16 +146,18 @@ const ActionButtons = ({
                 <button id="clear" className="btn-dibujo t-tip" data-tip="Deshacer Todo" onClick={handleClearCanvas}>
                     <img src={broomIcon} alt="Limpiar" />
                 </button>
-                <button id="download" className="btn-dibujo t-tip" data-tip="Descargar" onClick={handleDownload}>
+
+
+                <button id="download" className="btn-dibujo t-tip big" data-tip="Descargar" onClick={handleDownload}>
                     <img src={downloadIcon} alt="Descargar" />
                 </button>
-                <button id="save-cloud" className="btn-dibujo t-tip" data-tip="Guardar en Cloud" onClick={handleSaveToCloudinary} disabled={isSaving}>
+                <button id="save-cloud" className="btn-dibujo t-tip big" data-tip="Guardar en Cloud" onClick={handleSaveToCloudinary} disabled={isSaving}>
                     {isSaving ? "..." : <CloudUpload />}
                 </button>
-                <button id="print" className="btn-dibujo t-tip" data-tip="Imprimir" onClick={handlePrint}>
+                <button id="print" className="btn-dibujo t-tip big" data-tip="Imprimir" onClick={handlePrint}>
                     <Printer />
                 </button>
-                <button id="expand" className="btn-dibujo t-tip" data-tip="Ver en grande" onClick={() => setShowBackdrop(true)}>
+                <button id="expand" className="btn-dibujo t-tip big" data-tip="Ver en grande" onClick={() => setShowBackdrop(true)}>
                     <Expand />
                 </button>
             </div>

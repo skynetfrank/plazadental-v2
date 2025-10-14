@@ -3042,6 +3042,14 @@ label {
 
 /* fin de tooltip for buttons */
 
+.btn-dibujo.big{
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
 /*MEDIA QUERIES FEBB */
 @media screen and (max-width: 760px) {
   .odograma__container {
