@@ -63,7 +63,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar, }) => {
   const animationFrameIdRef = useRef(null); // ID para requestAnimationFrame
   const pendingDrawRequestsRef = useRef([]); // Cola de puntos a dibujar
 
-  const [currentColor, setCurrentColor] = useState("rgba(0, 0, 0, 0.9)");
+  const [currentColor, setCurrentColor] = useState("#343A40"); // Nuevo color por defecto
   const [currentAction, setCurrentAction] = useState(SIN_SELECCION);
   const [history, setHistory] = useState([]);
   const [redoStack, setRedoStack] = useState([]);

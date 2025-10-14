@@ -84,11 +84,11 @@ const actionButtons = [
 ];
 
 const colorButtons = [
-    { id: "btncolor-negro", color: "rgba(0, 0, 0, 0.9)" },
-    { id: "btncolor-naranja", color: "#e68106" },
-    { id: "btncolor-rojo", color: "#FF0000" },
-    { id: "btncolor-azul", color: "rgba(0, 0, 255, 0.9)" },
-    { id: "btncolor-verde", color: "#008800" },
+    { id: "btncolor-black", color: "#343A40" }, // Dark Gray
+    { id: "btncolor-red", color: "#E63946" },   // Vibrant Red
+    { id: "btncolor-blue", color: "#457B9D" },  // Professional Blue
+    { id: "btncolor-green", color: "#2A9D8F" }, // Teal Green
+    { id: "btncolor-orange", color: "#F4A261" }, // Soft Orange
 ];
 
 const ActionButtons = ({
@@ -117,13 +117,11 @@ const ActionButtons = ({
                             className="btn-color"
                             style={{ backgroundColor: btn.color }}
                             onClick={() => setCurrentColor(btn.color)}
-                        />
+                        >
+                        </button>
                     ))}
-
                 </div>
-                <button id="color-actual" className="btn-color" style={{ backgroundColor: currentColor }}>
-                    actual
-                </button>
+                <div id="color-actual" style={{ backgroundColor: currentColor }} />
             </div>
             <hr />
             <div id="botonera-grafica">

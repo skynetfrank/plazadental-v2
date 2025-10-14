@@ -2748,13 +2748,12 @@ canvas#canvas {
 div#draw-panel {
   width: 310px;
   /* Un ancho fijo para el panel de herramientas */
-  max-height: 375px;
+  max-height: 460px;
   padding: 10px;
-  background-color: rgb(184, 179, 179);
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   /* margin-top: 2rem; */
-  /* El align-items: stretch lo hace innecesario */
-  /* overflow-y: auto;
-  Permite scroll si el contenido es muy alto */
 }
 
 .color-panel {
@@ -2812,35 +2811,21 @@ a#saveToImage:hover {
 .btn-color {
   width: 25px;
   height: 20px;
-  margin: 2px;
-  border: none;
+  border-radius: 50%;
+  border: 2px solid #dee2e6;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-color:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-color.activo {
-  border: 3px solid #007bff;
+  border: 3px solid #457B9D;
   transform: scale(1.1);
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-}
-
-#btncolor-negro {
-  background-color: #030303bd;
-}
-
-#btncolor-azul {
-  background-color: #0000ff;
-}
-
-#btncolor-naranja {
-  background-color: #e68106;
-}
-
-#btncolor-rojo {
-  background-color: #ff0000;
-}
-
-#btncolor-verde {
-  background-color: #008800;
+  box-shadow: 0 0 8px rgba(69, 123, 157, 0.6);
 }
 
 label {
@@ -2850,16 +2835,15 @@ label {
 #botonera-colores {
   display: flex;
   align-items: center;
-  column-gap: 5px;
+  gap: 8px;
 }
 
 #color-actual {
-  border: 1px solid rgba(0, 0, 0, 0.63);
-  border-radius: 5px;
-  width: 60px;
+  width: 50px;
+  height: 25px;
+  border-radius: 4px;
+  border: 2px solid #dee2e6;
   pointer-events: none;
-  background-color: #333;
-  height: unset;
 }
 
 #botonera-grafica {
@@ -2887,7 +2871,7 @@ label {
 }
 
 .btn-dibujo.activo {
-  border: 4px ridge orange;
+  border: 3px solid #457B9D;
 }
 
 .btn-dibujo img {
