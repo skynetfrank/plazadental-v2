@@ -2778,6 +2778,37 @@ div#draw-panel {
   /* Sombra un poco más pronunciada */
 }
 
+.tool-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.tool-panel label {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #495057;
+}
+
+.brush-size-panel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-brush-size {
+  background-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
 .color-panel {
   display: flex;
   justify-content: space-between;

@@ -12,6 +12,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
 
   const [currentColor, setCurrentColor] = useState("#343A40"); // Nuevo color por defecto
   const [currentAction, setCurrentAction] = useState(SIN_SELECCION);
+  const [currentSize, setCurrentSize] = useState(3);
 
   const {
     canvasRef,
@@ -35,6 +36,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
     imageUrl,
     currentAction,
     currentColor,
+    currentSize,
   });
 
   return (
@@ -48,6 +50,8 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           setCurrentAction={setCurrentAction}
           currentColor={currentColor}
           setCurrentColor={setCurrentColor}
+          currentSize={currentSize}
+          setCurrentSize={setCurrentSize}
           handleUndo={handleUndo}
           handleRedo={handleRedo}
           redoStack={redoStack}

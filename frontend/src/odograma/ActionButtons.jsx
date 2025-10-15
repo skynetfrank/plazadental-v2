@@ -117,6 +117,29 @@ const actionButtons = [
   { id: "compromiso-furcacion", tip: "Compromiso Furcacion", action: MARCAR_COMPROMISO_FURCACION, content: "CF" },
 ];
 
+const BrushSizeButtons = ({ currentSize, setCurrentSize, currentColor }) => {
+  const sizes = [
+    { size: 2, label: "Fino" },
+    { size: 5, label: "Medio" },
+    { size: 8, label: "Grueso" },
+  ];
+
+  return (
+    <div className="brush-size-panel">
+      {sizes.map((s) => (
+        <button
+          key={s.size}
+          className={`btn-brush-size t-tip ${currentSize === s.size ? "activo" : ""}`}
+          data-tip={s.label}
+          onClick={() => setCurrentSize(s.size)}
+        >
+          <div style={{ width: `${s.size + 4}px`, height: `${s.size + 4}px`, borderRadius: "50%", backgroundColor: currentColor }} />
+        </button>
+      ))}
+    </div>
+  );
+};
+
 const colorButtons = [
   { id: "btncolor-black", color: "#343A40" }, // Dark Gray
   { id: "btncolor-red", color: "#E63946" }, // Vibrant Red
@@ -130,6 +153,8 @@ const ActionButtons = ({
   setCurrentAction,
   currentColor,
   setCurrentColor,
+  currentSize,
+  setCurrentSize,
   handleUndo,
   handleRedo,
   redoStack,
@@ -156,6 +181,12 @@ const ActionButtons = ({
         </div>
         <div id="color-actual" style={{ backgroundColor: currentColor }} />
       </div>
+      <hr />
+      <div className="tool-panel">
+        <label>Grosor:</label>
+        <BrushSizeButtons currentSize={currentSize} setCurrentSize={setCurrentSize} currentColor={currentColor} />
+      </div>
+
       <hr />
       <div id="botonera-grafica">
         {actionButtons.map((btn) => (
