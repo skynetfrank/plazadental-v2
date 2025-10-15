@@ -98,6 +98,176 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
     }
   }, []); // No tiene dependencias externas al hook
 
+  // --- LÓGICA DE DIBUJO MODULARIZADA ---
+  const drawCaries = (ctx, { x, y }) => {
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fill();
+  };
+
+  const drawLineaVertical = (ctx, { x, y }) => {
+    ctx.strokeStyle = "rgb(0, 0,255)";
+    ctx.beginPath();
+    ctx.moveTo(x - 3, y - 10);
+    ctx.lineTo(x - 3, y + 10);
+    ctx.moveTo(x + 2, y - 10);
+    ctx.lineTo(x + 2, y + 10);
+    ctx.stroke();
+  };
+
+  const drawImplante = (ctx, { x, y }) => {
+    y = y - 5;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 10, y);
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 10, y);
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y + 7);
+    ctx.moveTo(x, y + 8);
+    ctx.lineTo(x + 10, y + 8);
+    ctx.moveTo(x, y + 8);
+    ctx.lineTo(x - 10, y + 8);
+    ctx.stroke();
+  };
+
+  const drawPuenteFijo = (ctx, { x, y }) => {
+    const xoffset = 12;
+    x = x - xoffset;
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.moveTo(x + 4, y);
+    ctx.lineTo(x + 21, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + 25, y, 4, 0, 2 * Math.PI);
+    ctx.fill();
+  };
+
+  const drawRemovible = (ctx, { x, y }) => {
+    x = x - 15;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 10, y - 6);
+    ctx.lineTo(x + 17, y);
+    ctx.lineTo(x + 25, y - 6);
+    ctx.lineTo(x + 32, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(x + 35, y, 3, 0, 2 * Math.PI);
+    ctx.fill();
+  };
+
+  const drawHipersensibilidad = (ctx, { x, y }) => {
+    y = y - 15;
+    x = x - 5;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 8, y + 4);
+    ctx.lineTo(x, y + 8);
+    ctx.lineTo(x + 8, y + 12);
+    ctx.lineTo(x, y + 16);
+    ctx.lineTo(x + 8, y + 20);
+    ctx.lineTo(x, y + 24);
+    ctx.stroke();
+  };
+
+  const drawProcesoApical = (ctx, { x, y }) => {
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, 6, 0, 2 * Math.PI);
+    ctx.stroke();
+  };
+
+  const drawFistula = (ctx, { x, y }) => {
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, 7, 0, 2 * Math.PI);
+    ctx.fill();
+  };
+
+  const drawInfraoclusion = (ctx, { x, y }) => {
+    x = x - 5;
+    y = y - 5;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x + 5, y - 10);
+    ctx.lineTo(x + 5, y);
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 10, y);
+    ctx.lineTo(x + 5, y + 15);
+    ctx.fill();
+    ctx.stroke();
+  };
+
+  const drawExtrusion = (ctx, { x, y }) => {
+    ctx.lineWidth = 2;
+    x = x - 5;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 5, y - 15);
+    ctx.lineTo(x + 10, y);
+    ctx.moveTo(x + 5, y);
+    ctx.lineTo(x + 5, y + 10);
+    ctx.fill();
+    ctx.stroke();
+  };
+
+  const drawInclinacion = (ctx, { x, y }) => {
+    ctx.lineWidth = 2;
+    y = y - 5;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 10, y + 5);
+    ctx.lineTo(x, y + 10);
+    ctx.moveTo(x + 5, y + 5);
+    ctx.lineTo(x - 10, y + 5);
+    ctx.fill();
+    ctx.stroke();
+  };
+
+  const drawRotacion = (ctx, { x, y }) => {
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 5, y - 15);
+    ctx.lineTo(x + 10, y);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x - 5, y, 10, 0, Math.PI, false);
+    ctx.stroke();
+  };
+
+  const drawFractura = (ctx, { x, y }) => {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x - 5, y);
+    ctx.lineTo(x - 5, y + 5);
+    ctx.lineTo(x - 10, y + 5);
+    ctx.lineTo(x - 10, y + 10);
+    ctx.lineTo(x - 15, y + 10);
+    ctx.stroke();
+  };
+
+  const drawLineaHorizontal = (ctx, { x, y }) => {
+    ctx.strokeStyle = "rgb(0, 0,255)";
+    x = x - 10;
+    y = y - 3;
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 20, y);
+    ctx.moveTo(x, y + 5);
+    ctx.lineTo(x + 20, y + 5);
+    ctx.stroke();
+  };
+
   // Función para dibujar acciones de un solo clic
   const drawAction = useCallback(
     (ctx, command) => {
@@ -116,106 +286,34 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           ausente(x, y, ctx);
           break;
         case MARCAR_CARIES:
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, 2 * Math.PI);
-          ctx.fill();
+          drawCaries(ctx, command);
           break;
         case LINEA_VERTICAL:
-          ctx.strokeStyle = "rgb(0, 0,255)";
-          ctx.moveTo(x - 3, y);
-          ctx.lineTo(x - 3, y - 10);
-          ctx.moveTo(x + 2, y);
-          ctx.lineTo(x + 2, y - 10);
-          ctx.moveTo(x - 3, y);
-          ctx.lineTo(x - 3, y + 10);
-          ctx.moveTo(x + 2, y);
-          ctx.lineTo(x + 2, y + 10);
+          drawLineaVertical(ctx, command);
           break;
         case MARCAR_IMPLANTE:
-          y = y - 5;
-          ctx.lineWidth = 3;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 10, y);
-          ctx.moveTo(x, y);
-          ctx.lineTo(x - 10, y);
-          ctx.moveTo(x, y);
-          ctx.lineTo(x, y + 7);
-          ctx.moveTo(x, y + 8);
-          ctx.lineTo(x + 10, y + 8);
-          ctx.moveTo(x, y + 8);
-          ctx.lineTo(x - 10, y + 8);
+          drawImplante(ctx, command);
           break;
         case MARCAR_PUENTE_FIJO:
-          let xoffset = 12;
-          x = x - xoffset;
-          ctx.beginPath();
-          ctx.arc(x, y, 4, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.lineTo(x + 20, y);
-          ctx.arc(x + 25, y, 4, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.closePath();
+          drawPuenteFijo(ctx, command);
           break;
         case MARCAR_REMOVIBLE:
-          x = x - 15;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.arc(x, y, 3, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.closePath();
-          ctx.lineTo(x + 10, y - 6);
-          ctx.lineTo(x + 17, y);
-          ctx.lineTo(x + 25, y - 6);
-          ctx.lineTo(x + 32, y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.arc(x + 35, y, 3, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.closePath();
+          drawRemovible(ctx, command);
           break;
         case MARCAR_HIPERSENSE:
-          y = y - 15;
-          x = x - 5;
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x, y);
-          ctx.lineTo(x + 8, y + 4);
-          ctx.lineTo(x, y + 8);
-          ctx.lineTo(x + 8, y + 12);
-          ctx.lineTo(x, y + 16);
-          ctx.lineTo(x + 8, y + 20);
-          ctx.lineTo(x, y + 24);
+          drawHipersensibilidad(ctx, command);
           break;
         case MARCAR_APICAL:
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(x, y, 6, 0, 2 * Math.PI);
-          ctx.strokeStyle = color;
-          ctx.closePath();
+          drawProcesoApical(ctx, command);
           break;
         case MARCAR_FISTULA:
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.arc(x, y, 7, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.closePath();
+          drawFistula(ctx, command);
           break;
         case MARCAR_EMPAQ_ALIMENTO:
           ctx.fillText("E", x - 7, y + 5);
           break;
         case MARCAR_INFRAOCLUSION:
-          x = x - 5;
-          y = y - 5;
-          ctx.lineWidth = 2;
-          ctx.moveTo(x + 5, y - 10);
-          ctx.lineTo(x + 5, y);
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 10, y);
-          ctx.lineTo(x + 5, y + 15);
-          ctx.fill();
-          ctx.closePath();
+          drawInfraoclusion(ctx, command);
           break;
         case MARCAR_PROFUNDIDAD_SONDAJE:
           ctx.fillText("PS", x - 10, y + 5);
@@ -249,58 +347,23 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           ctx.fillText("Y", x - 7, y + 5);
           break;
         case MARCAR_EXTRUSION:
-          ctx.lineWidth = 2;
-          x = x - 5;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 5, y - 15);
-          ctx.lineTo(x + 10, y);
-          ctx.moveTo(x + 5, y);
-          ctx.lineTo(x + 5, y + 10);
-          ctx.fill();
-          ctx.closePath();
+          drawExtrusion(ctx, command);
           break;
         case MARCAR_INCLINACION:
-          ctx.lineWidth = 2;
-          y = y - 5;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 10, y + 5);
-          ctx.lineTo(x, y + 10);
-          ctx.moveTo(x + 5, y + 5);
-          ctx.lineTo(x - 10, y + 5);
-          ctx.fill();
-          ctx.closePath();
+          drawInclinacion(ctx, command);
           break;
         case MARCAR_ROTACION:
-          ctx.lineWidth = 2;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 5, y - 15);
-          ctx.lineTo(x + 10, y);
-          ctx.moveTo(x, y);
-          ctx.fill();
-          ctx.arc(x - 5, y, 10, 0, Math.PI, false);
+          drawRotacion(ctx, command);
           break;
         case MARCAR_FRACTURA:
-          ctx.strokeStyle = color;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x - 5, y);
-          ctx.lineTo(x - 5, y + 5);
-          ctx.lineTo(x - 10, y + 5);
-          ctx.lineTo(x - 10, y + 10);
-          ctx.lineTo(x - 15, y + 10);
+          drawFractura(ctx, command);
           break;
         case LINEA_HORIZONTAL:
-          ctx.strokeStyle = "rgb(0, 0,255)";
-          x = x - 10;
-          y = y - 3;
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + 20, y);
-          ctx.moveTo(x, y + 5);
-          ctx.lineTo(x + 20, y + 5);
+          drawLineaHorizontal(ctx, command);
           break;
         default:
           break;
       }
-      ctx.stroke();
     },
     [ausente, extraccion]
   );
