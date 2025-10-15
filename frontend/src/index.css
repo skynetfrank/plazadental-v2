@@ -2738,6 +2738,7 @@ summary {
   flex-shrink: 0;
   /* Evita que el contenedor del canvas se encoja */
   display: flex;
+  position: relative; /* <-- AÑADIDO: Para posicionar el spinner dentro */
   justify-content: center;
   align-items: center;
   margin: 2px;
@@ -2895,6 +2896,16 @@ label {
   background-color: #e9ecef;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
+
+/* --- INICIO: Estilo para botones deshabilitados --- */
+button:disabled, .btn-dibujo:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+/* --- FIN: Estilo para botones deshabilitados --- */
 
 #sellante {
   font-size: 1.5rem;

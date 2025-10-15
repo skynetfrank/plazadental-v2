@@ -711,11 +711,14 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
       });
     } catch (error) {
       console.error("Error al guardar en Cloudinary:", error);
+      // --- MEJORA: Feedback de error más detallado ---
+      const errorMessage = error.message || "No se pudo conectar con el servidor.";
       Swal.fire({
         title: "Error",
-        text: "Hubo un error al guardar el odontograma en la nube.",
+        text: `Error al guardar: ${errorMessage}`,
         icon: "error",
-        confirmButtonText: "Cerrar",
+        footer: "Sugerencia: Revisa tu conexión a internet e inténtalo de nuevo.",
+        confirmButtonText: "Entendido",
       });
     } finally {
       setIsSaving(false);
@@ -752,6 +755,16 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
             onMouseUp={handleMouseUp} // Evento para mouse
             onMouseLeave={() => (isMouseDownRef.current = false)} // Extra: para evitar que se quede dibujando si el mouse sale del canvas
           />
+          {/* --- INICIO: Spinner de Carga --- */}
+          {isSaving && (
+            <div className="myspinner-container" style={{ display: "flex" }}>
+              <div className="myspinner-text" data-spintext="Guardando..."></div>
+              <div className="myspinner-sector myspinner-sector-blue"></div>
+              <div className="myspinner-sector myspinner-sector-red"></div>
+              <div className="myspinner-sector myspinner-sector-green"></div>
+            </div>
+          )}
+          {/* --- FIN: Spinner de Carga --- */}
         </div>
         {showBackdrop && (
           <div className="backdrop" onClick={() => setShowBackdrop(false)}>
