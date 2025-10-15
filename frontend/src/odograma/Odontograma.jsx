@@ -36,22 +36,6 @@ const MARCAR_ROTACION = 31;
 const MARCAR_SELLANTE = 32;
 const SIN_SELECCION = 0;
 
-const strToDMA = (nfecha) => {
-  //parametro: string en forma AAAA-MM-DD
-  //return: string en forma DD-MM-AAAA
-  const dma = nfecha.split("-").reverse().join("-");
-  return dma;
-};
-
-const dateToAMD = (cfecha) => {
-  //parametro: una fecha tipo Date();
-  //return: string en forma AAAA-MM-DD
-  let year = cfecha.getFullYear(); // YYYY
-  let month = ("0" + (cfecha.getMonth() + 1)).slice(-2); // MM
-  let day = ("0" + cfecha.getDate()).slice(-2); // DD
-  return year + "-" + month + "-" + day;
-};
-
 // eslint-disable-next-line react/prop-types
 const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   const navigate = useNavigate();
@@ -72,7 +56,15 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   const [cursorStyle, setCursorStyle] = useState("default"); // Estado para el estilo del cursor
   const odogramaImageRef = useRef(null); // Ref para la imagen base
 
-  const fecha = strToDMA(dateToAMD(new Date()));
+  // --- FUNCIONES DE UTILIDAD ---
+  const formatDate = useCallback((date) => {
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${day}-${month}-${year}`;
+  }, []);
+
+  const fecha = formatDate(new Date());
   const localStorageKey = `odontogramaState_${idPaciente}`;
 
   const setupContext = useCallback((ctx, { color, size = 3, font = "bold 16px serif" } = {}) => {
