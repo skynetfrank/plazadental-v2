@@ -534,7 +534,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
 
   const esDibujable = (posx, posy) => {
     if (posx < 5 || posx >= 515) return false;
-    if (posy < 50 || posy >= 380) return false;
+    if (posy < 50 || posy >= 400) return false;
     if (posy >= 220 && posy <= 250) return false;
     return true;
   };
