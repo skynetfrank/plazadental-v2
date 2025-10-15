@@ -69,6 +69,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   const [redoStack, setRedoStack] = useState([]);
   const [isSaving, setIsSaving] = useState(false); // Estado para el feedback de guardado
   const [showBackdrop, setShowBackdrop] = useState(false); // Estado para el backdrop
+  const [cursorStyle, setCursorStyle] = useState("default"); // Estado para el estilo del cursor
   const odogramaImageRef = useRef(null); // Ref para la imagen base
 
   const fecha = strToDMA(dateToAMD(new Date()));
@@ -417,6 +418,21 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
     localStorage.setItem(localStorageKey, JSON.stringify(stateToSave));
   }, [history, redoStack, localStorageKey]);
 
+  // Efecto para cambiar el cursor según la herramienta seleccionada
+  useEffect(() => {
+    switch (currentAction) {
+      case MARCAR_AREA:
+        setCursorStyle("crosshair"); // Cursor para dibujo libre
+        break;
+      case SIN_SELECCION:
+        setCursorStyle("default"); // Cursor por defecto
+        break;
+      default:
+        setCursorStyle("pointer"); // Cursor para acciones de un solo clic
+        break;
+    }
+  }, [currentAction]);
+
   const addCommandToHistory = useCallback(
     (command) => {
       const newHistory = [...history, command];
@@ -622,11 +638,24 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   }, []);
 
   const handleClearCanvas = useCallback(() => {
-    // Simplemente vuelve a dibujar el canvas inicial
-    setHistory([]);
-    setRedoStack([]);
-    redrawCanvas([]);
-  }, [redrawCanvas]);
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Se borrará todo el progreso. Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, limpiar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, se ejecuta la limpieza
+        setHistory([]);
+        setRedoStack([]);
+        redrawCanvas([]);
+      }
+    });
+  }, [redrawCanvas, setHistory, setRedoStack]);
 
   const handleUndo = useCallback(() => {
     if (history.length === 0) return;
@@ -750,6 +779,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           <canvas
             ref={canvasRef}
             id="canvas"
+            style={{ cursor: cursorStyle }} // Aplicar el estilo del cursor dinámicamente
             onMouseDown={handleMouseDown} // Evento para mouse
             onMouseMove={handleMouseMove} // Evento para mouse
             onMouseUp={handleMouseUp} // Evento para mouse
