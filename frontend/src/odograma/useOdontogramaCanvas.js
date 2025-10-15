@@ -39,6 +39,7 @@ export const useOdontogramaCanvas = ({ idPaciente, nombrePaciente, imageUrl, cur
   const isMouseDownRef = useRef(false);
   const lastPositionRef = useRef({ x: 0, y: 0 });
   const pendingDrawRequestsRef = useRef([]);
+  const animationFrameIdRef = useRef(null);
   const odogramaImageRef = useRef(null);
 
   const [history, setHistory] = useState([]);
@@ -398,6 +399,30 @@ export const useOdontogramaCanvas = ({ idPaciente, nombrePaciente, imageUrl, cur
     [drawAction, setupContext]
   );
 
+  const drawLoop = useCallback(() => {
+    if (pendingDrawRequestsRef.current.length === 0) {
+      animationFrameIdRef.current = requestAnimationFrame(drawLoop);
+      return;
+    }
+
+    const pointsToDraw = [...pendingDrawRequestsRef.current];
+    pendingDrawRequestsRef.current = [];
+
+    const ctx = contextRef.current;
+    setupContext(ctx, { color: currentColor });
+    ctx.beginPath();
+    ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
+
+    pointsToDraw.forEach((pos) => {
+      if (esDibujable(pos.x, pos.y)) {
+        ctx.lineTo(pos.x, pos.y);
+      }
+    });
+    ctx.stroke();
+    lastPositionRef.current = pointsToDraw[pointsToDraw.length - 1];
+    animationFrameIdRef.current = requestAnimationFrame(drawLoop);
+  }, [currentColor, setupContext]);
+
   const redrawCanvas = useCallback(
     (commands) => {
       const canvas = canvasRef.current;
@@ -466,11 +491,12 @@ export const useOdontogramaCanvas = ({ idPaciente, nombrePaciente, imageUrl, cur
 
       if (currentAction === MARCAR_AREA) {
         pendingDrawRequestsRef.current = [currentPosition];
+        animationFrameIdRef.current = requestAnimationFrame(drawLoop);
       }
 
       setupContext(contextRef.current, { color: currentColor, size: 3 });
     },
-    [currentAction, getPointerPosition, currentColor, setupContext]
+    [currentAction, getPointerPosition, currentColor, setupContext, drawLoop]
   );
 
   const handleMouseMove = useCallback(
@@ -479,26 +505,17 @@ export const useOdontogramaCanvas = ({ idPaciente, nombrePaciente, imageUrl, cur
         e.preventDefault();
       }
       if (currentAction === MARCAR_AREA && isMouseDownRef.current) {
-        const currentPosition = getPointerPosition(e);
-        pendingDrawRequestsRef.current.push(currentPosition);
-
-        const ctx = contextRef.current;
-        setupContext(ctx, { color: currentColor });
-        ctx.beginPath();
-        ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
-        if (esDibujable(currentPosition.x, currentPosition.y)) {
-          ctx.lineTo(currentPosition.x, currentPosition.y);
-          ctx.stroke();
-        }
-        lastPositionRef.current = currentPosition;
+        // Solo acumulamos los puntos, no dibujamos nada aquí.
+        pendingDrawRequestsRef.current.push(getPointerPosition(e));
       }
     },
-    [currentAction, getPointerPosition, currentColor, setupContext]
+    [currentAction, getPointerPosition]
   );
 
   const handleMouseUp = useCallback(
     (e) => {
       isMouseDownRef.current = false;
+      cancelAnimationFrame(animationFrameIdRef.current);
 
       if (e.type === "touchend") {
         e.preventDefault();
@@ -517,8 +534,12 @@ export const useOdontogramaCanvas = ({ idPaciente, nombrePaciente, imageUrl, cur
       const command = { type: currentAction, x, y, color: currentColor, size: 3 };
 
       if (currentAction === MARCAR_AREA) {
-        if (pendingDrawRequestsRef.current.length > 1) {
-          command.points = [...pendingDrawRequestsRef.current];
+        // Al soltar, tomamos todos los puntos acumulados (los del último frame + los del historial del trazo)
+        const finalPoints = [...(history[history.length - 1]?.points || []), ...pendingDrawRequestsRef.current];
+
+        if (finalPoints.length > 1) {
+          command.points = finalPoints;
+          // Reemplazamos el último comando parcial con el comando completo
           addCommandToHistory(command);
         } else {
           redrawCanvas(history);
