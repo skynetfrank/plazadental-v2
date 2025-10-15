@@ -2782,7 +2782,6 @@ div#draw-panel {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 5px 0;
 }
 
 .tool-panel label {
@@ -2795,6 +2794,12 @@ div#draw-panel {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.brush-size-panel.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .btn-brush-size {
@@ -2928,7 +2933,8 @@ label {
 }
 
 /* --- INICIO: Estilo para botones deshabilitados --- */
-button:disabled, .btn-dibujo:disabled {
+button:disabled,
+.btn-dibujo:disabled {
   background-color: #e9ecef;
   color: #adb5bd;
   cursor: not-allowed;

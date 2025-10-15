@@ -53,7 +53,6 @@ const MARCAR_SELLANTE = 32;
 
 // --- CONFIGURACIÓN DE BOTONES ---
 const actionButtons = [
-  { id: "marcador", tip: "Marcador", action: MARCAR_AREA, content: <img src={markerIcon} alt="Marcador" /> },
   { id: "caries", tip: "Caries", action: MARCAR_CARIES, content: <img src={cariesIcon} alt="Caries" /> },
   { id: "sellante", tip: "Sellante", action: MARCAR_SELLANTE, content: "S", className: "font-bold text-xl" },
   {
@@ -117,7 +116,7 @@ const actionButtons = [
   { id: "compromiso-furcacion", tip: "Compromiso Furcacion", action: MARCAR_COMPROMISO_FURCACION, content: "CF" },
 ];
 
-const BrushSizeButtons = ({ currentSize, setCurrentSize, currentColor }) => {
+const BrushSizeButtons = ({ currentSize, setCurrentSize, currentColor, disabled }) => {
   const sizes = [
     { size: 2, label: "Fino" },
     { size: 5, label: "Medio" },
@@ -125,15 +124,23 @@ const BrushSizeButtons = ({ currentSize, setCurrentSize, currentColor }) => {
   ];
 
   return (
-    <div className="brush-size-panel">
+    <div className={`brush-size-panel ${disabled ? "disabled" : ""}`}>
       {sizes.map((s) => (
         <button
           key={s.size}
           className={`btn-brush-size t-tip ${currentSize === s.size ? "activo" : ""}`}
           data-tip={s.label}
           onClick={() => setCurrentSize(s.size)}
+          disabled={disabled}
         >
-          <div style={{ width: `${s.size + 4}px`, height: `${s.size + 4}px`, borderRadius: "50%", backgroundColor: currentColor }} />
+          <div
+            style={{
+              width: `${s.size + 4}px`,
+              height: `${s.size + 4}px`,
+              borderRadius: "50%",
+              backgroundColor: currentColor,
+            }}
+          />
         </button>
       ))}
     </div>
@@ -183,8 +190,21 @@ const ActionButtons = ({
       </div>
       <hr />
       <div className="tool-panel">
+        <button
+          id="marcador"
+          className={`btn-dibujo t-tip ${currentAction === MARCAR_AREA ? "activo" : ""}`}
+          data-tip="Marcador"
+          onClick={() => setCurrentAction(MARCAR_AREA)}
+        >
+          <img src={markerIcon} alt="Marcador" />
+        </button>
         <label>Grosor:</label>
-        <BrushSizeButtons currentSize={currentSize} setCurrentSize={setCurrentSize} currentColor={currentColor} />
+        <BrushSizeButtons
+          currentSize={currentSize}
+          setCurrentSize={setCurrentSize}
+          currentColor={currentColor}
+          disabled={currentAction !== MARCAR_AREA}
+        />
       </div>
 
       <hr />
