@@ -817,12 +817,12 @@ button.circle-btn:hover {
   color: rgb(187, 187, 187);
 }
 
-.dash-info-image>svg {
+.dash-info-image > svg {
   font-size: 48px;
   color: #d8d8d8;
 }
 
-.dash-info-detail h2>span {
+.dash-info-detail h2 > span {
   font-size: 14px;
 }
 
@@ -1856,8 +1856,8 @@ input:valid {
   border: 1.5px solid #1065d4;
 }
 
-.input:focus~label,
-input:not(:placeholder-shown)~label {
+.input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
   transform: translateY(-50%) scale(0.8);
   background-color: #ffffff;
   /*padding: 0 0.2em;*/
@@ -1969,17 +1969,17 @@ button.button.small {
   padding: 10px;
 }
 
-.titulo-recipe>h1 {
+.titulo-recipe > h1 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe>h2 {
+.titulo-recipe > h2 {
   width: 100%;
   text-align: center;
 }
 
-.titulo-recipe.constancia>h2 {
+.titulo-recipe.constancia > h2 {
   margin-top: 130px;
 }
 
@@ -2665,7 +2665,7 @@ summary {
   transition: all 0.3s ease-in-out;
 }
 
-.radio-button input[type="radio"]:checked+.radio {
+.radio-button input[type="radio"]:checked + .radio {
   border-color: #5cb85c;
   transform: translateZ(0px);
   background-color: #fff;
@@ -2748,7 +2748,7 @@ summary {
   /* flex-wrap: wrap; */
   /* Es mejor controlar el wrap explícitamente en media queries */
   justify-content: center;
-  align-items: center; /* Centra los elementos verticalmente */
+  align-items: flex-start; /* Centra los elementos verticalmente */
   gap: 20px;
   width: 100%; /* Ocupa el 100% del ancho de su contenedor */
   height: 100%; /* Ocupa el 100% de la altura de su contenedor */
@@ -2817,9 +2817,8 @@ a#saveToImage {
   font-size: 0.7rem;
   width: 50px;
   position: relative;
-  top: 10px;
-  left: 5px;
   border-radius: 2px;
+  margin: 0 5px;
 }
 
 #btn-cerrar:hover,
@@ -2845,7 +2844,7 @@ a#saveToImage:hover {
 }
 
 .btn-color.activo {
-  border: 3px solid #4546EF;
+  border: 3px solid #4546ef;
   transform: scale(1.1);
   box-shadow: 0 0 8px rgba(69, 70, 239, 0.6);
 }
@@ -2878,7 +2877,7 @@ label {
   width: 40px;
   height: 40px;
   margin: 3px;
-  color: #4546EF; /* Color azul uniforme para texto e íconos SVG */
+  color: #4546ef; /* Color azul uniforme para texto e íconos SVG */
   font-weight: bold;
   cursor: pointer;
   position: relative;
@@ -2903,7 +2902,7 @@ label {
 }
 
 .btn-dibujo.activo {
-  border: 3px solid #4546EF;
+  border: 3px solid #4546ef;
 }
 
 .btn-dibujo img {
@@ -2999,7 +2998,6 @@ label {
 }
 
 @keyframes myLoading {
-
   0%,
   100% {
     opacity: 1;
