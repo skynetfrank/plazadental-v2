@@ -75,6 +75,13 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   const fecha = strToDMA(dateToAMD(new Date()));
   const localStorageKey = `odontogramaState_${idPaciente}`;
 
+  const setupContext = useCallback((ctx, { color, size = 3, font = "bold 16px serif" } = {}) => {
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = size;
+    ctx.font = font;
+  }, []);
+
   const extraccion = useCallback((posx, posy, ctx) => {
     if (esDibujable(posx, posy)) {
       ctx.lineWidth = 3;
@@ -271,10 +278,8 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
   // Función para dibujar acciones de un solo clic
   const drawAction = useCallback(
     (ctx, command) => {
-      let { type, x, y, color } = command;
-      ctx.fillStyle = color;
-      ctx.strokeStyle = color;
-      ctx.font = "bold 16px serif";
+      const { type, x, y, color, size } = command;
+      setupContext(ctx, { color, size });
 
       // La lógica de dibujo para cada acción se mantiene casi idéntica
       // Solo se cambia la forma de acceder al contexto (ctx)
@@ -325,7 +330,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           ctx.fillText("S.S", x - 12, y + 5);
           break;
         case MARCAR_SELLANTE:
-          ctx.font = "bold 25px Verdana";
+          setupContext(ctx, { color, font: "bold 25px Verdana" });
           ctx.fillText("S", x - 12, y + 5);
           break;
         case MARCAR_MUCOSA_MASTICADORA:
@@ -365,17 +370,14 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           break;
       }
     },
-    [ausente, extraccion]
+    [ausente, extraccion, setupContext]
   );
 
   const executeCommand = useCallback(
     (ctx, command) => {
       const { type, color, size, points } = command;
-      ctx.strokeStyle = color;
-      ctx.fillStyle = color;
-      ctx.lineWidth = size || 3;
+      setupContext(ctx, { color, size });
       ctx.lineCap = "round";
-      ctx.font = "bold 16px serif";
 
       switch (type) {
         case MARCAR_AREA:
@@ -395,7 +397,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
           break;
       }
     },
-    [drawAction]
+    [drawAction, setupContext]
   );
 
   const redrawCanvas = useCallback(
@@ -582,7 +584,6 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
         return;
       }
       isMouseDownRef.current = true;
-      const ctx = contextRef.current;
       const currentPosition = getPointerPosition(e);
       lastPositionRef.current = currentPosition;
 
@@ -590,9 +591,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
         pendingDrawRequestsRef.current = [currentPosition];
       }
 
-      ctx.lineWidth = 3; // currentSize
-      ctx.lineCap = "round";
-      ctx.strokeStyle = currentColor;
+      setupContext(contextRef.current, { color: currentColor, size: 3 });
     },
     [currentAction, getPointerPosition, currentColor]
   );
@@ -608,6 +607,7 @@ const Odontograma = ({ idPaciente, nombrePaciente, imageUrl, onCerrar }) => {
 
         // Dibujamos el segmento directamente para feedback visual inmediato
         const ctx = contextRef.current;
+        setupContext(ctx, { color: currentColor });
         ctx.beginPath();
         ctx.moveTo(lastPositionRef.current.x, lastPositionRef.current.y);
         if (esDibujable(currentPosition.x, currentPosition.y)) {
