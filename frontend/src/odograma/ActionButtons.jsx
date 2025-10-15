@@ -235,7 +235,9 @@ const ActionButtons = ({
         <button id="clear" className="btn-dibujo t-tip" data-tip="Borrar Todo" onClick={handleClearCanvas}>
           <img src={broomIcon} alt="Limpiar" />
         </button>
-
+      </div>
+      <hr />
+      <div className="action-panel">
         <button id="download" className="btn-dibujo t-tip big" data-tip="Descargar" onClick={handleDownload}>
           <Download />
         </button>
@@ -251,16 +253,10 @@ const ActionButtons = ({
         <button id="print" className="btn-dibujo t-tip big" data-tip="Imprimir" onClick={handlePrint}>
           <Printer />
         </button>
-        <button
-          id="expand"
-          className="btn-dibujo t-tip big"
-          data-tip="Visualizar"
-          onClick={() => setShowBackdrop(true)}
-        >
+        <button id="expand" className="btn-dibujo t-tip big" data-tip="Visualizar" onClick={() => setShowBackdrop(true)}>
           <Expand />
         </button>
       </div>
-      <hr />
     </div>
   );
 };

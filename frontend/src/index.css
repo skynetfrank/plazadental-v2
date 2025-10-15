@@ -2814,6 +2814,13 @@ div#draw-panel {
   position: relative;
 }
 
+.action-panel {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1rem;
+}
+
 .color-panel {
   display: flex;
   justify-content: space-between;
