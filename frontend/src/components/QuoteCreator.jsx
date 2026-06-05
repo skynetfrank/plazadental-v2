@@ -59,7 +59,8 @@ const QuoteCreator = () => {
     useEffect(() => {
         if (loadedQuote) {
             setSelectedPaciente(loadedQuote.paciente);
-            setItems(loadedQuote.items);
+            // Asignamos una key local para manejo de UI basada en el _id de la DB si existe
+            setItems(loadedQuote.items.map(item => ({ ...item, key: item._id || Date.now() + Math.random() })));
             setDiscount(loadedQuote.discount);
             setValidity(loadedQuote.validity);
         }
@@ -67,7 +68,7 @@ const QuoteCreator = () => {
 
     const handleAddService = (serviceDetails) => {
         const newItem = {
-            _id: Date.now(), // Unique ID for the item in the quote
+            key: Date.now(), // ID temporal para React y manejo local
             serviceId: serviceDetails.serviceId,
             nombre: serviceDetails.nombre,
             precio: serviceDetails.precio,
@@ -78,7 +79,7 @@ const QuoteCreator = () => {
     };
 
     const removeItem = (id) => {
-        setItems(items.filter(item => item._id !== id));
+        setItems(items.filter(item => item.key !== id));
     };
 
     const subtotal = items.reduce((acc, item) => acc + item.total, 0); // Use parseFloat for discount
@@ -239,7 +240,7 @@ const QuoteCreator = () => {
                                 {items.length === 0 ? (
                                     <tr><td colSpan="4" className="empty-row">No hay servicios agregados</td></tr>
                                 ) : items.map((item) => (
-                                    <tr key={item._id}>
+                                    <tr key={item.key}>
                                         <td>{item.nombre}</td>
                                         <td className="txt-center">{item.cantidad}</td>
                                         <td className="txt-right">${item.precio.toFixed(2)}</td>

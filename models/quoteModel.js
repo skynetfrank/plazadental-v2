@@ -9,7 +9,8 @@ const quoteItemSchema = new mongoose.Schema(
         total: { type: Number, required: true },
     },
     {
-        timestamps: false, // No necesitamos timestamps para cada item de servicio
+        timestamps: false,
+        _id: false, // Evita conflictos con IDs temporales del frontend y ahorra espacio
     }
 );
 
