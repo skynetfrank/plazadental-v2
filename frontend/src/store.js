@@ -68,6 +68,11 @@ import {
   gastoListReducer,
   gastoUpdateReducer,
 } from "./reducers/gastoReducers";
+import {
+  quoteCreateReducer,
+  quoteDetailsReducer,
+  quoteListReducer,
+} from "./reducers/quoteReducers";
 
 const initialState = {
   userSignin: {
@@ -129,6 +134,9 @@ const reducer = combineReducers({
   servicioAll: servicioAllReducer,
   serviceOnlyCodes: servicioOnlyCodesReducer,
 
+  quoteCreate: quoteCreateReducer,
+  quoteList: quoteListReducer,
+  quoteDetails: quoteDetailsReducer,
   gastoList: gastoListReducer,
   gastoDelete: gastoDeleteReducer,
   gastoDetails: gastoDetailsReducer,

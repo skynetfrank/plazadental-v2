@@ -8,6 +8,7 @@ import CalendarioIcon from "../icons/CalendarioIcon";
 import CardDollarIcon from "../icons/CardDollarIcon";
 import ToothPasteIcon from "../icons/ToothPasteIcon";
 import SpreadSheetIcon from "../icons/SpreadSheetIcon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Outpatient } from "../icons/Outpatient";
 import { StockIcon } from "../icons/StockIcon";
 
@@ -74,6 +75,12 @@ function HomeScreen() {
             </button>
           </a>
 
+          <Link to="/quotelist">
+            <button>
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              <span>Cotizaciones</span>
+            </button>
+          </Link>
           {userInfo.isAdmin ? (
             <Link to="/listagasto">
               <button>

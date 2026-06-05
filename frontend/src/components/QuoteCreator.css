@@ -116,6 +116,14 @@
     margin-top: 10px;
 }
 
+.btn-save-quote {
+    background: #28a745;
+    color: white;
+    padding: 15px 30px;
+    width: 100%;
+    font-size: 1rem;
+}
+
 /* Ajustes del Encabezado para uniformidad e impresión */
 .print-header {
     display: flex;

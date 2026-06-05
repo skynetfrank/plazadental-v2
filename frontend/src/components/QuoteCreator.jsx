@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom'; // Import Link for the back button
+import { Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash, faPrint, faUser, faTooth, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { createQuote, detailsQuote } from '../actions/quoteActions';
+import { QUOTE_CREATE_RESET } from '../constants/quoteConstants';
+import Swal from 'sweetalert2';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faPlus, faTrash, faPrint, faUser, faFileInvoiceDollar, faSave } from '@fortawesome/free-solid-svg-icons'; // Import specific icons
 import logo from "/plazaDentalLogo.jpg";
 import wsapp from "/whatsapp.png";
 import instagram from "/instagram.png";
@@ -15,6 +19,7 @@ import './QuoteCreator.css';
 const QuoteCreator = () => {
     const { id: pacienteId } = useParams();
     const navigate = useNavigate(); // For navigation if needed, e.g., back button
+    const dispatch = useDispatch();
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         contentRef: componentRef,
@@ -29,19 +34,36 @@ const QuoteCreator = () => {
 
     const [selectedPaciente, setSelectedPaciente] = useState(null);
     const [items, setItems] = useState([]);
-    const [currentServiceId, setCurrentServiceId] = useState("");
-    const [quantity, setQuantity] = useState(1);
-    const [discount, setDiscount] = useState(0); // Renamed from setDescuento for consistency
+    const [discount, setDiscount] = useState(0);
     const [showServiceModal, setShowServiceModal] = useState(false);
+    const [validity, setValidity] = useState(15); // Default validity in days
+
+    const quoteCreate = useSelector((state) => state.quoteCreate) || {};
+    const { success: createSuccess, loading: createLoading, error: createError, quote: createdQuote } = quoteCreate;
+
+    const quoteDetails = useSelector((state) => state.quoteDetails) || {};
+    const { loading: detailsLoading, error: detailsError, quote: loadedQuote } = quoteDetails;
 
     useEffect(() => {
-        if (pacienteId && listaPacientes.length > 0) {
+        if (pacienteId) {
             const found = listaPacientes.find(p => p._id === pacienteId);
             if (found) {
                 setSelectedPaciente(found);
+            } else if (pacienteId.length === 24) {
+                // Si no se encuentra en la lista de pacientes, intentamos cargar como cotización existente
+                dispatch(detailsQuote(pacienteId));
             }
         }
-    }, [pacienteId, listaPacientes]);
+    }, [pacienteId, listaPacientes, dispatch]);
+
+    useEffect(() => {
+        if (loadedQuote) {
+            setSelectedPaciente(loadedQuote.paciente);
+            setItems(loadedQuote.items);
+            setDiscount(loadedQuote.discount);
+            setValidity(loadedQuote.validity);
+        }
+    }, [loadedQuote]);
 
     const handleAddService = (serviceDetails) => {
         const newItem = {
@@ -50,7 +72,7 @@ const QuoteCreator = () => {
             nombre: serviceDetails.nombre,
             precio: serviceDetails.precio,
             cantidad: serviceDetails.cantidad,
-            total: serviceDetails.total
+            total: serviceDetails.precio * serviceDetails.cantidad
         };
         setItems([...items, newItem]);
     };
@@ -60,7 +82,34 @@ const QuoteCreator = () => {
     };
 
     const subtotal = items.reduce((acc, item) => acc + item.total, 0); // Use parseFloat for discount
-    const total = subtotal - parseFloat(discount || 0);
+    const total = subtotal - parseFloat(discount || 0); // Ensure discount is parsed as float
+
+    const handleSaveQuote = () => {
+        if (!selectedPaciente || items.length === 0) {
+            Swal.fire('Error', 'Debe seleccionar un paciente y agregar al menos un servicio.', 'error');
+            return;
+        }
+
+        const quoteData = {
+            paciente: selectedPaciente,
+            items,
+            discount: parseFloat(discount || 0),
+            validity: parseInt(validity || 15),
+            // subtotal and total will be calculated on backend
+        };
+        dispatch(createQuote(quoteData));
+    };
+
+    useEffect(() => {
+        if (createSuccess) {
+            Swal.fire('Guardado', 'Cotización guardada con éxito!', 'success');
+            dispatch({ type: QUOTE_CREATE_RESET });
+            navigate('/quotelist'); // Navigate to the list of quotes
+        }
+        if (createError) {
+            Swal.fire('Error', createError, 'error');
+        }
+    }, [createSuccess, createError, dispatch, navigate]);
 
     return (
         <div className="quote-creator-container">
@@ -97,9 +146,31 @@ const QuoteCreator = () => {
                         </div>
 
                         <div className="editor-row">
+                            <div className="editor-field" style={{ maxWidth: '200px' }}>
+                                <label>Validez de la oferta (días)</label>
+                                <input
+                                    type="number"
+                                    className="input-modern"
+                                    value={validity}
+                                    onChange={(e) => setValidity(e.target.value)}
+                                    min="1"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="editor-row">
                             <div className="editor-field flex-full">
                                 <Link to="/listapacientes" className="btn-modern btn-back">Volver a Pacientes</Link>
                             </div>
+                            <div className="editor-field flex-full">
+                                <button className="btn-modern btn-save-quote" onClick={handleSaveQuote} disabled={createLoading}>
+                                    <FontAwesomeIcon icon={faSave} /> {createLoading ? 'Guardando...' : 'Guardar Cotización'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="editor-row">
+                            {/* Discount field moved here */}
                         </div>
                     </div>
 
@@ -109,8 +180,10 @@ const QuoteCreator = () => {
                 </div>
 
                 {/* Este div se movió de la sección de edición para estar fuera de ella pero aún visible */}
-                <div className="quote-totals-summary no-print">
+                <div className="quote-totals-summary no-print editor-discount-section">
                     <div className="total-row"><span>SUBTOTAL:</span> <strong>${subtotal.toFixed(2)}</strong></div>
+                    {/* Discount input field */}
+                    <div className="total-row"><span>DESCUENTO:</span> <input type="number" className="input-modern inline-discount-input" value={discount} onChange={(e) => setDiscount(e.target.value)} /></div>
                     {discount > 0 && <div className="total-row discount"><span>DESCUENTO:</span> <strong>-${Number(discount).toFixed(2)}</strong></div>}
                     <div className="total-row final"><span>TOTAL ESTIMADO:</span> <strong>${total.toFixed(2)}</strong></div>
                 </div>
@@ -142,6 +215,7 @@ const QuoteCreator = () => {
                         <div className="quote-document-title">
                             <h1>PRESUPUESTO ESTIMADO</h1>
                             <p>Emitido el: {dayjs().format('DD/MM/YYYY')}</p>
+                            <p><strong>Válido por:</strong> {validity} días</p>
                         </div>
 
                         <div className="quote-info-section">

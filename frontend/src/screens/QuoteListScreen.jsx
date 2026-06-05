@@ -1,0 +1,94 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { listQuotes } from '../actions/quoteActions';
+import Loader from '../components/Loader';
+import MessageBox from '../components/MessageBox';
+import SimpleTable from '../components/SimpleTable';
+import ToolTip from '../components/ToolTip';
+import AddCircleIcon from '../icons/AddCircleIcon';
+import EditIcon from '../icons/EditIcon';
+import dayjs from 'dayjs';
+
+const QuoteListScreen = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const quoteList = useSelector((state) => state.quoteList);
+    const { loading, error, quotes } = quoteList;
+
+    useEffect(() => {
+        dispatch(listQuotes());
+    }, [dispatch]);
+
+    const columns = [
+        {
+            header: 'Fecha',
+            accessorKey: 'createdAt',
+            cell: (info) => dayjs(info.getValue()).format('DD/MM/YYYY'),
+        },
+        {
+            header: 'Paciente',
+            accessorKey: 'paciente.nombre',
+            cell: (info) => `${info.row.original.paciente.nombre} ${info.row.original.paciente.apellido}`,
+        },
+        {
+            header: 'C.I. Paciente',
+            accessorKey: 'paciente.cedula',
+        },
+        {
+            header: 'Doctor',
+            accessorKey: 'doctor.nombre',
+            cell: (info) => `${info.row.original.doctor.nombre} ${info.row.original.doctor.apellido}`,
+        },
+        {
+            header: 'Total ($)',
+            accessorKey: 'total',
+            cell: (info) => `$${Number(info.getValue()).toFixed(2)}`,
+        },
+        {
+            header: 'Validez (días)',
+            accessorKey: 'validity',
+        },
+        {
+            header: 'Acciones',
+            accessorKey: '_id',
+            cell: (value) => {
+                const { _id } = value.row.original;
+                return (
+                    <div className="flx pad-0">
+                        <ToolTip text="Ver/Editar Cotización">
+                            <button className="circle-btn" onClick={() => navigate(`/createquote/${_id}`)}>
+                                <EditIcon />
+                            </button>
+                        </ToolTip>
+                        {/* Add print button here if needed, similar to QuoteCreator */}
+                    </div>
+                );
+            },
+        },
+    ];
+
+    return (
+        <div>
+            <div className="flx jcenter gap1 pad-0">
+                <h2>Cotizaciones</h2>
+                <ToolTip text="Crear Nueva Cotización">
+                    <Link to="/createquote">
+                        <AddCircleIcon />
+                    </Link>
+                </ToolTip>
+            </div>
+
+            {loading ? (
+                <Loader txt="Cargando Cotizaciones..." />
+            ) : error ? (
+                <MessageBox variant="danger">{error}</MessageBox>
+            ) : (
+                <SimpleTable data={quotes} columns={columns} filterInput={true} botonera={true} records={quotes.length} />
+            )}
+        </div>
+    );
+};
+
+export default QuoteListScreen;

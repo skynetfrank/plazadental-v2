@@ -8,6 +8,7 @@ import pacienteRouter from "./routers/pacienteRouter.js";
 import doctorRouter from "./routers/doctorRouter.js";
 import controlRouter from "./routers/controlRouter.js";
 import servicioRouter from "./routers/servicioRouter.js";
+import quoteRouter from "./routers/quoteRouter.js";
 import gastoRouter from "./routers/gastoRouter.js";
 import cloudinary from "cloudinary";
 
@@ -48,6 +49,7 @@ app.use("/api/pacientes", pacienteRouter);
 app.use("/api/doctores", doctorRouter);
 app.use("/api/controles", controlRouter);
 app.use("/api/servicios", servicioRouter);
+app.use("/api/quotes", quoteRouter);
 app.use("/api/gastos", gastoRouter);
 
 const __dirname = path.resolve();
