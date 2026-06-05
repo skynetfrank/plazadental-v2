@@ -117,18 +117,7 @@ const QuoteEditScreen = () => {
           </Link>
         </div>
 
-        <div className="flx gap wrap mb-1">
-          <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
-            <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
-          </button>
-          {showServiceModal && (
-            <ServiceSelectorModal
-              listaServicios={listaServicios}
-              onAddService={handleAddService}
-              onClose={() => setShowServiceModal(false)}
-            />
-          )}
-        </div>
+        <div className="flx gap wrap mb-1"></div>
 
         <div className="quote-print-preview mt-2" ref={componentRef}>
           <div className="print-header">

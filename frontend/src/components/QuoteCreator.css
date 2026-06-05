@@ -1,6 +1,6 @@
 .quote-creator-container {
   max-width: 1000px;
-  margin: 20px auto;
+  margin: 0px auto;
   padding: 10px;
 }
 
@@ -10,6 +10,7 @@
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 40px;
+  margin-top: 20px;
   border: 1px solid #eaeaea;
 }
 
@@ -197,13 +198,13 @@
 /* Estilos de Impresión y Previsualización */
 .quote-print-preview {
   background: white;
-  padding: 50px;
+  padding: 0px 50px;
   min-height: 800px;
 }
 
 .quote-document-title {
   text-align: center;
-  margin: 40px 0;
+  margin: 10px 0;
 }
 
 .quote-document-title h1 {
