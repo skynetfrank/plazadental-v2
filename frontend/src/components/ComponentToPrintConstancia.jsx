@@ -3,6 +3,7 @@ import logo from "/plazaDentalLogo.jpg";
 import wsapp from "/whatsapp.png";
 import instagram from "/instagram.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import dayjs from "dayjs";
 
 // Create Document Component
 // eslint-disable-next-line react/display-name
@@ -52,7 +53,18 @@ const ComponentToPrintConstancia = React.forwardRef((props, ref) => {
               <h2>CONSTANCIA</h2>
             </div>
             <div className="detalle-recipe-print constancia">
-              <p>{control?.constancia}</p>
+              <p>
+                {control?.constancia
+                  ? control.constancia
+                  : "Por Medio de la presente Hacemos constar que el paciente " +
+                  control?.paciente.nombre +
+                  " " +
+                  control?.paciente.apellido +
+                  " C.I. " +
+                  control?.paciente.cedula +
+                  " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
+                  dayjs(control?.fechaControl).format("DD-MM-YYYY")}
+              </p>
             </div>
             <div className="constancia-att">
               <p>Atentamente,</p>

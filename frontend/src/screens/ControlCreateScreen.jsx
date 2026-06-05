@@ -512,7 +512,7 @@ export default function ControlCreateScreen(props) {
   useEffect(() => {
     if (paciente && !constancia && fechaControl && dayjs(fechaControl).isValid()) {
       setConstancia(
-        "Por Medio de la presenta Hacemos constar que el paciente " +
+        "Por Medio de la presente Hacemos constar que el paciente " +
         paciente.nombre +
         " " +
         paciente.apellido +
