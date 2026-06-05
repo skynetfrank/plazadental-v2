@@ -14,7 +14,7 @@ const QuoteListScreen = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const quoteList = useSelector((state) => state.quoteList);
+    const quoteList = useSelector((state) => state.quoteList) || { quotes: [] };
     const { loading, error, quotes } = quoteList;
 
     useEffect(() => {
@@ -30,16 +30,17 @@ const QuoteListScreen = () => {
         {
             header: 'Paciente',
             accessorKey: 'paciente.nombre',
-            cell: (info) => `${info.row.original.paciente.nombre} ${info.row.original.paciente.apellido}`,
+            cell: (info) => info.row.original.paciente ? `${info.row.original.paciente.nombre} ${info.row.original.paciente.apellido}` : 'No encontrado',
         },
         {
             header: 'C.I. Paciente',
             accessorKey: 'paciente.cedula',
+            cell: (info) => info.row.original.paciente?.cedula || 'N/A',
         },
         {
             header: 'Doctor',
             accessorKey: 'doctor.nombre',
-            cell: (info) => `${info.row.original.doctor.nombre} ${info.row.original.doctor.apellido}`,
+            cell: (info) => info.row.original.doctor ? `${info.row.original.doctor.nombre} ${info.row.original.doctor.apellido}` : 'No encontrado',
         },
         {
             header: 'Total ($)',
@@ -85,7 +86,13 @@ const QuoteListScreen = () => {
             ) : error ? (
                 <MessageBox variant="danger">{error}</MessageBox>
             ) : (
-                <SimpleTable data={quotes} columns={columns} filterInput={true} botonera={true} records={quotes.length} />
+                <SimpleTable
+                    data={quotes || []}
+                    columns={columns}
+                    filterInput={true}
+                    botonera={true}
+                    records={quotes?.length || 0}
+                />
             )}
         </div>
     );
