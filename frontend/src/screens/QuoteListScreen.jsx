@@ -59,7 +59,7 @@ const QuoteListScreen = () => {
                 return (
                     <div className="flx pad-0">
                         <ToolTip text="Ver/Editar Cotización">
-                            <button className="circle-btn" onClick={() => navigate(`/createquote/${_id}`)}>
+                            <button className="circle-btn" onClick={() => navigate(`/quote/${_id}/edit`)}>
                                 <EditIcon />
                             </button>
                         </ToolTip>

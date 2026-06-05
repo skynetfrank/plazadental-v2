@@ -9,6 +9,10 @@ import {
     QUOTE_LIST_FAIL,
     QUOTE_LIST_REQUEST,
     QUOTE_LIST_SUCCESS,
+    QUOTE_UPDATE_FAIL,
+    QUOTE_UPDATE_REQUEST,
+    QUOTE_UPDATE_RESET,
+    QUOTE_UPDATE_SUCCESS,
 } from '../constants/quoteConstants';
 
 export const quoteCreateReducer = (state = {}, action) => {
@@ -20,6 +24,21 @@ export const quoteCreateReducer = (state = {}, action) => {
         case QUOTE_CREATE_FAIL:
             return { loading: false, error: action.payload };
         case QUOTE_CREATE_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
+export const quoteUpdateReducer = (state = {}, action) => {
+    switch (action.type) {
+        case QUOTE_UPDATE_REQUEST:
+            return { loading: true };
+        case QUOTE_UPDATE_SUCCESS:
+            return { loading: false, success: true };
+        case QUOTE_UPDATE_FAIL:
+            return { loading: false, error: action.payload };
+        case QUOTE_UPDATE_RESET:
             return {};
         default:
             return state;

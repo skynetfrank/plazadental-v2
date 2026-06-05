@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { useDispatch } from 'react-redux';
-import { createQuote, detailsQuote } from '../actions/quoteActions';
+import { createQuote } from '../actions/quoteActions';
 import { QUOTE_CREATE_RESET } from '../constants/quoteConstants';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
@@ -41,30 +41,14 @@ const QuoteCreator = () => {
     const quoteCreate = useSelector((state) => state.quoteCreate) || {};
     const { success: createSuccess, loading: createLoading, error: createError, quote: createdQuote } = quoteCreate;
 
-    const quoteDetails = useSelector((state) => state.quoteDetails) || {};
-    const { loading: detailsLoading, error: detailsError, quote: loadedQuote } = quoteDetails;
-
     useEffect(() => {
         if (pacienteId) {
             const found = listaPacientes.find(p => p._id === pacienteId);
             if (found) {
                 setSelectedPaciente(found);
-            } else if (pacienteId.length === 24) {
-                // Si no se encuentra en la lista de pacientes, intentamos cargar como cotización existente
-                dispatch(detailsQuote(pacienteId));
             }
         }
-    }, [pacienteId, listaPacientes, dispatch]);
-
-    useEffect(() => {
-        if (loadedQuote) {
-            setSelectedPaciente(loadedQuote.paciente);
-            // Asignamos una key local para manejo de UI basada en el _id de la DB si existe
-            setItems(loadedQuote.items.map(item => ({ ...item, key: item._id || Date.now() + Math.random() })));
-            setDiscount(loadedQuote.discount);
-            setValidity(loadedQuote.validity);
-        }
-    }, [loadedQuote]);
+    }, [pacienteId, listaPacientes]);
 
     const handleAddService = (serviceDetails) => {
         const newItem = {

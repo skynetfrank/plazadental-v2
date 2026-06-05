@@ -72,6 +72,7 @@ import {
   quoteCreateReducer,
   quoteDetailsReducer,
   quoteListReducer,
+  quoteUpdateReducer,
 } from "./reducers/quoteReducers";
 
 const initialState = {
@@ -137,6 +138,7 @@ const reducer = combineReducers({
   quoteCreate: quoteCreateReducer,
   quoteList: quoteListReducer,
   quoteDetails: quoteDetailsReducer,
+  quoteUpdate: quoteUpdateReducer,
   gastoList: gastoListReducer,
   gastoDelete: gastoDeleteReducer,
   gastoDetails: gastoDetailsReducer,

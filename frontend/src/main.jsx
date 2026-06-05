@@ -41,6 +41,7 @@ import OdontogramaScreen from "./screens/OdontogramaScreen";
 
 import QuoteListScreen from "./screens/QuoteListScreen";
 import QuoteCreator from "./components/QuoteCreator";
+import QuoteEditScreen from "./components/QuoteEditScreen";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -77,6 +78,7 @@ const router = createBrowserRouter(
         <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
         <Route path="/quotelist" element={<QuoteListScreen />}></Route>
         <Route path="/createquote/:id?" element={<QuoteCreator />}></Route>
+        <Route path="/quote/:id/edit" element={<QuoteEditScreen />}></Route>
         <Route path="/odontograma/:idPaciente/:nombre/:imageUrl" element={<OdontogramaScreen />}></Route>
       </Route>
     </Route>

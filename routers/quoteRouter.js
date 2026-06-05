@@ -59,4 +59,31 @@ quoteRouter.post(
     })
 );
 
+// PUT update quote
+quoteRouter.put(
+    '/:id',
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const quote = await Quote.findById(req.params.id);
+        if (quote) {
+            const { items, discount, validity } = req.body;
+
+            // Recalcular para seguridad
+            const subtotal = items.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+            const total = subtotal - (discount || 0);
+
+            quote.items = items;
+            quote.subtotal = subtotal;
+            quote.discount = discount || 0;
+            quote.total = total;
+            quote.validity = validity || 15;
+
+            const updatedQuote = await quote.save();
+            res.send({ message: 'Cotización Actualizada', quote: updatedQuote });
+        } else {
+            res.status(404).send({ message: 'Cotización no encontrada' });
+        }
+    })
+);
+
 export default quoteRouter;

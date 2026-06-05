@@ -9,6 +9,9 @@ import {
     QUOTE_LIST_FAIL,
     QUOTE_LIST_REQUEST,
     QUOTE_LIST_SUCCESS,
+    QUOTE_UPDATE_FAIL,
+    QUOTE_UPDATE_REQUEST,
+    QUOTE_UPDATE_SUCCESS,
 } from '../constants/quoteConstants';
 
 export const createQuote = (quote) => async (dispatch, getState) => {
@@ -26,6 +29,27 @@ export const createQuote = (quote) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: QUOTE_CREATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        });
+    }
+};
+
+export const updateQuote = (quote) => async (dispatch, getState) => {
+    dispatch({ type: QUOTE_UPDATE_REQUEST, payload: quote });
+    const {
+        userSignin: { userInfo },
+    } = getState();
+    try {
+        const { data } = await Axios.put(`/api/quotes/${quote._id}`, quote, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: QUOTE_UPDATE_SUCCESS, payload: data.quote });
+    } catch (error) {
+        dispatch({
+            type: QUOTE_UPDATE_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message
