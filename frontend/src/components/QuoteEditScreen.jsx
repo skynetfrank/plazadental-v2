@@ -188,6 +188,20 @@ const QuoteEditScreen = () => {
               </div>
             </div>
 
+            {/* Botón Agregar Servicio reubicado */}
+            <div className="flx jstart no-print mt-1 mb-1">
+              <button className="btn-modern btn-add-service-modal" onClick={() => setShowServiceModal(true)}>
+                <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
+              </button>
+              {showServiceModal && (
+                <ServiceSelectorModal
+                  listaServicios={listaServicios}
+                  onAddService={handleAddService}
+                  onClose={() => setShowServiceModal(false)}
+                />
+              )}
+            </div>
+
             <table className="quote-items-table">
               <thead>
                 <tr>

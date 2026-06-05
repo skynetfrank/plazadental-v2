@@ -177,7 +177,7 @@
   color: white;
   padding: 12px 25px;
   font-size: 1rem;
-  width: 100%;
+  width: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,13 +216,14 @@
 .quote-info-section {
   margin-bottom: 5px;
   border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
   padding-top: 15px;
 }
 
 .quote-items-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .quote-items-table th {

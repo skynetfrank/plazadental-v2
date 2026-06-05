@@ -102,19 +102,6 @@ const QuoteCreator = () => {
         Volver a Pacientes
       </Link>
       <div className="quote-editor no-print">
-        <div className="flx gap wrap mb-1">
-          <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
-            <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
-          </button>
-          {showServiceModal && (
-            <ServiceSelectorModal
-              listaServicios={listaServicios}
-              onAddService={handleAddService}
-              onClose={() => setShowServiceModal(false)}
-            />
-          )}
-        </div>
-
         <div className="quote-print-preview" ref={componentRef}>
           <div className="print-header">
             <div className="print-header-direccion">
@@ -186,6 +173,20 @@ const QuoteCreator = () => {
                   <FontAwesomeIcon icon={faPrint} size="2x" />
                 </button>
               </div>
+            </div>
+
+            {/* Botón Agregar Servicio reubicado */}
+            <div className="flx jstart no-print mt-1 mb-1">
+              <button className="btn-modern btn-add-service-modal" onClick={() => setShowServiceModal(true)}>
+                <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
+              </button>
+              {showServiceModal && (
+                <ServiceSelectorModal
+                  listaServicios={listaServicios}
+                  onAddService={handleAddService}
+                  onClose={() => setShowServiceModal(false)}
+                />
+              )}
             </div>
 
             <table className="quote-items-table">
