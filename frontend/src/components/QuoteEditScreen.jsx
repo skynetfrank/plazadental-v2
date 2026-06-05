@@ -132,7 +132,11 @@ const QuoteEditScreen = () => {
                     <div className="editor-row">
                         <div className="editor-field" style={{ maxWidth: '200px' }}>
                             <label>Validez de la oferta (días)</label>
-                            <input type="number" className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)} min="1" />
+                            <select className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)}>
+                                {[...Array(90)].map((_, i) => (
+                                    <option key={i + 1} value={i + 1}>{i + 1} días</option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
