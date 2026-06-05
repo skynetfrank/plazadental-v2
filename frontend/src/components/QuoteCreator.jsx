@@ -127,10 +127,14 @@ const QuoteCreator = () => {
                             </div>
                         </div>
                         <div className="social-icons">
-                            <img src={wsapp} alt="ws" />
-                            <p>(0412) 611.9001</p>
-                            <img src={instagram} alt="ig" />
-                            <p>@PLAZADENTALVZLA</p>
+                            <div className="social-item">
+                                <img src={wsapp} alt="ws" />
+                                <p>(0412) 611.9001</p>
+                            </div>
+                            <div className="social-item">
+                                <img src={instagram} alt="ig" />
+                                <p>@PLAZADENTALVZLA</p>
+                            </div>
                         </div>
                     </div>
 
