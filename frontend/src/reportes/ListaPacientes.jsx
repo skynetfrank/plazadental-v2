@@ -171,13 +171,6 @@ function ListaPacientes() {
             </button>
           </Link>
         </ToolTip>
-        <ToolTip text="Crear Cotización">
-          <Link to="/createquote">
-            <button className="circle-btn">
-              <FontAwesomeIcon icon={faFileInvoiceDollar} />
-            </button>
-          </Link>
-        </ToolTip>
       </div>
 
       {loading ? (
