@@ -152,16 +152,16 @@ const QuoteCreator = () => {
                 <p>Av. Principal, Edificio Torre La Previsora, piso 12, Ofic. 12-1</p>
                 <p>Urb. plaza Venezuela, Caracas, Distrito Capital.</p>
                 <p>Email: plazadentalvenezuela@gmail.com</p>
-              </div>
-            </div>
-            <div className="social-icons">
-              <div className="social-item">
-                <img src={wsapp} alt="ws" />
-                <p>(0412) 611.9001</p>
-              </div>
-              <div className="social-item">
-                <img src={instagram} alt="ig" />
-                <p>@PLAZADENTALVZLA</p>
+                <div className="flx gap wrap">
+                  <div className="social-item">
+                    <img src={wsapp} alt="ws" />
+                    <p>(0412) 611.9001</p>
+                  </div>
+                  <div className="social-item">
+                    <img src={instagram} alt="ig" />
+                    <p>@PLAZADENTALVZLA</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
