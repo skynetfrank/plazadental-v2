@@ -126,17 +126,6 @@ const QuoteEditScreen = () => {
               onClose={() => setShowServiceModal(false)}
             />
           )}
-          <button
-            className="btn-modern btn-save-quote"
-            onClick={handleUpdate}
-            disabled={loadingUpdate}
-            title="Guardar Cambios"
-          >
-            <FontAwesomeIcon icon={faSave} size="2x" />
-          </button>
-          <button className="btn-modern btn-print-main" onClick={handlePrint} title="Imprimir">
-            <FontAwesomeIcon icon={faPrint} size="2x" />
-          </button>
         </div>
 
         <div className="quote-print-preview mt-2" ref={componentRef}>
@@ -183,14 +172,29 @@ const QuoteEditScreen = () => {
               </p>
             </div>
 
-            <div className="quote-info-section">
-              <h4>DATOS DEL PACIENTE</h4>
-              <p>
-                <strong>Nombre:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido}
-              </p>
-              <p>
-                <strong>C.I.:</strong> {selectedPaciente?.cedula}
-              </p>
+            <div className="quote-info-section flx jsb">
+              <div>
+                <h4>DATOS DEL PACIENTE</h4>
+                <p>
+                  <strong>Nombre:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido}
+                </p>
+                <p>
+                  <strong>C.I.:</strong> {selectedPaciente?.cedula}
+                </p>
+              </div>
+              <div className="flx gap05 no-print">
+                <button
+                  className="btn-modern btn-save-quote"
+                  onClick={handleUpdate}
+                  disabled={loadingUpdate}
+                  title="Guardar Cambios"
+                >
+                  <FontAwesomeIcon icon={faSave} size="2x" />
+                </button>
+                <button className="btn-modern btn-print-main" onClick={handlePrint} title="Imprimir">
+                  <FontAwesomeIcon icon={faPrint} size="2x" />
+                </button>
+              </div>
             </div>
 
             <table className="quote-items-table">

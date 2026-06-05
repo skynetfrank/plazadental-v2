@@ -117,17 +117,6 @@ const QuoteCreator = () => {
           <Link to="/listapacientes" className="btn-modern btn-back flex-1 centrado">
             Volver a Pacientes
           </Link>
-          <button
-            className="btn-modern btn-save-quote"
-            onClick={handleSaveQuote}
-            disabled={createLoading}
-            title="Guardar Cotización"
-          >
-            <FontAwesomeIcon icon={faSave} size="2x" />
-          </button>
-          <button className="btn-modern btn-print-main" onClick={handlePrint} title="Imprimir">
-            <FontAwesomeIcon icon={faPrint} size="2x" />
-          </button>
         </div>
 
         <div className="quote-print-preview" ref={componentRef}>
@@ -175,7 +164,7 @@ const QuoteCreator = () => {
               </p>
             </div>
 
-            <div className="quote-info-section">
+            <div className="quote-info-section flx jsb">
               <div className="info-block">
                 <h4>DATOS DEL PACIENTE</h4>
                 <p>
@@ -187,6 +176,19 @@ const QuoteCreator = () => {
                 <p>
                   <strong>C.I.:</strong> {selectedPaciente ? selectedPaciente.cedula : "____________________"}
                 </p>
+              </div>
+              <div className="flx gap05 no-print">
+                <button
+                  className="btn-modern btn-save-quote"
+                  onClick={handleSaveQuote}
+                  disabled={createLoading}
+                  title="Guardar Cotización"
+                >
+                  <FontAwesomeIcon icon={faSave} size="2x" />
+                </button>
+                <button className="btn-modern btn-print-main" onClick={handlePrint} title="Imprimir">
+                  <FontAwesomeIcon icon={faPrint} size="2x" />
+                </button>
               </div>
             </div>
 
