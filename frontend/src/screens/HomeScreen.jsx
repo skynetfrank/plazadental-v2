@@ -9,7 +9,7 @@ import CardDollarIcon from "../icons/CardDollarIcon";
 import ToothPasteIcon from "../icons/ToothPasteIcon";
 import SpreadSheetIcon from "../icons/SpreadSheetIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
+import { faDedent, faFileContract, faFileInvoiceDollar, faFilePrescription, faFileZipper, faLaptopFile } from "@fortawesome/free-solid-svg-icons";
 import { Outpatient } from "../icons/Outpatient";
 import { StockIcon } from "../icons/StockIcon";
 
@@ -78,7 +78,7 @@ function HomeScreen() {
 
           <Link to="/quotelist">
             <button>
-              <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              <FontAwesomeIcon className="cotizacion-icon" icon={faLaptopFile} />
               <span>Cotizaciones</span>
             </button>
           </Link>
