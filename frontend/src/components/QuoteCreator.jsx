@@ -132,15 +132,6 @@ const QuoteCreator = () => {
                     </div>
                 </div>
 
-                {/* Este div se movió de la sección de edición para estar fuera de ella pero aún visible */}
-                <div className="quote-totals-summary no-print editor-discount-section">
-                    <div className="total-row"><span>SUBTOTAL:</span> <strong>${subtotal.toFixed(2)}</strong></div>
-                    {/* Discount input field */}
-                    <div className="total-row"><span>DESCUENTO:</span> <input type="number" className="input-modern inline-discount-input" value={discount} onChange={(e) => setDiscount(e.target.value)} /></div>
-                    {discount > 0 && <div className="total-row discount"><span>DESCUENTO:</span> <strong>-${Number(discount).toFixed(2)}</strong></div>}
-                    <div className="total-row final"><span>TOTAL ESTIMADO:</span> <strong>${total.toFixed(2)}</strong></div>
-                </div>
-
                 <div className="quote-print-preview" ref={componentRef}>
                     <div className="print-header">
                         <div className="print-header-direccion">

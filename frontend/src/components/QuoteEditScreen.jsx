@@ -138,11 +138,6 @@ const QuoteEditScreen = () => {
                         </select>
                     </div>
                 </div>
-                <div className="quote-totals-summary no-print editor-discount-section mt-2">
-                    <div className="total-row"><span>SUBTOTAL:</span> <strong>${subtotal.toFixed(2)}</strong></div>
-                    <div className="total-row"><span>DESCUENTO:</span> <input type="number" className="input-modern inline-discount-input" value={discount} onChange={(e) => setDiscount(e.target.value)} /></div>
-                    <div className="total-row final"><span>TOTAL ESTIMADO:</span> <strong>${total.toFixed(2)}</strong></div>
-                </div>
 
                 <div className="quote-print-preview mt-2" ref={componentRef}>
                     <div className="print-header">
@@ -196,7 +191,21 @@ const QuoteEditScreen = () => {
                                     </tr>
                                 ))}
                                 <tr><td colSpan="3" className="txt-right total-label">Subtotal:</td><td className="txt-right total-value">${subtotal.toFixed(2)}</td><td className="no-print"></td></tr>
-                                {discount > 0 && <tr><td colSpan="3" className="txt-right total-label">Descuento:</td><td className="txt-right total-value">-${parseFloat(discount).toFixed(2)}</td><td className="no-print"></td></tr>}
+                                <tr className={parseFloat(discount || 0) <= 0 ? "no-print" : ""}>
+                                    <td colSpan="3" className="txt-right total-label">
+                                        Descuento:
+                                        <input
+                                            type="number"
+                                            className="input-modern inline-discount-input"
+                                            value={discount}
+                                            onChange={(e) => setDiscount(e.target.value)}
+                                        />
+                                    </td>
+                                    <td className="txt-right total-value">
+                                        -${parseFloat(discount || 0).toFixed(2)}
+                                    </td>
+                                    <td className="no-print"></td>
+                                </tr>
                                 <tr><td colSpan="3" className="txt-right total-label total-value">Total Estimado:</td><td className="txt-right total-value">${total.toFixed(2)}</td><td className="no-print"></td></tr>
                             </tbody>
                         </table>
