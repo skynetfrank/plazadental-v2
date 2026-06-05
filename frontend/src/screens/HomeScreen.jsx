@@ -9,6 +9,7 @@ import CardDollarIcon from "../icons/CardDollarIcon";
 import ToothPasteIcon from "../icons/ToothPasteIcon";
 import SpreadSheetIcon from "../icons/SpreadSheetIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
 import { Outpatient } from "../icons/Outpatient";
 import { StockIcon } from "../icons/StockIcon";
 
