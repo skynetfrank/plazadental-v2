@@ -510,8 +510,19 @@ export default function ControlCreateScreen(props) {
   };
 
   useEffect(() => {
-    setConstancia("Por medio de la presente se hace constar que el paciente " + paciente.nombre + " " + paciente.apellido + " " + "Cedula de Identidad " + paciente.cedula + ", asistió a consulta el dia de hoy " + dayjs(new Date().toLocaleDateString()).format("DD-MM-YYYY"))
-  }, [])
+    if (paciente && !constancia && fechaControl && dayjs(fechaControl).isValid()) {
+      setConstancia(
+        "Por Medio de la presenta Hacemos constar que el paciente " +
+        paciente.nombre +
+        " " +
+        paciente.apellido +
+        " C.I. " +
+        paciente.cedula +
+        " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
+        dayjs(fechaControl).format("DD-MM-YYYY")
+      );
+    }
+  }, [paciente, constancia, fechaControl]);
 
 
   return (
