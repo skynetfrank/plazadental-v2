@@ -363,3 +363,24 @@
   margin-left: 10px;
   text-align: right;
 }
+
+/* Estilos para el selector de validez pequeño */
+.select-validity-tiny {
+  padding: 2px 4px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: auto;
+  background: #fff;
+  cursor: pointer;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: inline;
+  }
+}

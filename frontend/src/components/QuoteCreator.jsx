@@ -130,19 +130,6 @@ const QuoteCreator = () => {
           </button>
         </div>
 
-        <div className="editor-row">
-          <div className="editor-field" style={{ maxWidth: "200px" }}>
-            <label>Validez de la oferta (días)</label>
-            <select className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)}>
-              {[...Array(90)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1} días
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
         <div className="quote-print-preview" ref={componentRef}>
           <div className="print-header">
             <div className="print-header-direccion">
@@ -171,7 +158,20 @@ const QuoteCreator = () => {
               <h1>PRESUPUESTO ESTIMADO</h1>
               <p>Emitido el: {dayjs().format("DD/MM/YYYY")}</p>
               <p>
-                <strong>Válido por:</strong> {validity} días
+                <strong>Válido por: </strong>
+                <select
+                  className="select-validity-tiny no-print"
+                  value={validity}
+                  onChange={(e) => setValidity(e.target.value)}
+                >
+                  {[...Array(90)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+                <span className="no-print"> días</span>
+                <span className="print-only">{validity} días</span>
               </p>
             </div>
 
