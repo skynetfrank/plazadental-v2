@@ -11,6 +11,8 @@ import ControlIcon from "../icons/ControlIcon";
 import TrashIcon from "../icons/TrashIcon";
 import Loader from "../components/Loader";
 import Swal from "sweetalert2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
 
 function ListaPacientes() {
   const navigate = useNavigate("");
@@ -136,6 +138,11 @@ function ListaPacientes() {
                 <EditIcon />
               </button>
             </ToolTip>
+            <ToolTip text="Crear Cotización">
+              <button className="circle-btn" onClick={() => navigate(`/createquote/${_id}`)}>
+                <FontAwesomeIcon icon={faFileInvoiceDollar} />
+              </button>
+            </ToolTip>
             <ToolTip text={"Ver Controles (" + controles.length + ")"}>
               <button className="circle-btn" onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
@@ -167,7 +174,7 @@ function ListaPacientes() {
         <ToolTip text="Crear Cotización">
           <Link to="/createquote">
             <button className="circle-btn">
-              <ControlIcon /> {/* Puedes cambiar este icono si tienes uno más adecuado para cotizaciones */}
+              <FontAwesomeIcon icon={faFileInvoiceDollar} />
             </button>
           </Link>
         </ToolTip>

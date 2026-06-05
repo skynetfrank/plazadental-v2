@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash, faPrint, faUser, faTooth, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +11,7 @@ import dayjs from 'dayjs';
 import './QuoteCreator.css';
 
 const QuoteCreator = () => {
+    const { id: pacienteId } = useParams();
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         contentRef: componentRef,
@@ -27,6 +29,15 @@ const QuoteCreator = () => {
     const [currentServiceId, setCurrentServiceId] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [discount, setDescuento] = useState(0);
+
+    useEffect(() => {
+        if (pacienteId && listaPacientes.length > 0) {
+            const found = listaPacientes.find(p => p._id === pacienteId);
+            if (found) {
+                setSelectedPaciente(found);
+            }
+        }
+    }, [pacienteId, listaPacientes]);
 
     const addItem = () => {
         if (!currentServiceId) return;
@@ -60,15 +71,17 @@ const QuoteCreator = () => {
 
                 <div className="editor-form-wrapper">
                     <div className="editor-row">
-                        <div className="editor-field flex-1">
-                            <label><FontAwesomeIcon icon={faUser} /> Seleccionar Paciente</label>
-                            <select className="input-modern" onChange={(e) => setSelectedPaciente(listaPacientes.find(p => p._id === e.target.value))}>
-                                <option value="">-- Buscar Paciente --</option>
-                                {listaPacientes.map(p => (
-                                    <option key={p._id} value={p._id}>{p.nombre} {p.apellido} ({p.cedula})</option>
-                                ))}
-                            </select>
-                        </div>
+                        {!pacienteId && (
+                            <div className="editor-field flex-1">
+                                <label><FontAwesomeIcon icon={faUser} /> Seleccionar Paciente</label>
+                                <select className="input-modern" onChange={(e) => setSelectedPaciente(listaPacientes.find(p => p._id === e.target.value))}>
+                                    <option value="">-- Buscar Paciente --</option>
+                                    {listaPacientes.map(p => (
+                                        <option key={p._id} value={p._id}>{p.nombre} {p.apellido} ({p.cedula})</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
 
                         <div className="editor-field flex-2">
                             <label><FontAwesomeIcon icon={faTooth} /> Agregar Servicio</label>
