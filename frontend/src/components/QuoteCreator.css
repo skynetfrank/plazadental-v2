@@ -15,9 +15,9 @@
 
 .editor-title {
   color: #203040;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   font-size: 1.5rem;
-  border-bottom: 2px solid #f0f0f0;
+  border-bottom: none;
   padding-bottom: 10px;
 }
 

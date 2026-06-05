@@ -99,9 +99,14 @@ const QuoteCreator = () => {
   return (
     <div className="quote-creator-container">
       <div className="quote-editor no-print">
-        <h2 className="editor-title">
-          <FontAwesomeIcon icon={faFileInvoiceDollar} /> Nueva Cotización
-        </h2>
+        <div className="flx jsb border-bottom mb-1">
+          <h2 className="editor-title">
+            <FontAwesomeIcon icon={faFileInvoiceDollar} /> Nueva Cotización
+          </h2>
+          <Link to="/listapacientes" className="btn-modern btn-back">
+            Volver a Pacientes
+          </Link>
+        </div>
 
         <div className="flx gap wrap mb-1">
           <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
@@ -114,9 +119,6 @@ const QuoteCreator = () => {
               onClose={() => setShowServiceModal(false)}
             />
           )}
-          <Link to="/listapacientes" className="btn-modern btn-back flex-1 centrado">
-            Volver a Pacientes
-          </Link>
         </div>
 
         <div className="quote-print-preview" ref={componentRef}>

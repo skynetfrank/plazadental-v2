@@ -108,14 +108,16 @@ const QuoteEditScreen = () => {
   return (
     <div className="quote-creator-container">
       <div className="quote-editor no-print">
-        <h2 className="editor-title m-0 mb-1">
-          <FontAwesomeIcon icon={faFileInvoiceDollar} /> Editar Cotización
-        </h2>
-
-        <div className="flx gap wrap mb-1">
-          <Link to="/quotelist" className="btn-modern btn-back flex-1 centrado">
+        <div className="flx jsb border-bottom mb-1">
+          <h2 className="editor-title">
+            <FontAwesomeIcon icon={faFileInvoiceDollar} /> Editar Cotización
+          </h2>
+          <Link to="/quotelist" className="btn-modern btn-back">
             <FontAwesomeIcon icon={faArrowLeft} /> Volver
           </Link>
+        </div>
+
+        <div className="flx gap wrap mb-1">
           <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
             <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
           </button>
