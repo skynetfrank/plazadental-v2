@@ -106,50 +106,38 @@ const QuoteEditScreen = () => {
     return (
         <div className="quote-creator-container">
             <div className="quote-editor no-print">
-                <div className="flx jsb mb-1">
-                    <h2 className="editor-title m-0"><FontAwesomeIcon icon={faFileInvoiceDollar} /> Editar Cotización</h2>
-                    <Link to="/quotelist" className="btn-modern btn-back"><FontAwesomeIcon icon={faArrowLeft} /> Volver</Link>
+                <h2 className="editor-title m-0 mb-1"><FontAwesomeIcon icon={faFileInvoiceDollar} /> Editar Cotización</h2>
+
+                <div className="flx gap wrap mb-1">
+                    <Link to="/quotelist" className="btn-modern btn-back flex-1 centrado"><FontAwesomeIcon icon={faArrowLeft} /> Volver</Link>
+                    <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
+                        <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
+                    </button>
+                    {showServiceModal && (
+                        <ServiceSelectorModal
+                            listaServicios={listaServicios}
+                            onAddService={handleAddService}
+                            onClose={() => setShowServiceModal(false)}
+                        />
+                    )}
+                    <button className="btn-modern btn-save-quote flex-1" onClick={handleUpdate} disabled={loadingUpdate}>
+                        <FontAwesomeIcon icon={faSave} /> {loadingUpdate ? 'Actualizando...' : 'Guardar Cambios'}
+                    </button>
+                    <button className="btn-modern btn-print-main flex-1" onClick={handlePrint}>
+                        <FontAwesomeIcon icon={faPrint} /> Imprimir
+                    </button>
                 </div>
 
-                <div className="editor-form-wrapper">
-                    <div className="info-badge mb-1">
-                        <strong>Paciente:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido} ({selectedPaciente?.cedula})
-                    </div>
-
-                    <div className="editor-row add-service-row">
-                        <button className="btn-modern btn-add-service-modal" onClick={() => setShowServiceModal(true)}>
-                            <FontAwesomeIcon icon={faPlus} /> Agregar Otro Servicio
-                        </button>
-                        {showServiceModal && (
-                            <ServiceSelectorModal
-                                listaServicios={listaServicios}
-                                onAddService={handleAddService}
-                                onClose={() => setShowServiceModal(false)}
-                            />
-                        )}
-                    </div>
-
-                    <div className="editor-row">
-                        <div className="editor-field" style={{ maxWidth: '200px' }}>
-                            <label>Validez de la oferta (días)</label>
-                            <select className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)}>
-                                {[...Array(90)].map((_, i) => (
-                                    <option key={i + 1} value={i + 1}>{i + 1} días</option>
-                                ))}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="flx gap">
-                        <button className="btn-modern btn-save-quote flex-1" onClick={handleUpdate} disabled={loadingUpdate}>
-                            <FontAwesomeIcon icon={faSave} /> {loadingUpdate ? 'Actualizando...' : 'Guardar Cambios'}
-                        </button>
-                        <button className="btn-modern btn-print-main flex-1" onClick={handlePrint}>
-                            <FontAwesomeIcon icon={faPrint} /> Imprimir
-                        </button>
+                <div className="editor-row">
+                    <div className="editor-field" style={{ maxWidth: '200px' }}>
+                        <label>Validez de la oferta (días)</label>
+                        <select className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)}>
+                            {[...Array(90)].map((_, i) => (
+                                <option key={i + 1} value={i + 1}>{i + 1} días</option>
+                            ))}
+                        </select>
                     </div>
                 </div>
-
                 <div className="quote-totals-summary no-print editor-discount-section mt-2">
                     <div className="total-row"><span>SUBTOTAL:</span> <strong>${subtotal.toFixed(2)}</strong></div>
                     <div className="total-row"><span>DESCUENTO:</span> <input type="number" className="input-modern inline-discount-input" value={discount} onChange={(e) => setDiscount(e.target.value)} /></div>

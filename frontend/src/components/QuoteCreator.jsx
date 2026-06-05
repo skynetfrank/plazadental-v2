@@ -101,69 +101,35 @@ const QuoteCreator = () => {
             <div className="quote-editor no-print">
                 <h2 className="editor-title"><FontAwesomeIcon icon={faFileInvoiceDollar} /> Nueva Cotización</h2>
 
-                <div className="editor-form-wrapper">
-                    <div className="editor-row">
-                        {!pacienteId && (
-                            <div className="editor-field flex-1">
-                                <label><FontAwesomeIcon icon={faUser} /> Seleccionar Paciente</label>
-                                <select className="input-modern" onChange={(e) => setSelectedPaciente(listaPacientes.find(p => p._id === e.target.value))}>
-                                    <option value="">-- Buscar Paciente --</option>
-                                    {listaPacientes.map(p => (
-                                        <option key={p._id} value={p._id}>{p.nombre} {p.apellido} ({p.cedula})</option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
-
-                        <div className="editor-row add-service-row">
-                            <div className="editor-field flex-full">
-                                <button className="btn-modern btn-add-service-modal" onClick={() => setShowServiceModal(true)}>
-                                    <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
-                                </button>
-                                {showServiceModal && (
-                                    <ServiceSelectorModal
-                                        listaServicios={listaServicios}
-                                        onAddService={handleAddService}
-                                        onClose={() => setShowServiceModal(false)}
-                                    />
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="editor-row">
-                            <div className="editor-field" style={{ maxWidth: '200px' }}>
-                                <label>Validez de la oferta (días)</label>
-                                <select
-                                    className="input-modern"
-                                    value={validity}
-                                    onChange={(e) => setValidity(e.target.value)}
-                                >
-                                    {[...Array(90)].map((_, i) => (
-                                        <option key={i + 1} value={i + 1}>{i + 1} días</option>
-                                    ))}
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className="editor-row">
-                            <div className="editor-field flex-full">
-                                <Link to="/listapacientes" className="btn-modern btn-back">Volver a Pacientes</Link>
-                            </div>
-                            <div className="editor-field flex-full">
-                                <button className="btn-modern btn-save-quote" onClick={handleSaveQuote} disabled={createLoading}>
-                                    <FontAwesomeIcon icon={faSave} /> {createLoading ? 'Guardando...' : 'Guardar Cotización'}
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="editor-row">
-                            {/* Discount field moved here */}
-                        </div>
-                    </div>
-
-                    <button className="btn-modern btn-print-main" onClick={handlePrint}>
-                        <FontAwesomeIcon icon={faPrint} /> Imprimir Presupuesto
+                <div className="flx gap wrap mb-1">
+                    <button className="btn-modern btn-add-service-modal flex-1" onClick={() => setShowServiceModal(true)}>
+                        <FontAwesomeIcon icon={faPlus} /> Agregar Servicio
                     </button>
+                    {showServiceModal && (
+                        <ServiceSelectorModal
+                            listaServicios={listaServicios}
+                            onAddService={handleAddService}
+                            onClose={() => setShowServiceModal(false)}
+                        />
+                    )}
+                    <Link to="/listapacientes" className="btn-modern btn-back flex-1 centrado">Volver a Pacientes</Link>
+                    <button className="btn-modern btn-save-quote flex-1" onClick={handleSaveQuote} disabled={createLoading}>
+                        <FontAwesomeIcon icon={faSave} /> {createLoading ? 'Guardando...' : 'Guardar Cotización'}
+                    </button>
+                    <button className="btn-modern btn-print-main flex-1" onClick={handlePrint}>
+                        <FontAwesomeIcon icon={faPrint} /> Imprimir
+                    </button>
+                </div>
+
+                <div className="editor-row">
+                    <div className="editor-field" style={{ maxWidth: '200px' }}>
+                        <label>Validez de la oferta (días)</label>
+                        <select className="input-modern" value={validity} onChange={(e) => setValidity(e.target.value)}>
+                            {[...Array(90)].map((_, i) => (
+                                <option key={i + 1} value={i + 1}>{i + 1} días</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
                 {/* Este div se movió de la sección de edición para estar fuera de ella pero aún visible */}
