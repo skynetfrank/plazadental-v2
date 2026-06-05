@@ -179,7 +179,7 @@ const QuoteCreator = () => {
                                     </tr>
                                 )}
                                 {items.length > 0 && (
-                                    <tr>
+                                    <tr className={parseFloat(discount || 0) <= 0 ? "no-print" : ""}>
                                         <td colSpan="3" className="txt-right total-label">
                                             Descuento:
                                             <input
@@ -190,6 +190,12 @@ const QuoteCreator = () => {
                                             />
                                         </td>
                                         <td className="txt-right total-value">-${parseFloat(discount || 0).toFixed(2)}</td>
+                                    </tr>
+                                )}
+                                {items.length > 0 && (
+                                    <tr>
+                                        <td colSpan="3" className="txt-right total-label total-value">Total Estimado:</td>
+                                        <td className="txt-right total-value">${total.toFixed(2)}</td>
                                     </tr>
                                 )}
                             </tbody>
