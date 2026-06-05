@@ -164,6 +164,13 @@ function ListaPacientes() {
             </button>
           </Link>
         </ToolTip>
+        <ToolTip text="Crear Cotización">
+          <Link to="/createquote">
+            <button className="circle-btn">
+              <ControlIcon /> {/* Puedes cambiar este icono si tienes uno más adecuado para cotizaciones */}
+            </button>
+          </Link>
+        </ToolTip>
       </div>
 
       {loading ? (

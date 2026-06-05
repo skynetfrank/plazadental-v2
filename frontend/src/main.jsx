@@ -39,6 +39,7 @@ import Odontograma from "./components/Odontograma";
 import CanvasDeepSea from "./components/CanvasDeepSea";
 import OdontogramaScreen from "./screens/OdontogramaScreen";
 
+import QuoteCreator from "./components/QuoteCreator";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -73,6 +74,7 @@ const router = createBrowserRouter(
         <Route path="/analiticsventas" element={<GroupingControles />}></Route>
         <Route path="/control/:id/edit" element={<ControlEditScreen />}></Route>
         <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
+        <Route path="/createquote" element={<QuoteCreator />}></Route>
         <Route path="/odontograma/:idPaciente/:nombre/:imageUrl" element={<OdontogramaScreen />}></Route>
       </Route>
     </Route>
