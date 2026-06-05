@@ -213,7 +213,7 @@
 }
 
 .quote-info-section {
-  margin-bottom: 30px;
+  margin-bottom: 5px;
   border-top: 2px solid #333;
   padding-top: 15px;
 }
@@ -228,6 +228,7 @@
   padding: 15px;
   background: #f4f4f4;
   border-bottom: 2px solid #333;
+  border-top: 2px solid #333;
   font-size: 0.9rem;
 }
 
