@@ -127,14 +127,14 @@ const QuoteEditScreen = () => {
             />
           )}
           <button
-            className="btn-modern btn-save-quote flex-1"
+            className="btn-modern btn-save-quote"
             onClick={handleUpdate}
             disabled={loadingUpdate}
             title="Guardar Cambios"
           >
             <FontAwesomeIcon icon={faSave} size="2x" />
           </button>
-          <button className="btn-modern btn-print-main flex-1" onClick={handlePrint} title="Imprimir">
+          <button className="btn-modern btn-print-main" onClick={handlePrint} title="Imprimir">
             <FontAwesomeIcon icon={faPrint} size="2x" />
           </button>
         </div>

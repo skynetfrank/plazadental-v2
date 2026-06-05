@@ -1002,7 +1002,9 @@ h3 {
   border-radius: 5px;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
 }
 
 .tooltip-children:hover .tooltip {
@@ -1156,7 +1158,11 @@ img.tiny-image {
   content: "";
   grid-area: 1/1;
   --c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
-  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%, var(--c) 0 50%;
+  background:
+    var(--c) 50% 0,
+    var(--c) 50% 100%,
+    var(--c) 100% 50%,
+    var(--c) 0 50%;
   background-size: 12px 12px;
   animation: l12 1s infinite;
 }
@@ -2878,7 +2884,9 @@ a#saveToImage:hover {
   border-radius: 50%;
   border: 2px solid #dee2e6;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .btn-color:hover {
@@ -3086,7 +3094,9 @@ button:disabled,
   left: 50%;
   transform: translateX(-50%) translateY(var(--translate-y-final)) scale(var(--scale));
   opacity: var(--opacity);
-  transition: 200ms transform, 200ms opacity;
+  transition:
+    200ms transform,
+    200ms opacity;
   transform-origin: bottom center;
   pointer-events: none;
   /* Evita que el tooltip interfiera con el mouse */
@@ -3289,7 +3299,21 @@ button:disabled,
   }
 }
 
-
-.cotizacion-icon{
+.cotizacion-icon {
   font-size: 10rem;
+}
+
+/* Estilos para botones circulares de cotización */
+.btn-save-quote,
+.btn-print-main {
+  width: 6rem !important;
+  max-width: 6rem;
+  min-width: 6rem;
+  height: 6rem;
+  flex-shrink: 0; /* Evita que se deformen en contenedores pequeños */
+  border-radius: 50% !important; /* Forzamos la redondez */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
 }
