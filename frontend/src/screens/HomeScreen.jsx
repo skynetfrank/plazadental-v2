@@ -3,13 +3,12 @@ import { useSelector } from "react-redux";
 import DoctorIcon from "../icons/DoctorIcon";
 import PacientesIcon from "../icons/PacientesIcon";
 import HandDollarIcon from "../icons/HandDollarIcon";
-import TuercasIcon from "../icons/TuercasIcon";
 import CalendarioIcon from "../icons/CalendarioIcon";
 import CardDollarIcon from "../icons/CardDollarIcon";
 import ToothPasteIcon from "../icons/ToothPasteIcon";
 import SpreadSheetIcon from "../icons/SpreadSheetIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDedent, faFileContract, faFileInvoiceDollar, faFilePrescription, faFileZipper, faLaptopFile } from "@fortawesome/free-solid-svg-icons";
+import { faLaptopFile } from "@fortawesome/free-solid-svg-icons";
 import { Outpatient } from "../icons/Outpatient";
 import { StockIcon } from "../icons/StockIcon";
 
@@ -65,6 +64,17 @@ function HomeScreen() {
             ""
           )}
 
+          {userInfo.isAdmin ? (
+            <Link to="/quotelist">
+              <button>
+                <FontAwesomeIcon className="cotizacion-icon" icon={faLaptopFile} />
+                <span>Cotizaciones</span>
+              </button>
+            </Link>
+          ) : (
+            ""
+          )}
+
           <a
             href="https://planner-plaza-9tp7wnvii-tyrant7995gmailcoms-projects.vercel.app/"
             rel="nofollow noopener noreferrer"
@@ -76,12 +86,8 @@ function HomeScreen() {
             </button>
           </a>
 
-          <Link to="/quotelist">
-            <button>
-              <FontAwesomeIcon className="cotizacion-icon" icon={faLaptopFile} />
-              <span>Cotizaciones</span>
-            </button>
-          </Link>
+
+
           {userInfo.isAdmin ? (
             <Link to="/listagasto">
               <button>
