@@ -133,8 +133,8 @@ const QuoteEditScreen = () => {
                         <FontAwesomeIcon icon={isViewOnly ? faEye : faFileInvoiceDollar} />{" "}
                         {isViewOnly ? "Visualizar Cotización" : "Editar Cotización"}
                     </h2>
-                    <Link to="/quotelist" className="btn-modern btn-back">
-                        <FontAwesomeIcon icon={faArrowLeft} /> Volver
+                    <Link to="/quotelist" className="font-12 cot-back-link">
+                        {"< Volver a Pacientes"}
                     </Link>
                 </div>
 

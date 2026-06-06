@@ -17,9 +17,17 @@
 .editor-title {
   color: #203040;
   margin-bottom: 0;
+  margin-top: 6px;
+  margin-left: 20px;
   font-size: 1.5rem;
   border-bottom: none;
-  padding-bottom: 10px;
+
+}
+
+.cot-back-link {
+  margin: 10px 15px 5px 0;
+  color:blue;
+  font-weight: 600;
 }
 
 .editor-form-wrapper {
@@ -190,10 +198,14 @@
 }
 
 .btn-modern:hover {
-  opacity: 1; /* Eliminamos la opacidad que los "apaga" */
-  filter: brightness(1.15); /* Resalte de color más intenso */
-  transform: translateY(-3px); /* Elevación más pronunciada para botones de acción */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra de destaque */
+  opacity: 1;
+  /* Eliminamos la opacidad que los "apaga" */
+  filter: brightness(1.15);
+  /* Resalte de color más intenso */
+  transform: translateY(-3px);
+  /* Elevación más pronunciada para botones de acción */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  /* Sombra de destaque */
 }
 
 /* Estilos de Impresión y Previsualización */

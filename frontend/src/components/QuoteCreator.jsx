@@ -115,8 +115,8 @@ const QuoteCreator = () => {
 
   return (
     <div className="quote-creator-container">
-      <Link to="/listapacientes" className="btn-modern btn-back">
-        Volver a Pacientes
+      <Link to="/listapacientes" className="font-12 ml cot-back-link">
+        {"Volver a Pacientes"}
       </Link>
       <div className="quote-editor no-print">
         <div className="quote-print-preview" ref={componentRef}>
