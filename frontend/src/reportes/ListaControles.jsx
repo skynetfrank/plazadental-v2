@@ -40,6 +40,13 @@ function ListaControles() {
     setPageNumber(1);
   };
 
+  const setToday = () => {
+    const today = dayjs().format("YYYY-MM-DD");
+    setStartDate(today);
+    setEndDate(today);
+    setPageNumber(1);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
@@ -171,38 +178,49 @@ function ListaControles() {
         <Loader txt={"Obteniendo Controles"} />
       ) : (
         <div className="tankstack-pagination-container">
-          <div className="filterv8-container pad-1">
-            <div className="flx gap1">
+          <div className="flx jcenter gap wrap pad-1" style={{ alignItems: 'flex-end' }}>
+            <div className="flx gap1" style={{ alignItems: 'flex-end' }}>
               <div className="flx column astart">
                 <label className="font-tiny negrita">Desde:</label>
-                <input type="date" className="input-modern pad-05" value={startDate} onChange={(e) => { setStartDate(e.target.value); setPageNumber(1); }} />
+                <input type="date" className="input-modern" style={{ padding: '5px 10px', height: '38px', width: 'auto' }} value={startDate} onChange={(e) => { setStartDate(e.target.value); setPageNumber(1); }} />
               </div>
               <div className="flx column astart">
                 <label className="font-tiny negrita">Hasta:</label>
-                <input type="date" className="input-modern pad-05" value={endDate} onChange={(e) => { setEndDate(e.target.value); setPageNumber(1); }} />
+                <input type="date" className="input-modern" style={{ padding: '5px 10px', height: '38px', width: 'auto' }} value={endDate} onChange={(e) => { setEndDate(e.target.value); setPageNumber(1); }} />
               </div>
+              <button
+                className="btn-modern"
+                style={{ height: '38px', padding: '0 15px', margin: '0', backgroundColor: '#203040', color: 'white', fontSize: '1.2rem' }}
+                onClick={setToday}
+              >
+                Hoy
+              </button>
             </div>
 
-            <div className="pos-rel flx">
-              <input
-                type="text"
-                className="filter-input-v8"
-                placeholder="Buscar por paciente, evaluación o tratamiento..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <div className="pos-abs flx" style={{ right: '15px', height: '100%', top: 0 }}>
-                {isDebouncing && (
-                  <FontAwesomeIcon icon={faCircleNotch} spin className="azul-brand" />
-                )}
-                {searchTerm && !isDebouncing && (
-                  <button
-                    className="btn-clear"
-                    onClick={clearSearch}
-                  >
-                    <FontAwesomeIcon icon={faTimes} />
-                  </button>
-                )}
+            <div className="flx column astart">
+              <label className="font-tiny negrita" style={{ visibility: 'hidden' }}>Buscador</label>
+              <div className="pos-rel flx">
+                <input
+                  type="text"
+                  className="filter-input-v8"
+                  style={{ margin: 0, height: '25px' }}
+                  placeholder="Buscar por paciente, evaluación o tratamiento..."
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+                <div className="pos-abs flx" style={{ right: '15px', height: '100%', top: 0 }}>
+                  {isDebouncing && (
+                    <FontAwesomeIcon icon={faCircleNotch} spin className="azul-brand" />
+                  )}
+                  {searchTerm && !isDebouncing && (
+                    <button
+                      className="btn-clear"
+                      onClick={clearSearch}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
