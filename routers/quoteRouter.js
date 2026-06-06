@@ -88,4 +88,19 @@ quoteRouter.put(
     })
 );
 
+// DELETE quote
+quoteRouter.delete(
+    '/:id',
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const quote = await Quote.findById(req.params.id);
+        if (quote) {
+            const deletedQuote = await quote.deleteOne({ _id: req.params.id });
+            res.send({ message: 'Cotización Eliminada', quote: deletedQuote });
+        } else {
+            res.status(404).send({ message: 'Cotización no encontrada' });
+        }
+    })
+);
+
 export default quoteRouter;

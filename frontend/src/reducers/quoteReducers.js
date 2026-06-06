@@ -3,6 +3,10 @@ import {
     QUOTE_CREATE_REQUEST,
     QUOTE_CREATE_RESET,
     QUOTE_CREATE_SUCCESS,
+    QUOTE_DELETE_FAIL,
+    QUOTE_DELETE_REQUEST,
+    QUOTE_DELETE_RESET,
+    QUOTE_DELETE_SUCCESS,
     QUOTE_DETAILS_FAIL,
     QUOTE_DETAILS_REQUEST,
     QUOTE_DETAILS_SUCCESS,
@@ -24,6 +28,21 @@ export const quoteCreateReducer = (state = {}, action) => {
         case QUOTE_CREATE_FAIL:
             return { loading: false, error: action.payload };
         case QUOTE_CREATE_RESET:
+            return {};
+        default:
+            return state;
+    }
+};
+
+export const quoteDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case QUOTE_DELETE_REQUEST:
+            return { loading: true };
+        case QUOTE_DELETE_SUCCESS:
+            return { loading: false, success: true };
+        case QUOTE_DELETE_FAIL:
+            return { loading: false, error: action.payload };
+        case QUOTE_DELETE_RESET:
             return {};
         default:
             return state;

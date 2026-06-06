@@ -70,6 +70,7 @@ import {
 } from "./reducers/gastoReducers";
 import {
   quoteCreateReducer,
+  quoteDeleteReducer,
   quoteDetailsReducer,
   quoteListReducer,
   quoteUpdateReducer,
@@ -139,6 +140,7 @@ const reducer = combineReducers({
   quoteList: quoteListReducer,
   quoteDetails: quoteDetailsReducer,
   quoteUpdate: quoteUpdateReducer,
+  quoteDelete: quoteDeleteReducer,
   gastoList: gastoListReducer,
   gastoDelete: gastoDeleteReducer,
   gastoDetails: gastoDetailsReducer,

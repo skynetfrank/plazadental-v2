@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { listQuotes } from "../actions/quoteActions";
+import { listQuotes, deleteQuote } from "../actions/quoteActions";
 import Loader from "../components/Loader";
 import MessageBox from "../components/MessageBox";
 import SimpleTable from "../components/SimpleTable";
@@ -9,7 +9,8 @@ import ToolTip from "../components/ToolTip";
 import AddCircleIcon from "../icons/AddCircleIcon";
 import EditIcon from "../icons/EditIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
 import dayjs from "dayjs";
 
 const QuoteListScreen = () => {
@@ -19,9 +20,44 @@ const QuoteListScreen = () => {
   const quoteList = useSelector((state) => state.quoteList) || { quotes: [] };
   const { loading, error, quotes } = quoteList;
 
+  const quoteDelete = useSelector((state) => state.quoteDelete) || {};
+  const { success: successDelete } = quoteDelete;
+
   useEffect(() => {
     dispatch(listQuotes());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (id) => {
+    Swal.fire({
+      title: "¿Eliminar cotización?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Clave de Autorización",
+          input: "password",
+          inputAttributes: {
+            maxlength: "10",
+            autocapitalize: "off",
+            autocorrect: "off",
+          },
+        }).then((res) => {
+          if (res.value === "matias01") {
+            dispatch(deleteQuote(id));
+            Swal.fire("Eliminado", "La cotización ha sido eliminada.", "success");
+          } else if (res.value !== undefined) {
+            Swal.fire("Clave incorrecta");
+          }
+        });
+      }
+    });
+  };
 
   const columns = [
     {
@@ -76,7 +112,11 @@ const QuoteListScreen = () => {
                 <EditIcon />
               </button>
             </ToolTip>
-            {/* Add print button here if needed, similar to QuoteCreator */}
+            <ToolTip text="Eliminar Cotización">
+              <button className="circle-btn" onClick={() => deleteHandler(_id)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </button>
+            </ToolTip>
           </div>
         );
       },

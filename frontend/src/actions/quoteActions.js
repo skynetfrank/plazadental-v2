@@ -6,6 +6,9 @@ import {
     QUOTE_DETAILS_FAIL,
     QUOTE_DETAILS_REQUEST,
     QUOTE_DETAILS_SUCCESS,
+    QUOTE_DELETE_FAIL,
+    QUOTE_DELETE_REQUEST,
+    QUOTE_DELETE_SUCCESS,
     QUOTE_LIST_FAIL,
     QUOTE_LIST_REQUEST,
     QUOTE_LIST_SUCCESS,
@@ -34,6 +37,25 @@ export const createQuote = (quote) => async (dispatch, getState) => {
                     ? error.response.data.message
                     : error.message,
         });
+    }
+};
+
+export const deleteQuote = (quoteId) => async (dispatch, getState) => {
+    dispatch({ type: QUOTE_DELETE_REQUEST, payload: quoteId });
+    const {
+        userSignin: { userInfo },
+    } = getState();
+    try {
+        const { data } = await Axios.delete(`/api/quotes/${quoteId}`, {
+            headers: { Authorization: `Bearer ${userInfo.token}` },
+        });
+        dispatch({ type: QUOTE_DELETE_SUCCESS, payload: data });
+    } catch (error) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        dispatch({ type: QUOTE_DELETE_FAIL, payload: message });
     }
 };
 
