@@ -1,7 +1,7 @@
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { deleteControlPaciente, deletePaciente, listPacientes } from "../actions/pacienteActions";
 import InfoIcon from "../icons/InfoIcon";
 import PacienteAddIcon from "../icons/PacienteAddIcon";
@@ -16,9 +16,10 @@ import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
 
 function ListaPacientes() {
   const navigate = useNavigate("");
+  const [pageNumber, setPageNumber] = useState(1);
 
   const pacienteList = useSelector((state) => state.pacienteList);
-  const { loading, pacientes } = pacienteList;
+  const { loading, pacientes, pages, page, total } = pacienteList;
 
   const pacienteDelete = useSelector((state) => state.pacienteDelete);
   const { error: errorDelete, success: successDelete } = pacienteDelete;
@@ -26,10 +27,8 @@ function ListaPacientes() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (pacientes.length === 0) {
-      dispatch(listPacientes());
-    }
-  }, [dispatch]);
+    dispatch(listPacientes({ pageNumber }));
+  }, [dispatch, pageNumber]);
 
   useEffect(() => {
     if (successDelete) {
@@ -176,23 +175,35 @@ function ListaPacientes() {
       {loading ? (
         <Loader txt={"Obteniendo Pacientes"} />
       ) : (
-        <>
-          <div>
-            <div>
-              {pacientes ? (
-                <SimpleTable
-                  data={pacientes}
-                  columns={columns}
-                  filterInput={true}
-                  botonera={true}
-                  records={pacientes.length || 0}
-                />
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
-        </>
+        <div className="tankstack-pagination-container">
+          {pacientes && (
+            <>
+              <SimpleTable
+                data={pacientes}
+                columns={columns}
+                filterInput={false} // Desactivamos el filtro cliente de SimpleTable
+                botonera={true}
+                records={total}
+              />
+
+              <div className="tankstack-pagination-botonera">
+                <button
+                  disabled={pageNumber === 1}
+                  onClick={() => setPageNumber(prev => prev - 1)}
+                >
+                  Anterior
+                </button>
+                <span className="pagination-totalpages">Página {page} de {pages}</span>
+                <button
+                  disabled={pageNumber === pages}
+                  onClick={() => setPageNumber(prev => prev + 1)}
+                >
+                  Siguiente
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       )}
     </div>
   );

@@ -54,6 +54,9 @@ export const pacienteListReducer = (state = { loading: true, pacientes: [] }, ac
       return {
         loading: false,
         pacientes: action.payload.pacientes,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        total: action.payload.total,
       };
     case PACIENTE_LIST_FAIL:
       return { loading: false, error: action.payload };

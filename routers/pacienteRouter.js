@@ -8,8 +8,27 @@ const pacienteRouter = express.Router();
 pacienteRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const pacientes = await Paciente.find({}).sort({ nombre: 1 });
-    res.send({ pacientes });
+    const pageSize = Number(req.query.pageSize) || 20;
+    const page = Number(req.query.pageNumber) || 1;
+    const search = req.query.search || "";
+
+    const searchQuery = search
+      ? {
+        $or: [
+          { nombre: { $regex: search, $options: "i" } },
+          { apellido: { $regex: search, $options: "i" } },
+          { cedula: { $regex: search, $options: "i" } },
+        ],
+      }
+      : {};
+
+    const count = await Paciente.countDocuments(searchQuery);
+    const pacientes = await Paciente.find(searchQuery)
+      .sort({ nombre: 1 })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res.send({ pacientes, page, pages: Math.ceil(count / pageSize), total: count });
   })
 );
 
