@@ -12,13 +12,14 @@ import TrashIcon from "../icons/TrashIcon";
 import Loader from "../components/Loader";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
+import { faFileInvoiceDollar, faTimes, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 function ListaPacientes() {
   const navigate = useNavigate("");
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isDebouncing, setIsDebouncing] = useState(false);
 
   const pacienteList = useSelector((state) => state.pacienteList);
   const { loading, pacientes, pages, page, total } = pacienteList;
@@ -30,11 +31,22 @@ function ListaPacientes() {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
+    if (e.target.value !== debouncedSearch) {
+      setIsDebouncing(true);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setDebouncedSearch("");
+    setIsDebouncing(false);
+    setPageNumber(1);
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchTerm);
+      setIsDebouncing(false);
       setPageNumber(1); // Reiniciamos a la página 1 solo cuando el filtro cambia realmente
     }, 1200); // Espera 600ms antes de ejecutar la búsqueda
 
@@ -192,13 +204,28 @@ function ListaPacientes() {
       ) : (
         <div className="tankstack-pagination-container">
           <div className="filterv8-container pad-1">
-            <input
-              type="text"
-              className="filter-input-v8"
-              placeholder="Buscar por nombre, apellido o cédula..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            />
+            <div className="pos-rel flx">
+              <input
+                type="text"
+                className="filter-input-v8"
+                placeholder="Buscar por nombre, apellido o cédula..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <div className="pos-abs flx" style={{ right: '15px', height: '100%', top: 0 }}>
+                {isDebouncing && (
+                  <FontAwesomeIcon icon={faCircleNotch} spin className="azul-brand" />
+                )}
+                {searchTerm && !isDebouncing && (
+                  <button
+                    className="btn-clear"
+                    onClick={clearSearch}
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
           {pacientes && (
             <>
@@ -206,7 +233,7 @@ function ListaPacientes() {
                 data={pacientes}
                 columns={columns}
                 filterInput={false} // Desactivamos el filtro cliente de SimpleTable
-                botonera={true}
+                botonera={false}
                 records={total}
               />
 
