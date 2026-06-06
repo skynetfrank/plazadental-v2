@@ -11,6 +11,9 @@ import logo from "/plazaDentalLogo.jpg";
 import wsapp from "/whatsapp.png";
 import instagram from "/instagram.png";
 import dayjs from "dayjs";
+import { detailsPaciente } from "../actions/pacienteActions";
+import Loader from "./Loader";
+import { listServicios } from "../actions/servicioActions";
 import ServiceSelectorModal from "./ServiceSelectorModal";
 import "./QuoteCreator.css"; // Reutilizamos estilos por consistencia
 
@@ -26,7 +29,12 @@ const QuoteEditScreen = () => {
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
 
-    const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")) || []);
+    const pacienteDetails = useSelector((state) => state.pacienteDetails);
+    const { loading: loadingPaciente, error: errorPaciente, paciente: fetchedPaciente } = pacienteDetails;
+
+    const servicioList = useSelector((state) => state.servicioList);
+    const { loading: loadingServicios, error: errorServicios, servicios: listaServicios } = servicioList;
+
     const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")) || 0);
     const handleUpdateBcv = async () => {
         const { value: rate } = await Swal.fire({
@@ -98,8 +106,24 @@ const QuoteEditScreen = () => {
             if (quote.cambioBcv) {
                 setCambioBcv(quote.cambioBcv);
             }
+            // Obtener datos actualizados del paciente si no están cargados
+            if (quote.paciente?._id && (!fetchedPaciente || fetchedPaciente._id !== quote.paciente._id)) {
+                dispatch(detailsPaciente(quote.paciente._id));
+            }
         }
-    }, [dispatch, quoteId, quote]);
+    }, [dispatch, quoteId, quote, fetchedPaciente]);
+
+    useEffect(() => {
+        if (fetchedPaciente) {
+            setSelectedPaciente(fetchedPaciente);
+        }
+    }, [fetchedPaciente]);
+
+    useEffect(() => {
+        if (!listaServicios || listaServicios.length === 0) {
+            dispatch(listServicios());
+        }
+    }, [dispatch, listaServicios]);
 
     useEffect(() => {
         if (successUpdate) {
@@ -156,8 +180,9 @@ const QuoteEditScreen = () => {
         );
     };
 
-    if (loadingDetails) return <div className="centrado pad-2">Cargando datos de cotización...</div>;
+    if (loadingDetails || loadingPaciente) return <Loader txt="Cargando datos..." />;
     if (errorDetails) return <div className="alert alert-danger">{errorDetails}</div>;
+    if (errorPaciente) return <div className="alert alert-danger">{errorPaciente}</div>;
 
     return (
         <div className="quote-creator-container">

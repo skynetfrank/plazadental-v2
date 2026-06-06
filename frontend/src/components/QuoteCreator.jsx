@@ -7,6 +7,9 @@ import { useDispatch } from "react-redux";
 import { createQuote } from "../actions/quoteActions";
 import { QUOTE_CREATE_RESET } from "../constants/quoteConstants";
 import Swal from "sweetalert2";
+import { detailsPaciente } from "../actions/pacienteActions";
+import Loader from "./Loader";
+import { listServicios } from "../actions/servicioActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
 import { faPlus, faTrash, faPrint, faUser, faFileInvoiceDollar, faSave, faSyncAlt } from "@fortawesome/free-solid-svg-icons"; // Import specific icons
 import logo from "/plazaDentalLogo.jpg";
@@ -25,9 +28,12 @@ const QuoteCreator = () => {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
 
-  // Obtenemos datos de localStorage para mantener consistencia con otras pantallas
-  const [listaPacientes] = useState(JSON.parse(localStorage.getItem("pacientes")) || []);
-  const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")) || []);
+  const pacienteDetails = useSelector((state) => state.pacienteDetails);
+  const { loading: loadingPaciente, error: errorPaciente, paciente } = pacienteDetails;
+
+  const servicioList = useSelector((state) => state.servicioList);
+  const { loading: loadingServicios, error: errorServicios, servicios: listaServicios } = servicioList;
+
   const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")) || 0);
   const handleUpdateBcv = async () => {
     const { value: rate } = await Swal.fire({
@@ -90,12 +96,21 @@ const QuoteCreator = () => {
 
   useEffect(() => {
     if (pacienteId) {
-      const found = listaPacientes.find((p) => p._id === pacienteId);
-      if (found) {
-        setSelectedPaciente(found);
-      }
+      dispatch(detailsPaciente(pacienteId));
     }
-  }, [pacienteId, listaPacientes]);
+  }, [dispatch, pacienteId]);
+
+  useEffect(() => {
+    if (paciente) {
+      setSelectedPaciente(paciente);
+    }
+  }, [paciente]);
+
+  useEffect(() => {
+    if (!listaServicios || listaServicios.length === 0) {
+      dispatch(listServicios());
+    }
+  }, [dispatch, listaServicios]);
 
   const handleAddService = (serviceDetails) => {
     const newItem = {
@@ -143,6 +158,9 @@ const QuoteCreator = () => {
       Swal.fire("Error", createError, "error");
     }
   }, [createSuccess, createError, dispatch, navigate]);
+
+  if (loadingPaciente) return <Loader txt="Cargando datos del paciente..." />;
+  if (errorPaciente) return <div className="alert alert-danger">{errorPaciente}</div>;
 
   return (
     <div className="quote-creator-container">
