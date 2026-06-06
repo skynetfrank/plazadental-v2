@@ -31,11 +31,11 @@ function App() {
   const doctorList = useSelector((state) => state.doctorList);
   const servicioAllList = useSelector((state) => state.servicioAllList);
 
- /*  useEffect(() => {
+  useEffect(() => {
     dispatch(listPacientes({}));
     dispatch(listDoctores({}));
     dispatch(listServicios({}));
-  }, [dispatch]); */
+  }, [dispatch]);
 
   const signoutHandler = () => {
     dispatch(signout());
