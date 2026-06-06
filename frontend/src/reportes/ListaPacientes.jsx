@@ -18,6 +18,7 @@ function ListaPacientes() {
   const navigate = useNavigate("");
   const [pageNumber, setPageNumber] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const pacienteList = useSelector((state) => state.pacienteList);
   const { loading, pacientes, pages, page, total } = pacienteList;
@@ -29,12 +30,20 @@ function ListaPacientes() {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setPageNumber(1); // Al buscar, volvemos a la primera página
   };
 
   useEffect(() => {
-    dispatch(listPacientes({ pageNumber, search: searchTerm }));
-  }, [dispatch, pageNumber, searchTerm]);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setPageNumber(1); // Reiniciamos a la página 1 solo cuando el filtro cambia realmente
+    }, 1200); // Espera 600ms antes de ejecutar la búsqueda
+
+    return () => clearTimeout(timer); // Limpia el timer si el usuario sigue escribiendo
+  }, [searchTerm]);
+
+  useEffect(() => {
+    dispatch(listPacientes({ pageNumber, search: debouncedSearch }));
+  }, [dispatch, pageNumber, debouncedSearch]);
 
   useEffect(() => {
     if (successDelete) {
