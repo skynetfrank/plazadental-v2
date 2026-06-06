@@ -22,7 +22,9 @@ import dayjs from "dayjs";
 
 function App() {
   const [hoy] = useState(new Date());
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    return !sessionStorage.getItem("splashShown");
+  });
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
@@ -55,11 +57,14 @@ function App() {
   };
 
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2900);
-  }, []);
+    if (loading) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem("splashShown", "true");
+      }, 2900);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   return (
     <>
