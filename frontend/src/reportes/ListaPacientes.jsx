@@ -17,6 +17,7 @@ import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
 function ListaPacientes() {
   const navigate = useNavigate("");
   const [pageNumber, setPageNumber] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const pacienteList = useSelector((state) => state.pacienteList);
   const { loading, pacientes, pages, page, total } = pacienteList;
@@ -26,9 +27,14 @@ function ListaPacientes() {
 
   const dispatch = useDispatch();
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setPageNumber(1); // Al buscar, volvemos a la primera página
+  };
+
   useEffect(() => {
-    dispatch(listPacientes({ pageNumber }));
-  }, [dispatch, pageNumber]);
+    dispatch(listPacientes({ pageNumber, search: searchTerm }));
+  }, [dispatch, pageNumber, searchTerm]);
 
   useEffect(() => {
     if (successDelete) {
@@ -176,6 +182,15 @@ function ListaPacientes() {
         <Loader txt={"Obteniendo Pacientes"} />
       ) : (
         <div className="tankstack-pagination-container">
+          <div className="filterv8-container pad-1">
+            <input
+              type="text"
+              className="filter-input-v8"
+              placeholder="Buscar por nombre, apellido o cédula..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
           {pacientes && (
             <>
               <SimpleTable
