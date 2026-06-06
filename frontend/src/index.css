@@ -119,6 +119,7 @@ button,
   border: 1px solid #a4a4a4;
   background-color: #eeeeee;
   margin: 5px;
+  transition: all 0.2s ease-in-out; /* Transición suave para todos los estados */
 }
 
 .btn-icon-container {
@@ -159,8 +160,10 @@ button.btn-tiny {
 }
 
 button:hover {
-  background-color: #c0c0c0;
-  border-color: blue;
+  filter: brightness(1.1); /* Resalta el color original sin opacarlo */
+  border-color: #007bff;
+  transform: translateY(-1px); /* Efecto de elevación sutil */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra profesional */
 }
 
 .btn-icon-container:has(.fa-power-off):hover,

@@ -191,8 +191,10 @@
 }
 
 .btn-modern:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  opacity: 1; /* Eliminamos la opacidad que los "apaga" */
+  filter: brightness(1.15); /* Resalte de color más intenso */
+  transform: translateY(-3px); /* Elevación más pronunciada para botones de acción */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra de destaque */
 }
 
 /* Estilos de Impresión y Previsualización */
