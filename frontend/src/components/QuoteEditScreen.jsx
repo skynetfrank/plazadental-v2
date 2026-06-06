@@ -182,9 +182,8 @@ const QuoteEditScreen = () => {
 
             <div className="quote-info-section flx jsb">
               <div>
-                <h4>DATOS DEL PACIENTE</h4>
                 <p>
-                  <strong>Nombre:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido}
+                  <strong>Paciente:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido}
                 </p>
                 <p>
                   <strong>C.I.:</strong> {selectedPaciente?.cedula}

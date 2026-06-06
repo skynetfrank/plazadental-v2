@@ -6,7 +6,7 @@
 
 .quote-editor {
   background: #ffffff;
-  padding: 25px;
+  padding: 25px 0;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 40px;
@@ -200,7 +200,7 @@
 /* Estilos de Impresión y Previsualización */
 .quote-print-preview {
   background: white;
-  padding: 0px 50px;
+  padding: 0px 10px;
   min-height: 800px;
 }
 
@@ -219,7 +219,11 @@
   margin-bottom: 5px;
   border-top: 2px solid #333;
   border-bottom: 2px solid #333;
-  padding-top: 15px;
+  padding-top: 10px;
+}
+
+.info-block {
+  margin-bottom: 10px;
 }
 
 .quote-items-table {

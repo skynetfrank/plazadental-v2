@@ -166,9 +166,9 @@ const QuoteCreator = () => {
 
             <div className="quote-info-section flx jsb">
               <div className="info-block">
-                <h4>DATOS DEL PACIENTE</h4>
+                
                 <p>
-                  <strong>Nombre:</strong>{" "}
+                  <strong>Paciente:</strong>{" "}
                   {selectedPaciente
                     ? `${selectedPaciente.nombre} ${selectedPaciente.apellido}`
                     : "____________________"}
