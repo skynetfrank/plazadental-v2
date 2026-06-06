@@ -8,6 +8,8 @@ import SimpleTable from "../components/SimpleTable";
 import ToolTip from "../components/ToolTip";
 import AddCircleIcon from "../icons/AddCircleIcon";
 import EditIcon from "../icons/EditIcon";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import dayjs from "dayjs";
 
 const QuoteListScreen = () => {
@@ -64,6 +66,11 @@ const QuoteListScreen = () => {
         const { _id } = value.row.original;
         return (
           <div className="flx pad-0">
+            <ToolTip text="Visualizar Cotización">
+              <button className="circle-btn" onClick={() => navigate(`/quote/${_id}/view`)}>
+                <FontAwesomeIcon icon={faEye} />
+              </button>
+            </ToolTip>
             <ToolTip text="Ver/Editar Cotización">
               <button className="circle-btn" onClick={() => navigate(`/quote/${_id}/edit`)}>
                 <EditIcon />

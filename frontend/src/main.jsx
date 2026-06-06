@@ -78,6 +78,7 @@ const router = createBrowserRouter(
         <Route path="/detalle-control/:id" element={<DetailControlScreen />}></Route>
         <Route path="/quotelist" element={<QuoteListScreen />}></Route>
         <Route path="/createquote/:id?" element={<QuoteCreator />}></Route>
+        <Route path="/quote/:id/view" element={<QuoteEditScreen />}></Route>
         <Route path="/quote/:id/edit" element={<QuoteEditScreen />}></Route>
         <Route path="/odontograma/:idPaciente/:nombre/:imageUrl" element={<OdontogramaScreen />}></Route>
       </Route>
