@@ -194,6 +194,9 @@ export const controlListReducer = (state = { loading: true, controles: [] }, act
       return {
         loading: false,
         controles: action.payload.controles,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        total: action.payload.total,
       };
     case CONTROL_LIST_FAIL:
       return { loading: false, error: action.payload };

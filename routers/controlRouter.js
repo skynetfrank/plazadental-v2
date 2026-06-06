@@ -11,16 +11,41 @@ const controlRouter = express.Router();
 controlRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const controles = await Control.find(
-      {},
-      { fechaControl: 1, paciente: 1, montoUsd: 1, evaluacion: 1, tratamiento: 1 }
-    )
+    const pageSize = Number(req.query.pageSize) || 20;
+    const page = Number(req.query.pageNumber) || 1;
+    const search = req.query.search || "";
+
+    let searchQuery = {};
+    if (search) {
+      // Primero buscamos pacientes que coincidan con el término para obtener sus IDs
+      const patients = await Paciente.find({
+        $or: [
+          { nombre: { $regex: search, $options: "i" } },
+          { apellido: { $regex: search, $options: "i" } },
+        ]
+      }).select('_id');
+      const patientIds = patients.map(p => p._id);
+
+      searchQuery = {
+        $or: [
+          { paciente: { $in: patientIds } },
+          { evaluacion: { $regex: search, $options: "i" } },
+          { tratamiento: { $regex: search, $options: "i" } },
+        ]
+      };
+    }
+
+    const count = await Control.countDocuments(searchQuery);
+    const controles = await Control.find(searchQuery, { fechaControl: 1, paciente: 1, montoUsd: 1, evaluacion: 1, tratamiento: 1 })
       .populate({
         path: "paciente",
         select: "nombre apellido",
       })
-      .sort({ fechaControl: -1 });
-    res.send({ controles });
+      .sort({ fechaControl: -1 })
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res.send({ controles, page, pages: Math.ceil(count / pageSize), total: count });
   })
 );
 

@@ -1,25 +1,54 @@
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../components/SimpleTable";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import InfoIcon from "../icons/InfoIcon";
 import ToolTip from "../components/ToolTip";
 import Loader from "../components/Loader";
 import { listControles } from "../actions/controlActions";
 import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTimes, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 
 function ListaControles() {
   const navigate = useNavigate("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [isDebouncing, setIsDebouncing] = useState(false);
+
   const controlList = useSelector((state) => state.controlList);
-  const { loading, controles } = controlList;
+  const { loading, controles, pages, page, total } = controlList;
   const dispatch = useDispatch();
 
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    if (e.target.value !== debouncedSearch) {
+      setIsDebouncing(true);
+    }
+  };
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setDebouncedSearch("");
+    setIsDebouncing(false);
+    setPageNumber(1);
+  };
+
   useEffect(() => {
-    dispatch(listControles({}));
-  }, [dispatch]);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setIsDebouncing(false);
+      setPageNumber(1);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    dispatch(listControles({ pageNumber, search: debouncedSearch }));
+  }, [dispatch, pageNumber, debouncedSearch]);
 
   const columns = [
     {
@@ -137,23 +166,59 @@ function ListaControles() {
       {loading ? (
         <Loader txt={"Obteniendo Controles"} />
       ) : (
-        <>
-          <div>
-            <div>
-              {controles ? (
-                <SimpleTable
-                  data={controles}
-                  columns={columns}
-                  filterInput={true}
-                  botonera={true}
-                  records={controles.length || 0}
-                />
-              ) : (
-                ""
-              )}
+        <div className="tankstack-pagination-container">
+          <div className="filterv8-container pad-1">
+            <div className="pos-rel flx">
+              <input
+                type="text"
+                className="filter-input-v8"
+                placeholder="Buscar por paciente, evaluación o tratamiento..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+              />
+              <div className="pos-abs flx" style={{ right: '15px', height: '100%', top: 0 }}>
+                {isDebouncing && (
+                  <FontAwesomeIcon icon={faCircleNotch} spin className="azul-brand" />
+                )}
+                {searchTerm && !isDebouncing && (
+                  <button
+                    className="btn-clear"
+                    onClick={clearSearch}
+                  >
+                    <FontAwesomeIcon icon={faTimes} />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-        </>
+          {controles && (
+            <>
+              <SimpleTable
+                data={controles}
+                columns={columns}
+                filterInput={false}
+                botonera={false}
+                records={total}
+              />
+
+              <div className="tankstack-pagination-botonera">
+                <button
+                  disabled={pageNumber === 1}
+                  onClick={() => setPageNumber(prev => prev - 1)}
+                >
+                  Anterior
+                </button>
+                <span className="pagination-totalpages">Página {page} de {pages}</span>
+                <button
+                  disabled={pageNumber === pages}
+                  onClick={() => setPageNumber(prev => prev + 1)}
+                >
+                  Siguiente
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       )}
     </div>
   );
