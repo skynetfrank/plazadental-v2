@@ -166,7 +166,6 @@ const QuoteCreator = () => {
 
             <div className="quote-info-section flx jsb">
               <div className="info-block">
-                
                 <p>
                   <strong>Paciente:</strong>{" "}
                   {selectedPaciente
@@ -211,7 +210,7 @@ const QuoteCreator = () => {
                 <tr>
                   <th>DESCRIPCIÓN</th>
                   <th className="txt-center">CANT.</th>
-                  <th className="txt-right">PRECIO UNIT.</th>
+                  <th className="txt-right">PRECIO</th>
                   <th className="txt-right">TOTAL</th>
                 </tr>
               </thead>

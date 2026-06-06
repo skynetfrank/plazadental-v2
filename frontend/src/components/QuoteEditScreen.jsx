@@ -223,7 +223,7 @@ const QuoteEditScreen = () => {
                 <tr>
                   <th>DESCRIPCIÓN</th>
                   <th className="txt-center">CANT.</th>
-                  <th className="txt-right">P. UNIT.</th>
+                  <th className="txt-right">PRECIO</th>
                   <th className="txt-right">TOTAL</th>
                   <th className="txt-center no-print">ACCIÓN</th>
                 </tr>

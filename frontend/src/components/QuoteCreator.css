@@ -6,7 +6,7 @@
 
 .quote-editor {
   background: #ffffff;
-  padding: 25px 0;
+  padding: 0;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 40px;
@@ -124,7 +124,6 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 2px solid #333;
   padding-bottom: 15px;
   margin-bottom: 20px;
 }
@@ -217,8 +216,8 @@
 
 .quote-info-section {
   margin-bottom: 5px;
-  border-top: 2px solid #333;
-  border-bottom: 2px solid #333;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
   padding-top: 10px;
 }
 
@@ -233,11 +232,11 @@
 }
 
 .quote-items-table th {
-  padding: 15px;
+  padding: 10px;
   background: #f4f4f4;
-  border-bottom: 2px solid #333;
-  border-top: 2px solid #333;
-  font-size: 0.9rem;
+  border-bottom: 1px solid #333;
+  border-top: 1px solid #333;
+  font-size: 1rem;
 }
 
 .quote-items-table td {
