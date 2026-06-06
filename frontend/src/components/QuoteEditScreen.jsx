@@ -196,7 +196,7 @@ const QuoteEditScreen = () => {
                                     <strong>Paciente:</strong> {selectedPaciente?.nombre} {selectedPaciente?.apellido}
                                 </p>
                                 <p>
-                                    <strong>C.I.:</strong> {selectedPaciente?.cedula}
+                                    <strong>Cedula de Identidad:</strong> {selectedPaciente?.cedula}
                                 </p>
                             </div>
                             <div className="flx gap05 no-print">
@@ -298,7 +298,7 @@ const QuoteEditScreen = () => {
                             <p className="name">
                                 {userInfo.nombre} {userInfo.apellido}
                             </p>
-                            <p className="role">Profesional a cargo</p>
+                            <p className="role">Elaborado por</p>
                         </div>
                     </div>
                 </div>

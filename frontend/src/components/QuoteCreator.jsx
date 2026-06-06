@@ -173,7 +173,7 @@ const QuoteCreator = () => {
                     : "____________________"}
                 </p>
                 <p>
-                  <strong>C.I.:</strong> {selectedPaciente ? selectedPaciente.cedula : "____________________"}
+                  <strong>Cedula de Identidad:</strong> {selectedPaciente ? selectedPaciente.cedula : "____________________"}
                 </p>
               </div>
               <div className="flx gap05 no-print">
@@ -271,7 +271,7 @@ const QuoteCreator = () => {
               <p className="name">
                 {userInfo.nombre} {userInfo.apellido}
               </p>
-              <p className="role">Profesional a cargo</p>
+              <p className="role">Elaborado por</p>
             </div>
           </div>
         </div>

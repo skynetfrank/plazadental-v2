@@ -254,7 +254,6 @@
   font-weight: bold;
   padding-top: 10px;
   border-top: 1px solid #ddd;
-  color: #007bff;
 }
 
 .txt-center {
@@ -302,7 +301,7 @@
 
 .signature-box .name {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
 }
 
 .quote-totals-summary.no-print {
