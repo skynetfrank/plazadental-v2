@@ -2389,8 +2389,9 @@ button.td-group-btn {
 
 .filterv8-container {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .filterv8-container div {
