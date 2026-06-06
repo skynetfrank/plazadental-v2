@@ -17,6 +17,8 @@ function ListaControles() {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [isDebouncing, setIsDebouncing] = useState(false);
+  const [startDate, setStartDate] = useState(dayjs().startOf("month").format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState(dayjs().endOf("month").format("YYYY-MM-DD"));
 
   const controlList = useSelector((state) => state.controlList);
   const { loading, controles, pages, page, total } = controlList;
@@ -32,6 +34,8 @@ function ListaControles() {
   const clearSearch = () => {
     setSearchTerm("");
     setDebouncedSearch("");
+    setStartDate(dayjs().startOf("month").format("YYYY-MM-DD"));
+    setEndDate(dayjs().endOf("month").format("YYYY-MM-DD"));
     setIsDebouncing(false);
     setPageNumber(1);
   };
@@ -47,8 +51,8 @@ function ListaControles() {
   }, [searchTerm]);
 
   useEffect(() => {
-    dispatch(listControles({ pageNumber, search: debouncedSearch }));
-  }, [dispatch, pageNumber, debouncedSearch]);
+    dispatch(listControles({ pageNumber, search: debouncedSearch, startDate, endDate }));
+  }, [dispatch, pageNumber, debouncedSearch, startDate, endDate]);
 
   const columns = [
     {
@@ -168,6 +172,17 @@ function ListaControles() {
       ) : (
         <div className="tankstack-pagination-container">
           <div className="filterv8-container pad-1">
+            <div className="flx gap1">
+              <div className="flx column astart">
+                <label className="font-tiny negrita">Desde:</label>
+                <input type="date" className="input-modern pad-05" value={startDate} onChange={(e) => { setStartDate(e.target.value); setPageNumber(1); }} />
+              </div>
+              <div className="flx column astart">
+                <label className="font-tiny negrita">Hasta:</label>
+                <input type="date" className="input-modern pad-05" value={endDate} onChange={(e) => { setEndDate(e.target.value); setPageNumber(1); }} />
+              </div>
+            </div>
+
             <div className="pos-rel flx">
               <input
                 type="text"

@@ -14,8 +14,19 @@ controlRouter.get(
     const pageSize = Number(req.query.pageSize) || 20;
     const page = Number(req.query.pageNumber) || 1;
     const search = req.query.search || "";
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
 
     let searchQuery = {};
+
+    // Filtro por rango de fechas
+    if (startDate && endDate) {
+      searchQuery.fechaControl = {
+        $gte: new Date(startDate),
+        $lte: new Date(endDate),
+      };
+    }
+
     if (search) {
       // Primero buscamos pacientes que coincidan con el término para obtener sus IDs
       const patients = await Paciente.find({
@@ -26,13 +37,20 @@ controlRouter.get(
       }).select('_id');
       const patientIds = patients.map(p => p._id);
 
-      searchQuery = {
+      const searchConditions = {
         $or: [
           { paciente: { $in: patientIds } },
           { evaluacion: { $regex: search, $options: "i" } },
           { tratamiento: { $regex: search, $options: "i" } },
         ]
       };
+
+      // Si ya hay fechas, unimos con $and
+      if (searchQuery.fechaControl) {
+        searchQuery = { $and: [{ fechaControl: searchQuery.fechaControl }, searchConditions] };
+      } else {
+        searchQuery = searchConditions;
+      }
     }
 
     const count = await Control.countDocuments(searchQuery);

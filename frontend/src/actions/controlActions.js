@@ -264,12 +264,12 @@ export const abonoControl = (control, abono) => async (dispatch, getState) => {
 };
 
 
-export const listControles = ({ pageNumber = 1, pageSize = 20, search = "" } = {}) => async (dispatch) => {
+export const listControles = ({ pageNumber = 1, pageSize = 20, search = "", startDate = "", endDate = "" } = {}) => async (dispatch) => {
   dispatch({
     type: CONTROL_LIST_REQUEST,
   });
   try {
-    const { data } = await Axios.get(`/api/controles?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search}`);
+    const { data } = await Axios.get(`/api/controles?pageNumber=${pageNumber}&pageSize=${pageSize}&search=${search}&startDate=${startDate}&endDate=${endDate}`);
     dispatch({ type: CONTROL_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: CONTROL_LIST_FAIL, payload: error.message });
