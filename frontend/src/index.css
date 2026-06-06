@@ -928,18 +928,24 @@ button.buscador svg {
 
 .btn-clear {
   background-color: transparent;
-  border: none;
+  border: none !important;
   width: auto;
   min-width: unset;
-  padding: 4px;
+  padding: 2px;
   margin: 0;
+  box-shadow: none !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important; /* Eliminamos transiciones para evitar saltos layout */
 }
 
 .btn-clear:hover {
-  transform: none;
-  border-color: transparent;
-  box-shadow: none;
+  transform: none !important;
+  border: none !important;
+  box-shadow: none !important;
   background-color: transparent;
+  filter: brightness(1.2) !important; /* Un ligero brillo al icono en lugar de moverlo */
+  outline: none;
 }
 
 .circle {

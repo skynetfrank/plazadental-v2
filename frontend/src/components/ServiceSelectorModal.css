@@ -30,7 +30,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
-    padding-bottom: 15px;
+
 }
 
 .modal-header h3 {
@@ -46,6 +46,7 @@
     cursor: pointer;
     color: #888;
     transition: color 0.2s ease-in-out;
+    margin: 0;
 }
 
 .close-modal-btn:hover {
@@ -80,9 +81,9 @@
 /* Reusing some styles from QuoteCreator.css for consistency */
 .editor-field label {
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #666;
-    margin-bottom: 5px;
+
 }
 
 .input-modern {
