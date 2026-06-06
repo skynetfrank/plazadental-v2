@@ -929,8 +929,17 @@ button.buscador svg {
 .btn-clear {
   background-color: transparent;
   border: none;
-  width: 10px;
-  min-width: 10px;
+  width: auto;
+  min-width: unset;
+  padding: 4px;
+  margin: 0;
+}
+
+.btn-clear:hover {
+  transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  background-color: transparent;
 }
 
 .circle {
