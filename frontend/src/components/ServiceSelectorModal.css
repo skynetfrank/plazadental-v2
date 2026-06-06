@@ -105,14 +105,26 @@
 .modal-row {
     display: flex;
     gap: 15px;
-    align-items: flex-end; /* Alinea los inputs en la base */
+    align-items: flex-end;
+    /* Alinea los inputs en la base */
 }
 
 .flex-grow {
-    flex: 1; /* El selector de servicios ocupará el espacio sobrante */
+    flex: 1;
+    /* El selector de servicios ocupará el espacio sobrante */
 }
 
 .qty-input-small {
     max-width: 60px;
     text-align: center;
+}
+
+@media (max-width: 575px) {
+    .input-modern.w-300 {
+        max-width: 300px;
+    }
+    
+.service-selector-modal-content {
+   max-width: 80%;
+}
 }

@@ -52,7 +52,7 @@ const ServiceSelectorModal = ({ listaServicios, onAddService, onClose }) => {
                     <div className="modal-row">
                         <div className="editor-field flex-grow">
                             <label>Servicio</label>
-                            <select className="input-modern" value={currentServiceId} onChange={(e) => setCurrentServiceId(e.target.value)}>
+                            <select className="input-modern w-300" value={currentServiceId} onChange={(e) => setCurrentServiceId(e.target.value)}>
                                 <option value="">-- Seleccionar Servicio --</option>
                                 {listaServicios.map(s => (
                                     <option key={s._id} value={s._id}>{s.nombre} (${s.preciousd})</option>
