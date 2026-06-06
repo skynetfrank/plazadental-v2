@@ -27,15 +27,12 @@ function App() {
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
 
-  const pacienteList = useSelector((state) => state.pacienteList);
-  const doctorList = useSelector((state) => state.doctorList);
-  const servicioAllList = useSelector((state) => state.servicioAllList);
 
-  useEffect(() => {
-    dispatch(listPacientes({}));
-    dispatch(listDoctores({}));
-    dispatch(listServicios({}));
-  }, [dispatch]);
+  /*  useEffect(() => {
+     dispatch(listPacientes({}));
+     dispatch(listDoctores({}));
+     dispatch(listServicios({}));
+   }, [dispatch]); */
 
   const signoutHandler = () => {
     dispatch(signout());

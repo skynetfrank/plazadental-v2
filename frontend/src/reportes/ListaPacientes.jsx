@@ -26,10 +26,10 @@ function ListaPacientes() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!pacientes) {
-      dispatch(listPacientes({}));
+    if (pacientes.length === 0) {
+      dispatch(listPacientes());
     }
-  }, [dispatch, pacientes]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (successDelete) {
