@@ -19,7 +19,6 @@ const QuoteEditScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const componentRef = useRef();
-  const handlePrint = useReactToPrint({ contentRef: componentRef });
 
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -30,6 +29,24 @@ const QuoteEditScreen = () => {
   const [discount, setDiscount] = useState(0);
   const [validity, setValidity] = useState(15);
   const [showServiceModal, setShowServiceModal] = useState(false);
+
+  const triggerPrint = useReactToPrint({ contentRef: componentRef });
+
+  const handlePrint = () => {
+    if (items.length === 0) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: "No hay servicios para imprimir",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+    triggerPrint();
+  };
 
   const quoteDetails = useSelector((state) => state.quoteDetails) || {};
   const { loading: loadingDetails, error: errorDetails, quote } = quoteDetails;
