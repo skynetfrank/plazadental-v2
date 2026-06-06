@@ -23,6 +23,7 @@ const quoteSchema = new mongoose.Schema(
         discount: { type: Number, default: 0 },
         total: { type: Number, required: true },
         validity: { type: Number, default: 15 }, // Validez en días
+        cambioBcv: { type: Number, default: 0 },
         createdAt: { type: Date, default: Date.now },
     },
     {

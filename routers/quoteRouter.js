@@ -38,7 +38,7 @@ quoteRouter.post(
     '/',
     isAuth,
     expressAsyncHandler(async (req, res) => {
-        const { paciente, items, discount, validity } = req.body;
+        const { paciente, items, discount, validity, cambioBcv } = req.body;
 
         // Recalcular subtotal y total en el backend para seguridad
         const subtotal = items.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
@@ -52,6 +52,7 @@ quoteRouter.post(
             discount: discount || 0,
             total,
             validity: validity || 15,
+            cambioBcv: cambioBcv || 0,
         });
 
         const createdQuote = await quote.save();
@@ -66,7 +67,7 @@ quoteRouter.put(
     expressAsyncHandler(async (req, res) => {
         const quote = await Quote.findById(req.params.id);
         if (quote) {
-            const { items, discount, validity } = req.body;
+            const { items, discount, validity, cambioBcv } = req.body;
 
             // Recalcular para seguridad
             const subtotal = items.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
@@ -77,6 +78,7 @@ quoteRouter.put(
             quote.discount = discount || 0;
             quote.total = total;
             quote.validity = validity || 15;
+            quote.cambioBcv = cambioBcv !== undefined ? cambioBcv : quote.cambioBcv;
 
             const updatedQuote = await quote.save();
             res.send({ message: 'Cotización Actualizada', quote: updatedQuote });

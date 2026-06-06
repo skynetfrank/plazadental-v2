@@ -6,7 +6,7 @@ import { detailsQuote, updateQuote } from "../actions/quoteActions";
 import { QUOTE_UPDATE_RESET } from "../constants/quoteConstants";
 import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrash, faPrint, faSave, faArrowLeft, faFileInvoiceDollar, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash, faPrint, faSave, faArrowLeft, faFileInvoiceDollar, faEye, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import logo from "/plazaDentalLogo.jpg";
 import wsapp from "/whatsapp.png";
 import instagram from "/instagram.png";
@@ -27,6 +27,36 @@ const QuoteEditScreen = () => {
     const { userInfo } = userSignin;
 
     const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")) || []);
+    const [cambioBcv, setCambioBcv] = useState(Number(localStorage.getItem("cambioBcv")) || 0);
+    const handleUpdateBcv = async () => {
+        const { value: rate } = await Swal.fire({
+            title: "Actualizar Tasa BCV",
+            input: "number",
+            inputLabel: "Ingrese la tasa de cambio actual",
+            inputValue: cambioBcv,
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value || value <= 0) {
+                    return "¡Debe ingresar una tasa válida!";
+                }
+            },
+        });
+
+        if (rate) {
+            localStorage.setItem("cambioBcv", rate);
+            setCambioBcv(Number(rate));
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Tasa actualizada",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        }
+    };
+
+    const [currency, setCurrency] = useState("USD");
     const [selectedPaciente, setSelectedPaciente] = useState(null);
     const [items, setItems] = useState([]);
     const [discount, setDiscount] = useState(0);
@@ -65,6 +95,9 @@ const QuoteEditScreen = () => {
             setItems(quote.items.map((item) => ({ ...item, key: item._id || Math.random() })));
             setDiscount(quote.discount);
             setValidity(quote.validity);
+            if (quote.cambioBcv) {
+                setCambioBcv(quote.cambioBcv);
+            }
         }
     }, [dispatch, quoteId, quote]);
 
@@ -118,6 +151,7 @@ const QuoteEditScreen = () => {
                 items,
                 discount: parseFloat(discount || 0),
                 validity: parseInt(validity || 15),
+                cambioBcv: Number(cambioBcv),
             }),
         );
     };
@@ -166,6 +200,35 @@ const QuoteEditScreen = () => {
 
                     <div className="quote-main-content">
                         <div className="quote-document-title">
+                            <div className="flx jcenter gap1 no-print mb-1">
+                                <button
+                                    className={`btn-modern ${currency === "USD" ? "bg-blue" : ""}`}
+                                    style={{ padding: "5px 15px", fontSize: "1.2rem" }}
+                                    onClick={() => setCurrency("USD")}
+                                >
+                                    Ver en Dólares ($)
+                                </button>
+                                <button
+                                    className={`btn-modern ${currency === "BS" ? "bg-blue" : ""}`}
+                                    style={{ padding: "5px 15px", fontSize: "1.2rem" }}
+                                    onClick={() => {
+                                        if (cambioBcv <= 0) {
+                                            Swal.fire({
+                                                toast: true,
+                                                position: "top-end",
+                                                icon: "warning",
+                                                title: "Debe actualizar la tasa BCV para ver en Bolívares",
+                                                showConfirmButton: false,
+                                                timer: 3000,
+                                            });
+                                        } else {
+                                            setCurrency("BS");
+                                        }
+                                    }}
+                                >
+                                    Ver en Bolívares (Bs.)
+                                </button>
+                            </div>
                             <h1>PRESUPUESTO</h1>
                             <p>Emitido el: {dayjs(quote.createdAt).format("DD/MM/YYYY")}</p>
                             <p>
@@ -188,6 +251,14 @@ const QuoteEditScreen = () => {
                                 <span className={!isViewOnly ? "no-print" : ""}> días</span>
                                 <span className={!isViewOnly ? "print-only" : "hide"}>{validity} días</span>
                             </p>
+                            {currency === "BS" && (
+                                <p className="font-12 mt-1">
+                                    Tasa de cambio BCV: <strong>{cambioBcv.toFixed(2)} Bs/$</strong>
+                                    <button className="btn-clear no-print ml-05" onClick={handleUpdateBcv} title="Actualizar Tasa">
+                                        <FontAwesomeIcon icon={faSyncAlt} className="azul-brand" size="xs" />
+                                    </button>
+                                </p>
+                            )}
                         </div>
 
                         <div className="quote-info-section flx jsb">
@@ -247,8 +318,20 @@ const QuoteEditScreen = () => {
                                     <tr key={item.key}>
                                         <td>{item.nombre}</td>
                                         <td className="txt-center">{item.cantidad}</td>
-                                        <td className="txt-right">${item.precio.toFixed(2)}</td>
-                                        <td className="txt-right">${item.total.toFixed(2)}</td>
+                                        <td className="txt-right">
+                                            {currency === "USD"
+                                                ? `$${item.precio.toFixed(2)}`
+                                                : `Bs. ${(item.precio * cambioBcv).toLocaleString("de-DE", {
+                                                    minimumFractionDigits: 2,
+                                                })}`}
+                                        </td>
+                                        <td className="txt-right">
+                                            {currency === "USD"
+                                                ? `$${item.total.toFixed(2)}`
+                                                : `Bs. ${(item.total * cambioBcv).toLocaleString("de-DE", {
+                                                    minimumFractionDigits: 2,
+                                                })}`}
+                                        </td>
                                         {!isViewOnly && (
                                             <td className="txt-center no-print">
                                                 <button className="btn-clear" onClick={() => removeItem(item.key)}>
@@ -262,7 +345,9 @@ const QuoteEditScreen = () => {
                                     <td colSpan="3" className="txt-right total-label">
                                         Subtotal:
                                     </td>
-                                    <td className="txt-right total-value">${subtotal.toFixed(2)}</td>
+                                    <td className="txt-right total-value">
+                                        {currency === "USD" ? `$${subtotal.toFixed(2)}` : `Bs. ${(subtotal * cambioBcv).toLocaleString("de-DE", { minimumFractionDigits: 2 })}`}
+                                    </td>
                                     {!isViewOnly && <td className="no-print"></td>}
                                 </tr>
                                 <tr className={parseFloat(discount || 0) <= 0 ? "no-print" : ""}>
@@ -279,14 +364,22 @@ const QuoteEditScreen = () => {
                                             ""
                                         )}
                                     </td>
-                                    <td className="txt-right total-value">-${parseFloat(discount || 0).toFixed(2)}</td>
+                                    <td className="txt-right total-value">
+                                        {currency === "USD"
+                                            ? `-$${parseFloat(discount || 0).toFixed(2)}`
+                                            : `-Bs. ${(parseFloat(discount || 0) * cambioBcv).toLocaleString("de-DE", {
+                                                minimumFractionDigits: 2,
+                                            })}`}
+                                    </td>
                                     {!isViewOnly && <td className="no-print"></td>}
                                 </tr>
                                 <tr>
                                     <td colSpan="3" className="txt-right total-label total-value">
                                         Total Estimado:
                                     </td>
-                                    <td className="txt-right total-value">${total.toFixed(2)}</td>
+                                    <td className="txt-right total-value">
+                                        {currency === "USD" ? `$${total.toFixed(2)}` : `Bs. ${(total * cambioBcv).toLocaleString("de-DE", { minimumFractionDigits: 2 })}`}
+                                    </td>
                                     {!isViewOnly && <td className="no-print"></td>}
                                 </tr>
                             </tbody>
