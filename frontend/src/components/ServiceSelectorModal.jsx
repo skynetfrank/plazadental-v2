@@ -49,18 +49,20 @@ const ServiceSelectorModal = ({ listaServicios, onAddService, onClose }) => {
                     </button>
                 </div>
                 <div className="modal-body">
-                    <div className="editor-field">
-                        <label>Servicio</label>
-                        <select className="input-modern" value={currentServiceId} onChange={(e) => setCurrentServiceId(e.target.value)}>
-                            <option value="">-- Seleccionar Servicio --</option>
-                            {listaServicios.map(s => (
-                                <option key={s._id} value={s._id}>{s.nombre} (${s.preciousd})</option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="editor-field">
-                        <label>Cantidad</label>
-                        <input type="number" className="input-modern" min="1" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                    <div className="modal-row">
+                        <div className="editor-field flex-grow">
+                            <label>Servicio</label>
+                            <select className="input-modern" value={currentServiceId} onChange={(e) => setCurrentServiceId(e.target.value)}>
+                                <option value="">-- Seleccionar Servicio --</option>
+                                {listaServicios.map(s => (
+                                    <option key={s._id} value={s._id}>{s.nombre} (${s.preciousd})</option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="editor-field">
+                            <label>Cant.</label>
+                            <input type="number" className="input-modern qty-input-small" min="1" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+                        </div>
                     </div>
                 </div>
                 <div className="modal-footer">
