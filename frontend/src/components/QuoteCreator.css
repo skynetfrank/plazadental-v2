@@ -21,12 +21,11 @@
   margin-left: 20px;
   font-size: 1.5rem;
   border-bottom: none;
-
 }
 
 .cot-back-link {
   margin: 10px 15px 5px 0;
-  color:blue;
+  color: blue;
   font-weight: 600;
 }
 
@@ -252,7 +251,7 @@
 }
 
 .quote-items-table td {
-  padding: 15px;
+  padding: 8px;
   border-bottom: 1px solid #c0bfbf;
 }
 
@@ -319,6 +318,17 @@
 .quote-totals-summary.no-print {
   margin-bottom: 40px;
   /* Add some space below the summary in the editor view */
+}
+
+.quote-terms-section {
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.quote-terms-image {
+  max-width: 90%;
+  height: 200px;
 }
 
 @media print {

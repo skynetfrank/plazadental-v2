@@ -11,10 +11,19 @@ import { detailsPaciente } from "../actions/pacienteActions";
 import Loader from "./Loader";
 import { listServicios } from "../actions/servicioActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import FontAwesomeIcon
-import { faPlus, faTrash, faPrint, faUser, faFileInvoiceDollar, faSave, faSyncAlt } from "@fortawesome/free-solid-svg-icons"; // Import specific icons
+import {
+  faPlus,
+  faTrash,
+  faPrint,
+  faUser,
+  faFileInvoiceDollar,
+  faSave,
+  faSyncAlt,
+} from "@fortawesome/free-solid-svg-icons"; // Import specific icons
 import logo from "/plazaDentalLogo.jpg";
 import wsapp from "/whatsapp.png";
 import instagram from "/instagram.png";
+import terminos from "../assets/terminos.png";
 import dayjs from "dayjs";
 import ServiceSelectorModal from "./ServiceSelectorModal"; // Import the new modal
 import "./QuoteCreator.css";
@@ -259,7 +268,8 @@ const QuoteCreator = () => {
                     : "____________________"}
                 </p>
                 <p>
-                  <strong>Cedula de Identidad:</strong> {selectedPaciente ? selectedPaciente.cedula : "____________________"}
+                  <strong>Cedula de Identidad:</strong>{" "}
+                  {selectedPaciente ? selectedPaciente.cedula : "____________________"}
                 </p>
               </div>
               <div className="flx gap05 no-print">
@@ -316,15 +326,15 @@ const QuoteCreator = () => {
                         {currency === "USD"
                           ? `$${item.precio.toFixed(2)}`
                           : `Bs. ${(item.precio * cambioBcv).toLocaleString("de-DE", {
-                            minimumFractionDigits: 2,
-                          })}`}
+                              minimumFractionDigits: 2,
+                            })}`}
                       </td>
                       <td className="txt-right">
                         {currency === "USD"
                           ? `$${item.total.toFixed(2)}`
                           : `Bs. ${(item.total * cambioBcv).toLocaleString("de-DE", {
-                            minimumFractionDigits: 2,
-                          })}`}
+                              minimumFractionDigits: 2,
+                            })}`}
                       </td>
                     </tr>
                   ))
@@ -356,8 +366,8 @@ const QuoteCreator = () => {
                       {currency === "USD"
                         ? `-$${parseFloat(discount || 0).toFixed(2)}`
                         : `-Bs. ${(parseFloat(discount || 0) * cambioBcv).toLocaleString("de-DE", {
-                          minimumFractionDigits: 2,
-                        })}`}
+                            minimumFractionDigits: 2,
+                          })}`}
                     </td>
                   </tr>
                 )}
@@ -385,6 +395,9 @@ const QuoteCreator = () => {
               </p>
               <p className="role">Elaborado por</p>
             </div>
+          </div>
+          <div className="quote-terms-section">
+            <img src={terminos} alt="Términos y Condiciones" className="quote-terms-image" />
           </div>
         </div>
       </div>
