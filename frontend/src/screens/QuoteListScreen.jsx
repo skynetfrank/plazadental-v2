@@ -62,8 +62,8 @@ const QuoteListScreen = () => {
   const columns = [
     {
       header: "Fecha",
-      accessorKey: "createdAt",
-      cell: (info) => dayjs(info.getValue()).format("DD/MM/YYYY"),
+      accessorKey: "createdAt", // Asegúrate de que este accessorKey coincida con el nombre del campo en tus datos
+      cell: (info) => dayjs.utc(info.getValue()).local().format("DD/MM/YYYY"),
     },
     {
       header: "Paciente",

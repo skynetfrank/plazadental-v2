@@ -268,8 +268,8 @@ const QuoteEditScreen = () => {
                   Ver en Bolívares (Bs.)
                 </button>
               </div>
-              <h1>PRESUPUESTO</h1>
-              <p>Emitido el: {dayjs(quote.createdAt).format("DD/MM/YYYY")}</p>
+              <h1>PRESUPUESTO</h1> {/* Título del documento */}
+              <p>Emitido el: {dayjs.utc(quote.createdAt).local().format("DD/MM/YYYY")}</p>
               <p>
                 <strong>Válido por: </strong>
                 {!isViewOnly ? (
