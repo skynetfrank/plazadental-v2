@@ -131,7 +131,7 @@ const QuoteListScreen = () => {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <SimpleTable
-          data={quotes || []}
+          data={[...(quotes || [])].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))}
           columns={columns}
           filterInput={true}
           botonera={true}
