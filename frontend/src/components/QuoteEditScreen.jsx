@@ -365,6 +365,7 @@ const QuoteEditScreen = () => {
                           className="input-detalle-inline no-print"
                           value={item.detalle || ""}
                           onChange={(e) => updateItemDetail(item.key, e.target.value)}
+                          maxLength={80}
                           placeholder="Agregar información extra..."
                         />
                       )}

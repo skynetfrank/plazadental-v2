@@ -82,13 +82,14 @@ const ServiceSelectorModal = ({ listaServicios, onAddService, onClose }) => {
           <div className="modal-row mtop-1">
             <div className="editor-field w-100pc">
               <label>Detalle adicional (opcional)</label>
-              <textarea
+              <input
+                type="text"
                 className="input-modern w-100pc"
-                rows="2"
                 value={detalle}
                 onChange={(e) => setDetalle(e.target.value)}
+                maxLength={80}
                 placeholder="Ej: Especificaciones del tratamiento, materiales, etc."
-              ></textarea>
+              />
             </div>
           </div>
         </div>

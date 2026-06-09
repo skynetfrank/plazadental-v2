@@ -334,6 +334,7 @@ const QuoteCreator = () => {
                           className="input-detalle-inline no-print"
                           value={item.detalle || ""}
                           onChange={(e) => updateItemDetail(item.key, e.target.value)}
+                          maxLength={80}
                           placeholder="Agregar información extra..."
                         />
                         {item.detalle && <div className="print-only item-detalle-print">{item.detalle}</div>}
