@@ -7,6 +7,7 @@ const quoteItemSchema = new mongoose.Schema(
         precio: { type: Number, required: true },
         cantidad: { type: Number, required: true },
         total: { type: Number, required: true },
+        detalle: { type: String },
     },
     {
         timestamps: false,
