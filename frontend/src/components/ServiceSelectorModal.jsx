@@ -79,19 +79,21 @@ const ServiceSelectorModal = ({ listaServicios, onAddService, onClose }) => {
               />
             </div>
           </div>
-          <div className="modal-row mtop-1">
-            <div className="editor-field w-100pc">
-              <label>Detalle adicional (opcional)</label>
-              <input
-                type="text"
-                className="input-modern w-100pc"
-                value={detalle}
-                onChange={(e) => setDetalle(e.target.value)}
-                maxLength={80}
-                placeholder="Ej: Especificaciones del tratamiento, materiales, etc."
-              />
+          {currentServiceId && (
+            <div className="modal-row mtop-1">
+              <div className="editor-field w-100pc">
+                <label>Detalle adicional (opcional)</label>
+                <input
+                  type="text"
+                  className="input-modern w-100pc"
+                  value={detalle}
+                  onChange={(e) => setDetalle(e.target.value)}
+                  maxLength={80}
+                  placeholder="Ej: Especificaciones del tratamiento, materiales, etc."
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="modal-footer">
           <button className="btn-modern btn-add-service" onClick={handleAdd}>
