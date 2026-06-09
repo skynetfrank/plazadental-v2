@@ -129,8 +129,13 @@ const QuoteCreator = () => {
       precio: serviceDetails.precio,
       cantidad: serviceDetails.cantidad,
       total: serviceDetails.precio * serviceDetails.cantidad,
+      detalle: serviceDetails.detalle || "",
     };
     setItems([...items, newItem]);
+  };
+
+  const updateItemDetail = (key, value) => {
+    setItems(items.map((item) => (item.key === key ? { ...item, detalle: value } : item)));
   };
 
   const removeItem = (id) => {
@@ -320,7 +325,19 @@ const QuoteCreator = () => {
                 ) : (
                   items.map((item) => (
                     <tr key={item.key}>
-                      <td>{item.nombre}</td>
+                      <td>
+                        <div className="item-name-row">
+                          <strong>{item.nombre}</strong>
+                        </div>
+                        <input
+                          type="text"
+                          className="input-detalle-inline no-print"
+                          value={item.detalle || ""}
+                          onChange={(e) => updateItemDetail(item.key, e.target.value)}
+                          placeholder="Agregar información extra..."
+                        />
+                        {item.detalle && <div className="print-only item-detalle-print">{item.detalle}</div>}
+                      </td>
                       <td className="txt-center">{item.cantidad}</td>
                       <td className="txt-right">
                         {currency === "USD"

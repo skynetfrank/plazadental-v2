@@ -331,6 +331,24 @@
   height: 200px;
 }
 
+.input-detalle-inline {
+  width: 100%;
+  border: none;
+  border-bottom: 1px dashed #ccc;
+  background: transparent;
+  font-size: 1rem;
+  color: #666;
+  padding: 4px 0;
+  margin-top: 4px;
+}
+
+.item-detalle-print {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #444;
+  margin-top: 2px;
+}
+
 @media print {
   @page {
     margin: 1.5cm;
