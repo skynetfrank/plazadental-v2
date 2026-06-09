@@ -349,6 +349,10 @@
   margin-top: 2px;
 }
 
+.view-mode-blue {
+  color: #007bff !important;
+}
+
 @media print {
   @page {
     margin: 1.5cm;
@@ -358,6 +362,10 @@
   body {
     margin: 0;
     padding: 0;
+  }
+
+  .view-mode-blue {
+    color: #444 !important;
   }
 
   .quote-items-table .inline-discount-input {

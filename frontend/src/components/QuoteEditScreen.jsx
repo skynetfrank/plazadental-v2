@@ -370,7 +370,9 @@ const QuoteEditScreen = () => {
                         />
                       )}
                       {item.detalle && (
-                        <div className={`${!isViewOnly ? "print-only" : ""} item-detalle-print`}>{item.detalle}</div>
+                        <div className={`${!isViewOnly ? "print-only" : "view-mode-blue"} item-detalle-print`}>
+                          {item.detalle}
+                        </div>
                       )}
                     </td>
                     <td className="txt-center">{item.cantidad}</td>
