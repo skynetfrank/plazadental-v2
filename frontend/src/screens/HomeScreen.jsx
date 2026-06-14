@@ -1,5 +1,8 @@
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { listDoctores } from "../actions/doctorActions";
+import { listServicios } from "../actions/servicioActions";
 import DoctorIcon from "../icons/DoctorIcon";
 import PacientesIcon from "../icons/PacientesIcon";
 import HandDollarIcon from "../icons/HandDollarIcon";
@@ -13,9 +16,41 @@ import { Outpatient } from "../icons/Outpatient";
 import { StockIcon } from "../icons/StockIcon";
 
 function HomeScreen() {
+  const dispatch = useDispatch();
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-  console.log("userInfo", userInfo);
+
+  const doctorList = useSelector((state) => state.doctorList) || {};
+  const { doctores } = doctorList;
+
+  const servicioList = useSelector((state) => state.servicioList) || {};
+  const { servicios } = servicioList;
+
+  // 1. Efecto para disparar la carga si los datos no están en localStorage
+  useEffect(() => {
+    if (userInfo) {
+      if (!localStorage.getItem("doctores")) {
+        dispatch(listDoctores());
+      }
+      if (!localStorage.getItem("servicios")) {
+        dispatch(listServicios());
+      }
+    }
+  }, [dispatch, userInfo]);
+
+  // 2. Efecto para guardar en localStorage una vez que el estado de Redux se actualiza
+  useEffect(() => {
+    if (doctores) {
+      localStorage.setItem("doctores", JSON.stringify(doctores));
+    }
+  }, [doctores]);
+
+  useEffect(() => {
+    if (servicios) {
+      localStorage.setItem("servicios", JSON.stringify(servicios));
+    }
+  }, [servicios]);
+
   return (
     <div>
       {userInfo ? (
@@ -85,8 +120,6 @@ function HomeScreen() {
               <span>Planificacion</span>
             </button>
           </a>
-
-
 
           {userInfo.isAdmin ? (
             <Link to="/listagasto">
