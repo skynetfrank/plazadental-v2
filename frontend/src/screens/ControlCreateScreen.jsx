@@ -61,7 +61,7 @@ export default function ControlCreateScreen(props) {
   const [listaServicios] = useState(JSON.parse(localStorage.getItem("servicios")));
   const [conceptoLaboratorio, setConceptoLaboratorio] = useState("");
   const pacienteDetails = useSelector((state) => state.pacienteDetails);
-  const { paciente } = pacienteDetails;
+  const { loading: loadingPaciente, error: errorPaciente, paciente } = pacienteDetails;
   const [nombreDoctor, setNombreDoctor] = useState("");
   const [showLabConceptModal, setShowLabConceptModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("CONTADO");
@@ -71,7 +71,7 @@ export default function ControlCreateScreen(props) {
   const [condiciones, setCondiciones] = useState("");
   const [isPaid, setIsPaid] = useState(false);
   const controlCreate = useSelector((state) => state.controlCreate);
-  const { success, control } = controlCreate;
+  const { loading: loadingCreate, error: errorCreate, success, control } = controlCreate;
 
   const dispatch = useDispatch();
 
@@ -97,14 +97,46 @@ export default function ControlCreateScreen(props) {
   const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   useEffect(() => {
+    // Validar si existen los datos críticos en localStorage o si hubo error con el paciente
+    if (errorPaciente || !listaDoctores || !listaServicios) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de Datos",
+        text: "No se pudieron cargar los datos de doctores o servicios. Por favor, intente más tarde.",
+        toast: true,
+        position: "top-end",
+        timer: 5000,
+        showConfirmButton: false,
+      });
+      navigate("/");
+    }
+  }, [errorPaciente, listaDoctores, listaServicios, navigate]);
+
+  useEffect(() => {
+    if (errorCreate) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de Servidor",
+        text: `No se pudo registrar el control: ${errorCreate}. Intente más tarde.`,
+        toast: true,
+        position: "top-end",
+        timer: 5000,
+        showConfirmButton: false,
+      });
+      dispatch({ type: CONTROL_CREATE_RESET });
+      navigate("/");
+    }
+  }, [errorCreate, navigate, dispatch]);
+
+  useEffect(() => {
     if (!paciente || paciente._id !== pacienteId) {
       dispatch(detailsPaciente(pacienteId));
     }
-
   }, [dispatch, paciente, pacienteId]);
 
   useEffect(() => {
-    const doctorFound = listaDoctores.find((x) => x._id === doctorId);
+    // Uso de encadenamiento opcional para evitar el error 'find' of null
+    const doctorFound = listaDoctores?.find((x) => x._id === doctorId);
     if (doctorFound) {
       setTasaComisionDr(doctorFound.tasaComisionDoctor);
       setTasaComisionPlaza(1 - doctorFound.tasaComisionDoctor);
@@ -146,7 +178,7 @@ export default function ControlCreateScreen(props) {
       setConceptoLaboratorio("");
       setDescuento(0);
       //navigate("/listapacientes");
-      navigate(`/controles/${pacienteId}`)
+      navigate(`/controles/${pacienteId}`);
     }
   }, [dispatch, control, navigate, success, pacienteId]);
 
@@ -210,8 +242,8 @@ export default function ControlCreateScreen(props) {
         abonos,
         condiciones,
         formaPago,
-        isPaid
-      )
+        isPaid,
+      ),
     );
   };
 
@@ -259,7 +291,7 @@ export default function ControlCreateScreen(props) {
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
-        servicios: listaServicios.map((s) => s.nombre),
+        servicios: listaServicios?.map((s) => s.nombre) || [],
       },
       inputPlaceholder: "Seleccione un Servicio a Facturar",
       showCancelButton: true,
@@ -275,6 +307,9 @@ export default function ControlCreateScreen(props) {
         });
       },
     });
+
+    if (!id || !listaServicios) return;
+
     setIdServ(listaServicios[Number(id)]._id);
     setPrecio(listaServicios[Number(id)].preciousd);
     const { value: cant } = await Swal.fire({
@@ -395,7 +430,7 @@ export default function ControlCreateScreen(props) {
     const { value: idDoctor } = await Swal.fire({
       input: "select",
       inputOptions: {
-        Doctores: listaDoctores.map((s) => s.nombre + " " + s.apellido),
+        Doctores: listaDoctores?.map((s) => s.nombre + " " + s.apellido) || [],
       },
       inputPlaceholder: "Seleccione un Doctor",
       showCancelButton: true,
@@ -411,6 +446,9 @@ export default function ControlCreateScreen(props) {
         });
       },
     });
+
+    if (!idDoctor || !listaDoctores) return;
+
     setDoctorId(listaDoctores[Number(idDoctor)]._id);
     setNombreDoctor(listaDoctores[Number(idDoctor)].nombre + " " + listaDoctores[Number(idDoctor)].apellido);
   };
@@ -513,17 +551,16 @@ export default function ControlCreateScreen(props) {
     if (paciente && !constancia && fechaControl && dayjs(fechaControl).isValid()) {
       setConstancia(
         "Por Medio de la presente Hacemos constar que el paciente " +
-        paciente.nombre +
-        " " +
-        paciente.apellido +
-        " C.I. " +
-        paciente.cedula +
-        " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
-        dayjs(fechaControl).format("DD-MM-YYYY")
+          paciente.nombre +
+          " " +
+          paciente.apellido +
+          " C.I. " +
+          paciente.cedula +
+          " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
+          dayjs(fechaControl).format("DD-MM-YYYY"),
       );
     }
   }, [paciente, constancia, fechaControl]);
-
 
   return (
     <div>
@@ -565,7 +602,7 @@ export default function ControlCreateScreen(props) {
           {serviciosItems?.length > 0 || montoUsd > 0 ? (
             <div className="show-servicios">
               {serviciosItems.map((m, inx) => {
-                const foundit = listaServicios.find((x) => x._id === m.servicio);
+                const foundit = listaServicios?.find((x) => x._id === m.servicio);
                 return (
                   <div key={inx} className="flx jsb mb03">
                     <span className="minw-10">{m.cantidad}</span>
