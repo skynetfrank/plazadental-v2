@@ -77,7 +77,7 @@ export default function ControlEditScreen(props) {
   const { loading, error, control } = controlDetails;
 
   const controlUpdate = useSelector((state) => state.controlUpdate);
-  const { success: successUpdate } = controlUpdate;
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = controlUpdate;
 
   const dispatch = useDispatch();
 
@@ -101,6 +101,38 @@ export default function ControlEditScreen(props) {
   ];
 
   const selCantidad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  useEffect(() => {
+    // Validar si existen los datos críticos en localStorage o si hubo error al cargar el control
+    if (error || !listaDoctores || !listaServicios) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de Datos",
+        text: "No se pudieron cargar los datos de doctores o servicios. Por favor, intente más tarde.",
+        toast: true,
+        position: "top-end",
+        timer: 5000,
+        showConfirmButton: false,
+      });
+      navigate("/");
+    }
+  }, [error, listaDoctores, listaServicios, navigate]);
+
+  useEffect(() => {
+    if (errorUpdate) {
+      Swal.fire({
+        icon: "error",
+        title: "Error de Servidor",
+        text: `No se pudo actualizar el control: ${errorUpdate}. Intente más tarde.`,
+        toast: true,
+        position: "top-end",
+        timer: 5000,
+        showConfirmButton: false,
+      });
+      dispatch({ type: CONTROL_UPDATE_RESET });
+      navigate("/");
+    }
+  }, [errorUpdate, navigate, dispatch]);
 
   useEffect(() => {
     if (successUpdate) {
@@ -149,14 +181,14 @@ export default function ControlEditScreen(props) {
       setFormaPago(control.formaPago || "");
       setCondiciones(control.condiciones || "");
       setIsPaid(control.isPaid);
-      let doc = listaDoctores.find((doc) => doc._id === doctorId);
+      let doc = listaDoctores?.find((doc) => doc._id === doctorId);
 
       setNombreDoctor(doc?.nombre + " " + doc?.apellido);
     }
   }, [control, controlId, dispatch, doctorId, listaDoctores, navigate, successUpdate]);
 
   useEffect(() => {
-    const doctorFound = listaDoctores.find((x) => x._id === doctorId);
+    const doctorFound = listaDoctores?.find((x) => x._id === doctorId);
     if (doctorFound) {
       setNombreDoctor(doctorFound?.nombre + " " + doctorFound?.apellido);
       setTasaComisionDr(doctorFound.tasaComisionDoctor);
@@ -261,7 +293,7 @@ export default function ControlEditScreen(props) {
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
-        servicios: listaServicios.map((s) => s.nombre),
+        servicios: listaServicios?.map((s) => s.nombre) || [],
       },
       inputPlaceholder: "Seleccione un Servicio a Facturar",
       showCancelButton: true,
@@ -277,6 +309,9 @@ export default function ControlEditScreen(props) {
         });
       },
     });
+
+    if (!id || !listaServicios) return;
+
     setIdServ(listaServicios[Number(id)]._id);
     setPrecio(listaServicios[Number(id)].preciousd);
     const { value: cant } = await Swal.fire({
@@ -387,7 +422,7 @@ export default function ControlEditScreen(props) {
     const { value: idDoctor } = await Swal.fire({
       input: "select",
       inputOptions: {
-        Doctores: listaDoctores.map((s) => s.nombre + " " + s.apellido),
+        Doctores: listaDoctores?.map((s) => s.nombre + " " + s.apellido) || [],
       },
       inputPlaceholder: "Seleccione un Doctor",
       showCancelButton: true,
@@ -403,6 +438,9 @@ export default function ControlEditScreen(props) {
         });
       },
     });
+
+    if (!idDoctor || !listaDoctores) return;
+
     setDoctorId(listaDoctores[Number(idDoctor)]._id);
     setNombreDoctor(listaDoctores[Number(idDoctor)].nombre + " " + listaDoctores[Number(idDoctor)].apellido);
   };
@@ -596,7 +634,7 @@ export default function ControlEditScreen(props) {
               {serviciosItems?.length > 0 || montoUsd > 0 ? (
                 <div className="show-servicios">
                   {serviciosItems.map((m, inx) => {
-                    const foundit = listaServicios.find((x) => x._id === m.servicio._id);
+                const foundit = listaServicios?.find((x) => x._id === m.servicio._id);
                     return (
                       <div key={inx} className="flx jsb mb03">
                         <span className="minw-10">{m.cantidad}</span>
