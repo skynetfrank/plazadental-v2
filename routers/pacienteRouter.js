@@ -24,11 +24,13 @@ pacienteRouter.get(
 
     const count = await Paciente.countDocuments(searchQuery);
     const pacientes = await Paciente.find(searchQuery)
+      .select(['_id', 'nombre', 'apellido', 'cedula', 'telefono', 'celular'])
       .sort({ nombre: 1 })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
 
     res.send({ pacientes, page, pages: Math.ceil(count / pageSize), total: count });
+
   })
 );
 

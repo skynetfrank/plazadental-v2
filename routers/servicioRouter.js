@@ -8,7 +8,10 @@ const servicioRouter = express.Router();
 servicioRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const servicios = await Servicio.find({}).sort({ nombre: 1 });
+    const servicios = await Servicio.find({})
+      .select(['_id', 'codigo', 'nombre', 'area', 'descripcion', 'preciousd'])
+      .sort({ nombre: 1 })
+
     res.send({ servicios });
   })
 );

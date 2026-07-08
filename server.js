@@ -40,7 +40,7 @@ const localdb = "mongodb://127.0.0.1:27017/plazadentaldb";
 //process.env.MONGODB_URI;
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => console.log("mongodb =>: conectado"))
+  .then(() => console.log("mongodb =>: conectado ok"))
   .catch((e) => console.log(e.message));
 
 app.use("/api/users", userRouter);

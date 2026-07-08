@@ -138,10 +138,7 @@ function ListaPacientes() {
     },
     { header: "Cedula", accessorKey: "cedula" },
     { header: "Telefono", accessorKey: "celular" },
-    {
-      header: "odograma URL",
-      accessorKey: "idPacienteOld",
-    },
+
     {
       header: "Acciones",
       accessorKey: "_id",
@@ -169,7 +166,7 @@ function ListaPacientes() {
                 <FontAwesomeIcon icon={faFileInvoiceDollar} />
               </button>
             </ToolTip>
-            <ToolTip text={"Ver Controles (" + controles.length + ")"}>
+            <ToolTip text={"Ver Controles (" + controles?.length + ")"}>
               <button className="circle-btn" onClick={() => navigate(`/controles/${_id}`)}>
                 <ControlIcon />
               </button>
