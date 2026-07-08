@@ -325,8 +325,8 @@ export default function ControlCreateScreen(props) {
 
     if (!id || !listaServicios) return;
 
-    setIdServ(listaServicios[Number(id)]._id);
-    setPrecio(listaServicios[Number(id)].preciousd);
+    setIdServ(serviciosOrdenados[Number(id)]._id);
+    setPrecio(serviciosOrdenados[Number(id)].preciousd);
     const { value: cant } = await Swal.fire({
       input: "select",
       inputOptions: {
@@ -353,9 +353,9 @@ export default function ControlCreateScreen(props) {
         ...prev,
         {
           cantidad: Number(cant) + 1,
-          servicio: listaServicios[Number(id)]._id,
-          precioServ: listaServicios[Number(id)].preciousd,
-          montoItemServicio: listaServicios[Number(id)].preciousd * (Number(cant) + 1),
+          servicio: serviciosOrdenados[Number(id)]._id,
+          precioServ: serviciosOrdenados[Number(id)].preciousd,
+          montoItemServicio: serviciosOrdenados[Number(id)].preciousd * (Number(cant) + 1),
         },
       ];
     });
