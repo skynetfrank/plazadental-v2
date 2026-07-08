@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "./actions/userActions";
 import LockIcon from "./icons/LockIcon";
-import logo from "/tiny_logo.jpg";
+import logo from "/logo.png";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import SplashSvg from "./components/SplashSvg";

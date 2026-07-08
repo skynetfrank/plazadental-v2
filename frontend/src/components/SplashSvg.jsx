@@ -1,17 +1,12 @@
 
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo.png";
 export default function SplashSvg() {
   return (
     <div className="fachada">
       {" "}
 
       <div className="splash-svg-container fachada">
-        <img className="logo" src={logo} alt="logo" />
-        <svg>
-          <text x="50%" y="15%" dy=".35em" textAnchor="middle">
-            PLAZA DENTAL
-          </text>
-        </svg>
+        <img className="logo-splash" src={logo} alt="logo" />
 
       </div>
     </div>
