@@ -68,7 +68,13 @@ export default function CuadreDiarioScreen() {
       },
       {
         header: "Doctor",
-        accessorKey: "doctor_data.nombre",
+        accessorKey: "doctor_data",
+        enableGrouping: false,
+        cell: (value) => {
+          const nombre = value.getValue().nombre;
+          const apellido = value.getValue().apellido;
+          return nombre.toUpperCase() + " " + apellido.toUpperCase();
+        },
       },
       {
         header: "Servicios Facturados",
