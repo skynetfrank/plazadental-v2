@@ -53,7 +53,9 @@ export const listDoctores = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get("/api/doctores");
-    localStorage.setItem("doctores", JSON.stringify(data.doctores));
+    if (data.doctores.length > 0) {
+      localStorage.setItem("doctores", JSON.stringify(data.doctores));
+    }
     dispatch({ type: DOCTOR_LIST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: DOCTOR_LIST_FAIL, payload: error.message });
