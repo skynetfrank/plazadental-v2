@@ -266,6 +266,10 @@ export default function ControlCreateScreen(props) {
     setServiciosItems(newarray);
   };
 
+
+
+
+
   const getServicio = async () => {
     if (!doctorId) {
       Swal.fire({
@@ -288,10 +292,21 @@ export default function ControlCreateScreen(props) {
       });
       return;
     }
+
+
+    //deep seek code
+    // Ordenar servicios alfabéticamente por nombre
+    const serviciosOrdenados = [...(listaServicios || [])].sort((a, b) =>
+      a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+    );
+
+
+
+
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
-        servicios: listaServicios?.map((s) => s.nombre) || [],
+        servicios: serviciosOrdenados?.map((s) => s.nombre.toUpperCase()) || [],
       },
       inputPlaceholder: "Seleccione un Servicio a Facturar",
       showCancelButton: true,
@@ -345,6 +360,10 @@ export default function ControlCreateScreen(props) {
       ];
     });
   };
+
+
+
+
 
   const getLaboratorio = async () => {
     if (!doctorId) {
@@ -551,13 +570,13 @@ export default function ControlCreateScreen(props) {
     if (paciente && !constancia && fechaControl && dayjs(fechaControl).isValid()) {
       setConstancia(
         "Por Medio de la presente Hacemos constar que el paciente " +
-          paciente.nombre +
-          " " +
-          paciente.apellido +
-          " C.I. " +
-          paciente.cedula +
-          " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
-          dayjs(fechaControl).format("DD-MM-YYYY"),
+        paciente.nombre +
+        " " +
+        paciente.apellido +
+        " C.I. " +
+        paciente.cedula +
+        " asistio a Consulta Odontologica en nuestras instalaciones el dia " +
+        dayjs(fechaControl).format("DD-MM-YYYY"),
       );
     }
   }, [paciente, constancia, fechaControl]);

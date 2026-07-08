@@ -160,7 +160,7 @@ export default function ControlEditScreen(props) {
       setEvaluacion(control.evaluacion || "");
       setTratamiento(control.tratamiento || "");
       setMontoUsd(control.montoUsd || 0);
-      setCambioBcv(control.cambioBcv || 0);
+      //setCambioBcv(control.cambioBcv || 0);
       setMontoBs(control.montoBs || 0);
       setTasaComisionDr(control.tasaComisionDr || 40);
       setTasaComisionPlaza(control.tasaComisionPlaza || 60);
@@ -267,7 +267,7 @@ export default function ControlEditScreen(props) {
     const newarray = serviciosItems.filter((x) => x.servicio !== id);
     setServiciosItems(newarray);
   };
-
+  console.log(cambioBcv, "cambioBcv")
   const getServicio = async () => {
     if (!doctorId) {
       Swal.fire({
@@ -290,10 +290,18 @@ export default function ControlEditScreen(props) {
       });
       return;
     }
+
+
+    //deep seek code
+    // Ordenar servicios alfabéticamente por nombre
+    const serviciosOrdenados = [...(listaServicios || [])].sort((a, b) =>
+      a.nombre.localeCompare(b.nombre, 'es', { sensitivity: 'base' })
+    );
+
     const { value: id } = await Swal.fire({
       input: "select",
       inputOptions: {
-        servicios: listaServicios?.map((s) => s.nombre) || [],
+        servicios: serviciosOrdenados?.map((s) => s.nombre.toUpperCase()) || [],
       },
       inputPlaceholder: "Seleccione un Servicio a Facturar",
       showCancelButton: true,
@@ -634,7 +642,7 @@ export default function ControlEditScreen(props) {
               {serviciosItems?.length > 0 || montoUsd > 0 ? (
                 <div className="show-servicios">
                   {serviciosItems.map((m, inx) => {
-                const foundit = listaServicios?.find((x) => x._id === m.servicio._id);
+                    const foundit = listaServicios?.find((x) => x._id === m.servicio._id);
                     return (
                       <div key={inx} className="flx jsb mb03">
                         <span className="minw-10">{m.cantidad}</span>

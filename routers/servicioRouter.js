@@ -8,7 +8,7 @@ const servicioRouter = express.Router();
 servicioRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const servicios = await Servicio.find({});
+    const servicios = await Servicio.find({}).sort({ nombre: 1 });
     res.send({ servicios });
   })
 );

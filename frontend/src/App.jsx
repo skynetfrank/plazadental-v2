@@ -30,11 +30,10 @@ function App() {
   const dispatch = useDispatch();
 
 
-  /*  useEffect(() => {
-     dispatch(listPacientes({}));
-     dispatch(listDoctores({}));
-     dispatch(listServicios({}));
-   }, [dispatch]); */
+  useEffect(() => {
+    dispatch(listDoctores({}));
+    dispatch(listServicios({}));
+  }, [dispatch]);
 
   const signoutHandler = () => {
     dispatch(signout());
